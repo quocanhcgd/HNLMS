@@ -9,9 +9,9 @@
 - Default branch: `main`
 - Local prototype: Next.js App Router at `apps/web`
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
-- Full-stack backend, worker, database and production infrastructure are not implemented yet.
-- Tasks: `T001` to `T175`; only T002 and T003 are currently marked complete.
-- Current commit baseline: `387125a`.
+- API and worker skeletons now exist with TypeScript strict and API `/health`; database and production infrastructure are not implemented yet.
+- Tasks: `T001` to `T175`; T001, T002, T003, T004 and T005 are currently marked complete; T006+ remain open.
+- Current commit baseline: `387125a`; latest foundation work is pending commit.
 
 ## Source Of Truth Order
 
@@ -75,3 +75,4 @@ Before ending every task:
 - 2026-08-20: Restored corrupted data model/API contracts and added multimedia requirements T144-T160.
 - 2026-08-20: Added full-stack readiness checklist and T161-T175.
 - 2026-08-20: Initialized Git repository and pushed `main` to GitHub.
+- 2026-08-20: Created API/worker/shared package skeletons; web typecheck/build passed; API runtime health check still pending.

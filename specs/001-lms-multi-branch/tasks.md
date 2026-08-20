@@ -16,11 +16,11 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Purpose**: Khởi tạo monorepo, toolchain và native Linux release structure.
 
-- [ ] T001 Tạo cấu trúc monorepo `apps/web`, `apps/api`, `worker`, `packages`, `infra` theo [plan.md](./plan.md)
+- [X] T001 Tạo cấu trúc monorepo `apps/web`, `apps/api`, `worker`, `packages`, `infra` theo [plan.md](./plan.md)
 - [X] T002 [P] Khởi tạo npm workspace TypeScript/Node.js LTS và lockfile trong `package.json`, `package-lock.json` và workspace config
 - [X] T003 [P] Khởi tạo Next.js app trong `apps/web/` với TypeScript và App Router
-- [ ] T004 [P] Khởi tạo NestJS app trong `apps/api/` với module loader
-- [ ] T005 [P] Khởi tạo worker app trong `worker/` với queue consumer entrypoint
+- [X] T004 [P] Khởi tạo NestJS app trong `apps/api/` với module loader
+- [X] T005 [P] Khởi tạo worker app trong `worker/` với queue consumer entrypoint
 - [ ] T006 [P] Cấu hình ESLint, Prettier, TypeScript strict và scripts kiểm tra trong `package.json`, `eslint.config.mjs`, `tsconfig.json`
 - [ ] T007 [P] Cấu hình Vitest và Playwright trong `vitest.config.ts` và `playwright.config.ts`
 - [ ] T008 [P] Tạo shared packages `packages/domain-contracts`, `packages/authorization`, `packages/module-sdk`, `packages/license-contracts`, `packages/ui`, `packages/theme-presets`; `packages/ui` giữ shared UI contracts/theme helpers; không sao chép source Mantine

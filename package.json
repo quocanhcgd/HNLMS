@@ -1,14 +1,22 @@
 {
   "name": "hnlms-workspace",
   "private": true,
-  "scripts": {
-    "dev": "npm run dev --workspace=@hnlms/web",
-    "build": "npm run build --workspace=@hnlms/web",
-    "typecheck": "npm run typecheck --workspace=@hnlms/web"
+  "engines": {
+    "node": ">=20.12 <21"
   },
   "workspaces": [
     "apps/*",
+    "worker",
     "packages/*"
   ],
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "scripts": {
+    "dev": "npm run dev --workspace=@hnlms/web",
+    "dev:web": "npm run dev --workspace=@hnlms/web",
+    "dev:api": "npm run dev --workspace=@hnlms/api",
+    "dev:worker": "npm run dev --workspace=@hnlms/worker",
+    "build": "npm run build --workspace=@hnlms/web",
+    "typecheck": "npm run typecheck --workspace=@hnlms/web && npm run typecheck --workspace=@hnlms/api && npm run typecheck --workspace=@hnlms/worker",
+    "lint": "npm run lint --workspace=@hnlms/web",
+    "test": "npm run test --workspace=@hnlms/api"
+  }
 }
