@@ -15,11 +15,11 @@
     "dev:api": "npm run dev --workspace=@hnlms/api",
     "dev:worker": "npm run dev --workspace=@hnlms/worker",
     "build": "npm run build --workspace=@hnlms/web",
-    "typecheck": "npm run typecheck --workspace=@hnlms/web && npm run typecheck --workspace=@hnlms/api && npm run typecheck --workspace=@hnlms/worker",
+    "typecheck": "npm run typecheck --workspace=@hnlms/web && npm run typecheck --workspace=@hnlms/api && npm run typecheck --workspace=@hnlms/worker && npm run typecheck --workspaces --if-present",
     "lint": "eslint .",
     "test": "vitest run",
     "format": "prettier --write .",
-    "format:check": "prettier --check \"apps/**/*.{ts,tsx,js,mjs,css,json,md}\" \"worker/**/*.{ts,js,json,md}\" \"packages/**/*.{ts,json,md}\" \"tests/**/*.{ts,tsx}\" \"*.{json,md,mjs}\" \"docs/development/**/*.{md,json}\" \"infra/**/*.{md,json}\"",
+    "format:check": "prettier --check \"apps/**/src/**/*.{ts,tsx,js,mjs,css,json,md}\" \"worker/src/**/*.{ts,js,json,md}\" \"packages/**/src/**/*.{ts,tsx,json,md}\" \"tests/**/*.{ts,tsx}\" \"*.{json,md,mjs}\" \"docs/development/**/*.{md,json}\" \"infra/**/*.{md,json}\"",
     "test:watch": "vitest",
     "test:e2e": "playwright test"
   },

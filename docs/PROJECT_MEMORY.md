@@ -11,7 +11,7 @@
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; database and production infrastructure are not implemented yet.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T007 are currently marked complete; T008+ remain open.
+- Tasks: `T001` to `T175`; T001-T008 are currently marked complete; T009+ remain open.
 - Current commit baseline: `387125a`; latest foundation work is pending commit.
 
 ## Source Of Truth Order
@@ -78,3 +78,4 @@ Before ending every task:
 - 2026-08-20: Initialized Git repository and pushed `main` to GitHub.
 - 2026-08-20: Created API/worker/shared package skeletons; web typecheck/build passed; API runtime health check still pending.
 - 2026-08-20: Added ESLint/Prettier/Vitest/Playwright; all configured quality checks pass.
+- 2026-08-20: Implemented shared domain, authorization, module, license, UI and theme contracts with invariant tests.
