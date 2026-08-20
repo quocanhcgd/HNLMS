@@ -1,7 +1,7 @@
 "use client";
-import Link from "next/link";
-import { Badge, Button, Group, Paper, Progress, Table, Text, Title } from "@mantine/core";
-import { Activity, ArrowLeft, Database, Server, ShieldCheck } from "lucide-react";
+import { UiBadge, UiButton, UiTable } from "@/components/ui";
+import { Group, Paper, Progress, Table, Text, Title } from "@mantine/core";
+import { Activity, Database, Server, ShieldCheck } from "lucide-react";
 type KpiIcon = typeof Server;
 type Kpi = readonly [string, string, KpiIcon, string];
 
@@ -14,21 +14,6 @@ const tenants = [
 export default function Platform() {
   return (
     <main style={{ minHeight: "100vh", background: "light-dark(#f5f7f8,#080d12)" }}>
-      <header className="topbar">
-        <Group>
-          <div className="brandMark">CP</div>
-          <div>
-            <Text fw={700}>HN LMS Control Plane</Text>
-            <Text size="xs" c="dimmed">
-              Provider operations
-            </Text>
-          </div>
-        </Group>
-        <div style={{ flex: 1 }} />
-        <Button component={Link} href="/admin" variant="default" leftSection={<ArrowLeft size={16} />}>
-          LMS preview
-        </Button>
-      </header>
       <div className="page">
         <div className="pageHeader">
           <div>
@@ -38,7 +23,7 @@ export default function Platform() {
               License, database và deployment status trên toàn hệ thống
             </Text>
           </div>
-          <Button>Provision tenant</Button>
+          <UiButton>Provision tenant</UiButton>
         </div>
         <div className="kpiGrid">
           {(
@@ -62,7 +47,7 @@ export default function Platform() {
           ))}
         </div>
         <div className="tableWrap">
-          <Table verticalSpacing="md" horizontalSpacing="lg" highlightOnHover>
+          <UiTable verticalSpacing="md" horizontalSpacing="lg">
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>Tenant</Table.Th>
@@ -85,12 +70,12 @@ export default function Platform() {
                   </Table.Td>
                   <Table.Td>{r[1]}</Table.Td>
                   <Table.Td>
-                    <Badge
+                    <UiBadge
                       color={r[2] === "Healthy" ? "teal" : r[2] === "Maintenance" ? "yellow" : "orange"}
                       variant="light"
                     >
                       {r[2]}
-                    </Badge>
+                    </UiBadge>
                   </Table.Td>
                   <Table.Td>{r[3]}</Table.Td>
                   <Table.Td>
@@ -102,7 +87,7 @@ export default function Platform() {
                 </Table.Tr>
               ))}
             </Table.Tbody>
-          </Table>
+          </UiTable>
         </div>
       </div>
     </main>

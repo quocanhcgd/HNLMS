@@ -492,3 +492,115 @@ a {
     white-space: normal;
   }
 }
+.platformShell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  background: var(--mantine-color-body);
+}
+.platformSidebar {
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  padding: 18px 12px;
+  border-right: 1px solid var(--app-border);
+  background: var(--app-panel);
+  display: flex;
+  flex-direction: column;
+}
+.platformBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 20px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.platformBrand small {
+  color: var(--mantine-color-dimmed);
+  font-size: 11px;
+  font-weight: 500;
+}
+.platformWorkspace {
+  border: 1px solid var(--app-border);
+  border-radius: 6px;
+  padding: 11px;
+  margin-bottom: 18px;
+}
+.platformNav {
+  display: grid;
+  gap: 3px;
+}
+.platformNavItem {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: var(--mantine-color-dimmed);
+  font-size: 13px;
+}
+.platformNavItem:hover,
+.platformNavItem:focus-visible {
+  background: color-mix(in srgb, var(--hn-dark-primary) 12%, var(--app-panel));
+  color: var(--mantine-color-text);
+}
+.platformBottom {
+  margin-top: auto;
+  display: grid;
+  gap: 3px;
+}
+.platformMain {
+  min-width: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.platformTopbar {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--app-border);
+  background: color-mix(in srgb, var(--mantine-color-body) 92%, transparent);
+  backdrop-filter: blur(12px);
+}
+.platformTopActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+.platformMobileTitle {
+  color: var(--mantine-color-dimmed);
+  font-size: 13px;
+}
+.platformFooter {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 28px;
+  border-top: 1px solid var(--app-border);
+}
+@media (max-width: 800px) {
+  .platformShell {
+    display: block;
+  }
+  .platformSidebar {
+    display: none;
+  }
+  .platformTopbar {
+    padding: 0 14px;
+  }
+  .platformFooter {
+    padding: 12px 14px;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .platformMain > .page {
+    padding: 20px 14px 36px;
+  }
+}

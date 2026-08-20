@@ -1,13 +1,13 @@
 # HN LMS
 
 [![CI](https://github.com/quocanhcgd/HNLMS/actions/workflows/ci.yml/badge.svg)](https://github.com/quocanhcgd/HNLMS/actions/workflows/ci.yml)
-[![Project progress](https://img.shields.io/badge/progress-16%2F175%20tasks-15aebb)](https://quocanhcgd.github.io/HNLMS/)
+[![Project progress](https://img.shields.io/badge/progress-17%2F175%20tasks-15aebb)](https://quocanhcgd.github.io/HNLMS/)
 
 LMS đa ngành, đa chi nhánh với public landing, tuyển sinh, học tập, assessment, multimedia learning, HRM, payroll, finance, reporting và AI governance.
 
 ## Project progress
 
-- Completed: **16 / 175 tasks** (**9.1%**)
+- Completed: **17 / 175 tasks** (**9.7%**)
 - Current phase: **Phase 1 - Setup**
 - Next task: **T017 - License control plane shell**
 - Live dashboard: **https://quocanhcgd.github.io/HNLMS/**
