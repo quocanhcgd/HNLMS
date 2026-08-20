@@ -11,7 +11,7 @@
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; database and production infrastructure are not implemented yet.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T014 are currently marked complete; T015+ remain open.
+- Tasks: `T001` to `T175`; T001-T015 are currently marked complete; T016+ remain open.
 - Current commit baseline: `387125a`; latest foundation work is pending commit.
 
 ## Source Of Truth Order
@@ -87,3 +87,4 @@ Before ending every task:
 - 2026-08-20: Added separate public, platform and LMS App Router layout boundaries with route tests.
 - 2026-08-20: Added loading/error/not-found boundaries, product metadata and deep-link/history E2E coverage.
 - 2026-08-20: Added shared Mantine UI wrappers for controls/table/modal/toolbar and migrated shell/lead list.
+- 2026-08-20: Formalized semantic theme tokens, state colors, spacing/typography scales and CSS runtime mapping.

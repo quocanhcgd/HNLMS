@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { canAccessResource, hasScope } from "@hnlms/authorization";
 import { resolveEffectiveState } from "@hnlms/module-sdk";
 import { hasEntitlement, isLicenseUsable, quotaRemaining } from "@hnlms/license-contracts";
-import { validateRequiredTokens } from "@hnlms/theme-presets";
+import { requiredThemeTokenKeys, validateRequiredTokens } from "@hnlms/theme-presets";
 import { parseAssessmentAnswer, parseLessonDocument } from "@hnlms/domain-contracts";
 
 describe("shared contract invariants", () => {
@@ -61,6 +61,6 @@ describe("shared contract invariants", () => {
 
   it("reports missing semantic theme tokens", () => {
     expect(validateRequiredTokens({ primary: "#fff" })).toContain("background");
-    expect(validateRequiredTokens({})).toHaveLength(11);
+    expect(validateRequiredTokens({})).toHaveLength(requiredThemeTokenKeys.length);
   });
 });

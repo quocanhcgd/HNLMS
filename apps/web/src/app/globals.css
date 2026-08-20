@@ -1,7 +1,12 @@
 :root {
-  --app-shell: #0b1117;
-  --app-panel: #101820;
-  --app-border: rgba(148, 163, 184, 0.16);
+  --app-shell: var(--hn-dark-background);
+  --app-panel: var(--hn-dark-surface);
+  --app-border: color-mix(in srgb, var(--hn-dark-border) 65%, transparent);
+}
+:root[data-mantine-color-scheme="light"] {
+  --app-shell: var(--hn-light-background);
+  --app-panel: var(--hn-light-surface);
+  --app-border: var(--hn-light-border);
 }
 * {
   box-sizing: border-box;
@@ -31,7 +36,7 @@ a {
   top: 0;
   padding: 16px 12px;
   border-right: 1px solid var(--app-border);
-  background: light-dark(#f8fafb, #0a1016);
+  background: var(--app-shell);
   display: flex;
   flex-direction: column;
 }
@@ -78,12 +83,12 @@ a {
   margin: 1px 0;
 }
 .navItem:hover {
-  background: light-dark(#eef2f4, #131d26);
+  background: var(--hn-light-surface-muted);
   color: var(--mantine-color-text);
 }
 .navItem.active {
-  background: light-dark(#daf7fa, #102a31);
-  color: light-dark(#087986, #65e0e9);
+  background: color-mix(in srgb, var(--hn-dark-primary) 18%, var(--app-panel));
+  color: var(--hn-dark-primary);
   font-weight: 600;
 }
 .sidebarBottom {
@@ -151,7 +156,7 @@ a {
 .kpi {
   border: 1px solid var(--app-border);
   padding: 18px;
-  background: light-dark(#fff, #0e171f);
+  background: var(--app-panel);
 }
 .kpiTop {
   display: flex;
@@ -167,7 +172,7 @@ a {
 }
 .delta {
   font-size: 12px;
-  color: #45c98b;
+  color: var(--hn-dark-success);
 }
 .dashboardGrid {
   display: grid;
@@ -203,7 +208,7 @@ a {
 .scheduleTime {
   font-variant-numeric: tabular-nums;
   font-weight: 600;
-  color: #5ed8e3;
+  color: var(--hn-dark-primary);
 }
 .toolbar {
   display: flex;
@@ -381,4 +386,12 @@ a {
 .productBoundary--public,
 .productBoundary--platform {
   width: 100%;
+}
+
+:root[data-mantine-color-scheme="light"] .navItem.active {
+  background: color-mix(in srgb, var(--hn-light-primary) 14%, var(--app-panel));
+  color: var(--hn-light-primary);
+}
+.tableSortButton:focus-visible {
+  outline-color: var(--hn-dark-ring);
 }
