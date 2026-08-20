@@ -9,12 +9,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@hnlms/theme-presets": "*",
+    "@hnlms/ui": "*",
     "@mantine/core": "^8.3.1",
     "@mantine/hooks": "^8.3.1",
     "@mantine/notifications": "^8.3.1",
     "@tanstack/react-table": "8.21.3",
     "lucide-react": "^0.468.0",
     "next": "^15.5.2",
+    "next-intl": "^4.3.12",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
