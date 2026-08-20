@@ -12,7 +12,7 @@ Sync Impact Report
   - Quy trình phát triển và quality gates
 - Added architecture constraints:
   - Next.js App Router là router duy nhất; không dùng React Router
-  - shadcn/ui registry trên Radix UI; không tự mô phỏng component có sẵn
+  - Mantine component system và semantic theme tokens; không tự mô phỏng component có sẵn
   - Server Component mặc định và ba layout boundary tách biệt
   - UI foundation acceptance gate trước màn hình nghiệp vụ
 - Removed sections: Không có
@@ -87,17 +87,14 @@ các yêu cầu an toàn thành bằng chứng có thể lặp lại thay vì gi
 
 - Stack chuẩn MUST dùng TypeScript trên Node.js LTS, Next.js cho web và NestJS cho backend
   modular monolith, trừ khi amendment constitution phê duyệt thay đổi.
-- UI MUST dùng shadcn/ui primitives, Tailwind CSS và semantic CSS variables. Component
+- UI MUST dùng Mantine components, CSS Modules/Mantine styles và semantic theme tokens. Component
   nghiệp vụ MUST không hard-code màu thương hiệu, font hoặc radius khi đã có design token.
 - Theme MUST hỗ trợ preset, version, preview, publish, rollback, light/dark/system mode và kiểm tra
-  accessibility. Đổi preset shadcn MUST không yêu cầu sửa logic component nghiệp vụ.
+  accessibility. Đổi preset Mantine MUST không yêu cầu sửa logic component nghiệp vụ.
 - Web application MUST dùng duy nhất Next.js App Router với route groups, nested layouts,
   loading/error/not-found boundaries, `next/link` và `next/navigation`. React Router hoặc một
   router phía client cạnh tranh MUST NOT được cài hoặc sử dụng trong cùng ứng dụng.
-- shadcn/ui MUST được khởi tạo bằng cấu hình chuẩn của dự án và dùng Radix UI làm primitive
-  tương tác. Component registry được đưa vào `components/ui` và chỉ điều chỉnh có kiểm soát;
-  MUST NOT tự mô phỏng lại component shadcn bằng thẻ HTML và CSS khi component tương ứng tồn tại.
-- Server Component MUST là mặc định. Chỉ thêm `use client` tại boundary nhỏ nhất cần state,
+- Mantine MUST được khởi tạo bằng provider/theme API chuẩn của dự án. Component registry/wrapper được đưa vào `components/ui` và chỉ điều chỉnh có kiểm soát; MUST NOT tự mô phỏng lại component Mantine bằng thẻ HTML/CSS khi component tương ứng tồn tại.`r`n- Server Component MUST là mặc định. Chỉ thêm `use client` tại boundary nhỏ nhất cần state,
   browser API hoặc interaction; MUST NOT biến toàn bộ layout/page thành Client Component chỉ để
   phục vụ một điều khiển con.
 - Landing page, license control plane và LMS application MUST có route group và layout boundary
