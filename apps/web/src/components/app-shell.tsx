@@ -2,86 +2,95 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ActionIcon, Avatar, Badge, Group, Menu, Text, Tooltip, useMantineColorScheme } from "@mantine/core";
+import { useState } from "react";
 import {
-  Settings2,
-  Bell,
-  BookOpen,
-  Building2,
-  ChartBar,
-  ChevronDown,
-  ClipboardList,
-  LayoutDashboard,
-  Languages,
-  Moon,
-  Search,
-  Settings,
-  Sun,
-  Users,
-  Wallet,
-  UserRound,
-  LogOut,
-  RefreshCw,
-} from "lucide-react";
-import { useUI } from "@/lib/providers";
+  ActionIcon,
+  Avatar,
+  Badge,
+  Collapse,
+  Drawer,
+  Group,
+  Menu,
+  Text,
+  Tooltip,
+  useMantineColorScheme,
+} from "@mantine/core";
+import { Bell, ChevronDown, Languages, LogOut, Moon, Search, Settings, Settings2, Sun, UserRound } from "lucide-react";
 import { UiButton, UiTextInput } from "@/components/ui";
-
-const nav = [
-  ["overview", "/admin", LayoutDashboard],
-  ["admission", "/admin/leads", Users],
-  ["academic", "#", BookOpen],
-  ["learning", "#", ClipboardList],
-  ["students", "#", Users],
-  ["finance", "#", Wallet],
-  ["people", "#", Building2],
-  ["reports", "#", ChartBar],
-  ["settings", "/ui-preview", Settings],
-] as const;
+import {
+  filterNavigation,
+  isNavigationActive,
+  lmsNavigation,
+  mockNavigationContext,
+  type NavigationManifest,
+} from "@/lib/navigation/manifests";
+import { useDisclosure } from "@mantine/hooks";
+import { useUI } from "@/lib/providers";
+import type { MessageKey } from "@/lib/i18n/messages";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { t, locale, setLocale } = useUI();
   const { setColorScheme } = useMantineColorScheme();
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpened, { open: openMobile, close: closeMobile }] = useDisclosure(false);
+  const navigation = <Navigation pathname={pathname} t={t} />;
   return (
     <div className="shell">
-      <aside className="sidebar">
+      <aside className={`sidebar ${collapsed ? "sidebarCollapsed" : ""}`}>
         <div className="brand">
           <div className="brandMark">HN</div>
           <span>HN LMS</span>
+          <ActionIcon
+            className="sidebarCollapse"
+            variant="subtle"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            onClick={() => setCollapsed((value) => !value)}
+          >
+            <ChevronDown size={16} />
+          </ActionIcon>
         </div>
-        <div className="workspace">
-          <Group justify="space-between" wrap="nowrap">
-            <div>
-              <Text size="xs" c="dimmed">
-                KHÔNG GIAN
-              </Text>
-              <Text size="sm" fw={600}>
-                {t("branch")}
-              </Text>
-            </div>
-            <ChevronDown size={15} />
-          </Group>
-        </div>
-        <nav>
-          {nav.map(([key, href, Icon]) => (
-            <Link className={`navItem ${pathname === href ? "active" : ""}`} href={href} key={key}>
-              <Icon size={18} />
-              <span>{t(key)}</span>
-            </Link>
-          ))}
-        </nav>
+        <Menu position="bottom-start">
+          <Menu.Target>
+            <button className="workspace workspaceButton" type="button">
+              <Group justify="space-between" wrap="nowrap">
+                <div>
+                  <Text size="xs" c="dimmed">
+                    KHÔNG GIAN
+                  </Text>
+                  <Text size="sm" fw={600}>
+                    {t("branch")}
+                  </Text>
+                </div>
+                <ChevronDown size={15} />
+              </Group>
+            </button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Label>Chuyển không gian</Menu.Label>
+            <Menu.Item>Chi nhánh Hà Nội</Menu.Item>
+            <Menu.Item>Toàn tổ chức</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+        {navigation}
         <div className="sidebarBottom">
           <Link className="navItem" href="/">
             <Settings2 size={18} />
             <span>{t("publicSite")}</span>
           </Link>
           <Link className="navItem" href="/platform">
-            <Building2 size={18} />
+            <Settings size={18} />
             <span>{t("platform")}</span>
           </Link>
         </div>
       </aside>
       <main className="main">
+        <ActionIcon className="mobileNavTrigger" variant="subtle" aria-label="Open LMS navigation" onClick={openMobile}>
+          <ChevronDown size={18} />
+        </ActionIcon>
+        <Drawer opened={mobileOpened} onClose={closeMobile} title="HN LMS" position="left" size="min(88vw, 320px)">
+          {navigation}
+        </Drawer>
         <header className="topbar">
           <UiTextInput className="searchBox" leftSection={<Search size={16} />} placeholder={t("search")} />
           <Group className="topbarActions" gap={6} wrap="nowrap">
@@ -159,7 +168,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </Text>
           </Group>
           <Group gap="xs">
-            <Badge size="sm" variant="light" color="yellow" leftSection={<RefreshCw size={12} />}>
+            <Badge size="sm" variant="light" color="yellow">
               Có phiên bản mới
             </Badge>
             <UiButton variant="subtle" size="compact-xs">
@@ -169,6 +178,43 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </footer>
       </main>
     </div>
+  );
+}
+
+function Navigation({ pathname, t }: { pathname: string; t: (key: MessageKey) => string }) {
+  const items: NavigationManifest[] = filterNavigation(lmsNavigation, mockNavigationContext);
+  return (
+    <nav className="lmsNavigation" aria-label="LMS navigation">
+      {items.map((item) => {
+        const Icon = item.icon;
+        if (!Icon) return null;
+        const active = isNavigationActive(pathname, item);
+        return (
+          <div className="navGroup" key={item.key}>
+            <Link className={`navItem ${active ? "active" : ""}`} href={item.href}>
+              <Icon size={18} />
+              <span>{t(item.labelKey as MessageKey)}</span>
+              {item.children?.length ? <ChevronDown className="navChevron" size={14} /> : null}
+            </Link>
+            {item.children?.length ? (
+              <Collapse in={active}>
+                <div className="navSubmenu">
+                  {item.children.map((child) => (
+                    <Link
+                      className={`navSubItem ${isNavigationActive(pathname, child) ? "active" : ""}`}
+                      href={child.href}
+                      key={child.key}
+                    >
+                      {t(child.labelKey as never)}
+                    </Link>
+                  ))}
+                </div>
+              </Collapse>
+            ) : null}
+          </div>
+        );
+      })}
+    </nav>
   );
 }
 

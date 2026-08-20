@@ -6,6 +6,7 @@ export type NavigationItem = {
   href: string;
   moduleKey?: string;
   permission?: string;
+  roles?: readonly string[];
   children?: readonly NavigationItem[];
 };
 export type PageState = "loading" | "empty" | "error" | "forbidden" | "ready";

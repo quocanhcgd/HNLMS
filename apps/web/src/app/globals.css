@@ -604,3 +604,113 @@ a {
     padding: 20px 14px 36px;
   }
 }
+.lmsNavigation {
+  display: grid;
+  gap: 2px;
+}
+.navGroup {
+  display: grid;
+}
+.navChevron {
+  margin-left: auto;
+  transition: transform 0.18s ease;
+}
+.navItem.active .navChevron {
+  transform: rotate(180deg);
+}
+.navSubmenu {
+  margin: 1px 0 4px 28px;
+  border-left: 1px solid var(--app-border);
+  padding-left: 8px;
+  display: grid;
+  gap: 2px;
+}
+.navSubItem {
+  color: var(--mantine-color-dimmed);
+  font-size: 13px;
+  padding: 7px 9px;
+  border-radius: 5px;
+}
+.navSubItem:hover,
+.navSubItem.active {
+  color: var(--mantine-color-text);
+  background: color-mix(in srgb, var(--hn-dark-primary) 10%, var(--app-panel));
+}
+.workspaceButton {
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+.sidebarCollapse {
+  margin-left: auto;
+  transform: rotate(-90deg);
+}
+.sidebarCollapsed .brand {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+.sidebarCollapsed .brand span,
+.sidebarCollapsed .workspace,
+.sidebarCollapsed .navItem span,
+.sidebarCollapsed .navChevron,
+.sidebarCollapsed .navSubmenu {
+  display: none;
+}
+.sidebarCollapsed .sidebarCollapse {
+  display: inline-flex;
+  transform: rotate(90deg);
+}
+.sidebarCollapsed .navItem {
+  justify-content: center;
+  width: 44px;
+}
+.mobileNavTrigger {
+  display: none;
+  position: fixed;
+  left: 10px;
+  top: 12px;
+  z-index: 25;
+}
+@media (max-width: 1000px) {
+  .sidebarCollapse {
+    display: none;
+  }
+  .navSubmenu {
+    display: none;
+  }
+  .sidebar .navItem span {
+    display: none;
+  }
+  .sidebar .navItem {
+    justify-content: center;
+    width: 44px;
+  }
+  .sidebar .workspace {
+    display: none;
+  }
+  .sidebar .brand span {
+    display: none;
+  }
+  .sidebar {
+    align-items: center;
+  }
+  .mobileNavTrigger {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .mobileNavTrigger {
+    display: inline-flex;
+  }
+  .main .topbar {
+    padding-left: 58px;
+  }
+  .sidebar {
+    display: none;
+  }
+  .platformShell .mobileNavTrigger {
+    display: none;
+  }
+}
