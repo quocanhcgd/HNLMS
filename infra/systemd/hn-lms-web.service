@@ -1,0 +1,25 @@
+[Unit]
+Description=HN LMS Web
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=hnlms
+Group=hnlms
+WorkingDirectory=/opt/hn-lms/current
+EnvironmentFile=/etc/hn-lms/hn-lms.env
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/npm run start --workspace=@hnlms/web
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/hn-lms /var/log/hn-lms
+
+[Install]
+WantedBy=multi-user.target
