@@ -11,7 +11,7 @@
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; database and production infrastructure are not implemented yet.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T017 are currently marked complete; T018+ remain open.
+- Tasks: `T001` to `T175`; T001-T018 are currently marked complete; T019+ remain open.
 - Current commit baseline: `387125a`; latest foundation work is pending commit.
 
 ## Source Of Truth Order
@@ -90,3 +90,4 @@ Before ending every task:
 - 2026-08-20: Formalized semantic theme tokens, state colors, spacing/typography scales and CSS runtime mapping.
 - 2026-08-20: Added public shell with desktop/mobile navigation, locale/theme controls, consultation CTA and legal footer.
 - 2026-08-20: Added separate platform control-plane shell with tenant/license/deployment/migration/audit navigation and mobile layout.
+- 2026-08-21: Upgraded LMS shell with workspace context, grouped navigation, mobile/collapsed behavior and shared table/form wrappers.
