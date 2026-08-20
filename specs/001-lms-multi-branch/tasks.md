@@ -16,17 +16,17 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Purpose**: Khởi tạo monorepo, toolchain và native Linux release structure.
 
-- [X] T001 Tạo cấu trúc monorepo `apps/web`, `apps/api`, `worker`, `packages`, `infra` theo [plan.md](./plan.md)
-- [X] T002 [P] Khởi tạo npm workspace TypeScript/Node.js LTS và lockfile trong `package.json`, `package-lock.json` và workspace config
-- [X] T003 [P] Khởi tạo Next.js app trong `apps/web/` với TypeScript và App Router
-- [X] T004 [P] Khởi tạo NestJS app trong `apps/api/` với module loader
-- [X] T005 [P] Khởi tạo worker app trong `worker/` với queue consumer entrypoint
-- [X] T006 [P] Cấu hình ESLint, Prettier, TypeScript strict và scripts kiểm tra trong `package.json`, `eslint.config.mjs`, `tsconfig.json`
-- [X] T007 [P] Cấu hình Vitest và Playwright trong `vitest.config.ts` và `playwright.config.ts`
-- [X] T008 [P] Tạo shared packages `packages/domain-contracts`, `packages/authorization`, `packages/module-sdk`, `packages/license-contracts`, `packages/ui`, `packages/theme-presets`; `packages/ui` giữ shared UI contracts/theme helpers; không sao chép source Mantine
-- [X] T009 [P] Hoàn thiện Mantine provider, color-scheme bootstrap, CSS Modules/Mantine styles, semantic theme override, TanStack Table 8.x và next-intl trong `apps/web/`; prototype đã có Mantine/TanStack nhưng chưa có next-intl/theme package hoàn chỉnh
-- [X] T010 [P] Tạo native deployment skeleton gồm `infra/systemd/`, `infra/nginx/`, `infra/release-scripts/`, `infra/environments/` và `infra/secrets/README.md`
-- [ ] T011 [P] Tạo CI checks cho lint, typecheck, unit test, build artifact và checksum trong `.github/workflows/ci.yml`
+- [x] T001 Tạo cấu trúc monorepo `apps/web`, `apps/api`, `worker`, `packages`, `infra` theo [plan.md](./plan.md)
+- [x] T002 [P] Khởi tạo npm workspace TypeScript/Node.js LTS và lockfile trong `package.json`, `package-lock.json` và workspace config
+- [x] T003 [P] Khởi tạo Next.js app trong `apps/web/` với TypeScript và App Router
+- [x] T004 [P] Khởi tạo NestJS app trong `apps/api/` với module loader
+- [x] T005 [P] Khởi tạo worker app trong `worker/` với queue consumer entrypoint
+- [x] T006 [P] Cấu hình ESLint, Prettier, TypeScript strict và scripts kiểm tra trong `package.json`, `eslint.config.mjs`, `tsconfig.json`
+- [x] T007 [P] Cấu hình Vitest và Playwright trong `vitest.config.ts` và `playwright.config.ts`
+- [x] T008 [P] Tạo shared packages `packages/domain-contracts`, `packages/authorization`, `packages/module-sdk`, `packages/license-contracts`, `packages/ui`, `packages/theme-presets`; `packages/ui` giữ shared UI contracts/theme helpers; không sao chép source Mantine
+- [x] T009 [P] Hoàn thiện Mantine provider, color-scheme bootstrap, CSS Modules/Mantine styles, semantic theme override, TanStack Table 8.x và next-intl trong `apps/web/`; prototype đã có Mantine/TanStack nhưng chưa có next-intl/theme package hoàn chỉnh
+- [x] T010 [P] Tạo native deployment skeleton gồm `infra/systemd/`, `infra/nginx/`, `infra/release-scripts/`, `infra/environments/` và `infra/secrets/README.md`
+- [x] T011 [P] Tạo CI checks cho lint, typecheck, unit test, build artifact và checksum trong `.github/workflows/ci.yml`
 
 ## Phase 2: UI Foundation and Application Shell
 
@@ -371,8 +371,6 @@ MVP checkpoint: T046 đạt independent test của US1.
 
 Tất cả implementation tasks đều theo format `- [ ] T### [P?] [US#?] Description with exact file path`. Setup/foundational/polish tasks không có story label; task thuộc user story có `[US#]`; task parallelizable có `[P]`. IDs nền tảng tuần tự từ T001 đến T143; multimedia supplement dùng T144 đến T160; full-stack readiness dùng T161 đến T175 và tuân cùng format/path requirement.
 
-
-
 ## Phase 22: Multimedia Learning and Assessment Foundation
 
 **Purpose**: Triển khai nền tảng block lesson, upload/processing media, player/viewer, question registry và speaking response. Phase này phụ thuộc Phase 3 và phải hoàn tất trước khi đóng T067-T069, T083-T085, T088-T089.
@@ -410,9 +408,6 @@ Tất cả implementation tasks đều theo format `- [ ] T### [P?] [US#?] Descr
 - [ ] T160 Chạy schema migration, malicious payload, upload resume/duplicate, MIME spoof, processing retry, signed URL expiry, cross-scope playback, autosave out-of-order, speaking mobile/keyboard và visual E2E tests trong `apps/api/tests/media/`, `worker/tests/media/` và `apps/web/tests/e2e/multimedia/`
 
 **Checkpoint**: Lesson multimedia và assessment media MVP chỉ hoàn tất khi source private, processing state trung thực, renderer/editor schema parity, autosave sequence và speaking manual review đều qua T160.
-
-
-
 
 ## Phase 23: Full-Stack Delivery Readiness
 

@@ -4,11 +4,11 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Native deployment skeleton T010.
+- **Current task**: GitHub CI and visible progress T011.
 - **Status**: Completed.
-- **Next task**: T011, add GitHub CI checks, then continue T012-T023 UI foundation.
+- **Next task**: T012, create route groups and nested layout boundaries for public, platform and LMS application.
 - **Blocker**: API health runtime smoke check remains pending; database/auth/provider decisions remain open.
-- **Files in focus**: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `specs/001-lms-multi-branch/tasks.md`.\n- **Verification**: Lint/format/typecheck pass; 14 Vitest tests pass including deployment hardening/path guards; previous 2 Chromium E2E tests pass.
+- **Files in focus**: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `specs/001-lms-multi-branch/tasks.md`.\n- **Verification**: Local CI contract passes; lint/format/typecheck pass; 17 Vitest tests pass; previous Chromium E2E tests pass; GitHub Actions workflow configured for remote validation.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

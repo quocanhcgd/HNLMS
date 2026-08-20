@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality gates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e -- --project=chromium
+
+  build:
+    name: Build release artifact
+    runs-on: ubuntu-24.04
+    needs: quality
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run build --workspaces --if-present
+      - name: Package immutable release
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${GITHUB_SHA::12}"
+          stage="release/hn-lms-${version}"
+          mkdir -p "$stage/apps/web" "$stage/apps/api" "$stage/worker" "$stage/packages"
+          cp package.json package-lock.json "$stage/"
+          cp apps/web/package.json "$stage/apps/web/"
+          cp -R apps/web/.next "$stage/apps/web/.next"
+          if [[ -d apps/web/public ]]; then cp -R apps/web/public "$stage/apps/web/public"; fi
+          cp apps/api/package.json "$stage/apps/api/"
+          cp -R apps/api/dist "$stage/apps/api/dist"
+          cp worker/package.json "$stage/worker/"
+          cp -R worker/dist "$stage/worker/dist"
+          for package in packages/*; do
+            name="$(basename "$package")"
+            mkdir -p "$stage/packages/$name"
+            cp "$package/package.json" "$stage/packages/$name/"
+            cp -R "$package/dist" "$stage/packages/$name/dist"
+          done
+          tar -C release -czf "release/hn-lms-${version}.tgz" "hn-lms-${version}"
+          (cd release && sha256sum "hn-lms-${version}.tgz" > "hn-lms-${version}.sha256")
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hn-lms-${{ github.sha }}
+          path: |
+            release/*.tgz
+            release/*.sha256
+          if-no-files-found: error
+          retention-days: 14
