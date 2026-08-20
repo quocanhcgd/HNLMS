@@ -29,3 +29,6 @@ playwright-report/
 *.crt
 infra/secrets/*
 !infra/secrets/README.md
+
+# Build outputs
+**/dist/
