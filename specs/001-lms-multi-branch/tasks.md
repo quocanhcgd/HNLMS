@@ -36,7 +36,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T013 [P] Thiết lập Server Component mặc định, Client Component boundary, `loading.tsx`, `error.tsx`, `not-found.tsx`, metadata và deep-link behavior cho các route nền tảng trong `apps/web/src/app/`
 - [x] T014 [P] Tạo wrapper/composition dùng chung quanh Mantine cho button, input, textarea, select, checkbox, modal, drawer, menu, tabs, table, tooltip, notification và sidebar trong `apps/web/src/components/ui/`
 - [x] T015 Tạo semantic token contract cho light/dark/system, typography, spacing, radius, border, elevation, focus và trạng thái trong `apps/web/src/app/styles.css` cùng `apps/web/src/lib/theme/`
-- [ ] T016 Tạo public shell không dùng admin navigation trong `apps/web/src/app/(public)/layout.tsx` và các component liên quan trong `apps/web/src/components/shell/`
+- [x] T016 Tạo public shell không dùng admin navigation trong `apps/web/src/app/(public)/layout.tsx` và các component liên quan trong `apps/web/src/components/shell/`
 - [ ] T017 Tạo license control plane shell với navigation riêng trong `apps/web/src/app/(platform)/platform/layout.tsx` và `apps/web/src/components/shell/`
 - [ ] T018 Tạo LMS application shell gồm workspace switcher, grouped navigation, nested submenu, active state, header, footer, collapsed desktop sidebar và mobile sheet trong `apps/web/src/app/admin/layout.tsx` và `apps/web/src/components/shell/`
 - [ ] T019 [P] Tạo typed navigation manifests, active-route resolver, locale labels và entitlement-aware visibility theo từng product boundary trong `apps/web/src/lib/navigation/` và `apps/web/src/lib/i18n/`

@@ -1,36 +1,10 @@
-"use client";
 import Link from "next/link";
-import { ActionIcon, Button, Group, Paper, SimpleGrid, Text, Title, useMantineColorScheme } from "@mantine/core";
-import { ArrowRight, Languages, MoonStar } from "lucide-react";
-import { useUI } from "@/lib/providers";
+import { Button, Group, Paper, SimpleGrid, Text, Title } from "@mantine/core";
+import { ArrowRight } from "lucide-react";
+
 export default function Landing() {
-  const { locale, setLocale } = useUI();
-  const { toggleColorScheme } = useMantineColorScheme();
   return (
-    <main>
-      <nav className="publicNav">
-        <Group>
-          <div className="brandMark">HN</div>
-          <Text fw={700}>Hanoi Learning</Text>
-        </Group>
-        <Group className="desktopLinks" gap="xl">
-          <Text size="sm">Chương trình</Text>
-          <Text size="sm">Chi nhánh</Text>
-          <Text size="sm">Đội ngũ</Text>
-          <Text size="sm">Tin tức</Text>
-        </Group>
-        <Group gap={5}>
-          <ActionIcon variant="subtle" color="gray" onClick={() => setLocale(locale === "vi" ? "en" : "vi")}>
-            <Languages size={18} />
-          </ActionIcon>
-          <ActionIcon variant="subtle" color="gray" onClick={toggleColorScheme}>
-            <MoonStar size={18} />
-          </ActionIcon>
-          <Button component={Link} href="/admin" color="cyan">
-            Xem portal
-          </Button>
-        </Group>
-      </nav>
+    <main className="publicMain">
       <section className="publicHero">
         <div className="heroInner">
           <Text tt="uppercase" fw={700} c="cyan.2" size="sm">
@@ -46,7 +20,7 @@ export default function Landing() {
             cho học viên và phụ huynh.
           </Text>
           <Group mt={32}>
-            <Button size="md" rightSection={<ArrowRight size={18} />}>
+            <Button component={Link} href="#consultation" size="md" rightSection={<ArrowRight size={18} />}>
               Đăng ký tư vấn
             </Button>
             <Button size="md" variant="white" color="dark">
@@ -55,7 +29,7 @@ export default function Landing() {
           </Group>
         </div>
       </section>
-      <section style={{ padding: "54px max(6vw,24px)" }}>
+      <section id="programs" style={{ padding: "54px max(6vw,24px)" }}>
         <Text c="dimmed" size="sm" fw={700}>
           CHƯƠNG TRÌNH NỔI BẬT
         </Text>

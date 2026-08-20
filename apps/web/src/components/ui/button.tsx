@@ -1,6 +1,9 @@
-import { forwardRef } from "react";
+import type { ElementType } from "react";
 import { Button, type ButtonProps } from "@mantine/core";
 
-export const UiButton = forwardRef<HTMLButtonElement, ButtonProps>(function UiButton(props, ref) {
-  return <Button ref={ref} size={props.size ?? "sm"} {...props} />;
-});
+type UiButtonProps = ButtonProps & { component?: ElementType; href?: string; onClick?: () => void };
+const PolymorphicButton = Button as unknown as React.ComponentType<UiButtonProps>;
+
+export function UiButton({ size, ...props }: UiButtonProps) {
+  return <PolymorphicButton size={size ?? "sm"} {...props} />;
+}
