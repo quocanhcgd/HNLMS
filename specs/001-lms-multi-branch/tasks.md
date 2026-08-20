@@ -34,7 +34,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 - [x] T012 Tạo route groups và nested layouts cho `(public)`, `(platform)` và LMS application trong `apps/web/src/app/`; dùng duy nhất Next.js App Router, `next/link` và `next/navigation`, không dùng React Router
 - [x] T013 [P] Thiết lập Server Component mặc định, Client Component boundary, `loading.tsx`, `error.tsx`, `not-found.tsx`, metadata và deep-link behavior cho các route nền tảng trong `apps/web/src/app/`
-- [ ] T014 [P] Tạo wrapper/composition dùng chung quanh Mantine cho button, input, textarea, select, checkbox, modal, drawer, menu, tabs, table, tooltip, notification và sidebar trong `apps/web/src/components/ui/`
+- [x] T014 [P] Tạo wrapper/composition dùng chung quanh Mantine cho button, input, textarea, select, checkbox, modal, drawer, menu, tabs, table, tooltip, notification và sidebar trong `apps/web/src/components/ui/`
 - [ ] T015 Tạo semantic token contract cho light/dark/system, typography, spacing, radius, border, elevation, focus và trạng thái trong `apps/web/src/app/styles.css` cùng `apps/web/src/lib/theme/`
 - [ ] T016 Tạo public shell không dùng admin navigation trong `apps/web/src/app/(public)/layout.tsx` và các component liên quan trong `apps/web/src/components/shell/`
 - [ ] T017 Tạo license control plane shell với navigation riêng trong `apps/web/src/app/(platform)/platform/layout.tsx` và `apps/web/src/components/shell/`

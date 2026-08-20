@@ -2,18 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  ActionIcon,
-  Avatar,
-  Badge,
-  Button,
-  Group,
-  Menu,
-  Text,
-  TextInput,
-  Tooltip,
-  useMantineColorScheme,
-} from "@mantine/core";
+import { ActionIcon, Avatar, Badge, Group, Menu, Text, Tooltip, useMantineColorScheme } from "@mantine/core";
 import {
   Settings2,
   Bell,
@@ -35,6 +24,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { useUI } from "@/lib/providers";
+import { UiButton, UiTextInput } from "@/components/ui";
 
 const nav = [
   ["overview", "/admin", LayoutDashboard],
@@ -93,7 +83,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
       <main className="main">
         <header className="topbar">
-          <TextInput className="searchBox" leftSection={<Search size={16} />} placeholder={t("search")} />
+          <UiTextInput className="searchBox" leftSection={<Search size={16} />} placeholder={t("search")} />
           <Group className="topbarActions" gap={6} wrap="nowrap">
             <Tooltip label={locale === "vi" ? "Chuyển sang English" : "Switch to Vietnamese"}>
               <ActionIcon
@@ -172,9 +162,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <Badge size="sm" variant="light" color="yellow" leftSection={<RefreshCw size={12} />}>
               Có phiên bản mới
             </Badge>
-            <Button variant="subtle" size="compact-xs">
+            <UiButton variant="subtle" size="compact-xs">
               Cập nhật
-            </Button>
+            </UiButton>
           </Group>
         </footer>
       </main>
@@ -194,7 +184,7 @@ export function PageHeader({ title, subtitle, action }: { title: string; subtitl
           {subtitle}
         </Text>
       </div>
-      {action && <Button>{action}</Button>}
+      {action && <UiButton>{action}</UiButton>}
     </div>
   );
 }

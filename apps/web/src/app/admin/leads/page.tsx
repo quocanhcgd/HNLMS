@@ -10,9 +10,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Avatar, Badge, Button, Group, SegmentedControl, Select, Table, Text, TextInput } from "@mantine/core";
+import { Avatar, Group, SegmentedControl, Table, Text } from "@mantine/core";
 import { ArrowDown, ArrowUp, ArrowUpDown, ListFilter, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
+import { PageToolbar, UiBadge, UiTable, UiTextInput, UiButton, UiSelect } from "@/components/ui";
 import { useUI } from "@/lib/providers";
 
 type Lead = {
@@ -119,9 +120,9 @@ export default function Leads() {
         accessorKey: "source",
         header: "Nguồn",
         cell: ({ getValue }) => (
-          <Badge variant="outline" color="gray">
+          <UiBadge variant="outline" color="gray">
             {String(getValue())}
-          </Badge>
+          </UiBadge>
         ),
       },
       { accessorKey: "consultant", header: "Tư vấn viên" },
@@ -129,9 +130,9 @@ export default function Leads() {
         accessorKey: "status",
         header: "Trạng thái",
         cell: ({ getValue }) => (
-          <Badge variant="light" color={colors[String(getValue())]}>
+          <UiBadge variant="light" color={colors[String(getValue())]}>
             {String(getValue())}
-          </Badge>
+          </UiBadge>
         ),
       },
       {
@@ -165,15 +166,15 @@ export default function Leads() {
   return (
     <div className="page">
       <PageHeader title={t("leadPipeline")} subtitle={t("leadSub")} action={t("newConsultation")} />
-      <div className="toolbar">
-        <TextInput
+      <PageToolbar className="toolbar">
+        <UiTextInput
           value={query}
           onChange={(event) => setQuery(event.currentTarget.value)}
           style={{ minWidth: 260 }}
           leftSection={<Search size={16} />}
           placeholder="Tìm theo tên, nhu cầu, nguồn..."
         />
-        <Select
+        <UiSelect
           w={190}
           value={status}
           onChange={setStatus}
@@ -186,14 +187,14 @@ export default function Leads() {
             "Đã ghi danh",
           ]}
         />
-        <Button variant="default" leftSection={<ListFilter size={16} />}>
+        <UiButton variant="default" leftSection={<ListFilter size={16} />}>
           Bộ lọc
-        </Button>
+        </UiButton>
         <div style={{ flex: 1 }} />
         <SegmentedControl data={["Bảng", "Kanban"]} />
-      </div>
+      </PageToolbar>
       <div className="tableWrap">
-        <Table verticalSpacing="md" horizontalSpacing="lg" highlightOnHover>
+        <UiTable verticalSpacing="md" horizontalSpacing="lg">
           <Table.Thead>
             <Table.Tr>
               {table.getHeaderGroups()[0]?.headers.map((header) => (
@@ -233,7 +234,7 @@ export default function Leads() {
               </Table.Tr>
             )}
           </Table.Tbody>
-        </Table>
+        </UiTable>
       </div>
       <Text size="xs" c="dimmed" mt="sm">
         TanStack Table · {table.getRowModel().rows.length} / {leads.length} bản ghi · hỗ trợ tìm kiếm và sắp xếp theo
