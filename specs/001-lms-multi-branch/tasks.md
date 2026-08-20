@@ -21,8 +21,8 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [X] T003 [P] Khởi tạo Next.js app trong `apps/web/` với TypeScript và App Router
 - [X] T004 [P] Khởi tạo NestJS app trong `apps/api/` với module loader
 - [X] T005 [P] Khởi tạo worker app trong `worker/` với queue consumer entrypoint
-- [ ] T006 [P] Cấu hình ESLint, Prettier, TypeScript strict và scripts kiểm tra trong `package.json`, `eslint.config.mjs`, `tsconfig.json`
-- [ ] T007 [P] Cấu hình Vitest và Playwright trong `vitest.config.ts` và `playwright.config.ts`
+- [X] T006 [P] Cấu hình ESLint, Prettier, TypeScript strict và scripts kiểm tra trong `package.json`, `eslint.config.mjs`, `tsconfig.json`
+- [X] T007 [P] Cấu hình Vitest và Playwright trong `vitest.config.ts` và `playwright.config.ts`
 - [ ] T008 [P] Tạo shared packages `packages/domain-contracts`, `packages/authorization`, `packages/module-sdk`, `packages/license-contracts`, `packages/ui`, `packages/theme-presets`; `packages/ui` giữ shared UI contracts/theme helpers; không sao chép source Mantine
 - [ ] T009 [P] Hoàn thiện Mantine provider, color-scheme bootstrap, CSS Modules/Mantine styles, semantic theme override, TanStack Table 8.x và next-intl trong `apps/web/`; prototype đã có Mantine/TanStack nhưng chưa có next-intl/theme package hoàn chỉnh
 - [ ] T010 [P] Tạo native deployment skeleton gồm `infra/systemd/`, `infra/nginx/`, `infra/release-scripts/`, `infra/environments/` và `infra/secrets/README.md`

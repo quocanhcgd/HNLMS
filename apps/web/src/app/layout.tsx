@@ -7,6 +7,14 @@ import { AppProviders } from "@/lib/providers";
 export const metadata = { title: "HN LMS UI Preview", description: "Prototype giao diện LMS đa chi nhánh" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return <html lang="vi" {...mantineHtmlProps}><head><ColorSchemeScript defaultColorScheme="dark" /></head><body><AppProviders>{children}</AppProviders></body></html>;
+  return (
+    <html lang="vi" {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript defaultColorScheme="dark" />
+      </head>
+      <body>
+        <AppProviders>{children}</AppProviders>
+      </body>
+    </html>
+  );
 }
-
