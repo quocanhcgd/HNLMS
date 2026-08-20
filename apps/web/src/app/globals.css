@@ -375,3 +375,10 @@ a {
   text-align: center;
   gap: 4px;
 }
+.productBoundary {
+  min-height: 100vh;
+}
+.productBoundary--public,
+.productBoundary--platform {
+  width: 100%;
+}
