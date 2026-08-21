@@ -52,6 +52,13 @@ At the start of every task:
 4. Select the smallest unblocked task, then read its referenced spec/contract paths.
 5. Check whether another agent changed the same files.
 
+During every task:
+
+1. Update `docs/project-status.json` at task start, each meaningful progress milestone, any blocker and task completion; regenerate `docs/task-dashboard.html` each time.
+2. Treat the public dashboard as updated only after the status checkpoint is committed and successfully pushed to the branch monitored by GitHub Pages.
+3. Do not allow the public dashboard to lag across completed tasks. Push each coherent completion checkpoint when push authorization is available.
+4. If push is not authorized or fails, immediately state that only local status is current, the public dashboard is stale, and request permission or report the failure.
+
 Before ending every task:
 
 1. Run the narrowest relevant tests, typecheck or build.
@@ -59,7 +66,7 @@ Before ending every task:
 3. Update `docs/ai-task-continuity.md` and `docs/project-status.json` with completed work, current task percentage, activity, blockers and next task.
 4. Run `npm run status:generate` so the HTML task list and live status stay synchronized.
 5. Commit a coherent change; never commit secrets, `.env`, generated output, `node_modules` or private media.
-6. Push only after checking the target branch and remote.
+6. Check the target branch and remote, then push the completion checkpoint when authorized so the public dashboard remains current.
 
 ## Current Blockers / Decisions Needed
 
@@ -104,6 +111,8 @@ Before ending every task:
 - Source: `docs/project-status.json`, polled every 15 seconds.
 - Update command: `npm run status:generate`.
 - Start a task: `npm run status:start --task=T024` or set `STATUS_TASK`, `STATUS_STATE`, `STATUS_PERCENT`, `STATUS_ACTIVITY` before `npm run status:generate`.
+- A local generation does not update GitHub Pages. The dashboard is current only after the generated status/dashboard files are committed, pushed and visible on the monitored branch.
+- Required cadence: task start, meaningful milestones, blockers and completion; never batch multiple completed tasks while leaving the public dashboard stale.
 
 - 2026-08-21: Added Drizzle database foundation, tenant resolver, migration runner and generated tenant registry migration.
 - 2026-08-21: Added Remote Command Center Phase 1 queue/lock policy and GitHub Issue command link; no arbitrary shell execution.

@@ -26,7 +26,9 @@ Next task:
 
 ## Live Status Handoff
 
-Every task must update `docs/project-status.json` at start, meaningful milestones, blockers, and completion. The public dashboard polls every 15 seconds; without this update users cannot see current coding activity.
+Every task must update `docs/project-status.json` and regenerate `docs/task-dashboard.html` at start, meaningful milestones, blockers, and completion. The public dashboard polls the files published through GitHub Pages every 15 seconds; changing them locally is not enough.
+
+A dashboard checkpoint counts as published only after it is committed and successfully pushed to the monitored branch. Do not let the public dashboard lag across completed tasks. When push is not authorized or fails, explicitly report that the local status is current but the public dashboard is stale, then request permission or surface the push failure. Never claim the public dashboard was updated based only on local generation.
 
 ## Rules
 
