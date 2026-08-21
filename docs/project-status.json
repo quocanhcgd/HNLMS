@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T18:09:41.724Z",
+  "updatedAt": "2026-08-21T18:12:24.578Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
     "status": "next",
     "percent": 0,
-    "activity": "T054 routing/ownership/lifecycle hoàn tất; T055 consultant portal là task tiếp theo.",
+    "activity": "T054 hoàn tất và đã sẵn sàng đồng bộ; T055 consultant portal là task tiếp theo.",
     "startedAt": null,
-    "updatedAt": "2026-08-21T18:09:41.724Z"
+    "updatedAt": "2026-08-21T18:12:24.578Z"
   },
   "nextTask": {
     "id": "T055",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "4ce95c3",
-    "message": "docs: require continuous dashboard publishing",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/4ce95c3"
+    "sha": "5bf2c32",
+    "message": "feat(admission): add lead routing lifecycle",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/5bf2c32"
   },
   "ci": {
     "status": "unknown",
