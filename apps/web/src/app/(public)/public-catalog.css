@@ -1,0 +1,122 @@
+/* Scoped public catalog styles retain the established theme tokens. */
+.publicContainer {
+  padding-inline: max(6vw, 24px);
+}
+.publicHero {
+  position: relative;
+  isolation: isolate;
+  min-height: min(760px, calc(100vh - 70px));
+  align-items: center;
+  padding-top: 110px;
+  padding-bottom: 150px;
+}
+.publicHero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: max(6vw, 24px);
+  bottom: 42px;
+  width: min(39vw, 540px);
+  height: 2px;
+  background: color-mix(in srgb, white 55%, transparent);
+}
+.heroBadge {
+  color: #06171a;
+  background: #85e8ee;
+}
+.heroTitle {
+  max-width: 760px;
+  margin-top: 18px;
+  font-size: clamp(3rem, 7vw, 6.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+.heroDescription {
+  max-width: 620px;
+  color: color-mix(in srgb, white 84%, transparent);
+}
+.heroProof {
+  position: absolute;
+  right: max(6vw, 24px);
+  bottom: 62px;
+  display: flex;
+  gap: clamp(18px, 4vw, 56px);
+  color: color-mix(in srgb, white 72%, transparent);
+  font-size: 12px;
+}
+.heroProof span { display: grid; gap: 3px; }
+.heroProof strong { color: white; font-size: 19px; }
+.publicSection { padding: 92px max(6vw, 24px); }
+.publicSection--muted { background: color-mix(in srgb, var(--app-panel) 72%, var(--mantine-color-body)); }
+.sectionHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 32px; }
+.sectionHeading h2, .teamCopy h2, .consultationBand h2 { font-size: clamp(2rem, 3.6vw, 3.3rem); line-height: 1.05; letter-spacing: -0.035em; }
+.sectionEyebrow { color: var(--hn-dark-primary); font-size: 12px; font-weight: 750; letter-spacing: 0.1em; }
+.catalogCard {
+  position: relative;
+  display: flex;
+  min-height: 335px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--app-border);
+  background: var(--app-panel);
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+.catalogCard:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--hn-dark-primary) 65%, var(--app-border)); }
+.catalogCard--teal { --catalog-accent: var(--mantine-color-teal-5); }
+.catalogCard--orange { --catalog-accent: var(--mantine-color-orange-5); }
+.catalogCard--cyan { --catalog-accent: var(--hn-dark-primary); }
+.catalogCard::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--catalog-accent); }
+.catalogCardTitle { font-size: 1.55rem; letter-spacing: -0.025em; }
+.catalogCardSummary { line-height: 1.55; }
+.catalogCardMeta { display: grid; gap: 8px; margin-top: auto; padding-top: 24px; color: var(--mantine-color-dimmed); font-size: 13px; }
+.catalogCardMeta span { display: flex; align-items: center; gap: 8px; }
+.catalogCardLink { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: var(--catalog-accent); font-size: 14px; font-weight: 700; }
+.catalogCardLink:focus-visible { outline: 2px solid var(--hn-dark-ring); outline-offset: 4px; }
+.pathwayLayout, .publicSection--split { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr); gap: clamp(36px, 8vw, 120px); align-items: center; }
+.pathwayCard { border: 1px solid var(--app-border); background: var(--mantine-color-body); }
+.pathwayNumber { color: var(--hn-dark-primary); font-weight: 750; font-size: 13px; letter-spacing: 0.1em; }
+.pathwaySteps { display: grid; margin-top: 32px; border-top: 1px solid var(--app-border); }
+.pathwaySteps > div { display: flex; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--app-border); }
+.pathwaySteps span { color: var(--hn-dark-primary); font-variant-numeric: tabular-nums; font-weight: 750; }
+.branchCard { border: 1px solid var(--app-border); background: var(--app-panel); min-height: 240px; }
+.teamVisual { min-height: 390px; display: grid; place-items: center; padding: 28px; background: #12323a; }
+.teamVisualFrame { width: 100%; height: 100%; min-height: 330px; display: grid; place-content: end start; gap: 12px; padding: 34px; color: white; border: 1px solid color-mix(in srgb, white 45%, transparent); background: linear-gradient(135deg, transparent 10%, color-mix(in srgb, #3dd6df 25%, transparent)); }
+.teamCopy { max-width: 590px; }
+.teamStat { color: var(--hn-dark-primary); font-size: 2rem; font-weight: 750; line-height: 1; }
+.storyCard { border: 1px solid var(--app-border); background: var(--mantine-color-body); }
+.storyQuote { color: var(--hn-dark-primary); }
+.storyText { margin-top: 20px; font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.45; letter-spacing: -0.015em; }
+.newsList { border-top: 1px solid var(--app-border); }
+.newsItem { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto 24px; gap: 20px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--app-border); }
+.newsItem h3 { font-size: 1.1rem; }
+.newsDate { color: var(--mantine-color-dimmed); font-size: 13px; font-variant-numeric: tabular-nums; }
+.consultationBand { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 72px max(6vw, 24px); color: #effdff; background: #0b4650; }
+.consultationBand .sectionEyebrow { color: #8beaf0; }
+.programHero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr); gap: clamp(36px, 8vw, 110px); padding: 80px 0; }
+.programHero h1 { font-size: clamp(3rem, 6vw, 5.4rem); line-height: 0.98; letter-spacing: -0.05em; }
+.programQuickFacts { align-self: start; padding: 28px; border: 1px solid var(--app-border); background: var(--app-panel); }
+.programQuickFacts .mantine-Chip-label { cursor: default; }
+.programStepList { display: grid; gap: 16px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--app-border); }
+@media (max-width: 800px) {
+  .publicHero { min-height: 690px; }
+  .heroProof { left: max(6vw, 24px); right: auto; }
+  .publicHero::after { width: calc(100% - max(12vw, 48px)); }
+  .pathwayLayout, .publicSection--split, .programHero { grid-template-columns: 1fr; }
+  .newsItem { grid-template-columns: 1fr auto; gap: 9px 16px; }
+  .newsItem .newsDate { grid-column: 1 / -1; }
+  .newsItem .mantine-Badge-root { grid-column: 1; width: max-content; }
+  .newsItem > svg { grid-column: 2; grid-row: 2; }
+}
+@media (max-width: 520px) {
+  .publicHero { min-height: 650px; padding-top: 60px; padding-bottom: 135px; }
+  .heroTitle { font-size: clamp(2.7rem, 14vw, 4.3rem); }
+  .heroProof { gap: 16px; bottom: 54px; font-size: 11px; }
+  .heroProof strong { font-size: 16px; }
+  .publicSection { padding-top: 64px; padding-bottom: 64px; }
+  .sectionHeading { align-items: flex-start; flex-direction: column; margin-bottom: 24px; }
+  .teamVisual { min-height: 280px; }
+  .teamVisualFrame { min-height: 220px; }
+  .consultationBand { align-items: flex-start; flex-direction: column; padding-top: 56px; padding-bottom: 56px; }
+  .programHero { padding: 48px 0; }
+}
+
