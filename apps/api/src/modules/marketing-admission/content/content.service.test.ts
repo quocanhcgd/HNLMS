@@ -4,9 +4,9 @@ import {
   ContentServiceError,
   type ContentActor,
   type ContentRepository,
-  type CreateContentInput,
 } from "./content.service";
 import { InMemoryContentRepository } from "./in-memory-content-repository";
+import { type LandingContent } from "../schema";
 
 /* ---------- helpers ---------- */
 
@@ -40,7 +40,7 @@ function makeContent(overrides: Record<string, unknown> = {}) {
 function seededRepo(items = [makeContent()]): InMemoryContentRepository {
   const repo = new InMemoryContentRepository();
   for (const item of items) {
-    repo.records.push(item as any);
+    repo.records.push(item as LandingContent);
   }
   return repo;
 }
@@ -48,7 +48,12 @@ function seededRepo(items = [makeContent()]): InMemoryContentRepository {
 function createTestFixture(repo?: ContentRepository, audit = vi.fn(async () => undefined)) {
   const r = repo ?? seededRepo();
   return {
-    svc: new LandingContentService(r, audit, () => "new-id", () => new Date("2026-08-21T12:00:00Z")),
+    svc: new LandingContentService(
+      r,
+      audit,
+      () => "new-id",
+      () => new Date("2026-08-21T12:00:00Z"),
+    ),
     repo: r,
     audit,
   };
@@ -74,10 +79,8 @@ describe("LandingContentService.create", () => {
     expect(content.version).toBe(1);
     expect(content.createdByUserId).toBe("admin-1");
     expect(content.sortOrder).toBe(2); // maxSort=1 + 1
-    expect(repo.records).toHaveLength(2); // seeded + new
-    expect(audit).toHaveBeenCalledWith(
-      expect.objectContaining({ action: "content.created", entityId: "new-id" }),
-    );
+    expect((repo as InMemoryContentRepository).records).toHaveLength(2); // seeded + new
+    expect(audit).toHaveBeenCalledWith(expect.objectContaining({ action: "content.created", entityId: "new-id" }));
   });
 
   it("rejects duplicate slug within the same organization", async () => {
@@ -106,16 +109,16 @@ describe("LandingContentService.create", () => {
 
   it("rejects invalid slug format", async () => {
     const { svc } = createTestFixture();
-    await expect(
-      svc.create(orgActor, { kind: "course", slug: "Invalid Slug!", title: "Test" }),
-    ).rejects.toMatchObject({ code: "invalid_input" });
+    await expect(svc.create(orgActor, { kind: "course", slug: "Invalid Slug!", title: "Test" })).rejects.toMatchObject({
+      code: "invalid_input",
+    });
   });
 
   it("rejects missing title", async () => {
     const { svc } = createTestFixture();
-    await expect(
-      svc.create(orgActor, { kind: "course", slug: "test", title: "  " }),
-    ).rejects.toMatchObject({ code: "invalid_input" });
+    await expect(svc.create(orgActor, { kind: "course", slug: "test", title: "  " })).rejects.toMatchObject({
+      code: "invalid_input",
+    });
   });
 
   it("rejects invalid locale", async () => {
@@ -196,9 +199,9 @@ describe("LandingContentService.list / get", () => {
 
   it("get throws not_found when content belongs to another organization", async () => {
     const { svc } = createTestFixture();
-    await expect(
-      svc.get({ userId: "u", organizationId: "org-b" }, "content-1"),
-    ).rejects.toMatchObject({ code: "not_found" });
+    await expect(svc.get({ userId: "u", organizationId: "org-b" }, "content-1")).rejects.toMatchObject({
+      code: "not_found",
+    });
   });
 });
 
@@ -213,9 +216,7 @@ describe("LandingContentService.update", () => {
     });
     expect(updated.title).toBe("New Title");
     expect(updated.summary).toBe("Updated summary");
-    expect(audit).toHaveBeenCalledWith(
-      expect.objectContaining({ action: "content.updated", entityId: "content-1" }),
-    );
+    expect(audit).toHaveBeenCalledWith(expect.objectContaining({ action: "content.updated", entityId: "content-1" }));
   });
 
   it("rejects update on published content", async () => {
@@ -351,9 +352,7 @@ describe("LandingContentService.reorder", () => {
     const c2 = items.find((i) => i.id === "c-2")!;
     expect(c1.sortOrder).toBe(5);
     expect(c2.sortOrder).toBe(0);
-    expect(audit).toHaveBeenCalledWith(
-      expect.objectContaining({ action: "content.reordered", entityId: "course" }),
-    );
+    expect(audit).toHaveBeenCalledWith(expect.objectContaining({ action: "content.reordered", entityId: "course" }));
   });
 
   it("returns silently for empty items", async () => {
@@ -364,9 +363,9 @@ describe("LandingContentService.reorder", () => {
 
   it("rejects items without id", async () => {
     const { svc } = createTestFixture();
-    await expect(
-      svc.reorder(orgActor, "course", [{ id: "", sortOrder: 0 }]),
-    ).rejects.toMatchObject({ code: "invalid_input" });
+    await expect(svc.reorder(orgActor, "course", [{ id: "", sortOrder: 0 }])).rejects.toMatchObject({
+      code: "invalid_input",
+    });
   });
 });
 
@@ -377,9 +376,7 @@ describe("LandingContentService.remove", () => {
     const { svc, audit } = createTestFixture();
     const removed = await svc.remove(orgActor, "content-1");
     expect(removed.status).toBe("revoked");
-    expect(audit).toHaveBeenCalledWith(
-      expect.objectContaining({ action: "content.removed" }),
-    );
+    expect(audit).toHaveBeenCalledWith(expect.objectContaining({ action: "content.removed" }));
   });
 
   it("rejects remove of published content (must revoke first)", async () => {
@@ -390,4 +387,3 @@ describe("LandingContentService.remove", () => {
     });
   });
 });
-

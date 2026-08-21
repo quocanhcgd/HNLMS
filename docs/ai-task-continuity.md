@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T024 database foundation + Remote Command Center Phase 1.
-- **Status**: Completed.
-- **Current task**: Phase 5 Wave 1 completed (T047/T048/T050).
-- **Next task**: T025, create Organization/TenantInstance/User/Role/Permission/ScopeGrant/AuditEvent PostgreSQL entities.
+- **Current task**: Phase 5 Wave 2 completed (T049/T051).
+- **Status**: Completed; integration fixes committed after quality gate.
+- **Next task**: T052, add US2 API contract and landing E2E coverage.
 - **Blocker**: PostgreSQL runtime service and authentication/provider decisions remain open.
-- **Files in focus**: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `specs/001-lms-multi-branch/tasks.md`.\n- **Verification**: 195 unit tests and consultation E2E pass; lint/format/typecheck pass. Demo web moved to port 3100 and `/ui-preview` returns HTTP 200.
+- **Files in focus**: `apps/api/tests/contract/us2-public.contract.spec.ts`, `apps/web/tests/e2e/us2-landing.spec.ts`.
+- **Verification**: 273 unit tests, workspace typecheck, lint, format check and Next.js production build pass.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

@@ -17,8 +17,7 @@ export default function ProgramDetailError({
         <Stack align="center" maw={480} ta="center">
           <Title order={2}>Không thể tải chương trình</Title>
           <Text c="dimmed">
-            Có lỗi xảy ra khi tải thông tin chương trình. Vui lòng thử lại hoặc quay
-            lại danh sách chương trình.
+            Có lỗi xảy ra khi tải thông tin chương trình. Vui lòng thử lại hoặc quay lại danh sách chương trình.
           </Text>
           {error.digest ? (
             <Text size="sm" c="dimmed">

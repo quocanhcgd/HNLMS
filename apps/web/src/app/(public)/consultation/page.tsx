@@ -8,8 +8,7 @@ export const metadata: Metadata = {
     "Gửi yêu cầu tư vấn lộ trình học tại HN Learning. Đội ngũ tư vấn viên sẽ liên hệ trong giờ làm việc để gợi ý chương trình phù hợp.",
   openGraph: {
     title: "Đăng ký tư vấn | HN Learning",
-    description:
-      "Chia sẻ mục tiêu học tập, HN Learning sẽ tư vấn lộ trình phù hợp cho bạn.",
+    description: "Chia sẻ mục tiêu học tập, HN Learning sẽ tư vấn lộ trình phù hợp cho bạn.",
     url: "/consultation",
   },
   alternates: {

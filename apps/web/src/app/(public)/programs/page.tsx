@@ -11,8 +11,7 @@ export const metadata: Metadata = {
     "Danh sách chương trình IELTS, Tiếng Anh giao tiếp, Tiếng Anh thiếu niên và kỹ năng học thuật đang mở tại HN Learning.",
   openGraph: {
     title: "Chương trình học | HN Learning",
-    description:
-      "Khám phá các chương trình IELTS, Tiếng Anh giao tiếp và kỹ năng học thuật tại HN Learning.",
+    description: "Khám phá các chương trình IELTS, Tiếng Anh giao tiếp và kỹ năng học thuật tại HN Learning.",
     url: "/programs",
   },
   alternates: {

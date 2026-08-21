@@ -55,6 +55,9 @@ export const landingContents = pgTable(
   }),
 );
 
+export type LandingContent = typeof landingContents.$inferSelect;
+export type NewLandingContent = typeof landingContents.$inferInsert;
+
 export function isPublicVisible(status: string): boolean {
   return status === "published";
 }

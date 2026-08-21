@@ -2,14 +2,7 @@ import { describe, expect, it } from "vitest";
 
 /* ---------- types ---------- */
 
-type ContentKind =
-  | "page"
-  | "course"
-  | "instructor"
-  | "studentHighlight"
-  | "news"
-  | "announcement"
-  | "cta";
+type ContentKind = "page" | "course" | "instructor" | "studentHighlight" | "news" | "announcement" | "cta";
 
 type ContentStatus = "draft" | "review" | "published" | "revoked";
 
@@ -266,15 +259,7 @@ describe("ContentList filtering logic", () => {
 
 describe("kindLabels", () => {
   it("has a label for every content kind", () => {
-    const kinds: ContentKind[] = [
-      "page",
-      "course",
-      "instructor",
-      "studentHighlight",
-      "news",
-      "announcement",
-      "cta",
-    ];
+    const kinds: ContentKind[] = ["page", "course", "instructor", "studentHighlight", "news", "announcement", "cta"];
     for (const kind of kinds) {
       expect(kindLabels[kind]).toBeTruthy();
       expect(typeof kindLabels[kind]).toBe("string");
@@ -340,4 +325,3 @@ describe("Content status transitions", () => {
     expect(revoked.status).toBe("revoked");
   });
 });
-

@@ -1,19 +1,8 @@
-import {
-  landingContentKind,
-  landingContentStatus,
-  type LandingContent,
-} from "../schema";
+import { type LandingContent } from "../schema";
 
 /* ---------- public types ---------- */
 
-export type ContentKind =
-  | "page"
-  | "course"
-  | "instructor"
-  | "studentHighlight"
-  | "news"
-  | "announcement"
-  | "cta";
+export type ContentKind = "page" | "course" | "instructor" | "studentHighlight" | "news" | "announcement" | "cta";
 
 export type ContentStatus = "draft" | "review" | "published" | "revoked";
 
@@ -58,7 +47,7 @@ export type ContentRepository = {
     status?: ContentStatus;
     search?: string;
   }): Promise<LandingContent[]>;
-  create(input: Omit<LandingContent, "createdAt" | "updatedAt">): Promise<LandingContent>;
+  create(input: LandingContent): Promise<LandingContent>;
   update(input: {
     organizationId: string;
     id: string;
@@ -238,13 +227,10 @@ export class LandingContentService {
     const existing = await this.get(actor, id);
 
     if (existing.status === "published" || existing.status === "revoked") {
-      throw new ContentServiceError(
-        "invalid_status",
-        "content in terminal status cannot be edited",
-      );
+      throw new ContentServiceError("invalid_status", "content in terminal status cannot be edited");
     }
 
-    const updateChanges: Record<string, unknown> = {};
+    const updateChanges: Parameters<ContentRepository["update"]>[0]["changes"] = {};
 
     if (changes.slug !== undefined) {
       const slug = changes.slug.trim().toLowerCase();
@@ -280,7 +266,7 @@ export class LandingContentService {
     const updated = await this.repository.update({
       organizationId: actor.organizationId,
       id,
-      changes: updateChanges as any,
+      changes: updateChanges,
     });
 
     await this.audit({
@@ -404,10 +390,7 @@ export class LandingContentService {
     const existing = await this.get(actor, id);
 
     if (existing.status === "published") {
-      throw new ContentServiceError(
-        "invalid_status",
-        "content must be revoked before deletion",
-      );
+      throw new ContentServiceError("invalid_status", "content must be revoked before deletion");
     }
 
     const now = this.now();

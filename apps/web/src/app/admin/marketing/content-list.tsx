@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import {
   type ColumnDef,
+  type RowSelectionState,
   type SortingState,
   flexRender,
   getCoreRowModel,
@@ -12,51 +13,25 @@ import {
 } from "@tanstack/react-table";
 import {
   ActionIcon,
-  Badge,
-  Box,
+  type BadgeProps,
   Button,
   Checkbox,
   Drawer,
   Group,
-  Menu,
   Paper,
-  SegmentedControl,
   Stack,
   Table,
   Text,
-  TextInput,
   Tooltip,
 } from "@mantine/core";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  Check,
-  CircleOff,
-  Eye,
-  GripVertical,
-  ListFilter,
-  Megaphone,
-  Pencil,
-  Plus,
-  Search,
-  Trash2,
-  X,
-} from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Check, CircleOff, Eye, GripVertical, Pencil, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { EmptyState } from "@/components/domain";
 import { PageToolbar, UiBadge, UiTable, UiButton, UiSelect, UiTextInput } from "@/components/ui";
 
 /* ---------- types ---------- */
 
-export type ContentKind =
-  | "page"
-  | "course"
-  | "instructor"
-  | "studentHighlight"
-  | "news"
-  | "announcement"
-  | "cta";
+export type ContentKind = "page" | "course" | "instructor" | "studentHighlight" | "news" | "announcement" | "cta";
 
 export type ContentStatus = "draft" | "review" | "published" | "revoked";
 
@@ -99,7 +74,7 @@ const kindLabels: Record<ContentKind, string> = {
   cta: "Kêu gọi HĐ",
 };
 
-const statusConfig: Record<ContentStatus, { label: string; color: string; variant: string }> = {
+const statusConfig: Record<ContentStatus, { label: string; color: string; variant: BadgeProps["variant"] }> = {
   draft: { label: "Bản nháp", color: "gray", variant: "light" },
   review: { label: "Đang duyệt", color: "yellow", variant: "light" },
   published: { label: "Đã công bố", color: "green", variant: "light" },
@@ -282,7 +257,7 @@ export function ContentListWorkspace() {
   const [query, setQuery] = useState("");
   const [kindFilter, setKindFilter] = useState<string | null>("all");
   const [statusFilter, setStatusFilter] = useState<string | null>("all");
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
   const [previewItem, setPreviewItem] = useState<LandingContent | null>(null);
   const [editItem, setEditItem] = useState<LandingContent | null>(null);
   const [editDrawerOpen, setEditDrawerOpen] = useState(false);
@@ -369,7 +344,7 @@ export function ContentListWorkspace() {
         cell: ({ getValue }) => {
           const s = statusConfig[getValue() as ContentStatus];
           return (
-            <UiBadge variant={s.variant as any} color={s.color}>
+            <UiBadge variant={s.variant} color={s.color}>
               {s.label}
             </UiBadge>
           );
@@ -484,11 +459,6 @@ export function ContentListWorkspace() {
 
   const selectedCount = Object.keys(table.getState().rowSelection).length;
 
-  function handleNewContent() {
-    setEditItem(null);
-    setEditDrawerOpen(true);
-  }
-
   return (
     <div className="page">
       <PageHeader
@@ -563,9 +533,7 @@ export function ContentListWorkspace() {
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {header.column.getCanSort() && (
-                          <SortIndicator direction={header.column.getIsSorted()} />
-                        )}
+                        {header.column.getCanSort() && <SortIndicator direction={header.column.getIsSorted()} />}
                       </button>
                     )}
                   </Table.Th>
@@ -578,19 +546,14 @@ export function ContentListWorkspace() {
               table.getRowModel().rows.map((row) => (
                 <Table.Tr key={row.id} bg={row.getIsSelected() ? "blue.0" : undefined}>
                   {row.getVisibleCells().map((cell) => (
-                    <Table.Td key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </Table.Td>
+                    <Table.Td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Td>
                   ))}
                 </Table.Tr>
               ))
             ) : (
               <Table.Tr>
                 <Table.Td colSpan={columns.length}>
-                  <EmptyState
-                    title="Không tìm thấy nội dung"
-                    description="Hãy thay đổi từ khóa hoặc bộ lọc."
-                  />
+                  <EmptyState title="Không tìm thấy nội dung" description="Hãy thay đổi từ khóa hoặc bộ lọc." />
                 </Table.Td>
               </Table.Tr>
             )}
@@ -617,7 +580,7 @@ export function ContentListWorkspace() {
                 {kindLabels[previewItem.kind]}
               </UiBadge>
               <UiBadge
-                variant={statusConfig[previewItem.status].variant as any}
+                variant={statusConfig[previewItem.status].variant}
                 color={statusConfig[previewItem.status].color}
               >
                 {statusConfig[previewItem.status].label}
@@ -719,12 +682,8 @@ export function ContentListWorkspace() {
 
       {/* Confirm Dialog */}
       {confirmAction && (
-        <Group position="right" mt="md">
-          <Button
-            variant="subtle"
-            color="gray"
-            onClick={() => setConfirmAction(null)}
-          >
+        <Group justify="flex-end" mt="md">
+          <Button variant="subtle" color="gray" onClick={() => setConfirmAction(null)}>
             Hủy
           </Button>
           <Button
@@ -744,13 +703,7 @@ export function ContentListWorkspace() {
 
 /* ---------- edit form ---------- */
 
-function ContentEditForm({
-  content,
-  onClose,
-}: {
-  content: LandingContent | null;
-  onClose: () => void;
-}) {
+function ContentEditForm({ content, onClose }: { content: LandingContent | null; onClose: () => void }) {
   const [title, setTitle] = useState(content?.title ?? "");
   const [slug, setSlug] = useState(content?.slug ?? "");
   const [summary, setSummary] = useState(content?.summary ?? "");
@@ -855,10 +808,7 @@ function ContentEditForm({
         {content && (
           <Paper p="sm" withBorder>
             <Group>
-              <UiBadge
-                variant={statusConfig[content.status].variant as any}
-                color={statusConfig[content.status].color}
-              >
+              <UiBadge variant={statusConfig[content.status].variant} color={statusConfig[content.status].color}>
                 {statusConfig[content.status].label}
               </UiBadge>
               <Text size="xs" c="dimmed">

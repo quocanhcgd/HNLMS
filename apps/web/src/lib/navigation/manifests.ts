@@ -1,5 +1,15 @@
 import type { NavigationItem } from "@hnlms/ui";
-import { BarChart3, BookOpen, Building2, ClipboardList, LayoutDashboard, Megaphone, Settings, Users, Wallet } from "lucide-react";
+import {
+  BarChart3,
+  BookOpen,
+  Building2,
+  ClipboardList,
+  LayoutDashboard,
+  Megaphone,
+  Settings,
+  Users,
+  Wallet,
+} from "lucide-react";
 import type { ComponentType } from "react";
 
 export type NavIcon = ComponentType<{ size?: number }>;
