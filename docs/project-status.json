@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T07:04:39.329Z",
+  "updatedAt": "2026-08-21T07:05:45.941Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T031",
-    "title": "Tạo super-admin product plan, license issue/renew/revoke và license audit foundation trong apps/api/src/modules/super-admin-license/",
+    "id": "WAVE2",
+    "title": "Phase 3 Foundation Wave 2",
     "phase": "Phase 3: Foundational Backend",
-    "status": "next",
-    "percent": 0,
-    "activity": "Wave 1 hoàn tất 7 task; chuẩn bị chạy T031, T032 và T037 song song.",
-    "startedAt": null,
-    "updatedAt": "2026-08-21T07:04:39.329Z"
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Đang chạy 3 agent song song cho super-admin license, module/license guards và observability/health.",
+    "startedAt": "2026-08-21T07:05:45.939Z",
+    "updatedAt": "2026-08-21T07:05:45.941Z"
   },
   "nextTask": {
     "id": "T031",
@@ -195,61 +195,45 @@
   },
   "activeTracks": [
     {
-      "agent": "foundation-audit",
-      "taskId": "T028",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T028 hoàn tất và đã merge qua quality gate.",
-      "paths": ["apps/api/src/shared/audit", "apps/api/src/shared/observability", "tests/unit/audit*"]
+      "agent": "wave2-super-license",
+      "taskId": "T031",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động super-admin license foundation",
+      "paths": ["apps/api/src/modules/super-admin-license", "tests/unit/super-admin-license*"]
     },
     {
-      "agent": "foundation-modules",
-      "taskId": "T029",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T029 hoàn tất và đã merge qua quality gate.",
-      "paths": ["packages/module-sdk", "apps/api/src/modules/module-registry", "tests/unit/module*"]
+      "agent": "wave2-guards",
+      "taskId": "T032",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động module/license guard foundation",
+      "paths": ["apps/api/src/shared/module-guard", "worker/src/shared/module-guard", "tests/unit/module-guard*"]
     },
     {
-      "agent": "foundation-license",
-      "taskId": "T030",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T030 hoàn tất và đã merge qua quality gate.",
-      "paths": ["packages/license-contracts", "apps/api/src/modules/license-runtime", "tests/unit/license*"]
-    },
-    {
-      "agent": "foundation-outbox",
-      "taskId": "T033",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T033 hoàn tất và đã merge qua quality gate.",
-      "paths": ["apps/api/src/shared/integrations", "worker/src/shared/integrations", "tests/unit/outbox*"]
-    },
-    {
-      "agent": "foundation-redis",
-      "taskId": "T034",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T034 hoàn tất và đã merge qua quality gate.",
-      "paths": ["apps/api/src/shared/cache", "worker/src/shared/queue", "tests/unit/redis*"]
-    },
-    {
-      "agent": "foundation-storage",
-      "taskId": "T035",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T035 hoàn tất và đã merge qua quality gate.",
-      "paths": ["apps/api/src/shared/storage", "tests/unit/storage*"]
-    },
-    {
-      "agent": "foundation-http",
-      "taskId": "T036",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T036 hoàn tất và đã merge qua quality gate.",
-      "paths": ["apps/api/src/shared/http", "tests/unit/http*"]
+      "agent": "wave2-observability",
+      "taskId": "T037",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động observability/health foundation",
+      "paths": ["apps/api/src/shared/observability", "infra/systemd", "infra/nginx", "tests/unit/observability*"]
     }
   ],
-  "pathLocks": []
+  "pathLocks": [
+    {
+      "owner": "wave2-super-license",
+      "taskId": "T031",
+      "paths": ["apps/api/src/modules/super-admin-license", "tests/unit/super-admin-license*"]
+    },
+    {
+      "owner": "wave2-guards",
+      "taskId": "T032",
+      "paths": ["apps/api/src/shared/module-guard", "worker/src/shared/module-guard", "tests/unit/module-guard*"]
+    },
+    {
+      "owner": "wave2-observability",
+      "taskId": "T037",
+      "paths": ["apps/api/src/shared/observability", "infra/systemd", "infra/nginx", "tests/unit/observability*"]
+    }
+  ]
 }
