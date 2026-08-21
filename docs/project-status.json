@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T18:29:41.645Z",
+  "updatedAt": "2026-08-21T18:41:46.621Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -8,11 +8,11 @@
     "id": "T055",
     "title": "Implement consultant portal, notes, next actions và conversion flow trong apps/web/src/app/admin/admission/",
     "phase": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
-    "status": "next",
-    "percent": 0,
-    "activity": "Đã sửa và smoke-test API runtime: Nest /health HTTP 200, CORS web hợp lệ. T055 consultant portal là task tiếp theo.",
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Bắt đầu T055: phân tích consultant portal, timeline ghi chú, next action và conversion flow.",
     "startedAt": null,
-    "updatedAt": "2026-08-21T18:29:41.645Z"
+    "updatedAt": "2026-08-21T18:41:46.621Z"
   },
   "nextTask": {
     "id": "T055",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "e560e96",
-    "message": "fix(api): add Nest Express runtime adapter",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/e560e96"
+    "sha": "9dc64bc",
+    "message": "docs: publish API smoke-test status",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/9dc64bc"
   },
   "ci": {
     "status": "unknown",
