@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T09:43:51.177Z",
+  "updatedAt": "2026-08-21T09:46:33.184Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T041",
-    "title": "Tạo Branch, OrganizationSetting và BrandTheme migrations/entities trong apps/api/src/modules/organization-branch/",
+    "id": "PHASE4-WAVE1",
+    "title": "US1 Organization and Access Wave 1",
     "phase": "Phase 4: User Story 1 - Quản trị tổ chức, cài đặt và phân quyền (P1) 🎯 MVP",
-    "status": "next",
-    "percent": 0,
-    "activity": "Phase 3 foundational backend đã hoàn tất; chuẩn bị Phase 4 Wave 1.",
-    "startedAt": null,
-    "updatedAt": "2026-08-21T09:43:51.177Z"
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Đang chạy 3 agent song song cho organization schema, access assignment và module management UI.",
+    "startedAt": "2026-08-21T09:46:33.182Z",
+    "updatedAt": "2026-08-21T09:46:33.184Z"
   },
   "nextTask": {
     "id": "T041",
@@ -195,29 +195,61 @@
   },
   "activeTracks": [
     {
-      "agent": "wave3-foundation-tests",
-      "taskId": "T038",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T038 validation hoàn tất và đã merge.",
-      "paths": ["tests/unit/foundation-*", "tests/unit/*foundation*"]
+      "agent": "us1-schema",
+      "taskId": "T041",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động Branch/OrganizationSetting/BrandTheme schema",
+      "paths": [
+        "apps/api/src/modules/organization-branch",
+        "apps/api/src/database/schema/organization-branch.ts",
+        "tests/unit/organization-schema*"
+      ]
     },
     {
-      "agent": "wave3-authz-matrix",
-      "taskId": "T039",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T039 validation hoàn tất và đã merge.",
-      "paths": ["apps/api/tests/authorization", "tests/unit/authorization-*"]
+      "agent": "us1-access",
+      "taskId": "T043",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động role/permission assignment foundation",
+      "paths": [
+        "apps/api/src/modules/identity-access/assignments",
+        "apps/web/src/app/admin/access",
+        "tests/unit/access-assignment*"
+      ]
     },
     {
-      "agent": "wave3-tenant-isolation",
-      "taskId": "T040",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T040 validation hoàn tất và đã merge.",
-      "paths": ["apps/api/tests/integration", "tests/unit/tenant-isolation*"]
+      "agent": "us1-modules-ui",
+      "taskId": "T045",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động module enable/disable UI foundation",
+      "paths": ["apps/web/src/app/admin/modules", "apps/web/src/features/modules", "tests/unit/module-management-ui*"]
     }
   ],
-  "pathLocks": []
+  "pathLocks": [
+    {
+      "owner": "us1-schema",
+      "taskId": "T041",
+      "paths": [
+        "apps/api/src/modules/organization-branch",
+        "apps/api/src/database/schema/organization-branch.ts",
+        "tests/unit/organization-schema*"
+      ]
+    },
+    {
+      "owner": "us1-access",
+      "taskId": "T043",
+      "paths": [
+        "apps/api/src/modules/identity-access/assignments",
+        "apps/web/src/app/admin/access",
+        "tests/unit/access-assignment*"
+      ]
+    },
+    {
+      "owner": "us1-modules-ui",
+      "taskId": "T045",
+      "paths": ["apps/web/src/app/admin/modules", "apps/web/src/features/modules", "tests/unit/module-management-ui*"]
+    }
+  ]
 }
