@@ -63,7 +63,10 @@ describe("Redis cache and lock adapters", () => {
   it("provides expiring cache and non-reentrant locks in memory", async () => {
     let now = 1_000;
     const cache = new InMemoryCacheStore(() => now);
-    const locks = new InMemoryLockManager(() => now, () => "one");
+    const locks = new InMemoryLockManager(
+      () => now,
+      () => "one",
+    );
     await cache.set("session", { userId: "u1" }, 10);
 
     expect(await cache.get("session")).toEqual({ userId: "u1" });

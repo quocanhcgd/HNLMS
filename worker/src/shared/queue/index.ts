@@ -59,8 +59,8 @@ export class RedisJobQueue<T> implements JobQueue<T>, JobScheduler<T> {
     for (const serialized of due) {
       // Only the scheduler that removes the member owns its promotion.
       if ((await this.redis.zrem(this.scheduledKey, serialized)) !== 1) continue;
-      const { runAt: _runAt, ...job } = JSON.parse(serialized) as ScheduledJob<T>;
-      await this.enqueue(job);
+      const job = JSON.parse(serialized) as ScheduledJob<T>;
+      await this.enqueue({ id: job.id, payload: job.payload, enqueuedAt: job.enqueuedAt });
       promoted += 1;
     }
     return promoted;
@@ -90,8 +90,7 @@ export class InMemoryJobQueue<T> implements JobQueue<T>, JobScheduler<T> {
     const due = this.scheduled.filter((job) => Date.parse(job.runAt) <= dueAt);
     this.scheduled.splice(0, this.scheduled.length, ...this.scheduled.filter((job) => Date.parse(job.runAt) > dueAt));
     for (const job of due) {
-      const { runAt: _runAt, ...readyJob } = job;
-      await this.enqueue(readyJob);
+      await this.enqueue({ id: job.id, payload: job.payload, enqueuedAt: job.enqueuedAt });
     }
     return due.length;
   }

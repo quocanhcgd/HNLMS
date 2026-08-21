@@ -3,7 +3,7 @@ import { decideRetry, type DeliveryFailure, type RetryDecision, type RetryPolicy
 
 export type DeliverableEvent<T> = { id: string; payload: T; attempts: number };
 export type DeliveryResult = { kind: "accepted" | "duplicate" } | { kind: DeliveryFailure; message: string };
-export type DeliveryStore<T> = {
+export type DeliveryStore = {
   markPublished(id: string): Promise<void>;
   reschedule(id: string, attempts: number, availableAt: Date, error: string): Promise<void>;
   markDeadLettered(id: string, attempts: number, error: string): Promise<void>;
@@ -12,7 +12,7 @@ export type DeliveryStore<T> = {
 export async function deliverWithRetry<T>(
   event: DeliverableEvent<T>,
   send: (event: DeliverableEvent<T>) => Promise<DeliveryResult>,
-  store: DeliveryStore<T>,
+  store: DeliveryStore,
   deadLetters: DeadLetterStore<T>,
   policy?: RetryPolicy,
   now = new Date(),
@@ -22,6 +22,7 @@ export async function deliverWithRetry<T>(
     await store.markPublished(event.id);
     return "published";
   }
+  if (!("message" in result)) throw new Error("invalid_delivery_result");
   const decision = decideRetry(event.attempts, result.kind, policy, now);
   if (decision.action === "retry") {
     await store.reschedule(event.id, decision.attempts, decision.availableAt, result.message);
