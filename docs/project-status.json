@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T09:46:33.184Z",
+  "updatedAt": "2026-08-21T10:05:28.863Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "PHASE4-WAVE1",
-    "title": "US1 Organization and Access Wave 1",
+    "id": "T042",
+    "title": "Implement branch CRUD, status lifecycle và branch scope",
     "phase": "Phase 4: User Story 1 - Quản trị tổ chức, cài đặt và phân quyền (P1) 🎯 MVP",
-    "status": "in_progress",
-    "percent": 5,
-    "activity": "Đang chạy 3 agent song song cho organization schema, access assignment và module management UI.",
-    "startedAt": "2026-08-21T09:46:33.182Z",
-    "updatedAt": "2026-08-21T09:46:33.184Z"
+    "status": "next",
+    "percent": 0,
+    "activity": "Phase 4 Wave 1 hoàn tất; chuẩn bị branch lifecycle service T042 và settings/theme T044.",
+    "startedAt": null,
+    "updatedAt": "2026-08-21T10:05:28.862Z"
   },
   "nextTask": {
     "id": "T041",
@@ -197,9 +197,9 @@
     {
       "agent": "us1-schema",
       "taskId": "T041",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động Branch/OrganizationSetting/BrandTheme schema",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T041 hoàn tất và đã merge qua quality gate.",
       "paths": [
         "apps/api/src/modules/organization-branch",
         "apps/api/src/database/schema/organization-branch.ts",
@@ -209,9 +209,9 @@
     {
       "agent": "us1-access",
       "taskId": "T043",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động role/permission assignment foundation",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T043 hoàn tất và đã merge qua quality gate.",
       "paths": [
         "apps/api/src/modules/identity-access/assignments",
         "apps/web/src/app/admin/access",
@@ -221,35 +221,11 @@
     {
       "agent": "us1-modules-ui",
       "taskId": "T045",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động module enable/disable UI foundation",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T045 hoàn tất và đã merge qua quality gate.",
       "paths": ["apps/web/src/app/admin/modules", "apps/web/src/features/modules", "tests/unit/module-management-ui*"]
     }
   ],
-  "pathLocks": [
-    {
-      "owner": "us1-schema",
-      "taskId": "T041",
-      "paths": [
-        "apps/api/src/modules/organization-branch",
-        "apps/api/src/database/schema/organization-branch.ts",
-        "tests/unit/organization-schema*"
-      ]
-    },
-    {
-      "owner": "us1-access",
-      "taskId": "T043",
-      "paths": [
-        "apps/api/src/modules/identity-access/assignments",
-        "apps/web/src/app/admin/access",
-        "tests/unit/access-assignment*"
-      ]
-    },
-    {
-      "owner": "us1-modules-ui",
-      "taskId": "T045",
-      "paths": ["apps/web/src/app/admin/modules", "apps/web/src/features/modules", "tests/unit/module-management-ui*"]
-    }
-  ]
+  "pathLocks": []
 }
