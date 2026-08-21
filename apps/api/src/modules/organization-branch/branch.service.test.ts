@@ -42,8 +42,9 @@ describe("BranchService", () => {
 
   it("rejects reads outside the actor branch scope", async () => {
     const repo = repository();
-    await expect(new BranchService(repo).get({ ...orgActor, branchIds: new Set(["branch-2"]) }, "branch-1"))
-      .rejects.toMatchObject({ code: "forbidden" });
+    await expect(
+      new BranchService(repo).get({ ...orgActor, branchIds: new Set(["branch-2"]) }, "branch-1"),
+    ).rejects.toMatchObject({ code: "forbidden" });
   });
 
   it("creates an organization-owned branch and audits it", async () => {
@@ -59,20 +60,26 @@ describe("BranchService", () => {
     const repo = repository();
     const service = new BranchService(repo);
     await service.deactivate(orgActor, "branch-1");
-    expect(repo.update).toHaveBeenCalledWith(expect.objectContaining({
-      organizationId: "org-a",
-      branchId: "branch-1",
-      changes: expect.objectContaining({ status: "inactive" }),
-    }));
+    expect(repo.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        organizationId: "org-a",
+        branchId: "branch-1",
+        changes: expect.objectContaining({ status: "inactive" }),
+      }),
+    );
     await service.remove(orgActor, "branch-1");
-    expect(repo.update).toHaveBeenLastCalledWith(expect.objectContaining({ changes: expect.objectContaining({ status: "archived" }) }));
+    expect(repo.update).toHaveBeenLastCalledWith(
+      expect.objectContaining({ changes: expect.objectContaining({ status: "archived" }) }),
+    );
   });
 
   it("does not reactivate an archived branch or update it", async () => {
     const repo = repository(baseBranch({ status: "archived" }));
     const service = new BranchService(repo);
     await expect(service.activate(orgActor, "branch-1")).rejects.toMatchObject({ code: "invalid_status" });
-    await expect(service.update(orgActor, "branch-1", { name: "New" })).rejects.toMatchObject({ code: "invalid_status" });
+    await expect(service.update(orgActor, "branch-1", { name: "New" })).rejects.toMatchObject({
+      code: "invalid_status",
+    });
     expect(repo.update).not.toHaveBeenCalled();
   });
 });

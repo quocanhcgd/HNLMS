@@ -8,7 +8,8 @@ export type BranchCreateInput = Pick<
 > & { organizationId: string };
 export type BranchUpdateInput = Partial<
   Pick<BranchCreateInput, "code" | "name" | "address" | "phone" | "email" | "managerUserId" | "openedOn">
-> & Partial<Pick<Branch, "status" | "closedOn">>;
+> &
+  Partial<Pick<Branch, "status" | "closedOn">>;
 export type BranchStatus = Branch["status"];
 
 export type BranchActor = {
@@ -19,7 +20,11 @@ export type BranchActor = {
 };
 
 export type BranchRepository = {
-  list(input: { organizationId: string; branchIds?: ReadonlySet<string>; includeArchived?: boolean }): Promise<Branch[]>;
+  list(input: {
+    organizationId: string;
+    branchIds?: ReadonlySet<string>;
+    includeArchived?: boolean;
+  }): Promise<Branch[]>;
   findById(input: { organizationId: string; branchId: string }): Promise<Branch | null>;
   create(input: BranchCreateInput): Promise<Branch>;
   update(input: { organizationId: string; branchId: string; changes: BranchUpdateInput }): Promise<Branch>;
@@ -37,7 +42,10 @@ export type BranchAudit = (event: {
 export type BranchErrorCode = "forbidden" | "not_found" | "invalid_status" | "invalid_input";
 
 export class BranchServiceError extends Error {
-  constructor(public readonly code: BranchErrorCode, message: string = code) {
+  constructor(
+    public readonly code: BranchErrorCode,
+    message: string = code,
+  ) {
     super(message);
     this.name = "BranchServiceError";
   }
@@ -136,7 +144,7 @@ export class BranchService {
       branchId,
       changes: {
         status,
-        closedOn: status === "active" ? null : before.closedOn ?? new Date().toISOString().slice(0, 10),
+        closedOn: status === "active" ? null : (before.closedOn ?? new Date().toISOString().slice(0, 10)),
       },
     });
     await this.audit({
@@ -165,5 +173,3 @@ export class BranchService {
     if (!value.trim()) throw new BranchServiceError("invalid_input", `${field} is required`);
   }
 }
-
-
