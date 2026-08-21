@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T10:50:53.757Z",
+  "updatedAt": "2026-08-21T10:51:22.475Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T049",
-    "title": "Implement landing content admin CRUD, preview, publish, revoke và ordering trong apps/web/src/app/admin/marketing/ và apps/api/src/modules/marketing-admission/",
+    "id": "PHASE5-WAVE2",
+    "title": "Landing admin and SEO Wave 2",
     "phase": "Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)",
-    "status": "next",
-    "percent": 0,
-    "activity": "Phase 5 Wave 1 đã merge; chờ landing admin CRUD T049 và SEO/route states T051.",
-    "startedAt": null,
-    "updatedAt": "2026-08-21T10:50:53.757Z"
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Đang chạy 2 agent song song cho landing admin CRUD và SEO/sitemap/states.",
+    "startedAt": "2026-08-21T10:51:22.473Z",
+    "updatedAt": "2026-08-21T10:51:22.475Z"
   },
   "nextTask": {
     "id": "T049",
@@ -195,60 +195,49 @@
   },
   "activeTracks": [
     {
-      "agent": "landing-schema",
-      "taskId": "T047",
+      "agent": "landing-admin",
+      "taskId": "T049",
       "status": "starting",
       "percent": 0,
-      "activity": "Khởi động LandingContent schema/version/publication",
+      "activity": "Khởi động landing content admin CRUD/preview/publish",
       "paths": [
-        "apps/api/src/modules/marketing-admission",
-        "apps/api/src/database/schema/marketing-admission.ts",
-        "tests/unit/landing-schema*"
+        "apps/api/src/modules/marketing-admission/content",
+        "apps/web/src/app/admin/marketing",
+        "tests/unit/landing-admin*"
       ]
     },
     {
-      "agent": "public-catalog",
-      "taskId": "T048",
+      "agent": "landing-seo",
+      "taskId": "T051",
       "status": "starting",
       "percent": 0,
-      "activity": "Khởi động public landing/catalog UI",
-      "paths": ["apps/web/src/app/(public)", "apps/web/src/features/public-catalog", "tests/unit/public-catalog*"]
-    },
-    {
-      "agent": "consultation",
-      "taskId": "T050",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động consultation form/idempotency",
+      "activity": "Khởi động SEO/sitemap/loading/error states",
       "paths": [
-        "apps/api/src/modules/marketing-admission/consultation",
-        "apps/web/src/app/(public)/consultation",
-        "tests/unit/consultation*"
+        "apps/web/src/app/(public)/sitemap.ts",
+        "apps/web/src/app/(public)/loading.tsx",
+        "apps/web/src/app/(public)/error.tsx",
+        "tests/unit/public-seo*"
       ]
     }
   ],
   "pathLocks": [
     {
-      "owner": "landing-schema",
-      "taskId": "T047",
+      "owner": "landing-admin",
+      "taskId": "T049",
       "paths": [
-        "apps/api/src/modules/marketing-admission",
-        "apps/api/src/database/schema/marketing-admission.ts",
-        "tests/unit/landing-schema*"
+        "apps/api/src/modules/marketing-admission/content",
+        "apps/web/src/app/admin/marketing",
+        "tests/unit/landing-admin*"
       ]
     },
     {
-      "owner": "public-catalog",
-      "taskId": "T048",
-      "paths": ["apps/web/src/app/(public)", "apps/web/src/features/public-catalog", "tests/unit/public-catalog*"]
-    },
-    {
-      "owner": "consultation",
-      "taskId": "T050",
+      "owner": "landing-seo",
+      "taskId": "T051",
       "paths": [
-        "apps/api/src/modules/marketing-admission/consultation",
-        "apps/web/src/app/(public)/consultation",
-        "tests/unit/consultation*"
+        "apps/web/src/app/(public)/sitemap.ts",
+        "apps/web/src/app/(public)/loading.tsx",
+        "apps/web/src/app/(public)/error.tsx",
+        "tests/unit/public-seo*"
       ]
     }
   ]
