@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T06:34:35.528Z",
+  "updatedAt": "2026-08-21T07:04:39.329Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T028",
-    "title": "Tạo audit event service append-only và correlation ID middleware trong apps/api/src/shared/audit/ và apps/api/src/shared/observability/",
+    "id": "T031",
+    "title": "Tạo super-admin product plan, license issue/renew/revoke và license audit foundation trong apps/api/src/modules/super-admin-license/",
     "phase": "Phase 3: Foundational Backend",
     "status": "next",
-    "percent": 10,
-    "activity": "Đang chạy 7 agent song song cho audit, module registry, license, outbox, Redis, storage và HTTP foundation.",
+    "percent": 0,
+    "activity": "Wave 1 hoàn tất 7 task; chuẩn bị chạy T031, T032 và T037 song song.",
     "startedAt": null,
-    "updatedAt": "2026-08-21T06:34:35.528Z"
+    "updatedAt": "2026-08-21T07:04:39.329Z"
   },
   "nextTask": {
-    "id": "T028",
-    "title": "Tạo audit event service append-only và correlation ID middleware trong apps/api/src/shared/audit/ và apps/api/src/shared/observability/",
+    "id": "T031",
+    "title": "Tạo super-admin product plan, license issue/renew/revoke và license audit foundation trong apps/api/src/modules/super-admin-license/",
     "percent": 0
   },
   "overall": {
-    "done": 27,
+    "done": 34,
     "total": 175,
-    "percent": 15.4
+    "percent": 19.4
   },
   "phases": [
     {
@@ -39,9 +39,9 @@
     },
     {
       "name": "Phase 3: Foundational Backend",
-      "done": 4,
+      "done": 11,
       "total": 17,
-      "percent": 23.5
+      "percent": 64.7
     },
     {
       "name": "Phase 4: User Story 1 - Quản trị tổ chức, cài đặt và phân quyền (P1) 🎯 MVP",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "4c50b88",
-    "message": "chore: start Phase 3 foundation multi-agent wave",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/4c50b88"
+    "sha": "9f5f8ca",
+    "message": "fix: integrate Phase 3 foundation wave",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/9f5f8ca"
   },
   "ci": {
     "status": "unknown",
@@ -197,95 +197,59 @@
     {
       "agent": "foundation-audit",
       "taskId": "T028",
-      "status": "in_progress",
-      "percent": 10,
-      "activity": "T028 agent đang đọc spec và triển khai trong worktree riêng.",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T028 hoàn tất và đã merge qua quality gate.",
       "paths": ["apps/api/src/shared/audit", "apps/api/src/shared/observability", "tests/unit/audit*"]
     },
     {
       "agent": "foundation-modules",
       "taskId": "T029",
-      "status": "in_progress",
-      "percent": 10,
-      "activity": "T029 agent đang đọc spec và triển khai trong worktree riêng.",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T029 hoàn tất và đã merge qua quality gate.",
       "paths": ["packages/module-sdk", "apps/api/src/modules/module-registry", "tests/unit/module*"]
     },
     {
       "agent": "foundation-license",
       "taskId": "T030",
-      "status": "in_progress",
-      "percent": 10,
-      "activity": "T030 agent đang đọc spec và triển khai trong worktree riêng.",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T030 hoàn tất và đã merge qua quality gate.",
       "paths": ["packages/license-contracts", "apps/api/src/modules/license-runtime", "tests/unit/license*"]
     },
     {
       "agent": "foundation-outbox",
       "taskId": "T033",
-      "status": "in_progress",
-      "percent": 10,
-      "activity": "T033 agent đang đọc spec và triển khai trong worktree riêng.",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T033 hoàn tất và đã merge qua quality gate.",
       "paths": ["apps/api/src/shared/integrations", "worker/src/shared/integrations", "tests/unit/outbox*"]
     },
     {
       "agent": "foundation-redis",
       "taskId": "T034",
-      "status": "in_progress",
-      "percent": 10,
-      "activity": "T034 agent đang đọc spec và triển khai trong worktree riêng.",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T034 hoàn tất và đã merge qua quality gate.",
       "paths": ["apps/api/src/shared/cache", "worker/src/shared/queue", "tests/unit/redis*"]
     },
     {
       "agent": "foundation-storage",
       "taskId": "T035",
-      "status": "in_progress",
-      "percent": 10,
-      "activity": "T035 agent đang đọc spec và triển khai trong worktree riêng.",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T035 hoàn tất và đã merge qua quality gate.",
       "paths": ["apps/api/src/shared/storage", "tests/unit/storage*"]
     },
     {
       "agent": "foundation-http",
       "taskId": "T036",
-      "status": "in_progress",
-      "percent": 10,
-      "activity": "T036 agent đang đọc spec và triển khai trong worktree riêng.",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T036 hoàn tất và đã merge qua quality gate.",
       "paths": ["apps/api/src/shared/http", "tests/unit/http*"]
     }
   ],
-  "pathLocks": [
-    {
-      "owner": "foundation-audit",
-      "taskId": "T028",
-      "paths": ["apps/api/src/shared/audit", "apps/api/src/shared/observability", "tests/unit/audit*"]
-    },
-    {
-      "owner": "foundation-modules",
-      "taskId": "T029",
-      "paths": ["packages/module-sdk", "apps/api/src/modules/module-registry", "tests/unit/module*"]
-    },
-    {
-      "owner": "foundation-license",
-      "taskId": "T030",
-      "paths": ["packages/license-contracts", "apps/api/src/modules/license-runtime", "tests/unit/license*"]
-    },
-    {
-      "owner": "foundation-outbox",
-      "taskId": "T033",
-      "paths": ["apps/api/src/shared/integrations", "worker/src/shared/integrations", "tests/unit/outbox*"]
-    },
-    {
-      "owner": "foundation-redis",
-      "taskId": "T034",
-      "paths": ["apps/api/src/shared/cache", "worker/src/shared/queue", "tests/unit/redis*"]
-    },
-    {
-      "owner": "foundation-storage",
-      "taskId": "T035",
-      "paths": ["apps/api/src/shared/storage", "tests/unit/storage*"]
-    },
-    {
-      "owner": "foundation-http",
-      "taskId": "T036",
-      "paths": ["apps/api/src/shared/http", "tests/unit/http*"]
-    }
-  ]
+  "pathLocks": []
 }
