@@ -78,9 +78,9 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 **Independent Test**: Tạo hai chi nhánh, phân quyền khác nhau, đổi theme một tổ chức và xác minh dữ liệu/API/theme không rò sang tổ chức khác.
 
 - [x] T041 [P] [US1] Tạo `Branch`, `OrganizationSetting` và `BrandTheme` migrations/entities trong `apps/api/src/modules/organization-branch/`
-- [ ] T042 [US1] Implement branch CRUD, status lifecycle và branch scope trong `apps/api/src/modules/organization-branch/branch.service.ts`
+- [x] T042 [US1] Implement branch CRUD, status lifecycle và branch scope trong `apps/api/src/modules/organization-branch/branch.service.ts`
 - [x] T043 [US1] Implement role/permission assignment và scope grant UI/API trong `apps/api/src/modules/identity-access/` và `apps/web/src/app/admin/access/`
-- [ ] T044 [US1] Implement common settings và Mantine theme preview/publish/rollback trong `apps/api/src/modules/organization-branch/` và `apps/web/src/app/admin/settings/`
+- [x] T044 [US1] Implement common settings và Mantine theme preview/publish/rollback trong `apps/api/src/modules/organization-branch/` và `apps/web/src/app/admin/settings/`
 - [x] T045 [US1] Implement organization module enable/disable UI và effective-state explanation trong `apps/web/src/app/admin/modules/`
 - [ ] T046 [US1] Add US1 API contract, authorization and E2E tests in `apps/api/tests/contract/us1-organization.contract.spec.ts` and `apps/web/tests/e2e/us1-organization.spec.ts`
 

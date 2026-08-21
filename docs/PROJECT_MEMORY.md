@@ -121,3 +121,5 @@ Before ending every task:
 - 2026-08-21: Phase 3 Wave 3 merged T038/T039/T040. Full Phase 3 quality gate: 45 files, 161 tests passed; Phase 3 closed.
 
 - 2026-08-21: Phase 4 Wave 1 merged T041 organization/branch/theme schema, T043 access assignment foundation and T045 module management UI; 169 tests pass.
+
+- 2026-08-21: Phase 4 Wave 2 merged T042 branch lifecycle and T044 organization settings/theme service/UI; 176 tests pass.
