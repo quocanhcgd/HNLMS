@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T05:35:11.760Z",
+  "updatedAt": "2026-08-21T06:32:53.702Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T028",
-    "title": "Tạo audit event service append-only và correlation ID middleware trong apps/api/src/shared/audit/ và apps/api/src/shared/observability/",
+    "id": "WAVE1",
+    "title": "Phase 3 Foundation Wave 1 (7 agents)",
     "phase": "Phase 3: Foundational Backend",
-    "status": "next",
-    "percent": 0,
-    "activity": "T027 authentication/session foundation đã hoàn tất; chờ triển khai append-only audit service và correlation ID T028.",
-    "startedAt": null,
-    "updatedAt": "2026-08-21T05:35:11.760Z"
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Đang chạy 7 agent song song cho audit, module registry, license, outbox, Redis, storage và HTTP foundation.",
+    "startedAt": "2026-08-21T06:32:53.699Z",
+    "updatedAt": "2026-08-21T06:32:53.702Z"
   },
   "nextTask": {
     "id": "T028",
@@ -192,5 +192,100 @@
     "tasks": "../specs/001-lms-multi-branch/tasks.md",
     "memory": "PROJECT_MEMORY.md",
     "handoff": "ai-task-continuity.md"
-  }
+  },
+  "activeTracks": [
+    {
+      "agent": "foundation-audit",
+      "taskId": "T028",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động audit/correlation track",
+      "paths": ["apps/api/src/shared/audit", "apps/api/src/shared/observability", "tests/unit/audit*"]
+    },
+    {
+      "agent": "foundation-modules",
+      "taskId": "T029",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động module registry track",
+      "paths": ["packages/module-sdk", "apps/api/src/modules/module-registry", "tests/unit/module*"]
+    },
+    {
+      "agent": "foundation-license",
+      "taskId": "T030",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động license runtime track",
+      "paths": ["packages/license-contracts", "apps/api/src/modules/license-runtime", "tests/unit/license*"]
+    },
+    {
+      "agent": "foundation-outbox",
+      "taskId": "T033",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động outbox/inbox track",
+      "paths": ["apps/api/src/shared/integrations", "worker/src/shared/integrations", "tests/unit/outbox*"]
+    },
+    {
+      "agent": "foundation-redis",
+      "taskId": "T034",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động Redis adapters track",
+      "paths": ["apps/api/src/shared/cache", "worker/src/shared/queue", "tests/unit/redis*"]
+    },
+    {
+      "agent": "foundation-storage",
+      "taskId": "T035",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động private storage track",
+      "paths": ["apps/api/src/shared/storage", "tests/unit/storage*"]
+    },
+    {
+      "agent": "foundation-http",
+      "taskId": "T036",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động HTTP/OpenAPI track",
+      "paths": ["apps/api/src/shared/http", "tests/unit/http*"]
+    }
+  ],
+  "pathLocks": [
+    {
+      "owner": "foundation-audit",
+      "taskId": "T028",
+      "paths": ["apps/api/src/shared/audit", "apps/api/src/shared/observability", "tests/unit/audit*"]
+    },
+    {
+      "owner": "foundation-modules",
+      "taskId": "T029",
+      "paths": ["packages/module-sdk", "apps/api/src/modules/module-registry", "tests/unit/module*"]
+    },
+    {
+      "owner": "foundation-license",
+      "taskId": "T030",
+      "paths": ["packages/license-contracts", "apps/api/src/modules/license-runtime", "tests/unit/license*"]
+    },
+    {
+      "owner": "foundation-outbox",
+      "taskId": "T033",
+      "paths": ["apps/api/src/shared/integrations", "worker/src/shared/integrations", "tests/unit/outbox*"]
+    },
+    {
+      "owner": "foundation-redis",
+      "taskId": "T034",
+      "paths": ["apps/api/src/shared/cache", "worker/src/shared/queue", "tests/unit/redis*"]
+    },
+    {
+      "owner": "foundation-storage",
+      "taskId": "T035",
+      "paths": ["apps/api/src/shared/storage", "tests/unit/storage*"]
+    },
+    {
+      "owner": "foundation-http",
+      "taskId": "T036",
+      "paths": ["apps/api/src/shared/http", "tests/unit/http*"]
+    }
+  ]
 }
