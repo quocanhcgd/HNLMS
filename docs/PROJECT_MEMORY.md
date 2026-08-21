@@ -11,8 +11,8 @@
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T054 are complete; T055 is the next open task.
-- Current baseline: Phase 6 / US3 lead routing/lifecycle is complete; T055 consultant portal is next.
+- Tasks: `T001` to `T175`; T001-T055 are complete; T056 is the next open task.
+- Current baseline: Phase 6 / US3 consultant portal, consultation timeline, next-action scheduling and enrollment conversion preview are complete; T056 assessment assignment link is next.
 
 ## Source Of Truth Order
 
@@ -147,3 +147,4 @@ Before ending every task:
 
 - 2026-08-22: T054 added tenant-scoped duplicate detection, deterministic routing with branch fallback, consultant ownership/transfer and guarded lead lifecycle; 294 tests pass.
 - 2026-08-22: Fixed the API runtime by installing `@nestjs/platform-express`; Nest starts successfully on port `4100`, `/health` returns HTTP 200 with the expected payload, and CORS accepts the web origin `http://localhost:3100`. T055 remains the next task.
+- 2026-08-22: T055 added the consultant work queue and lead detail at `/admin/admission`, duplicate/assessment context, immutable consultation timeline, required future next actions, and guarded enrollment conversion preview with student/class/finance confirmation. Verification: 297 unit/contract tests, 2 focused T055 E2E, full typecheck/lint/format; the full 35-test Playwright pass had four cold parallel-load flakes and all four passed isolated reruns.

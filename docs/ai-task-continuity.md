@@ -5,11 +5,11 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 ## Active Handoff
 
 - **Current task**: T055 consultant portal, notes, next actions and conversion flow.
-- **Status**: Next; not started. The API runtime prerequisite found during system smoke testing is fixed.
-- **Next task**: T055, implement consultant portal, notes, next actions and conversion flow.
+- **Status**: Completed with consultant work queue, lead detail/timeline, required future next actions and guarded enrollment conversion preview.
+- **Next task**: T056, link entrance-assessment assignment from lead into the assessment module.
 - **Blocker**: PostgreSQL runtime service and authentication/provider decisions remain open.
-- **Files in focus**: `apps/web/src/app/admin/admission/` and consultation timeline APIs for T055.
-- **Verification**: 294 unit/contract tests, workspace typecheck, lint and format check pass. Nest API starts on port `4100`; `/health` returns HTTP 200 with the expected JSON and CORS allows `http://localhost:3100`.
+- **Files in focus**: `apps/api/src/modules/assessment-english/` for T056.
+- **Verification**: 297 unit/contract tests, workspace typecheck, lint and format check pass; 2/2 focused T055 E2E pass. Full Playwright reached 31/35 under eight-worker cold compilation; all four failures (three navigation timeouts and one transient Axe theme result) passed isolated reruns.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 
