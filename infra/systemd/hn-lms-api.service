@@ -2,6 +2,8 @@
 Description=HN LMS API
 After=network-online.target
 Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 Type=simple
@@ -11,14 +13,28 @@ WorkingDirectory=/opt/hn-lms/current
 EnvironmentFile=/etc/hn-lms/hn-lms.env
 Environment=NODE_ENV=production
 Environment=API_PORT=4000
+Environment=LOG_FORMAT=json
+Environment=METRICS_ENABLED=true
 ExecStart=/usr/bin/node apps/api/dist/main.js
+ExecStartPost=/bin/sh -c 'i=0; until /usr/bin/curl --fail --silent --show-error --max-time 2 http://127.0.0.1:4000/health; do i=$((i + 1)); [ "$i" -ge 10 ] && exit 1; /usr/bin/sleep 1; done'
 Restart=on-failure
 RestartSec=5
+TimeoutStartSec=30
 TimeoutStopSec=30
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hn-lms-api
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
 ReadWritePaths=/var/lib/hn-lms /var/log/hn-lms
 
 [Install]

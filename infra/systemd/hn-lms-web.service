@@ -2,6 +2,8 @@
 Description=HN LMS Web
 After=network-online.target
 Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
 
 [Service]
 Type=simple
@@ -11,14 +13,26 @@ WorkingDirectory=/opt/hn-lms/current
 EnvironmentFile=/etc/hn-lms/hn-lms.env
 Environment=NODE_ENV=production
 Environment=PORT=3000
+Environment=LOG_FORMAT=json
 ExecStart=/usr/bin/npm run start --workspace=@hnlms/web
 Restart=on-failure
 RestartSec=5
+TimeoutStartSec=30
 TimeoutStopSec=30
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hn-lms-web
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
 ReadWritePaths=/var/lib/hn-lms /var/log/hn-lms
 
 [Install]
