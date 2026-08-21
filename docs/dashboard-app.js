@@ -96,6 +96,13 @@ function renderStatus(status) {
         .map((blocker) => '<div class="blocker ' + blocker.severity + '">● ' + escapeHtml(blocker.text) + "</div>")
         .join("")
     : '<span class="muted">Không có blocker</span>';
+  $("#activeTracks").innerHTML =
+    (status.activeTracks || [])
+      .map(
+        (track) =>
+          `<div class="phase-card"><b>${escapeHtml(track.agent)} · ${escapeHtml(track.taskId)}</b><span class="muted">${escapeHtml(track.activity)} · ${track.percent || 0}%</span><div class="progress"><i style="width:${track.percent || 0}%"></i></div></div>`,
+      )
+      .join("") || "<span class=muted>Không có agent đang chạy</span>";
   $("#total").textContent = status.overall?.total || TASKS.length;
   $("#done").textContent = status.overall?.done || 0;
   $("#todo").textContent = (status.overall?.total || 0) - (status.overall?.done || 0);

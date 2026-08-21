@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T06:32:53.702Z",
+  "updatedAt": "2026-08-21T06:34:35.528Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "WAVE1",
-    "title": "Phase 3 Foundation Wave 1 (7 agents)",
+    "id": "T028",
+    "title": "Tạo audit event service append-only và correlation ID middleware trong apps/api/src/shared/audit/ và apps/api/src/shared/observability/",
     "phase": "Phase 3: Foundational Backend",
-    "status": "in_progress",
-    "percent": 5,
+    "status": "next",
+    "percent": 10,
     "activity": "Đang chạy 7 agent song song cho audit, module registry, license, outbox, Redis, storage và HTTP foundation.",
-    "startedAt": "2026-08-21T06:32:53.699Z",
-    "updatedAt": "2026-08-21T06:32:53.702Z"
+    "startedAt": null,
+    "updatedAt": "2026-08-21T06:34:35.528Z"
   },
   "nextTask": {
     "id": "T028",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "00289aa",
-    "message": "feat: add authorization context and scope guards",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/00289aa"
+    "sha": "4c50b88",
+    "message": "chore: start Phase 3 foundation multi-agent wave",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/4c50b88"
   },
   "ci": {
     "status": "unknown",
@@ -197,57 +197,57 @@
     {
       "agent": "foundation-audit",
       "taskId": "T028",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động audit/correlation track",
+      "status": "in_progress",
+      "percent": 10,
+      "activity": "T028 agent đang đọc spec và triển khai trong worktree riêng.",
       "paths": ["apps/api/src/shared/audit", "apps/api/src/shared/observability", "tests/unit/audit*"]
     },
     {
       "agent": "foundation-modules",
       "taskId": "T029",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động module registry track",
+      "status": "in_progress",
+      "percent": 10,
+      "activity": "T029 agent đang đọc spec và triển khai trong worktree riêng.",
       "paths": ["packages/module-sdk", "apps/api/src/modules/module-registry", "tests/unit/module*"]
     },
     {
       "agent": "foundation-license",
       "taskId": "T030",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động license runtime track",
+      "status": "in_progress",
+      "percent": 10,
+      "activity": "T030 agent đang đọc spec và triển khai trong worktree riêng.",
       "paths": ["packages/license-contracts", "apps/api/src/modules/license-runtime", "tests/unit/license*"]
     },
     {
       "agent": "foundation-outbox",
       "taskId": "T033",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động outbox/inbox track",
+      "status": "in_progress",
+      "percent": 10,
+      "activity": "T033 agent đang đọc spec và triển khai trong worktree riêng.",
       "paths": ["apps/api/src/shared/integrations", "worker/src/shared/integrations", "tests/unit/outbox*"]
     },
     {
       "agent": "foundation-redis",
       "taskId": "T034",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động Redis adapters track",
+      "status": "in_progress",
+      "percent": 10,
+      "activity": "T034 agent đang đọc spec và triển khai trong worktree riêng.",
       "paths": ["apps/api/src/shared/cache", "worker/src/shared/queue", "tests/unit/redis*"]
     },
     {
       "agent": "foundation-storage",
       "taskId": "T035",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động private storage track",
+      "status": "in_progress",
+      "percent": 10,
+      "activity": "T035 agent đang đọc spec và triển khai trong worktree riêng.",
       "paths": ["apps/api/src/shared/storage", "tests/unit/storage*"]
     },
     {
       "agent": "foundation-http",
       "taskId": "T036",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động HTTP/OpenAPI track",
+      "status": "in_progress",
+      "percent": 10,
+      "activity": "T036 agent đang đọc spec và triển khai trong worktree riêng.",
       "paths": ["apps/api/src/shared/http", "tests/unit/http*"]
     }
   ],
