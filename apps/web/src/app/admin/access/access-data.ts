@@ -11,7 +11,13 @@ export const accessPermissionGroups = [
   { key: "finance", label: "Tài chính", permissions: ["invoices:read", "reports:export"] },
 ] as const;
 export const accessUsers = [
-  { id: "u-001", name: "Nguyễn Minh Anh", email: "minh.anh@hnlms.vn", role: "Quản lý chi nhánh", scope: "Cơ sở Cầu Giấy" },
+  {
+    id: "u-001",
+    name: "Nguyễn Minh Anh",
+    email: "minh.anh@hnlms.vn",
+    role: "Quản lý chi nhánh",
+    scope: "Cơ sở Cầu Giấy",
+  },
   { id: "u-002", name: "Trần Hoàng Nam", email: "hoang.nam@hnlms.vn", role: "Tư vấn viên", scope: "2 chi nhánh" },
   { id: "u-003", name: "Lê Bảo Ngọc", email: "bao.ngoc@hnlms.vn", role: "Giáo viên", scope: "Lớp IELTS Foundation A1" },
 ] as const;

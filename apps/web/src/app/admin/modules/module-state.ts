@@ -93,9 +93,7 @@ export const defaultOrganizationModuleContext: OrganizationModuleContext = {
   licensedFeatureKeys: new Set(["admission", "academic", "learning", "finance", "reporting"]),
 };
 
-export function resolveOrganizationModuleStates(
-  context: OrganizationModuleContext,
-): readonly EffectiveModuleState[] {
+export function resolveOrganizationModuleStates(context: OrganizationModuleContext): readonly EffectiveModuleState[] {
   const effectiveModuleKeys = new Set<string>();
   return organizationModules.map((manifest) => {
     const state = resolveEffectiveState(
@@ -135,6 +133,3 @@ export function getModuleReason(state: EffectiveModuleState): string {
       return "A required dependency is not effective, so this module cannot run.";
   }
 }
-
-
-

@@ -9,7 +9,7 @@ describe("project status dashboard", () => {
     const total = matches.length;
     const done = matches.filter((match) => match[1].toLowerCase() === "x").length;
     expect(status.overall).toMatchObject({ total, done });
-    expect(status.currentTask.id).toMatch(/^(T\d{3}|WAVE\d+)$/);
+    expect(status.currentTask.id).toMatch(/^(T\d{3}|WAVE\d+|PHASE\d+-WAVE\d+)$/);
     expect(status.currentTask.activity.length).toBeGreaterThan(10);
   });
   it("dashboard has live status runtime and refresh", () => {

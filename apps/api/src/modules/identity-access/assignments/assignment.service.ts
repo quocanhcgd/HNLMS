@@ -17,7 +17,12 @@ export type AssignmentRepository = {
   replaceUserRoles(input: { organizationId: string; userId: string; roleIds: string[] }): Promise<void>;
   listScopeGrants(input: { organizationId: string; userId: string }): Promise<AssignmentGrant[]>;
   createScopeGrant(input: Omit<AssignmentGrant, "id">): Promise<AssignmentGrant>;
-  revokeScopeGrant(input: { organizationId: string; userId: string; grantId: string; effectiveTo: Date }): Promise<void>;
+  revokeScopeGrant(input: {
+    organizationId: string;
+    userId: string;
+    grantId: string;
+    effectiveTo: Date;
+  }): Promise<void>;
 };
 
 export type AssignmentAudit = (event: {
@@ -33,7 +38,10 @@ export type AssignmentActor = { userId: string; organizationId: string };
 export type AssignmentMutationErrorCode = "forbidden" | "invalid_scope" | "not_found";
 
 export class AssignmentMutationError extends Error {
-  constructor(public readonly code: AssignmentMutationErrorCode, message = code) {
+  constructor(
+    public readonly code: AssignmentMutationErrorCode,
+    message: string = code,
+  ) {
     super(message);
     this.name = "AssignmentMutationError";
   }
