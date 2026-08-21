@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T053 Lead, Consultation and LeadAssignment schema/migration.
-- **Status**: Completed; generated migration `0005_wonderful_elektra.sql` has no schema drift.
-- **Next task**: T054, implement lead routing, ownership, duplicate detection and lifecycle.
+- **Current task**: T054 lead routing, ownership, duplicate detection and lifecycle.
+- **Status**: Completed with rule-based routing, assignment transfer and lifecycle guards.
+- **Next task**: T055, implement consultant portal, notes, next actions and conversion flow.
 - **Blocker**: PostgreSQL runtime service and authentication/provider decisions remain open.
-- **Files in focus**: `apps/api/src/modules/marketing-admission/` lead service/repository and T054 tests.
-- **Verification**: 280 unit/contract tests, workspace typecheck, lint, format check and Drizzle no-drift generation pass; runtime migration awaits PostgreSQL service.
+- **Files in focus**: `apps/web/src/app/admin/admission/` and consultation timeline APIs for T055.
+- **Verification**: 294 unit/contract tests, workspace typecheck, lint and format check pass.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

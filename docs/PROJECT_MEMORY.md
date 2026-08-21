@@ -11,8 +11,8 @@
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T053 are complete; T054 is the next open task.
-- Current baseline: Phase 6 / US3 schema foundation is complete; T054 lead routing/lifecycle is next.
+- Tasks: `T001` to `T175`; T001-T054 are complete; T055 is the next open task.
+- Current baseline: Phase 6 / US3 lead routing/lifecycle is complete; T055 consultant portal is next.
 
 ## Source Of Truth Order
 
@@ -142,3 +142,5 @@ Before ending every task:
 - 2026-08-22: T052 closed US2 with publication/tenant/idempotency/consent contract coverage and landing/catalog/consultation E2E; 277 unit/contract and 17 Chromium E2E tests pass.
 
 - 2026-08-22: T053 added tenant-scoped Lead, Consultation and LeadAssignment entities, lifecycle enums, consent/idempotency fields, routing constraints and migration 0005; 280 tests pass and Drizzle reports no schema drift.
+
+- 2026-08-22: T054 added tenant-scoped duplicate detection, deterministic routing with branch fallback, consultant ownership/transfer and guarded lead lifecycle; 294 tests pass.

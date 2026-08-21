@@ -104,7 +104,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 **Independent Test**: Lead được phân công, làm bài đầu vào, nhận đề xuất lớp và tạo enrollment/hóa đơn đúng một lần.
 
 - [x] T053 [P] [US3] Tạo `Lead`, `Consultation`, `LeadAssignment` migrations/entities trong `apps/api/src/modules/marketing-admission/`
-- [ ] T054 [US3] Implement lead routing, consultant ownership, duplicate lead detection và lifecycle trong `apps/api/src/modules/marketing-admission/`
+- [x] T054 [US3] Implement lead routing, consultant ownership, duplicate lead detection và lifecycle trong `apps/api/src/modules/marketing-admission/`
 - [ ] T055 [US3] Implement consultant portal, notes, next actions và conversion flow trong `apps/web/src/app/admin/admission/`
 - [ ] T056 [US3] Implement entrance-assessment assignment link từ lead sang assessment trong `apps/api/src/modules/assessment-english/`
 - [ ] T057 [US3] Add US3 integration/contract/E2E tests trong `apps/api/tests/integration/us3-admission.spec.ts` và `apps/web/tests/e2e/us3-admission.spec.ts`
