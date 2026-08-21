@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T17:05:05.315Z",
+  "updatedAt": "2026-08-21T17:33:59.654Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T053",
-    "title": "Tạo Lead, Consultation, LeadAssignment migrations/entities trong apps/api/src/modules/marketing-admission/",
+    "id": "T054",
+    "title": "Implement lead routing, consultant ownership, duplicate lead detection và lifecycle trong apps/api/src/modules/marketing-admission/",
     "phase": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
     "status": "next",
     "percent": 0,
-    "activity": "US2 acceptance gate hoàn tất; T053 là task tiếp theo.",
+    "activity": "T053 schema/migration hoàn tất; T054 lead routing/lifecycle là task tiếp theo.",
     "startedAt": null,
-    "updatedAt": "2026-08-21T17:05:05.315Z"
+    "updatedAt": "2026-08-21T17:33:59.654Z"
   },
   "nextTask": {
-    "id": "T053",
-    "title": "Tạo Lead, Consultation, LeadAssignment migrations/entities trong apps/api/src/modules/marketing-admission/",
+    "id": "T054",
+    "title": "Implement lead routing, consultant ownership, duplicate lead detection và lifecycle trong apps/api/src/modules/marketing-admission/",
     "percent": 0
   },
   "overall": {
-    "done": 52,
+    "done": 53,
     "total": 175,
-    "percent": 29.7
+    "percent": 30.3
   },
   "phases": [
     {
@@ -57,9 +57,9 @@
     },
     {
       "name": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
-      "done": 0,
+      "done": 1,
       "total": 5,
-      "percent": 0
+      "percent": 20
     },
     {
       "name": "Phase 7: User Story 4 - Chương trình, lớp học và lịch học (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "58d800d",
-    "message": "fix: close Phase 5 landing Wave 2",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/58d800d"
+    "sha": "d427467",
+    "message": "test: close US2 public acquisition gate",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/d427467"
   },
   "ci": {
     "status": "unknown",
