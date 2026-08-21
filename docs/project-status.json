@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T18:41:46.621Z",
+  "updatedAt": "2026-08-21T18:49:17.249Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -9,10 +9,10 @@
     "title": "Implement consultant portal, notes, next actions và conversion flow trong apps/web/src/app/admin/admission/",
     "phase": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
     "status": "in_progress",
-    "percent": 5,
-    "activity": "Bắt đầu T055: phân tích consultant portal, timeline ghi chú, next action và conversion flow.",
+    "percent": 75,
+    "activity": "Đã triển khai work queue, lead detail/timeline, ghi chú + next action và conversion preview; 297 unit/contract, 2 E2E T055, typecheck/lint/format đều đạt.",
     "startedAt": null,
-    "updatedAt": "2026-08-21T18:41:46.621Z"
+    "updatedAt": "2026-08-21T18:49:17.249Z"
   },
   "nextTask": {
     "id": "T055",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "9dc64bc",
-    "message": "docs: publish API smoke-test status",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/9dc64bc"
+    "sha": "ccaed16",
+    "message": "docs: start T055 consultant portal",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/ccaed16"
   },
   "ci": {
     "status": "unknown",
