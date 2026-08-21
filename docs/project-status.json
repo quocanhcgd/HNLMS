@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T07:22:57.457Z",
+  "updatedAt": "2026-08-21T09:43:51.177Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "WAVE3",
-    "title": "Phase 3 Validation Wave",
-    "phase": "Phase 3: Foundational Backend",
-    "status": "in_progress",
-    "percent": 5,
-    "activity": "Đang chạy 3 agent song song cho foundational tests, authorization matrix và tenant isolation.",
-    "startedAt": "2026-08-21T07:22:57.455Z",
-    "updatedAt": "2026-08-21T07:22:57.457Z"
+    "id": "T041",
+    "title": "Tạo Branch, OrganizationSetting và BrandTheme migrations/entities trong apps/api/src/modules/organization-branch/",
+    "phase": "Phase 4: User Story 1 - Quản trị tổ chức, cài đặt và phân quyền (P1) 🎯 MVP",
+    "status": "next",
+    "percent": 0,
+    "activity": "Phase 3 foundational backend đã hoàn tất; chuẩn bị Phase 4 Wave 1.",
+    "startedAt": null,
+    "updatedAt": "2026-08-21T09:43:51.177Z"
   },
   "nextTask": {
-    "id": "T038",
-    "title": "Tạo foundational unit tests cho authz, module dependency, license signature, idempotency và tenant resolver trong apps/api/tests/unit/ và packages/*/tests/",
+    "id": "T041",
+    "title": "Tạo Branch, OrganizationSetting và BrandTheme migrations/entities trong apps/api/src/modules/organization-branch/",
     "percent": 0
   },
   "overall": {
-    "done": 37,
+    "done": 40,
     "total": 175,
-    "percent": 21.1
+    "percent": 22.9
   },
   "phases": [
     {
@@ -39,9 +39,9 @@
     },
     {
       "name": "Phase 3: Foundational Backend",
-      "done": 14,
+      "done": 17,
       "total": 17,
-      "percent": 82.4
+      "percent": 100
     },
     {
       "name": "Phase 4: User Story 1 - Quản trị tổ chức, cài đặt và phân quyền (P1) 🎯 MVP",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "b356723",
-    "message": "chore: integrate Phase 3 foundation Wave 2",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/b356723"
+    "sha": "2196625",
+    "message": "test: expand authorization negative access matrix",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/2196625"
   },
   "ci": {
     "status": "unknown",
@@ -197,43 +197,27 @@
     {
       "agent": "wave3-foundation-tests",
       "taskId": "T038",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động foundational unit coverage",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T038 validation hoàn tất và đã merge.",
       "paths": ["tests/unit/foundation-*", "tests/unit/*foundation*"]
     },
     {
       "agent": "wave3-authz-matrix",
       "taskId": "T039",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động authorization negative matrix",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T039 validation hoàn tất và đã merge.",
       "paths": ["apps/api/tests/authorization", "tests/unit/authorization-*"]
     },
     {
       "agent": "wave3-tenant-isolation",
       "taskId": "T040",
-      "status": "starting",
-      "percent": 0,
-      "activity": "Khởi động tenant isolation integration tests",
+      "status": "completed",
+      "percent": 100,
+      "activity": "T040 validation hoàn tất và đã merge.",
       "paths": ["apps/api/tests/integration", "tests/unit/tenant-isolation*"]
     }
   ],
-  "pathLocks": [
-    {
-      "owner": "wave3-foundation-tests",
-      "taskId": "T038",
-      "paths": ["tests/unit/foundation-*", "tests/unit/*foundation*"]
-    },
-    {
-      "owner": "wave3-authz-matrix",
-      "taskId": "T039",
-      "paths": ["apps/api/tests/authorization", "tests/unit/authorization-*"]
-    },
-    {
-      "owner": "wave3-tenant-isolation",
-      "taskId": "T040",
-      "paths": ["apps/api/tests/integration", "tests/unit/tenant-isolation*"]
-    }
-  ]
+  "pathLocks": []
 }

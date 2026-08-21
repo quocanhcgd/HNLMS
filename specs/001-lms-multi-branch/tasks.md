@@ -65,9 +65,9 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T035 Tạo private object storage adapter, signed URL authorization và file metadata primitives trong `apps/api/src/shared/storage/`
 - [x] T036 Tạo API error format, validation pipe, pagination, export job contract và OpenAPI generation trong `apps/api/src/shared/http/`
 - [x] T037 Tạo structured logging, metrics, health checks và systemd/Nginx deployment health endpoints trong `apps/api/src/shared/observability/`, `infra/systemd/`, `infra/nginx/`
-- [ ] T038 [P] Tạo foundational unit tests cho authz, module dependency, license signature, idempotency và tenant resolver trong `apps/api/tests/unit/` và `packages/*/tests/`
-- [ ] T039 [P] Tạo authorization negative-access matrix tests trong `apps/api/tests/authorization/scope-matrix.spec.ts`
-- [ ] T040 [P] Tạo database-per-tenant provisioning, backup metadata và connection isolation tests trong `apps/api/tests/integration/tenant-isolation.spec.ts`
+- [x] T038 [P] Tạo foundational unit tests cho authz, module dependency, license signature, idempotency và tenant resolver trong `apps/api/tests/unit/` và `packages/*/tests/`
+- [x] T039 [P] Tạo authorization negative-access matrix tests trong `apps/api/tests/authorization/scope-matrix.spec.ts`
+- [x] T040 [P] Tạo database-per-tenant provisioning, backup metadata và connection isolation tests trong `apps/api/tests/integration/tenant-isolation.spec.ts`
 
 **Checkpoint**: Foundation ready; user stories có thể triển khai độc lập sau Phase 3.
 
