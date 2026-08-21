@@ -18,7 +18,9 @@ export default function ProgramsPage() {
           Danh sach nay la noi ban khoai ngh, so sanh chu trinh va chon buoc tiep theo truoc khi dat tu van.
         </Text>
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg" mt="xl">
-          {programs.map((program) => <ProgramCard key={program.slug} program={program} />)}
+          {programs.map((program) => (
+            <ProgramCard key={program.slug} program={program} />
+          ))}
         </SimpleGrid>
       </Container>
     </main>

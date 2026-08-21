@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Container, Grid, Text, Title } from "@mantine/core";
+import { Container, SimpleGrid, Text, Title } from "@mantine/core";
 import { ConsultationForm } from "./consultation-form";
 
 export const metadata: Metadata = {
@@ -11,8 +11,8 @@ export default function ConsultationPage() {
   return (
     <main className="consultationPage" id="consultation">
       <Container size="lg" py={{ base: 48, sm: 80 }}>
-        <Grid gutter={{ base: 32, sm: 64 }} align="center">
-          <Grid.Col span={{ base: 12, md: 5 }}>
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={{ base: 32, sm: 64 }} verticalSpacing="xl">
+          <div>
             <Text c="cyan.4" fw={700} tt="uppercase" size="sm">
               Hanoi Learning
             </Text>
@@ -26,11 +26,9 @@ export default function ConsultationPage() {
             <Text size="sm" c="dimmed" mt="xl">
               Thông tin của bạn chỉ được dùng để phản hồi yêu cầu tư vấn này.
             </Text>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 7 }}>
-            <ConsultationForm />
-          </Grid.Col>
-        </Grid>
+          </div>
+          <ConsultationForm />
+        </SimpleGrid>
       </Container>
     </main>
   );

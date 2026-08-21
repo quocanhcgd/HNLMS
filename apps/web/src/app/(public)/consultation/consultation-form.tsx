@@ -90,7 +90,7 @@ export function ConsultationForm() {
         component="form"
         onSubmit={(event) => {
           event.preventDefault();
-          void submit(event.currentTarget);
+          void submit(event.currentTarget as unknown as HTMLFormElement);
         }}
       >
         <input type="hidden" name="submissionKey" value={key} />

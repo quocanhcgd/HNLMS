@@ -19,8 +19,14 @@ export function ProgramCard({ program, priority = false }: { program: Program; p
         {program.summary}
       </Text>
       <div className="catalogCardMeta">
-        <span><Clock3 size={15} aria-hidden="true" />{program.duration}</span>
-        <span><MapPin size={15} aria-hidden="true" />{program.format}</span>
+        <span>
+          <Clock3 size={15} aria-hidden="true" />
+          {program.duration}
+        </span>
+        <span>
+          <MapPin size={15} aria-hidden="true" />
+          {program.format}
+        </span>
       </div>
       <Link href={`/programs/${program.slug}`} className="catalogCardLink" aria-label={`Xem chi tiet ${program.title}`}>
         Xem lo trinh <span aria-hidden="true">-&gt;</span>

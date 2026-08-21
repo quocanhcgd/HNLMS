@@ -33,12 +33,25 @@ export default async function ProgramDetailPage({ params }: { params: ProgramDet
         </Button>
         <div className="programHero" aria-labelledby="program-title">
           <div>
-            <Group gap="sm"><Sparkles size={18} aria-hidden="true" /><Text fw={700}>{program.category}</Text></Group>
-            <Title id="program-title" order={1} mt="md">{program.title}</Title>
-            <Text fz="lg" c="dimmed" mt="md" maw={600}>{program.summary}</Text>
+            <Group gap="sm">
+              <Sparkles size={18} aria-hidden="true" />
+              <Text fw={700}>{program.category}</Text>
+            </Group>
+            <Title id="program-title" order={1} mt="md">
+              {program.title}
+            </Title>
+            <Text fz="lg" c="dimmed" mt="md" maw={600}>
+              {program.summary}
+            </Text>
             <Group mt="xl" gap="md">
-              <Group gap="xs"><Clock3 size={18} aria-hidden="true" /><Text fw={600}>{program.duration}</Text></Group>
-              <Group gap="xs"><MapPin size={18} aria-hidden="true" /><Text fw={600}>{program.format}</Text></Group>
+              <Group gap="xs">
+                <Clock3 size={18} aria-hidden="true" />
+                <Text fw={600}>{program.duration}</Text>
+              </Group>
+              <Group gap="xs">
+                <MapPin size={18} aria-hidden="true" />
+                <Text fw={600}>{program.format}</Text>
+              </Group>
             </Group>
             <Button mt="xl" component={Link} href="#consultation" rightSection={<ArrowRight size={18} />}>
               Dang ky tu van
@@ -47,20 +60,35 @@ export default async function ProgramDetailPage({ params }: { params: ProgramDet
           <div className="programQuickFacts">
             <Text fw={600}>Thong tin moi truong hoc</Text>
             <Group gap="sm" mt="md">
-              <Badge variant="outline" color="cyan">{program.level}</Badge>
-              <Badge variant="outline" color="cyan">{program.format}</Badge>
-              <Badge variant="outline" color="cyan">{program.duration}</Badge>
+              <Badge variant="outline" color="cyan">
+                {program.level}
+              </Badge>
+              <Badge variant="outline" color="cyan">
+                {program.format}
+              </Badge>
+              <Badge variant="outline" color="cyan">
+                {program.duration}
+              </Badge>
             </Group>
             <div className="programStepList">
               {["Danh gia dau vao", "Nhan ke hoach hoc", "Bat dau hoc theo lich phu hop"].map((step) => (
-                <Group key={step} gap="sm"><ThemeIcon variant="light" color="cyan" radius="xl"><Check size={16} /></ThemeIcon><Text fw={600}>{step}</Text></Group>
+                <Group key={step} gap="sm">
+                  <ThemeIcon variant="light" color="cyan" radius="xl">
+                    <Check size={16} />
+                  </ThemeIcon>
+                  <Text fw={600}>{step}</Text>
+                </Group>
               ))}
             </div>
           </div>
         </div>
-        <Title order={2} mt="xl">Cac chuong trinh lien quan</Title>
+        <Title order={2} mt="xl">
+          Cac chuong trinh lien quan
+        </Title>
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg" mt="lg">
-          {siblings.map((item) => <ProgramCard key={item.slug} program={item} />)}
+          {siblings.map((item) => (
+            <ProgramCard key={item.slug} program={item} />
+          ))}
         </SimpleGrid>
       </Container>
     </main>
