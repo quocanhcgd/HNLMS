@@ -115,3 +115,5 @@ Before ending every task:
 - 2026-08-21: Implemented T027 scrypt password primitives, opaque hashed sessions/reset tokens, tenant/platform realms, super-admin MFA boundary and authentication schema migration 0002.
 
 - 2026-08-21: Phase 3 Wave 1 used 7 Codex worktree agents. Merged T028/T029/T030/T033/T034/T035/T036; integration gate passed 89 tests after fixing Redis scheduled-job metadata preservation.
+
+- 2026-08-21: Phase 3 Wave 2 merged T031/T032/T037 from 3 worktree agents; full gate passed 106 tests.

@@ -58,13 +58,13 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T028 Tạo audit event service append-only và correlation ID middleware trong `apps/api/src/shared/audit/` và `apps/api/src/shared/observability/`
 - [x] T029 Tạo module manifest schema, dependency resolver, module registry và effective module state trong `packages/module-sdk/` và `apps/api/src/modules/module-registry/`
 - [x] T030 Tạo signed license document schema, verifier, cache, grace/expiry policy và quota evaluator trong `packages/license-contracts/` và `apps/api/src/modules/license-runtime/`
-- [ ] T031 Tạo super-admin product plan, license issue/renew/revoke và license audit foundation trong `apps/api/src/modules/super-admin-license/`
-- [ ] T032 Tạo global module/license guards cho backend routes, jobs và frontend navigation trong `apps/api/src/shared/module-guard/`, `apps/web/src/lib/navigation/` và `worker/src/shared/`
+- [x] T031 Tạo super-admin product plan, license issue/renew/revoke và license audit foundation trong `apps/api/src/modules/super-admin-license/`
+- [x] T032 Tạo global module/license guards cho backend routes, jobs và frontend navigation trong `apps/api/src/shared/module-guard/`, `apps/web/src/lib/navigation/` và `worker/src/shared/`
 - [x] T033 Tạo PostgreSQL outbox/inbox, idempotency key, retry policy và dead-letter primitives trong `apps/api/src/shared/integrations/` và `worker/src/shared/`
 - [x] T034 Tạo Redis queue/cache/lock adapters và worker scheduling trong `worker/src/shared/queue/` và `apps/api/src/shared/cache/`
 - [x] T035 Tạo private object storage adapter, signed URL authorization và file metadata primitives trong `apps/api/src/shared/storage/`
 - [x] T036 Tạo API error format, validation pipe, pagination, export job contract và OpenAPI generation trong `apps/api/src/shared/http/`
-- [ ] T037 Tạo structured logging, metrics, health checks và systemd/Nginx deployment health endpoints trong `apps/api/src/shared/observability/`, `infra/systemd/`, `infra/nginx/`
+- [x] T037 Tạo structured logging, metrics, health checks và systemd/Nginx deployment health endpoints trong `apps/api/src/shared/observability/`, `infra/systemd/`, `infra/nginx/`
 - [ ] T038 [P] Tạo foundational unit tests cho authz, module dependency, license signature, idempotency và tenant resolver trong `apps/api/tests/unit/` và `packages/*/tests/`
 - [ ] T039 [P] Tạo authorization negative-access matrix tests trong `apps/api/tests/authorization/scope-matrix.spec.ts`
 - [ ] T040 [P] Tạo database-per-tenant provisioning, backup metadata và connection isolation tests trong `apps/api/tests/integration/tenant-isolation.spec.ts`
