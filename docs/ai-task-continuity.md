@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Phase 5 Wave 2 completed (T049/T051).
-- **Status**: Completed; integration fixes committed after quality gate.
-- **Next task**: T052, add US2 API contract and landing E2E coverage.
+- **Current task**: T052 US2 contract and E2E acceptance gate.
+- **Status**: Completed; Phase 5 / US2 is closed.
+- **Next task**: T053, create Lead, Consultation and LeadAssignment migrations/entities for US3.
 - **Blocker**: PostgreSQL runtime service and authentication/provider decisions remain open.
-- **Files in focus**: `apps/api/tests/contract/us2-public.contract.spec.ts`, `apps/web/tests/e2e/us2-landing.spec.ts`.
-- **Verification**: 273 unit tests, workspace typecheck, lint, format check and Next.js production build pass.
+- **Files in focus**: `apps/api/src/modules/marketing-admission/` and the next migration.
+- **Verification**: 277 unit/contract tests, 17 Chromium E2E tests, workspace typecheck, lint, format check and Next.js production build pass.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

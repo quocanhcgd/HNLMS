@@ -95,7 +95,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T049 [US2] Implement landing content admin CRUD, preview, publish, revoke và ordering trong `apps/web/src/app/admin/marketing/` và `apps/api/src/modules/marketing-admission/`
 - [x] T050 [US2] Implement public consultation form, consent và idempotent submission trong `apps/web/src/app/(public)/consultation/` và `apps/api/src/modules/marketing-admission/`
 - [x] T051 [US2] Add public SEO metadata, sitemap, empty/error/loading states trong `apps/web/src/app/(public)/`
-- [ ] T052 [US2] Add US2 contract and E2E tests in `apps/api/tests/contract/us2-public.contract.spec.ts` and `apps/web/tests/e2e/us2-landing.spec.ts`
+- [x] T052 [US2] Add US2 contract and E2E tests in `apps/api/tests/contract/us2-public.contract.spec.ts` and `apps/web/tests/e2e/us2-landing.spec.ts`
 
 ## Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)
 

@@ -6,7 +6,7 @@ import { featuredPrograms } from "@/features/public-catalog/catalog-data";
 import { ProgramCard } from "@/features/public-catalog/program-card";
 
 export const metadata: Metadata = {
-  title: "Trang chủ",
+  title: { absolute: "Trang chủ | HN Learning" },
   description:
     "HN Learning - Nền tảng học tập đa chi nhánh với chương trình IELTS, Tiếng Anh giao tiếp, Tiếng Anh thiếu niên và kỹ năng học thuật. Giáo viên đồng hành, lộ trình minh bạch.",
   openGraph: {

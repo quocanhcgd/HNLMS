@@ -11,9 +11,11 @@ test("route metadata and deep links survive refresh/history", async ({ page }) =
   await page.reload();
   await expect(page.locator('[data-product-space="lms"]')).toBeVisible();
   await page.goBack();
-  await expect(page).toHaveTitle(/Control Plane/);
+  await expect(page).toHaveURL(/\/platform$/, { timeout: 15_000 });
+  await expect(page).toHaveTitle(/Control Plane/, { timeout: 15_000 });
   await page.goBack();
-  await expect(page).toHaveTitle(/HN Learning/);
+  await expect(page).toHaveURL(/\/$/, { timeout: 15_000 });
+  await expect(page).toHaveTitle(/HN Learning/, { timeout: 15_000 });
 });
 
 test("unknown route uses the not-found boundary", async ({ page }) => {

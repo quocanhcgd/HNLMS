@@ -325,3 +325,31 @@ npx playwright test         PASS - 28 tests across chromium, visual-desktop, vis
 - **Next allowed work**: bắt đầu T024 foundational backend song song với các việc còn lại của UI/organization.
 - **Owner sign-off**: Accepted for T023 on 2026-08-21; UI foundation gate is closed.
 - **Still blocked**: production full-stack vẫn bị chặn bởi database/auth/provider/infra readiness checklist.
+
+## US2 Public Acquisition Acceptance Gate - 2026-08-22
+
+**Scope**: T047-T052, từ landing content lifecycle đến public catalog, SEO và consultation submission.
+
+### Evidence
+
+- Draft và revoked content không xuất hiện trong published query; publish tăng version và ghi actor/timestamp.
+- Public content query giữ organization scope và không làm lộ content của tenant khác.
+- Consultation bắt buộc consent, lưu source/nhu cầu/branch và trả cùng kết quả khi gửi lại idempotency key.
+- E2E duyệt landing page, catalog, chi tiết chương trình và gửi consultation với payload/source/consent/submission key đúng.
+- Metadata trang chủ, sitemap, robots và loading/error/empty states được kiểm tra; history navigation ổn định dưới tải song song.
+
+### Commands and results
+
+```text
+npm test                                      PASS - 277 tests
+npm run typecheck                             PASS
+npm run lint                                  PASS
+npm run format:check                          PASS
+npm run build                                 PASS - 22 static/SSG pages
+npx playwright test --project=chromium        PASS - 17 tests
+```
+
+### Gate decision
+
+- **PASS for US2**: Phase 5 hoàn tất và có contract/E2E evidence cho ba acceptance scenario.
+- **Next allowed work**: bắt đầu T053 trong Phase 6 / US3 admission flow.

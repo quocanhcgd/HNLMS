@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T16:36:56.336Z",
+  "updatedAt": "2026-08-21T17:05:05.315Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T052",
-    "title": "Add US2 contract and E2E tests in apps/api/tests/contract/us2-public.contract.spec.ts and apps/web/tests/e2e/us2-landing.spec.ts",
-    "phase": "Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)",
+    "id": "T053",
+    "title": "Tạo Lead, Consultation, LeadAssignment migrations/entities trong apps/api/src/modules/marketing-admission/",
+    "phase": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
     "status": "next",
     "percent": 0,
-    "activity": "Phase 5 Wave 2 hoàn tất; T052 là task tiếp theo.",
+    "activity": "US2 acceptance gate hoàn tất; T053 là task tiếp theo.",
     "startedAt": null,
-    "updatedAt": "2026-08-21T16:36:56.336Z"
+    "updatedAt": "2026-08-21T17:05:05.315Z"
   },
   "nextTask": {
-    "id": "T052",
-    "title": "Add US2 contract and E2E tests in apps/api/tests/contract/us2-public.contract.spec.ts and apps/web/tests/e2e/us2-landing.spec.ts",
+    "id": "T053",
+    "title": "Tạo Lead, Consultation, LeadAssignment migrations/entities trong apps/api/src/modules/marketing-admission/",
     "percent": 0
   },
   "overall": {
-    "done": 51,
+    "done": 52,
     "total": 175,
-    "percent": 29.1
+    "percent": 29.7
   },
   "phases": [
     {
@@ -51,9 +51,9 @@
     },
     {
       "name": "Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)",
-      "done": 5,
+      "done": 6,
       "total": 6,
-      "percent": 83.3
+      "percent": 100
     },
     {
       "name": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "509cdf1",
-    "message": "feat(T051): add public SEO metadata, sitemap, robots, and nested loading/error/empty states",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/509cdf1"
+    "sha": "58d800d",
+    "message": "fix: close Phase 5 landing Wave 2",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/58d800d"
   },
   "ci": {
     "status": "unknown",

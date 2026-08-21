@@ -11,8 +11,8 @@
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T051 are complete except T052 is the next open task.
-- Current baseline: Phase 5 Wave 2 is integrated on `main`; T052 is next.
+- Tasks: `T001` to `T175`; T001-T052 are complete; T053 is the next open task.
+- Current baseline: Phase 5 / US2 acceptance gate is closed; Phase 6 / US3 starts at T053.
 
 ## Source Of Truth Order
 
@@ -129,3 +129,5 @@ Before ending every task:
 - 2026-08-21: Phase 5 Wave 1 merged T047 landing content schema, T048 public catalog and T050 consultation/idempotency; 195 unit tests and consultation E2E pass.
 
 - 2026-08-21: Phase 5 Wave 2 merged T049 landing admin CRUD/lifecycle/order and T051 SEO/sitemap/route states; 273 unit tests, typecheck, lint, format and production build pass.
+
+- 2026-08-22: T052 closed US2 with publication/tenant/idempotency/consent contract coverage and landing/catalog/consultation E2E; 277 unit/contract and 17 Chromium E2E tests pass.
