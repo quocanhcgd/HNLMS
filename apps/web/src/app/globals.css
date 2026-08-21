@@ -714,3 +714,6 @@ a {
     display: none;
   }
 }
+.pageFrame {
+  width: 100%;
+}

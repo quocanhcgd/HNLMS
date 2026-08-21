@@ -13,6 +13,7 @@ import {
 import { Avatar, Group, SegmentedControl, Table, Text } from "@mantine/core";
 import { ArrowDown, ArrowUp, ArrowUpDown, ListFilter, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
+import { EmptyState } from "@/components/domain";
 import { PageToolbar, UiBadge, UiTable, UiTextInput, UiButton, UiSelect } from "@/components/ui";
 import { useUI } from "@/lib/providers";
 
@@ -224,12 +225,10 @@ export default function Leads() {
             ) : (
               <Table.Tr>
                 <Table.Td colSpan={columns.length}>
-                  <div className="tableEmpty">
-                    <Text fw={600}>Không tìm thấy khách hàng</Text>
-                    <Text size="sm" c="dimmed">
-                      Hãy thay đổi từ khóa hoặc bộ lọc trạng thái.
-                    </Text>
-                  </div>
+                  <EmptyState
+                    title="Không tìm thấy khách hàng"
+                    description="Hãy thay đổi từ khóa hoặc bộ lọc trạng thái."
+                  />
                 </Table.Td>
               </Table.Tr>
             )}
