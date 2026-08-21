@@ -82,7 +82,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T043 [US1] Implement role/permission assignment và scope grant UI/API trong `apps/api/src/modules/identity-access/` và `apps/web/src/app/admin/access/`
 - [x] T044 [US1] Implement common settings và Mantine theme preview/publish/rollback trong `apps/api/src/modules/organization-branch/` và `apps/web/src/app/admin/settings/`
 - [x] T045 [US1] Implement organization module enable/disable UI và effective-state explanation trong `apps/web/src/app/admin/modules/`
-- [ ] T046 [US1] Add US1 API contract, authorization and E2E tests in `apps/api/tests/contract/us1-organization.contract.spec.ts` and `apps/web/tests/e2e/us1-organization.spec.ts`
+- [x] T046 [US1] Add US1 API contract, authorization and E2E tests in `apps/api/tests/contract/us1-organization.contract.spec.ts` and `apps/web/tests/e2e/us1-organization.spec.ts`
 
 ## Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)
 

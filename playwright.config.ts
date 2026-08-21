@@ -6,7 +6,7 @@ export default defineConfig({
   outputDir: "test-results",
   reporter: [["list"], ["html", { outputFolder: "playwright-report", open: "never" }]],
   use: {
-    baseURL: "http://localhost:3020",
+    baseURL: "http://localhost:3100",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
@@ -18,8 +18,8 @@ export default defineConfig({
     { name: "accessibility", testMatch: /accessibility\/.*\.spec\.ts/, use: { ...devices["Desktop Chrome"] } },
   ],
   webServer: {
-    command: "npm run dev --workspace=@hnlms/web -- -p 3020",
-    url: "http://localhost:3020",
+    command: "npm run dev --workspace=@hnlms/web -- -p 3100",
+    url: "http://localhost:3100",
     reuseExistingServer: true,
   },
 });
