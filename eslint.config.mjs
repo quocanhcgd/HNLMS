@@ -13,4 +13,17 @@ export default [
     },
   },
   { files: ["**/*.d.ts"], rules: { "@typescript-eslint/triple-slash-reference": "off" } },
+  {
+    files: ["docs/dashboard-app.js"],
+    languageOptions: {
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        navigator: "readonly",
+        fetch: "readonly",
+        setInterval: "readonly",
+      },
+    },
+  },
+  { files: ["scripts/**/*.mjs"], languageOptions: { globals: { console: "readonly", process: "readonly" } } },
 ];

@@ -1,0 +1,87 @@
+<main class="wrap">
+  <section class="top">
+    <div>
+      <div class="eyebrow">HN-LMS / Coding Control Room</div>
+      <div class="title">Tiến trình triển khai</div>
+      <div class="muted">Xem hệ thống đang làm gì, mức hoàn tất task/phase/toàn dự án và blocker hiện tại.</div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="reload">Làm mới ngay</button
+      ><button class="btn" id="copyNext">Copy prompt task tiếp theo</button>
+    </div>
+  </section>
+  <section class="live">
+    <div class="card">
+      <h3>Đang làm gì?</h3>
+      <div class="row">
+        <div class="current" id="currentTask">Đang tải...</div>
+        <span class="status-pill" id="currentState">—</span>
+      </div>
+      <div class="activity" id="activity">Đang đọc project-status.json</div>
+      <div class="progress"><i id="taskBar"></i></div>
+      <div class="triple">
+        <div class="mini"><span class="muted">Task</span><b id="taskPercent">0%</b></div>
+        <div class="mini"><span class="muted">Phase</span><b id="phasePercent">0%</b></div>
+        <div class="mini"><span class="muted">Toàn dự án</span><b id="overallPercent">0%</b></div>
+      </div>
+      <div class="meta" id="currentMeta"></div>
+    </div>
+    <div class="card">
+      <h3>Đã xong / tiếp theo</h3>
+      <div class="current" id="doneSummary">—</div>
+      <div class="meta" id="phaseSummary">—</div>
+      <hr style="border: 0; border-top: 1px solid var(--line); margin: 13px 0" />
+      <div class="muted">Task tiếp theo</div>
+      <div class="activity" id="nextTask">—</div>
+      <div class="meta" id="commitInfo"></div>
+    </div>
+    <div class="card">
+      <h3>Blockers và đồng bộ</h3>
+      <div class="blockers" id="blockers">—</div>
+      <div class="sync"><i class="dot" id="syncDot"></i><span id="syncText">Auto-refresh mỗi 15 giây</span></div>
+      <div class="meta"><a class="link" href="https://github.com/quocanhcgd/HNLMS/actions">GitHub Actions</a></div>
+    </div>
+  </section>
+  <section class="stats">
+    <div class="stat"><span class="muted">Tổng task</span><strong id="total">0</strong></div>
+    <div class="stat"><span class="muted">Đã xong</span><strong id="done">0</strong></div>
+    <div class="stat"><span class="muted">Còn lại</span><strong id="todo">0</strong></div>
+    <div class="stat"><span class="muted">Tiến độ</span><strong id="percent">0%</strong></div>
+    <div class="stat"><span class="muted">Đang focus</span><strong id="focus">—</strong></div>
+  </section>
+  <section class="phase-grid" id="phases"></section>
+  <section class="panel">
+    <div class="toolbar">
+      <input class="input" id="search" placeholder="Tìm task ID, phase, mô tả hoặc path..." /><select
+        class="select"
+        id="status"
+      >
+        <option value="all">Tất cả</option>
+        <option value="todo">Chưa làm</option>
+        <option value="done">Đã xong</option></select
+      ><select class="select" id="phase">
+        <option value="all">Tất cả phase</option></select
+      ><span class="muted" id="shown"></span>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Phase</th>
+            <th>Trạng thái</th>
+            <th>Task</th>
+            <th>Path</th>
+            <th>Prompt</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+  <div class="footer">
+    Status tự tải từ <code>project-status.json</code> mỗi 15 giây. Dữ liệu mới xuất hiện sau khi agent commit/push hoặc
+    chạy script status.
+  </div>
+</main>

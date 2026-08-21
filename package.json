@@ -21,7 +21,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check \"apps/**/src/**/*.{ts,tsx,js,mjs,css,json,md}\" \"worker/src/**/*.{ts,js,json,md}\" \"packages/**/src/**/*.{ts,tsx,json,md}\" \"tests/**/*.{ts,tsx}\" \"*.{json,md,mjs}\" \"docs/development/**/*.{md,json}\" \"infra/**/*.{md,json}\"",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "status:generate": "node scripts/update-project-status.mjs && node scripts/generate-task-dashboard.mjs",
+    "status:start": "cross-env STATUS_TASK=$npm_config_task STATUS_STATE=in_progress STATUS_PERCENT=0 STATUS_ACTIVITY=\"Bắt đầu task\" npm run status:generate"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -30,6 +32,7 @@
     "eslint": "9.39.5",
     "prettier": "3.9.6",
     "typescript-eslint": "8.67.0",
-    "vitest": "3.2.7"
+    "vitest": "3.2.7",
+    "cross-env": "^10.0.0"
   }
 }

@@ -23,6 +23,10 @@ Blockers:
 Next task:
 ```
 
+## Live Status Handoff
+
+Every task must update `docs/project-status.json` at start, meaningful milestones, blockers, and completion. The public dashboard polls every 15 seconds; without this update users cannot see current coding activity.
+
 ## Rules
 
 - Do not claim a task complete from documentation alone when the task asks for code, tests or infrastructure.

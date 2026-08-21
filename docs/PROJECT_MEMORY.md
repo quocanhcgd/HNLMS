@@ -48,7 +48,7 @@ At the start of every task:
 
 1. Read this file and `docs/ai-task-continuity.md`.
 2. Run `git status --short --branch`.
-3. Open the task dashboard: `docs/task-dashboard.html`.
+3. Run `npm run status:generate` and open `docs/task-dashboard.html`.
 4. Select the smallest unblocked task, then read its referenced spec/contract paths.
 5. Check whether another agent changed the same files.
 
@@ -56,8 +56,8 @@ Before ending every task:
 
 1. Run the narrowest relevant tests, typecheck or build.
 2. Update `tasks.md` only when the artifact/test really exists.
-3. Update `docs/ai-task-continuity.md` with completed work, current task, blockers and next task.
-4. Update the HTML dashboard data if task status changed.
+3. Update `docs/ai-task-continuity.md` and `docs/project-status.json` with completed work, current task percentage, activity, blockers and next task.
+4. Run `npm run status:generate` so the HTML task list and live status stay synchronized.
 5. Commit a coherent change; never commit secrets, `.env`, generated output, `node_modules` or private media.
 6. Push only after checking the target branch and remote.
 
@@ -96,3 +96,10 @@ Before ending every task:
 - 2026-08-21: Added theme preset registry with preview/publish/rollback mock lifecycle, contrast validation and token CSS application in UI preview.
 - 2026-08-21: Added UI foundation Playwright projects for visual overflow, Axe accessibility, keyboard and responsive checks; fixed contrast, labels and mobile table overflow.
 - 2026-08-21: UI foundation acceptance gate T023 passed and evidence was recorded in quickstart.
+
+## Live Coding Status
+
+- Dashboard: `https://quocanhcgd.github.io/HNLMS/`.
+- Source: `docs/project-status.json`, polled every 15 seconds.
+- Update command: `npm run status:generate`.
+- Start a task: `npm run status:start --task=T024` or set `STATUS_TASK`, `STATUS_STATE`, `STATUS_PERCENT`, `STATUS_ACTIVITY` before `npm run status:generate`.
