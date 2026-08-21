@@ -1,15 +1,15 @@
 # HN LMS
 
 [![CI](https://github.com/quocanhcgd/HNLMS/actions/workflows/ci.yml/badge.svg)](https://github.com/quocanhcgd/HNLMS/actions/workflows/ci.yml)
-[![Project progress](https://img.shields.io/badge/progress-21%2F175%20tasks-15aebb)](https://quocanhcgd.github.io/HNLMS/)
+[![Project progress](https://img.shields.io/badge/progress-22%2F175%20tasks-15aebb)](https://quocanhcgd.github.io/HNLMS/)
 
 LMS đa ngành, đa chi nhánh với public landing, tuyển sinh, học tập, assessment, multimedia learning, HRM, payroll, finance, reporting và AI governance.
 
 ## Project progress
 
-- Completed: **21 / 175 tasks** (**12.0%**)
+- Completed: **22 / 175 tasks** (**12.6%**)
 - Current phase: **Phase 1 - Setup**
-- Next task: **T021 - Theme preset preview/publish/rollback**
+- Next task: **T023 - UI foundation acceptance gate**
 - Live dashboard: **https://quocanhcgd.github.io/HNLMS/**
 - Source checklist: [tasks.md](./specs/001-lms-multi-branch/tasks.md)
 - Full-stack gate: [full-stack-readiness.md](./specs/001-lms-multi-branch/checklists/full-stack-readiness.md)

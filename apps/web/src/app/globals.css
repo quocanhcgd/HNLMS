@@ -717,3 +717,80 @@ a {
 .pageFrame {
   width: 100%;
 }
+:root[data-mantine-color-scheme="dark"] {
+  --mantine-color-dimmed: var(--hn-dark-muted);
+  --mantine-color-error: var(--hn-dark-validation);
+}
+:root[data-mantine-color-scheme="light"] {
+  --mantine-color-dimmed: var(--hn-light-muted);
+  --mantine-color-error: var(--hn-light-validation);
+}
+.page,
+.pageFrame {
+  width: 100%;
+  min-width: 0;
+}
+.tableWrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.swatch:nth-child(2),
+.swatch:nth-child(3) {
+  color: #071014;
+}
+@media (max-width: 700px) {
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+  .toolbar > * {
+    max-width: 100%;
+    min-width: 0 !important;
+  }
+  .tableWrap {
+    max-width: calc(100vw - 28px);
+  }
+  .tableWrap table {
+    min-width: 760px;
+  }
+}
+:root[data-mantine-color-scheme="dark"] {
+  --mantine-color-body: var(--hn-dark-background) !important;
+  --mantine-color-text: var(--hn-dark-foreground) !important;
+  --mantine-color-dimmed: var(--hn-dark-muted) !important;
+  --mantine-color-default: var(--hn-dark-surface) !important;
+  --mantine-color-default-color: var(--hn-dark-foreground) !important;
+  --mantine-color-default-border: var(--hn-dark-border) !important;
+  --mantine-color-error: var(--hn-dark-validation) !important;
+}
+:root[data-mantine-color-scheme="light"] {
+  --mantine-color-body: var(--hn-light-background) !important;
+  --mantine-color-text: var(--hn-light-foreground) !important;
+  --mantine-color-dimmed: var(--hn-light-muted) !important;
+  --mantine-color-default: var(--hn-light-surface) !important;
+  --mantine-color-default-color: var(--hn-light-foreground) !important;
+  --mantine-color-default-border: var(--hn-light-border) !important;
+  --mantine-color-error: var(--hn-light-validation) !important;
+}
+:root[data-mantine-color-scheme="dark"] .workspaceButton {
+  background: var(--hn-dark-surface);
+  color: var(--hn-dark-foreground);
+}
+:root[data-mantine-color-scheme="light"] .workspaceButton {
+  background: var(--hn-light-surface);
+  color: var(--hn-light-foreground);
+}
+:root[data-mantine-color-scheme="dark"] .mantine-Text-root[data-size="xs"],
+:root[data-mantine-color-scheme="dark"] .mantine-Text-root[data-size="sm"] {
+  color: var(--hn-dark-muted);
+}
+:root[data-mantine-color-scheme="light"] .mantine-Text-root[data-size="xs"],
+:root[data-mantine-color-scheme="light"] .mantine-Text-root[data-size="sm"] {
+  color: var(--hn-light-muted);
+}
+.swatch {
+  color: #071014;
+  font-weight: 650;
+}

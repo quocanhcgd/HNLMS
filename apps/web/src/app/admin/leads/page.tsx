@@ -176,6 +176,7 @@ export default function Leads() {
           placeholder="Tìm theo tên, nhu cầu, nguồn..."
         />
         <UiSelect
+          aria-label="Lọc trạng thái"
           w={190}
           value={status}
           onChange={setStatus}

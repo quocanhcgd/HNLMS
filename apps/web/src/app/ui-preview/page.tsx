@@ -137,7 +137,7 @@ export default function Preview() {
                 <Bell size={17} />
               </ActionIcon>
               <Tooltip label="Tác vụ khác">
-                <ActionIcon variant="subtle">
+                <ActionIcon variant="subtle" aria-label="Tác vụ khác">
                   <Ellipsis size={17} />
                 </ActionIcon>
               </Tooltip>
@@ -182,7 +182,7 @@ export default function Preview() {
             <Text size="sm" fw={600}>
               Tiến độ hồ sơ
             </Text>
-            <Progress value={72} mt={7} mb="lg" />
+            <Progress value={72} mt={7} mb="lg" aria-label="Tiến độ hồ sơ 72 phần trăm" />
             <Button variant="default" onClick={open}>
               Mở hộp thoại xác nhận
             </Button>

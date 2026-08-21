@@ -80,7 +80,7 @@ export default function Platform() {
                   <Table.Td>{r[3]}</Table.Td>
                   <Table.Td>
                     <Group wrap="nowrap">
-                      <Progress value={parseInt(r[4])} w={110} />
+                      <Progress value={parseInt(r[4])} w={110} aria-label={`Quota usage ${r[4]}`} />
                       <Text size="xs">{r[4]}</Text>
                     </Group>
                   </Table.Td>
