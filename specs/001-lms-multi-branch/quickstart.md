@@ -289,4 +289,39 @@ Chỉ coi feature sẵn sàng khi:
 - Backup restore và migration compatibility được kiểm chứng trên staging.
 - Audit, alerting và dashboard vận hành có thể truy vết lỗi bằng correlation ID.
 
+## UI Foundation Acceptance Gate - 2026-08-21
 
+**Scope**: T009 và T012-T022, kiểm tra bằng local Playwright/Chromium và quality scripts từ repository.
+
+### Evidence
+
+- Route boundaries: public, platform và LMS có nested layout/product marker riêng; public/platform không render LMS sidebar.
+- Route states: `loading.tsx`, `error.tsx`, `not-found.tsx`, product metadata, refresh, deep link và back/forward đã kiểm tra.
+- Theme/locale: mặc định tiếng Việt + dark; vi/en persistence; light/dark/system; semantic preset preview/publish/rollback; contrast validation.
+- Navigation: typed manifest, active parent/child, role/module visibility mock, desktop collapse và mobile drawer.
+- Shared UI: Mantine wrappers, page/data states, lead empty state và TanStack Table integration.
+- Responsive: no horizontal overflow cho `/`, `/platform`, `/admin`, `/admin/leads`, `/ui-preview` ở desktop 1440x900 và mobile Pixel 5.
+- Accessibility: Axe WCAG 2A/2AA/2.1A/2.1AA không còn lỗi serious/critical trên năm route; keyboard drawer/menu flow đạt.
+
+### Commands and results
+
+```text
+npm run format:check       PASS
+npm run lint               PASS
+npm run typecheck          PASS
+npm test                   PASS - 30 tests
+npx playwright test         PASS - 28 tests across chromium, visual-desktop, visual-mobile, accessibility
+```
+
+### Viewports
+
+- Visual desktop: 1440x900.
+- Visual mobile: Pixel 5 emulation.
+- Existing responsive E2E also covers 390x844 behavior for public/platform/LMS drawers.
+
+### Gate decision
+
+- **PASS for UI foundation**: T009 and T012-T022 có artifact và bằng chứng kiểm thử.
+- **Next allowed work**: bắt đầu T024 foundational backend song song với các việc còn lại của UI/organization.
+- **Owner sign-off**: Accepted for T023 on 2026-08-21; UI foundation gate is closed.
+- **Still blocked**: production full-stack vẫn bị chặn bởi database/auth/provider/infra readiness checklist.
