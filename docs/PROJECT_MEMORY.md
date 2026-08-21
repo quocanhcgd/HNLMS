@@ -125,3 +125,5 @@ Before ending every task:
 - 2026-08-21: Phase 4 Wave 2 merged T042 branch lifecycle and T044 organization settings/theme service/UI; 176 tests pass.
 
 - 2026-08-21: Phase 4 US1 closed through T046. API contract 3/3 and Playwright E2E 2/2 passed; organization/access/settings/module foundations complete.
+
+- 2026-08-21: Phase 5 Wave 1 merged T047 landing content schema, T048 public catalog and T050 consultation/idempotency; 195 unit tests and consultation E2E pass.

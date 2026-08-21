@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T10:32:07.615Z",
+  "updatedAt": "2026-08-21T10:50:53.757Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "PHASE5-WAVE1",
-    "title": "Landing and Consultation Wave 1",
+    "id": "T049",
+    "title": "Implement landing content admin CRUD, preview, publish, revoke và ordering trong apps/web/src/app/admin/marketing/ và apps/api/src/modules/marketing-admission/",
     "phase": "Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)",
-    "status": "in_progress",
-    "percent": 5,
-    "activity": "Đang chạy 3 agent song song cho landing schema, public catalog và consultation flow.",
-    "startedAt": "2026-08-21T10:32:07.614Z",
-    "updatedAt": "2026-08-21T10:32:07.615Z"
+    "status": "next",
+    "percent": 0,
+    "activity": "Phase 5 Wave 1 đã merge; chờ landing admin CRUD T049 và SEO/route states T051.",
+    "startedAt": null,
+    "updatedAt": "2026-08-21T10:50:53.757Z"
   },
   "nextTask": {
-    "id": "T047",
-    "title": "Tạo LandingContent entity, versioning và publication migrations trong apps/api/src/modules/marketing-admission/",
+    "id": "T049",
+    "title": "Implement landing content admin CRUD, preview, publish, revoke và ordering trong apps/web/src/app/admin/marketing/ và apps/api/src/modules/marketing-admission/",
     "percent": 0
   },
   "overall": {
-    "done": 46,
+    "done": 49,
     "total": 175,
-    "percent": 26.3
+    "percent": 28
   },
   "phases": [
     {
@@ -51,9 +51,9 @@
     },
     {
       "name": "Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)",
-      "done": 0,
+      "done": 3,
       "total": 6,
-      "percent": 0
+      "percent": 50
     },
     {
       "name": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "23a6cb8",
-    "message": "chore: close Phase 4 Wave 2",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/23a6cb8"
+    "sha": "f46cfea",
+    "message": "fix: integrate Phase 5 Wave 1 worktrees",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/f46cfea"
   },
   "ci": {
     "status": "unknown",
