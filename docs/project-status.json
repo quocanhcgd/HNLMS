@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T10:05:28.863Z",
+  "updatedAt": "2026-08-21T10:06:50.743Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T042",
-    "title": "Implement branch CRUD, status lifecycle và branch scope",
+    "id": "PHASE4-WAVE2",
+    "title": "US1 Branch lifecycle and settings/theme",
     "phase": "Phase 4: User Story 1 - Quản trị tổ chức, cài đặt và phân quyền (P1) 🎯 MVP",
-    "status": "next",
-    "percent": 0,
-    "activity": "Phase 4 Wave 1 hoàn tất; chuẩn bị branch lifecycle service T042 và settings/theme T044.",
-    "startedAt": null,
-    "updatedAt": "2026-08-21T10:05:28.862Z"
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Wave 1 đã merge; đang chạy T042 branch lifecycle và T044 organization settings/theme song song.",
+    "startedAt": "2026-08-21T10:06:50.741Z",
+    "updatedAt": "2026-08-21T10:06:50.743Z"
   },
   "nextTask": {
-    "id": "T041",
-    "title": "Tạo Branch, OrganizationSetting và BrandTheme migrations/entities trong apps/api/src/modules/organization-branch/",
+    "id": "T042",
+    "title": "Implement branch CRUD, status lifecycle và branch scope trong apps/api/src/modules/organization-branch/branch.service.ts",
     "percent": 0
   },
   "overall": {
-    "done": 40,
+    "done": 43,
     "total": 175,
-    "percent": 22.9
+    "percent": 24.6
   },
   "phases": [
     {
@@ -45,9 +45,9 @@
     },
     {
       "name": "Phase 4: User Story 1 - Quản trị tổ chức, cài đặt và phân quyền (P1) 🎯 MVP",
-      "done": 0,
+      "done": 3,
       "total": 6,
-      "percent": 0
+      "percent": 50
     },
     {
       "name": "Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "2196625",
-    "message": "test: expand authorization negative access matrix",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/2196625"
+    "sha": "093417e",
+    "message": "chore: close Phase 4 Wave 1",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/093417e"
   },
   "ci": {
     "status": "unknown",
@@ -195,37 +195,40 @@
   },
   "activeTracks": [
     {
-      "agent": "us1-schema",
-      "taskId": "T041",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T041 hoàn tất và đã merge qua quality gate.",
-      "paths": [
-        "apps/api/src/modules/organization-branch",
-        "apps/api/src/database/schema/organization-branch.ts",
-        "tests/unit/organization-schema*"
-      ]
+      "agent": "us1-branch-service",
+      "taskId": "T042",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động branch CRUD/lifecycle/scope",
+      "paths": ["apps/api/src/modules/organization-branch/branch.service.ts", "tests/unit/branch-service*"]
     },
     {
-      "agent": "us1-access",
-      "taskId": "T043",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T043 hoàn tất và đã merge qua quality gate.",
+      "agent": "us1-settings-theme",
+      "taskId": "T044",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động organization settings/theme preview publish rollback",
       "paths": [
-        "apps/api/src/modules/identity-access/assignments",
-        "apps/web/src/app/admin/access",
-        "tests/unit/access-assignment*"
+        "apps/api/src/modules/organization-branch/settings*",
+        "apps/web/src/app/admin/settings",
+        "tests/unit/settings-theme*"
       ]
-    },
-    {
-      "agent": "us1-modules-ui",
-      "taskId": "T045",
-      "status": "completed",
-      "percent": 100,
-      "activity": "T045 hoàn tất và đã merge qua quality gate.",
-      "paths": ["apps/web/src/app/admin/modules", "apps/web/src/features/modules", "tests/unit/module-management-ui*"]
     }
   ],
-  "pathLocks": []
+  "pathLocks": [
+    {
+      "owner": "us1-branch-service",
+      "taskId": "T042",
+      "paths": ["apps/api/src/modules/organization-branch/branch.service.ts", "tests/unit/branch-service*"]
+    },
+    {
+      "owner": "us1-settings-theme",
+      "taskId": "T044",
+      "paths": [
+        "apps/api/src/modules/organization-branch/settings*",
+        "apps/web/src/app/admin/settings",
+        "tests/unit/settings-theme*"
+      ]
+    }
+  ]
 }
