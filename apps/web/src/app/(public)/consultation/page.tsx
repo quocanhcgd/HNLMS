@@ -4,7 +4,17 @@ import { ConsultationForm } from "./consultation-form";
 
 export const metadata: Metadata = {
   title: "Đăng ký tư vấn",
-  description: "Gửi yêu cầu để Hanoi Learning tư vấn lộ trình học phù hợp.",
+  description:
+    "Gửi yêu cầu tư vấn lộ trình học tại HN Learning. Đội ngũ tư vấn viên sẽ liên hệ trong giờ làm việc để gợi ý chương trình phù hợp.",
+  openGraph: {
+    title: "Đăng ký tư vấn | HN Learning",
+    description:
+      "Chia sẻ mục tiêu học tập, HN Learning sẽ tư vấn lộ trình phù hợp cho bạn.",
+    url: "/consultation",
+  },
+  alternates: {
+    canonical: "/consultation",
+  },
 };
 
 export default function ConsultationPage() {

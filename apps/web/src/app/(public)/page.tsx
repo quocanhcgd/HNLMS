@@ -1,8 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Avatar, Badge, Button, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
 import { ArrowRight, Check, GraduationCap, MapPin, Quote, Sparkles } from "lucide-react";
 import { featuredPrograms } from "@/features/public-catalog/catalog-data";
 import { ProgramCard } from "@/features/public-catalog/program-card";
+
+export const metadata: Metadata = {
+  title: "Trang chủ",
+  description:
+    "HN Learning - Nền tảng học tập đa chi nhánh với chương trình IELTS, Tiếng Anh giao tiếp, Tiếng Anh thiếu niên và kỹ năng học thuật. Giáo viên đồng hành, lộ trình minh bạch.",
+  openGraph: {
+    title: "HN Learning - Học đúng lộ trình, tiến bộ có thể nhìn thấy",
+    description:
+      "Chương trình cá nhân hóa, giáo viên đồng hành và hệ thống theo dõi minh bạch cho học viên và phụ huynh.",
+    url: "/",
+    images: [{ url: "/og-home.png", width: 1200, height: 630, alt: "HN Learning" }],
+  },
+  alternates: {
+    canonical: "/",
+  },
+};
 
 const branches = [
   ["Cau Giay", "Tang 4, 36 Hoang Quoc Viet", "8 lop dang tuyen"],
