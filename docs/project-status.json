@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T07:22:09.609Z",
+  "updatedAt": "2026-08-21T07:22:57.457Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T038",
-    "title": "Tạo foundational unit tests cho authz, module dependency, license signature, idempotency và tenant resolver trong apps/api/tests/unit/ và packages/*/tests/",
+    "id": "WAVE3",
+    "title": "Phase 3 Validation Wave",
     "phase": "Phase 3: Foundational Backend",
-    "status": "next",
-    "percent": 0,
-    "activity": "Wave 2 hoàn tất; chuẩn bị chạy Wave 3 T038/T039/T040 song song.",
-    "startedAt": null,
-    "updatedAt": "2026-08-21T07:22:09.609Z"
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Đang chạy 3 agent song song cho foundational tests, authorization matrix và tenant isolation.",
+    "startedAt": "2026-08-21T07:22:57.455Z",
+    "updatedAt": "2026-08-21T07:22:57.457Z"
   },
   "nextTask": {
     "id": "T038",
@@ -195,45 +195,45 @@
   },
   "activeTracks": [
     {
-      "agent": "wave2-super-license",
-      "taskId": "T031",
+      "agent": "wave3-foundation-tests",
+      "taskId": "T038",
       "status": "starting",
       "percent": 0,
-      "activity": "Khởi động super-admin license foundation",
-      "paths": ["apps/api/src/modules/super-admin-license", "tests/unit/super-admin-license*"]
+      "activity": "Khởi động foundational unit coverage",
+      "paths": ["tests/unit/foundation-*", "tests/unit/*foundation*"]
     },
     {
-      "agent": "wave2-guards",
-      "taskId": "T032",
+      "agent": "wave3-authz-matrix",
+      "taskId": "T039",
       "status": "starting",
       "percent": 0,
-      "activity": "Khởi động module/license guard foundation",
-      "paths": ["apps/api/src/shared/module-guard", "worker/src/shared/module-guard", "tests/unit/module-guard*"]
+      "activity": "Khởi động authorization negative matrix",
+      "paths": ["apps/api/tests/authorization", "tests/unit/authorization-*"]
     },
     {
-      "agent": "wave2-observability",
-      "taskId": "T037",
+      "agent": "wave3-tenant-isolation",
+      "taskId": "T040",
       "status": "starting",
       "percent": 0,
-      "activity": "Khởi động observability/health foundation",
-      "paths": ["apps/api/src/shared/observability", "infra/systemd", "infra/nginx", "tests/unit/observability*"]
+      "activity": "Khởi động tenant isolation integration tests",
+      "paths": ["apps/api/tests/integration", "tests/unit/tenant-isolation*"]
     }
   ],
   "pathLocks": [
     {
-      "owner": "wave2-super-license",
-      "taskId": "T031",
-      "paths": ["apps/api/src/modules/super-admin-license", "tests/unit/super-admin-license*"]
+      "owner": "wave3-foundation-tests",
+      "taskId": "T038",
+      "paths": ["tests/unit/foundation-*", "tests/unit/*foundation*"]
     },
     {
-      "owner": "wave2-guards",
-      "taskId": "T032",
-      "paths": ["apps/api/src/shared/module-guard", "worker/src/shared/module-guard", "tests/unit/module-guard*"]
+      "owner": "wave3-authz-matrix",
+      "taskId": "T039",
+      "paths": ["apps/api/tests/authorization", "tests/unit/authorization-*"]
     },
     {
-      "owner": "wave2-observability",
-      "taskId": "T037",
-      "paths": ["apps/api/src/shared/observability", "infra/systemd", "infra/nginx", "tests/unit/observability*"]
+      "owner": "wave3-tenant-isolation",
+      "taskId": "T040",
+      "paths": ["apps/api/tests/integration", "tests/unit/tenant-isolation*"]
     }
   ]
 }
