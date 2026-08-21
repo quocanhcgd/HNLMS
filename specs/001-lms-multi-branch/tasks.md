@@ -54,7 +54,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T024 Tạo migration framework, database connection, tenant database resolver và migration runner trong `apps/api/src/database/` và `infra/migrations/`
 - [x] T025 Tạo shared PostgreSQL entities cho `Organization`, `TenantInstance`, `User`, `Role`, `Permission`, `ScopeGrant` và `AuditEvent` trong `apps/api/src/modules/identity-access/`
 - [x] T026 Tạo authorization context middleware và scope guards cho organization, branch, class, student delegation trong `packages/authorization/` và `apps/api/src/shared/authz/`
-- [ ] T027 Tạo authentication/session flow, password policy, account status và super-admin boundary trong `apps/api/src/modules/identity-access/`
+- [x] T027 Tạo authentication/session flow, password policy, account status và super-admin boundary trong `apps/api/src/modules/identity-access/`
 - [ ] T028 Tạo audit event service append-only và correlation ID middleware trong `apps/api/src/shared/audit/` và `apps/api/src/shared/observability/`
 - [ ] T029 Tạo module manifest schema, dependency resolver, module registry và effective module state trong `packages/module-sdk/` và `apps/api/src/modules/module-registry/`
 - [ ] T030 Tạo signed license document schema, verifier, cache, grace/expiry policy và quota evaluator trong `packages/license-contracts/` và `apps/api/src/modules/license-runtime/`
