@@ -11,7 +11,7 @@ class HealthController {
 class AppModule {}
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ origin: process.env.WEB_ORIGIN ?? "http://localhost:3000", credentials: true });
+  app.enableCors({ origin: process.env.WEB_ORIGIN ?? "http://localhost:3100", credentials: true });
   await app.listen(Number(process.env.API_PORT ?? 4000));
 }
 void bootstrap();

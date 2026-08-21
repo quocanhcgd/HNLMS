@@ -7,7 +7,7 @@
 
 - Repository: `https://github.com/quocanhcgd/HNLMS`
 - Default branch: `main`
-- Local prototype: Next.js App Router at `apps/web`
+- Local prototype: Next.js App Router at `apps/web`, demo port `3100` (`http://localhost:3100/ui-preview`)
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; database and production infrastructure are not implemented yet.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.

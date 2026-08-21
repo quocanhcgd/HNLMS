@@ -23,7 +23,7 @@ npm install
 npm run dev
 ```
 
-Mở `http://localhost:3000/ui-preview` hoặc route `/admin`, `/admin/leads`, `/platform`.
+Mở `http://localhost:3100/ui-preview` hoặc route `/admin`, `/admin/leads`, `/platform`.
 
 ## Repository rules
 

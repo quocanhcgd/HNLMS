@@ -10,8 +10,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=@hnlms/web",
-    "dev:web": "npm run dev --workspace=@hnlms/web",
+    "dev": "npm run dev --workspace=@hnlms/web -- -p 3100",
+    "dev:web": "npm run dev --workspace=@hnlms/web -- -p 3100",
     "dev:api": "npm run dev --workspace=@hnlms/api",
     "dev:worker": "npm run dev --workspace=@hnlms/worker",
     "build": "npm run build --workspace=@hnlms/web",
