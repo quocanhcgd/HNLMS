@@ -1,5 +1,5 @@
 import type { NavigationItem } from "@hnlms/ui";
-import { BarChart3, BookOpen, Building2, ClipboardList, LayoutDashboard, Settings, Users, Wallet } from "lucide-react";
+import { BarChart3, BookOpen, Building2, ClipboardList, LayoutDashboard, Megaphone, Settings, Users, Wallet } from "lucide-react";
 import type { ComponentType } from "react";
 
 export type NavIcon = ComponentType<{ size?: number }>;
@@ -33,6 +33,28 @@ export const lmsNavigation: readonly NavigationManifest[] = [
         key: "leads",
         labelKey: "leads",
         href: "/admin/leads",
+        roles: ["organization_admin", "branch_manager", "consultant"],
+      },
+    ],
+  },
+  {
+    key: "marketing",
+    labelKey: "marketing",
+    href: "/admin/marketing",
+    icon: Megaphone,
+    moduleKey: "marketing",
+    roles: ["organization_admin", "branch_manager", "consultant"],
+    children: [
+      {
+        key: "content",
+        labelKey: "landingContent",
+        href: "/admin/marketing/content",
+        roles: ["organization_admin", "branch_manager"],
+      },
+      {
+        key: "publicPreview",
+        labelKey: "publicPreview",
+        href: "/admin/marketing/preview",
         roles: ["organization_admin", "branch_manager", "consultant"],
       },
     ],
@@ -110,7 +132,7 @@ export const lmsNavigation: readonly NavigationManifest[] = [
 export const mockNavigationContext: NavigationContext = {
   role: "organization_admin",
   permissions: new Set(["navigation:read"]),
-  effectiveModules: new Set(["admission", "academic", "learning", "finance", "hrm", "reporting"]),
+  effectiveModules: new Set(["admission", "marketing", "academic", "learning", "finance", "hrm", "reporting"]),
 };
 
 export function isNavigationVisible(item: NavigationManifest, context: NavigationContext): boolean {
