@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T10:30:50.412Z",
+  "updatedAt": "2026-08-21T10:32:07.615Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T047",
-    "title": "Tạo LandingContent entity, versioning và publication migrations trong apps/api/src/modules/marketing-admission/",
+    "id": "PHASE5-WAVE1",
+    "title": "Landing and Consultation Wave 1",
     "phase": "Phase 5: User Story 2 - Landing page và đăng ký tư vấn (P1)",
-    "status": "next",
-    "percent": 0,
-    "activity": "Phase 4 US1 đã hoàn tất qua T046; chuẩn bị Phase 5 landing content và consultation.",
-    "startedAt": null,
-    "updatedAt": "2026-08-21T10:30:50.412Z"
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Đang chạy 3 agent song song cho landing schema, public catalog và consultation flow.",
+    "startedAt": "2026-08-21T10:32:07.614Z",
+    "updatedAt": "2026-08-21T10:32:07.615Z"
   },
   "nextTask": {
     "id": "T047",
@@ -195,39 +195,60 @@
   },
   "activeTracks": [
     {
-      "agent": "us1-branch-service",
-      "taskId": "T042",
+      "agent": "landing-schema",
+      "taskId": "T047",
       "status": "starting",
       "percent": 0,
-      "activity": "Khởi động branch CRUD/lifecycle/scope",
-      "paths": ["apps/api/src/modules/organization-branch/branch.service.ts", "tests/unit/branch-service*"]
+      "activity": "Khởi động LandingContent schema/version/publication",
+      "paths": [
+        "apps/api/src/modules/marketing-admission",
+        "apps/api/src/database/schema/marketing-admission.ts",
+        "tests/unit/landing-schema*"
+      ]
     },
     {
-      "agent": "us1-settings-theme",
-      "taskId": "T044",
+      "agent": "public-catalog",
+      "taskId": "T048",
       "status": "starting",
       "percent": 0,
-      "activity": "Khởi động organization settings/theme preview publish rollback",
+      "activity": "Khởi động public landing/catalog UI",
+      "paths": ["apps/web/src/app/(public)", "apps/web/src/features/public-catalog", "tests/unit/public-catalog*"]
+    },
+    {
+      "agent": "consultation",
+      "taskId": "T050",
+      "status": "starting",
+      "percent": 0,
+      "activity": "Khởi động consultation form/idempotency",
       "paths": [
-        "apps/api/src/modules/organization-branch/settings*",
-        "apps/web/src/app/admin/settings",
-        "tests/unit/settings-theme*"
+        "apps/api/src/modules/marketing-admission/consultation",
+        "apps/web/src/app/(public)/consultation",
+        "tests/unit/consultation*"
       ]
     }
   ],
   "pathLocks": [
     {
-      "owner": "us1-branch-service",
-      "taskId": "T042",
-      "paths": ["apps/api/src/modules/organization-branch/branch.service.ts", "tests/unit/branch-service*"]
+      "owner": "landing-schema",
+      "taskId": "T047",
+      "paths": [
+        "apps/api/src/modules/marketing-admission",
+        "apps/api/src/database/schema/marketing-admission.ts",
+        "tests/unit/landing-schema*"
+      ]
     },
     {
-      "owner": "us1-settings-theme",
-      "taskId": "T044",
+      "owner": "public-catalog",
+      "taskId": "T048",
+      "paths": ["apps/web/src/app/(public)", "apps/web/src/features/public-catalog", "tests/unit/public-catalog*"]
+    },
+    {
+      "owner": "consultation",
+      "taskId": "T050",
       "paths": [
-        "apps/api/src/modules/organization-branch/settings*",
-        "apps/web/src/app/admin/settings",
-        "tests/unit/settings-theme*"
+        "apps/api/src/modules/marketing-admission/consultation",
+        "apps/web/src/app/(public)/consultation",
+        "tests/unit/consultation*"
       ]
     }
   ]
