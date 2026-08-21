@@ -89,6 +89,12 @@ function renderStatus(status) {
   $("#todo").textContent = (status.overall?.total || 0) - (status.overall?.done || 0);
   $("#percent").textContent = (status.overall?.percent || 0) + "%";
   $("#focus").textContent = status.currentTask?.id || "-";
+  const issueTitle = encodeURIComponent(`[${status.nextTask?.id || "TASK"}] start_task`);
+  const issueBody = encodeURIComponent(
+    `Requested task: ${status.nextTask?.id || ""}\nAction: start_task\n\n${status.nextTask?.title || ""}\n\nRemote execution is subject to repository policy.`,
+  );
+  $("#remoteIssue").href =
+    `https://github.com/quocanhcgd/HNLMS/issues/new?title=${issueTitle}&body=${issueBody}&labels=remote-command`;
   $("#phases").innerHTML = (status.phases || [])
     .map(
       (phase) =>

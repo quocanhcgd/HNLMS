@@ -9,9 +9,9 @@
 - Default branch: `main`
 - Local prototype: Next.js App Router at `apps/web`, demo port `3100` (`http://localhost:3100/ui-preview`)
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
-- API and worker skeletons now exist with TypeScript strict and API `/health`; database and production infrastructure are not implemented yet.
+- API and worker skeletons now exist with TypeScript strict and API `/health`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T023 are currently marked complete; T024+ remain open.
+- Tasks: `T001` to `T175`; T001-T024 are currently marked complete; T025+ remain open.
 - Current commit baseline: `387125a`; latest foundation work is pending commit.
 
 ## Source Of Truth Order
@@ -66,7 +66,7 @@ Before ending every task:
 - `npm audit` currently reports 4 vulnerabilities (1 moderate, 3 high); address through T172 dependency gate, not force-upgrade without review.
 
 - Choose and document concrete authentication/session provider.
-- Choose PostgreSQL data-access/migration tool.
+- Database stack selected: Drizzle ORM + PostgreSQL; runtime PostgreSQL service still required for migration smoke/restore tests.
 - Choose payment, meeting, accounting/ERP, AI, email/SMS, storage and video provider adapters.
 - Define Vietnam payroll, tax and insurance formulas with an accountable business owner.
 - Define privacy/retention/legal basis for minors, parent data, recordings, voice and AI processing.
@@ -79,6 +79,7 @@ Before ending every task:
 - 2026-08-20: Added full-stack readiness checklist and T161-T175.
 - 2026-08-20: Initialized Git repository and pushed `main` to GitHub.
 - 2026-08-20: Created API/worker/shared package skeletons; web typecheck/build passed; API runtime health check still pending.
+- 2026-08-21: Implemented T024 Drizzle client, tenant resolver, tenant registry schema and migration runner. Added Remote Command Center queue/lock policy and GitHub Issue prefilled command link.
 - 2026-08-20: Added ESLint/Prettier/Vitest/Playwright; all configured quality checks pass.
 - 2026-08-20: Implemented shared domain, authorization, module, license, UI and theme contracts with invariant tests.
 - 2026-08-20: Integrated next-intl provider, typed vi/en catalogs, semantic Mantine preset runtime and locale persistence tests.
@@ -103,3 +104,6 @@ Before ending every task:
 - Source: `docs/project-status.json`, polled every 15 seconds.
 - Update command: `npm run status:generate`.
 - Start a task: `npm run status:start --task=T024` or set `STATUS_TASK`, `STATUS_STATE`, `STATUS_PERCENT`, `STATUS_ACTIVITY` before `npm run status:generate`.
+
+- 2026-08-21: Added Drizzle database foundation, tenant resolver, migration runner and generated tenant registry migration.
+- 2026-08-21: Added Remote Command Center Phase 1 queue/lock policy and GitHub Issue command link; no arbitrary shell execution.

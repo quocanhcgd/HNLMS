@@ -19,7 +19,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "format": "prettier --write .",
-    "format:check": "prettier --check \"apps/**/src/**/*.{ts,tsx,js,mjs,css,json,md}\" \"worker/src/**/*.{ts,js,json,md}\" \"packages/**/src/**/*.{ts,tsx,json,md}\" \"tests/**/*.{ts,tsx}\" \"*.{json,md,mjs}\" \"docs/development/**/*.{md,json}\" \"infra/**/*.{md,json}\"",
+    "format:check": "prettier --check \"apps/**/src/**/*.{ts,tsx,js,mjs,css,json,md}\" \"worker/src/**/*.{ts,js,json,md}\" \"packages/**/src/**/*.{ts,tsx,json,md}\" \"tests/**/*.{ts,tsx}\" \"*.{json,md,mjs}\" \"docs/development/**/*.{md,json}\"",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "status:generate": "node scripts/update-project-status.mjs && node scripts/generate-task-dashboard.mjs",

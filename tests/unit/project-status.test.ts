@@ -2,11 +2,14 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
 describe("project status dashboard", () => {
-  it("has a valid status contract", () => {
+  it("matches task source-of-truth", () => {
     const status = JSON.parse(readFileSync("docs/project-status.json", "utf8"));
-    expect(status.overall.total).toBe(175);
-    expect(status.overall.done).toBe(23);
-    expect(status.currentTask.id).toBe("T024");
+    const tasks = readFileSync("specs/001-lms-multi-branch/tasks.md", "utf8");
+    const matches = [...tasks.matchAll(/^- \[([ xX])\] T\d{3}/gm)];
+    const total = matches.length;
+    const done = matches.filter((match) => match[1].toLowerCase() === "x").length;
+    expect(status.overall).toMatchObject({ total, done });
+    expect(status.currentTask.id).toMatch(/^T\d{3}$/);
     expect(status.currentTask.activity.length).toBeGreaterThan(10);
   });
   it("dashboard has live status runtime and refresh", () => {
