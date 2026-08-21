@@ -11,7 +11,7 @@
 - UI: Mantine, TanStack Table 8.x, Lucide React; default locale `vi`, default theme `dark`.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T025 are currently marked complete; T026+ remain open.
+- Tasks: `T001` to `T175`; T001-T026 are currently marked complete; T027+ remain open.
 - Current commit baseline: `387125a`; latest foundation work is pending commit.
 
 ## Source Of Truth Order
@@ -109,3 +109,5 @@ Before ending every task:
 - 2026-08-21: Added Remote Command Center Phase 1 queue/lock policy and GitHub Issue command link; no arbitrary shell execution.
 
 - 2026-08-21: Implemented T025 Drizzle schemas for organization, tenant instance, users, roles, permissions, scope grants and append-only audit events; generated migration 0001. Remote queue now displays workspace lock and command history.
+
+- 2026-08-21: Implemented T026 server-derived authorization context, permission/resource assertions and negative organization/branch/class/student/delegation matrix tests.

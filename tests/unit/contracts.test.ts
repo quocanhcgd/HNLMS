@@ -13,6 +13,8 @@ describe("shared contract invariants", () => {
       branchIds: new Set(["branch-a"]),
       classIds: new Set<string>(),
       studentIds: new Set<string>(),
+      permissions: new Set(),
+      roles: new Set(),
     };
     expect(canAccessResource(context, { organizationId: "org-b" })).toBe(false);
     expect(canAccessResource(context, { organizationId: "org-a", branchId: "branch-b" })).toBe(false);
