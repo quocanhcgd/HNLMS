@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-21T18:53:19.830Z",
+  "updatedAt": "2026-08-21T19:00:26.056Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -8,11 +8,11 @@
     "id": "T056",
     "title": "Implement entrance-assessment assignment link từ lead sang assessment trong apps/api/src/modules/assessment-english/",
     "phase": "Phase 6: User Story 3 - Tư vấn tuyển sinh và ghi danh (P1)",
-    "status": "next",
-    "percent": 0,
-    "activity": "T055 hoàn tất: consultant work queue, timeline, next action và conversion preview đã kiểm thử. T056 assessment assignment link là task tiếp theo.",
+    "status": "in_progress",
+    "percent": 5,
+    "activity": "Bắt đầu T056: thiết kế liên kết lead với entrance-assessment assignment, tenant guard và idempotency.",
     "startedAt": null,
-    "updatedAt": "2026-08-21T18:53:19.830Z"
+    "updatedAt": "2026-08-21T19:00:26.056Z"
   },
   "nextTask": {
     "id": "T056",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "7a70f28",
-    "message": "feat(admission): add consultant conversion portal",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/7a70f28"
+    "sha": "bbf36ff",
+    "message": "docs: close T055 consultant portal",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/bbf36ff"
   },
   "ci": {
     "status": "unknown",
