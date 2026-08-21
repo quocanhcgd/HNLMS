@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
 import {
   ActionIcon,
   Badge,
@@ -21,13 +22,77 @@ import {
 } from "@mantine/core";
 import { Bell, Ellipsis, Download, Plus, Trash2 } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/app-shell";
+import { getPreset, themePresetRegistry, tokenCssVariables, validateContrast } from "@/lib/theme/registry";
 
 export default function Preview() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [activeKey, setActiveKey] = useState("hnlms-operational");
+  const [previewKey, setPreviewKey] = useState<string | null>(null);
+  const activePreset = getPreset(activeKey);
+  const previewPreset = previewKey ? getPreset(previewKey) : null;
+  const shownPreset = previewPreset ?? activePreset;
+  const applyPreview = (key: string) => {
+    const preset = getPreset(key);
+    for (const [mode, tokens] of [
+      ["light", preset.light],
+      ["dark", preset.dark],
+    ] as const)
+      for (const [name, value] of Object.entries(tokenCssVariables(tokens, mode)))
+        document.documentElement.style.setProperty(name, value);
+    setPreviewKey(key);
+  };
+  const publishPreview = () => {
+    if (previewKey) {
+      setActiveKey(previewKey);
+      setPreviewKey(null);
+    }
+  };
+  const rollback = () => {
+    setActiveKey("hnlms-operational");
+    setPreviewKey(null);
+  };
   return (
     <AppShell>
       <div className="page">
         <PageHeader title="Thư viện component" subtitle="Duyệt màu, trạng thái điều khiển và mật độ giao diện" />
+        <Paper className="panel themeControlPanel" p="lg">
+          <Group justify="space-between" align="flex-start">
+            <div>
+              <Text fw={650}>Theme preset</Text>
+              <Text size="sm" c="dimmed">
+                Preview trong shell thật, publish hoặc rollback theo version.
+              </Text>
+            </div>
+            <Badge color={previewKey ? "yellow" : "teal"} variant="light">
+              {previewKey ? "Đang preview" : `Đã publish ${activePreset.key}@${activePreset.version}`}
+            </Badge>
+          </Group>
+          <Group mt="md" align="end">
+            <Select
+              label="Preset"
+              value={previewKey ?? activeKey}
+              onChange={(value) => value && applyPreview(value)}
+              data={themePresetRegistry.map((preset) => ({
+                value: preset.key,
+                label: `${preset.key} v${preset.version}`,
+              }))}
+            />
+            <Button variant="default" onClick={publishPreview} disabled={!previewKey}>
+              Publish preview
+            </Button>
+            <Button variant="subtle" onClick={rollback}>
+              Rollback
+            </Button>
+          </Group>
+          <Group mt="md" gap="xs">
+            <Badge color={validateContrast(shownPreset.light).valid ? "teal" : "red"} variant="light">
+              Light contrast {validateContrast(shownPreset.light).ratio.toFixed(2)}
+            </Badge>
+            <Badge color={validateContrast(shownPreset.dark).valid ? "teal" : "red"} variant="light">
+              Dark contrast {validateContrast(shownPreset.dark).ratio.toFixed(2)}
+            </Badge>
+          </Group>
+        </Paper>
         <div className="galleryGrid">
           <Paper className="panel" p="lg">
             <Text fw={650} mb="md">

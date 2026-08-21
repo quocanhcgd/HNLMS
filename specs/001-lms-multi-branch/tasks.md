@@ -41,7 +41,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T018 Tạo LMS application shell gồm workspace switcher, grouped navigation, nested submenu, active state, header, footer, collapsed desktop sidebar và mobile sheet trong `apps/web/src/app/admin/layout.tsx` và `apps/web/src/components/shell/`
 - [x] T019 [P] Tạo typed navigation manifests, active-route resolver, locale labels và entitlement-aware visibility theo từng product boundary trong `apps/web/src/lib/navigation/` và `apps/web/src/lib/i18n/`
 - [x] T020 [P] Chuẩn hóa page frame, toolbar, form field, data table, pagination, loading, empty, error, forbidden và confirmation compositions trong `apps/web/src/components/domain/`
-- [ ] T021 [P] Đồng bộ theme preset preview với application shell thật, kiểm tra contrast, persistence, publish/rollback và light/dark/system trong `apps/web/src/app/admin/settings/` và `apps/web/src/lib/theme/`
+- [x] T021 [P] Đồng bộ theme preset preview với application shell thật, kiểm tra contrast, persistence, publish/rollback và light/dark/system trong `apps/web/src/app/admin/settings/` và `apps/web/src/lib/theme/`
 - [ ] T022 [P] Viết Playwright visual, responsive, keyboard, accessibility, theme persistence và routing/deep-link tests cho UI foundation trong `apps/web/tests/visual/`, `apps/web/tests/accessibility/` và `apps/web/tests/e2e/`
 - [ ] T023 Xác nhận UI foundation acceptance gate trên desktop/mobile trước khi mở rộng màn hình nghiệp vụ; ghi kết quả vào `specs/001-lms-multi-branch/quickstart.md`
 
