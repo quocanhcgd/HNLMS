@@ -30,7 +30,7 @@ Every task must update `docs/project-status.json` and regenerate `docs/task-dash
 
 A dashboard checkpoint counts as published only after it is committed and successfully pushed to the monitored branch. Do not let the public dashboard lag across completed tasks. When push is not authorized or fails, explicitly report that the local status is current but the public dashboard is stale, then request permission or surface the push failure. Never claim the public dashboard was updated based only on local generation.
 
-Standing authorization (2026-08-22): normal coherent task/status checkpoints may be pushed to `origin/main` without asking again, after branch/remote and quality-gate verification. Force-push and history rewriting remain unauthorized.
+Standing authorization (2026-08-22): normal coherent task/status checkpoints may be pushed to `origin/main` without asking again, after branch/remote and quality-gate verification. Force-push is also authorized for this repository when history rewriting is genuinely required; prefer `--force-with-lease`, fetch and verify the exact ref first, preserve a recoverable local ref, and report the rewritten commits afterward.
 
 ## Rules
 

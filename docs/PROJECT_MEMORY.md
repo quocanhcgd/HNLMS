@@ -113,7 +113,8 @@ Before ending every task:
 - Start a task: `npm run status:start --task=T024` or set `STATUS_TASK`, `STATUS_STATE`, `STATUS_PERCENT`, `STATUS_ACTIVITY` before `npm run status:generate`.
 - A local generation does not update GitHub Pages. The dashboard is current only after the generated status/dashboard files are committed, pushed and visible on the monitored branch.
 - Required cadence: task start, meaningful milestones, blockers and completion; never batch multiple completed tasks while leaving the public dashboard stale.
-- Standing authorization recorded 2026-08-22: push normal coherent task/status checkpoints to `origin/main` without asking again after verifying the branch, remote and quality gate. This does not authorize force-push, history rewrites or destructive Git operations.
+- Standing authorization recorded 2026-08-22: push normal coherent task/status checkpoints to `origin/main` without asking again after verifying the branch, remote and quality gate.
+- Force-push authorization recorded 2026-08-22 for this repository when history rewriting is genuinely required. Prefer `--force-with-lease`; first fetch, verify the exact remote/branch and preserve a recoverable local ref. Do not force-push when a normal push can succeed, and report the rewritten commits afterward.
 
 - 2026-08-21: Added Drizzle database foundation, tenant resolver, migration runner and generated tenant registry migration.
 - 2026-08-21: Added Remote Command Center Phase 1 queue/lock policy and GitHub Issue command link; no arbitrary shell execution.
