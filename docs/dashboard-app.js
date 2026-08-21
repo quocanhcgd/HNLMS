@@ -79,6 +79,18 @@ function renderStatus(status) {
       escapeHtml(status.lastCommit.message) +
       "</a>"
     : "";
+  const queueUrl = "./remote-command-queue.json";
+  fetch(queueUrl + "?t=" + Date.now(), { cache: "no-store" })
+    .then((response) => response.json())
+    .then((queue) => {
+      $("#workspaceLock").textContent = queue.workspace?.locked
+        ? "Workspace locked · " + queue.workspace.taskId + " · owner " + queue.workspace.owner
+        : "Workspace available";
+      $("#queueSummary").textContent = (queue.commands?.length || 0) + " command history item(s)";
+    })
+    .catch(() => {
+      $("#workspaceLock").textContent = "Workspace state unavailable";
+    });
   $("#blockers").innerHTML = status.blockers?.length
     ? status.blockers
         .map((blocker) => '<div class="blocker ' + blocker.severity + '">● ' + escapeHtml(blocker.text) + "</div>")
@@ -91,7 +103,12 @@ function renderStatus(status) {
   $("#focus").textContent = status.currentTask?.id || "-";
   const issueTitle = encodeURIComponent(`[${status.nextTask?.id || "TASK"}] start_task`);
   const issueBody = encodeURIComponent(
-    `Requested task: ${status.nextTask?.id || ""}\nAction: start_task\n\n${status.nextTask?.title || ""}\n\nRemote execution is subject to repository policy.`,
+    `Requested task: ${status.nextTask?.id || ""}
+Action: start_task
+
+${status.nextTask?.title || ""}
+
+Remote execution is subject to repository policy.`,
   );
   $("#remoteIssue").href =
     `https://github.com/quocanhcgd/HNLMS/issues/new?title=${issueTitle}&body=${issueBody}&labels=remote-command`;
