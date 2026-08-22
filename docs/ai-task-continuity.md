@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Phase 8 / US5 learning content, digital library and processing foundation.
-- **Status**: Completed T064-T069: schemas/migrations, approval/versioning/scope/signed URL, library search/saved resources, teacher/student UI, content-processing worker and US5 tests.
-- **Next task**: T070, implement student profile, enrollment and progress API in `apps/api/src/modules/academic-learning/`.
-- **Blocker**: PostgreSQL runtime, production storage provider and auth/session provider remain open; next phase should continue with typed service/in-memory contracts until providers are selected.
-- **Files in focus**: `apps/api/src/modules/academic-learning/`, future web student/parent pages.
-- **Verification**: `npm run typecheck --workspace=@hnlms/web`, `npm run typecheck --workspace=@hnlms/api`, `npm run typecheck --workspace=@hnlms/worker`, `npm test` (324 passed), and `npx playwright test apps/web/tests/e2e/us5-library.spec.ts` (2 passed).
+- **Current task**: Phase 9 / US6 learning, parent delegation and three-party communication.
+- **Status**: Completed T070: student/enrollment schemas in academic-learning, parent link/delegation schemas in communication, database exports and Drizzle migration 0009.
+- **Next task**: T071, implement enrollment, progress, attendance, score and completion state in `apps/api/src/modules/academic-learning/`.
+- **Blocker**: PostgreSQL runtime, production storage provider and auth/session provider remain open; continue with typed service/in-memory contracts until providers are selected.
+- **Files in focus**: `apps/api/src/modules/academic-learning/academic-learning.service.ts`, `apps/api/src/modules/academic-learning/in-memory-academic-repository.ts`, `apps/api/src/modules/academic-learning/schema.ts`, `apps/api/src/modules/academic-learning/academic-learning.service.test.ts`.
+- **Verification**: `npm run typecheck --workspace=@hnlms/api` passed; `npm test -- --run` passed (324 tests).
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

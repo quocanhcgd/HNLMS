@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T069 are complete; T070 is the next open task.
-- Current baseline: Phase 8 / US5 học liệu, bài giảng và thư viện số is complete; T070 Phase 9 student profile/enrollment/progress API is next.
+- Tasks: `T001` to `T175`; T001-T070 are complete; T071 is the next open task.
+- Current baseline: Phase 9 / US6 has started; T070 student/enrollment/parent link/delegation schemas and migration are complete; T071 enrollment progress/attendance/score/completion service is next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T070 by adding student/enrollment schemas in academic-learning, parent link/delegation schemas in communication, database exports and Drizzle migration 0009; API typecheck and full Vitest 324 tests pass.
 - 2026-08-22: Completed T069 and closed Phase 8 by adding US5 content-scope authorization tests and focused library E2E coverage; full Vitest passes 324 tests and US5 E2E passes 2/2.
 - 2026-08-22: Completed T068 by adding `worker/src/jobs/content-processing` processing stub and worker tests; full Vitest now passes 322 tests.
 - 2026-08-22: Completed T067 by adding teacher content editor UI at `/admin/teacher/content`, student library/player UI at `/admin/student/library`, learning navigation entries/i18n, and US5 focused E2E coverage; web typecheck, full Vitest 320 tests and focused US4/US5/LMS E2E pass.

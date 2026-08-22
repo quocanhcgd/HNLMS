@@ -48,6 +48,20 @@ export const fileProcessingStatus = pgEnum("file_processing_status", [
   "failed",
   "quarantined",
 ]);
+export const studentStatus = pgEnum("student_status", ["prospective", "active", "paused", "graduated", "archived"]);
+export const enrollmentStatus = pgEnum("enrollment_status", [
+  "pending",
+  "active",
+  "completed",
+  "cancelled",
+  "withdrawn",
+]);
+export const enrollmentCompletionState = pgEnum("enrollment_completion_state", [
+  "not_started",
+  "in_progress",
+  "completed",
+  "at_risk",
+]);
 
 export const departments = pgTable(
   "departments",
@@ -220,6 +234,75 @@ export const academicSchedules = pgTable(
       table.startsAt,
       table.endsAt,
     ),
+  }),
+);
+
+export const students = pgTable(
+  "students",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    userId: uuid("user_id").references(() => users.id),
+    studentCode: text("student_code").notNull(),
+    fullName: text("full_name").notNull(),
+    displayName: text("display_name"),
+    dateOfBirth: text("date_of_birth"),
+    guardianContact: jsonb("guardian_contact"),
+    privacyFlags: jsonb("privacy_flags"),
+    status: studentStatus("status").notNull().default("active"),
+    createdByUserId: uuid("created_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    organizationCodeUnique: uniqueIndex("students_organization_code_unique").on(
+      table.organizationId,
+      table.studentCode,
+    ),
+    organizationUserUnique: uniqueIndex("students_organization_user_unique").on(table.organizationId, table.userId),
+    organizationStatusIndex: index("students_organization_status_index").on(table.organizationId, table.status),
+  }),
+);
+
+export const enrollments = pgTable(
+  "enrollments",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    classId: uuid("class_id")
+      .notNull()
+      .references(() => academicClasses.id),
+    enrollmentCode: text("enrollment_code").notNull(),
+    status: enrollmentStatus("status").notNull().default("pending"),
+    progressPercent: integer("progress_percent").notNull().default(0),
+    completionState: enrollmentCompletionState("completion_state").notNull().default("not_started"),
+    enrolledAt: timestamp("enrolled_at", { withTimezone: true }).notNull().defaultNow(),
+    startedAt: timestamp("started_at", { withTimezone: true }),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    financeReferenceId: text("finance_reference_id"),
+    createdByUserId: uuid("created_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    studentClassUnique: uniqueIndex("enrollments_student_class_unique").on(table.studentId, table.classId),
+    organizationCodeUnique: uniqueIndex("enrollments_organization_code_unique").on(
+      table.organizationId,
+      table.enrollmentCode,
+    ),
+    organizationStatusIndex: index("enrollments_organization_status_index").on(table.organizationId, table.status),
+    classStatusIndex: index("enrollments_class_status_index").on(table.organizationId, table.classId, table.status),
   }),
 );
 
@@ -456,6 +539,10 @@ export type CourseRow = typeof courses.$inferSelect;
 export type AcademicModuleRow = typeof academicModules.$inferSelect;
 export type AcademicClassRow = typeof academicClasses.$inferSelect;
 export type AcademicScheduleRow = typeof academicSchedules.$inferSelect;
+export type StudentRow = typeof students.$inferSelect;
+export type NewStudentRow = typeof students.$inferInsert;
+export type EnrollmentRow = typeof enrollments.$inferSelect;
+export type NewEnrollmentRow = typeof enrollments.$inferInsert;
 export type FileAssetRow = typeof fileAssets.$inferSelect;
 export type NewFileAssetRow = typeof fileAssets.$inferInsert;
 export type LearningContentRow = typeof learningContents.$inferSelect;

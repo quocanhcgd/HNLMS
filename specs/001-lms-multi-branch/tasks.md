@@ -141,7 +141,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Cấp quyền khác nhau cho phụ huynh của hai học viên, tạo trao đổi ba bên và xác minh scope độc lập.
 
-- [ ] T070 [P] [US6] Tạo student, enrollment, parent link và delegation migrations/entities trong `apps/api/src/modules/academic-learning/` và `apps/api/src/modules/communication/`
+- [x] T070 [P] [US6] Tạo student, enrollment, parent link và delegation migrations/entities trong `apps/api/src/modules/academic-learning/` và `apps/api/src/modules/communication/`
 - [ ] T071 [US6] Implement enrollment, progress, attendance, score và completion state trong `apps/api/src/modules/academic-learning/`
 - [ ] T072 [US6] Implement parent delegation grant/revoke/expiry và scoped data resolver trong `apps/api/src/modules/communication/`
 - [ ] T073 [US6] Implement student/parent portals cho lịch, tiến độ, điểm, học phí và bài tập trong `apps/web/src/app/admin/student/` và `apps/web/src/app/admin/parent/`
