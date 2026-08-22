@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T086 Phase 12 / US9 English pathway foundation.
-- **Status**: Completed locally: added English pathway, level, skill record and placement rule entities to `assessment-english` schema with Drizzle migration `0013_fantastic_scourge.sql`.
-- **Next task**: T087 Phase 12 / US9 four-skill placement, progress and manual review workflow.
+- **Current task**: Phase 12 / US9 English pathway.
+- **Status**: Completed locally through T089: four-skill placement/progress/manual review backend, student `/student/english` pathway UI, teacher `/teacher/english` review UI, integration test and Playwright E2E.
+- **Next task**: T090 Phase 13 / US10 online session/provider/attendance/recording entities.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/assessment-english/schema.ts`, `infra/migrations/0013_fantastic_scourge.sql`, `infra/migrations/meta/0013_snapshot.json`.
-- **Verification**: API typecheck passed. Full Vitest should be run before commit/push.
+- **Files in focus**: `apps/api/src/modules/assessment-english/english-pathway.service.ts`, `apps/web/src/app/student/english/`, `apps/web/src/app/teacher/english/`, `apps/api/tests/integration/us9-english.spec.ts`, `apps/web/tests/e2e/us9-english.spec.ts`.
+- **Verification**: API/web typechecks passed; English pathway unit/integration and US9 Playwright E2E passed. Full Vitest should be run before commit/push.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

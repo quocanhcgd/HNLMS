@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T12:20:47.497Z",
+  "updatedAt": "2026-08-22T12:27:53.167Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T086",
-    "title": "Tạo English pathway, level, skill record và placement rule entities trong apps/api/src/modules/assessment-english/",
+    "id": "T089",
+    "title": "Add skill-level calculation and E2E tests trong apps/api/tests/integration/us9-english.spec.ts và apps/web/tests/e2e/us9-english.spec.ts",
     "phase": "Phase 12: User Story 9 - Lộ trình Tiếng Anh (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T086: English pathway, level, skill record và placement rule entities",
+    "activity": "Hoàn thành Phase 12 / US9: T087-T089 backend, UI, integration và E2E tests",
     "startedAt": null,
-    "updatedAt": "2026-08-22T12:20:47.497Z"
+    "updatedAt": "2026-08-22T12:27:53.167Z"
   },
   "nextTask": {
-    "id": "T087",
-    "title": "Implement four-skill placement, progress và manual review workflow trong apps/api/src/modules/assessment-english/",
+    "id": "T090",
+    "title": "Tạo online session, provider mapping, attendance sync và recording entities trong apps/api/src/modules/online-class/",
     "percent": 0
   },
   "overall": {
-    "done": 86,
+    "done": 89,
     "total": 175,
-    "percent": 49.1
+    "percent": 50.9
   },
   "phases": [
     {
@@ -93,9 +93,9 @@
     },
     {
       "name": "Phase 12: User Story 9 - Lộ trình Tiếng Anh (P1)",
-      "done": 1,
+      "done": 4,
       "total": 4,
-      "percent": 25
+      "percent": 100
     },
     {
       "name": "Phase 13: User Story 10 - Lớp học online (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "d6bd6b8",
-    "message": "test: add us8 assessment coverage",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/d6bd6b8"
+    "sha": "c0809d1",
+    "message": "feat(api): add english pathway foundation",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/c0809d1"
   },
   "ci": {
     "status": "unknown",

@@ -179,9 +179,9 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 **Independent Test**: Xếp level, hoàn thành hoạt động bốn kỹ năng và chờ giáo viên chấm speaking/writing.
 
 - [x] T086 [P] [US9] Tạo English pathway, level, skill record và placement rule entities trong `apps/api/src/modules/assessment-english/`
-- [ ] T087 [US9] Implement four-skill placement, progress và manual review workflow trong `apps/api/src/modules/assessment-english/`
-- [ ] T088 [US9] Implement English learning activities và teacher review UI trong `apps/web/src/app/student/english/` và `apps/web/src/app/teacher/english/`
-- [ ] T089 [US9] Add skill-level calculation and E2E tests trong `apps/api/tests/integration/us9-english.spec.ts` và `apps/web/tests/e2e/us9-english.spec.ts`
+- [x] T087 [US9] Implement four-skill placement, progress và manual review workflow trong `apps/api/src/modules/assessment-english/`
+- [x] T088 [US9] Implement English learning activities và teacher review UI trong `apps/web/src/app/student/english/` và `apps/web/src/app/teacher/english/`
+- [x] T089 [US9] Add skill-level calculation and E2E tests trong `apps/api/tests/integration/us9-english.spec.ts` và `apps/web/tests/e2e/us9-english.spec.ts`
 
 ## Phase 13: User Story 10 - Lớp học online (P1)
 

@@ -8,3 +8,6 @@ export * from "./in-memory-assessment-policy-repository";
 
 export * from "./assessment-attempt.service";
 export * from "./in-memory-assessment-attempt-repository";
+
+export * from "./english-pathway.service";
+export * from "./in-memory-english-pathway-repository";
