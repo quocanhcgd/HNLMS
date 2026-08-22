@@ -233,7 +233,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [ ] T110 [US13] Implement payroll calculation engine theo salary/hour/class, allowance, deduction, tax, insurance và calculation version trong `apps/api/src/modules/payroll-finance/`
 - [ ] T111 [US13] Implement payroll approve/lock/adjustment workflow và payslip publication trong `apps/api/src/modules/payroll-finance/`
 - [ ] T112 [US13] Implement payroll/branch finance portal trong `apps/web/src/app/admin/payroll/` và `apps/web/src/app/admin/finance/branch-finance/`
-- [ ] T113 [US13] Add payroll invariant, lock bypass, multi-branch allocation and E2E tests trong `apps/api/tests/integration/us13-payroll.spec.ts` và `apps/web/tests/e2e/us13-payroll.spec.ts`
+- [x] T113 [US13] Add payroll invariant, lock bypass, multi-branch allocation and E2E tests trong `apps/api/tests/integration/us13-payroll.spec.ts` và `apps/web/tests/e2e/us13-payroll.spec.ts`
 
 ## Phase 17: User Story 14 - AI hỗ trợ và tự động hóa có kiểm soát (P1)
 

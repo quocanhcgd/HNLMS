@@ -1,11 +1,1 @@
-import { PageHeader } from "@/components/app-shell";
-export default function PayrollAdminPage() {
-  return (
-    <div className="page">
-      <PageHeader
-        title="Tiền lương"
-        subtitle="Tính lương, phí giảng dạy, phí trợ giảng, phụ cấp, khấu trừ, duyệt và chi trả."
-      />
-    </div>
-  );
-}
+"use client";import {PageHeader} from "@/components/app-shell";import {Group,Paper,Text} from "@mantine/core";import {UiButton,UiStatusBadge} from "@/components/ui";export default function PayrollPage(){return <div className="page"><PageHeader title="Tiền lương" subtitle="Tính, duyệt, khóa và công bố bảng lương theo kỳ." action="Tạo kỳ lương"/><Paper className="panel" p="lg" withBorder><Group justify="space-between"><div><Text fw={700}>Kỳ lương tháng 08/2026</Text><Text size="sm" c="dimmed">18 nhân sự · tổng net 285.000.000đ</Text></div><UiStatusBadge role="warning">Chờ duyệt</UiStatusBadge><UiButton>Duyệt bảng lương</UiButton></Group></Paper></div>}

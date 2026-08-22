@@ -1,11 +1,1 @@
-import { PageHeader } from "@/components/app-shell";
-export default function TeacherPayrollPage() {
-  return (
-    <div className="page">
-      <PageHeader
-        title="Lương & công dạy"
-        subtitle="Bảng kê buổi dạy, phí giảng dạy, trợ giảng, nghỉ phép và phiếu lương cá nhân."
-      />
-    </div>
-  );
-}
+"use client";import {PageHeader} from "@/components/app-shell";import {Group,Paper,Text} from "@mantine/core";import {UiStatusBadge} from "@/components/ui";export default function TeacherPayrollPage(){return <div className="page"><PageHeader title="Lương & công dạy" subtitle="Giảng viên xem công dạy, phụ cấp và phiếu lương đã công bố."/><Paper className="panel" p="lg" withBorder><Group justify="space-between"><div><Text fw={700}>Tháng 08/2026</Text><Text size="sm" c="dimmed">18 giờ lớp · 4 giờ trợ giảng · net 12.450.000đ</Text></div><UiStatusBadge role="success">Đã công bố</UiStatusBadge></Group></Paper></div>}

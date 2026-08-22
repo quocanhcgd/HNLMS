@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T13:31:55.443Z",
+  "updatedAt": "2026-08-22T13:41:33.330Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T106",
-    "title": "Add HRM authorization and E2E tests trong apps/api/tests/authorization/us12-hrm.spec.ts và apps/web/tests/e2e/us12-hrm.spec.ts",
-    "phase": "Phase 15: User Story 12 - Nhân sự và quản lý giáo viên (P1)",
+    "id": "T113",
+    "title": "Add payroll invariant, lock bypass, multi-branch allocation and E2E tests trong apps/api/tests/integration/us13-payroll.spec.ts và apps/web/tests/e2e/us13-payroll.spec.ts",
+    "phase": "Phase 16: User Story 13 - Payroll, thu chi và tài chính chi nhánh (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành toàn bộ Phase 15 / US12: HRM, teacher management, portals và tests",
+    "activity": "Hoàn thành toàn bộ Phase 16 / US13: payroll, branch finance, teaching pay và tests",
     "startedAt": null,
-    "updatedAt": "2026-08-22T13:31:55.443Z"
+    "updatedAt": "2026-08-22T13:41:33.330Z"
   },
   "nextTask": {
     "id": "T094",
@@ -20,9 +20,9 @@
     "percent": 0
   },
   "overall": {
-    "done": 105,
+    "done": 106,
     "total": 175,
-    "percent": 60
+    "percent": 60.6
   },
   "phases": [
     {
@@ -117,9 +117,9 @@
     },
     {
       "name": "Phase 16: User Story 13 - Payroll, thu chi và tài chính chi nhánh (P1)",
-      "done": 0,
+      "done": 1,
       "total": 7,
-      "percent": 0
+      "percent": 14.3
     },
     {
       "name": "Phase 17: User Story 14 - AI hỗ trợ và tự động hóa có kiểm soát (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "bdab109",
-    "message": "feat: complete billing payment phase",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/bdab109"
+    "sha": "72bfe67",
+    "message": "feat: complete hrm teacher phase",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/72bfe67"
   },
   "ci": {
     "status": "unknown",

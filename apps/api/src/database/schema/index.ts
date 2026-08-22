@@ -10,3 +10,4 @@ export * from "./communication";
 export * from "./online-class";
 export * from "./billing-payment";
 export * from "./hrm-teacher";
+export * from "./payroll-finance";
