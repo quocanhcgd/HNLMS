@@ -430,4 +430,3 @@ Tất cả implementation tasks đều theo format `- [ ] T### [P?] [US#?] Descr
 - [ ] T175 Tạo full-stack readiness gate kiểm tra toàn bộ mục trong `checklists/full-stack-readiness.md`; không bắt đầu production rollout khi còn mục Critical chưa đạt
 
 **Checkpoint**: Full-stack implementation có thể bắt đầu theo MVP sau T161-T167 và T171-T172; production integration/rollout yêu cầu hoàn tất T168-T175 cùng các release gate tương ứng.
-

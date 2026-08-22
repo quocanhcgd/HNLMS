@@ -40,4 +40,3 @@ Mở `http://localhost:3100/ui-preview` hoặc route `/admin`, `/admin/leads`, `
 - Data: PostgreSQL, Redis, private S3-compatible storage.
 - Media: TipTap, Zod, Uppy, Vidstack, WaveSurfer.js, PDF.js, FFmpeg, Sharp, LibreOffice.
 - Deployment: Debian/Ubuntu, Nginx, systemd, versioned artifacts; no Docker in production baseline.
-
