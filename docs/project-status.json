@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T07:35:30.190Z",
+  "updatedAt": "2026-08-22T07:43:55.489Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T067",
-    "title": "Implement teacher content editor và student library/player UI trong apps/web/src/app/admin/teacher/content/ và apps/web/src/app/admin/student/library/",
+    "id": "T069",
+    "title": "Add US5 authorization, contract and E2E tests trong apps/api/tests/authorization/us5-content-scope.spec.ts và apps/web/tests/e2e/us5-library.spec.ts",
     "phase": "Phase 8: User Story 5 - Học liệu, bài giảng và thư viện số (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T067 teacher content editor và student library/player UI; typecheck, 320 Vitest và focused E2E pass",
+    "activity": "Hoàn thành T069 US5 authorization và E2E coverage; Phase 8 hoàn tất",
     "startedAt": null,
-    "updatedAt": "2026-08-22T07:35:30.190Z"
+    "updatedAt": "2026-08-22T07:43:55.489Z"
   },
   "nextTask": {
-    "id": "T068",
-    "title": "Add document processing/indexing worker trong worker/src/jobs/content-processing/",
+    "id": "T070",
+    "title": "Tạo student, enrollment, parent link và delegation migrations/entities trong apps/api/src/modules/academic-learning/ và apps/api/src/modules/communication/",
     "percent": 0
   },
   "overall": {
-    "done": 67,
+    "done": 69,
     "total": 175,
-    "percent": 38.3
+    "percent": 39.4
   },
   "phases": [
     {
@@ -69,9 +69,9 @@
     },
     {
       "name": "Phase 8: User Story 5 - Học liệu, bài giảng và thư viện số (P1)",
-      "done": 4,
+      "done": 6,
       "total": 6,
-      "percent": 66.7
+      "percent": 100
     },
     {
       "name": "Phase 9: User Story 6 - Học tập, phụ huynh và trao đổi ba bên (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "d2b3e11",
-    "message": "feat(api): add library search and saved resources",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/d2b3e11"
+    "sha": "1c5fb13",
+    "message": "feat(web): add learning content and library UI",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/1c5fb13"
   },
   "ci": {
     "status": "unknown",

@@ -132,8 +132,8 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T065 [US5] Implement content approval, versioning, access scope và private signed URL trong `apps/api/src/modules/academic-learning/` và `apps/api/src/shared/storage/`
 - [x] T066 [US5] Implement library search/filter/category và saved resources trong `apps/api/src/modules/academic-learning/`
 - [x] T067 [US5] Implement teacher content editor và student library/player UI trong `apps/web/src/app/admin/teacher/content/` và `apps/web/src/app/admin/student/library/`
-- [ ] T068 [US5] Add document processing/indexing worker trong `worker/src/jobs/content-processing/`
-- [ ] T069 [US5] Add US5 authorization, contract and E2E tests trong `apps/api/tests/authorization/us5-content-scope.spec.ts` và `apps/web/tests/e2e/us5-library.spec.ts`
+- [x] T068 [US5] Add document processing/indexing worker trong `worker/src/jobs/content-processing/`
+- [x] T069 [US5] Add US5 authorization, contract and E2E tests trong `apps/api/tests/authorization/us5-content-scope.spec.ts` và `apps/web/tests/e2e/us5-library.spec.ts`
 
 ## Phase 9: User Story 6 - Học tập, phụ huynh và trao đổi ba bên (P1)
 

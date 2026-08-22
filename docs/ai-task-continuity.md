@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T067 teacher content editor and student library/player UI.
-- **Status**: Completed with `/admin/teacher/content`, `/admin/student/library`, learning navigation/i18n updates and focused US5 E2E coverage.
-- **Next task**: T068, add document processing/indexing worker in `worker/src/jobs/content-processing/`.
-- **Blocker**: PostgreSQL runtime, storage provider production decision and auth/session provider remain open; worker should use mock/in-memory contracts until providers are selected.
-- **Files in focus**: `worker/src/jobs/content-processing/`, `apps/api/src/modules/academic-learning/`, `apps/api/src/shared/storage/`.
-- **Verification**: `npm run typecheck --workspace=@hnlms/web`, `npm test` (320 passed), `npx playwright test apps/web/tests/e2e/us5-library.spec.ts`, and focused US4/LMS navigation E2E pass.
+- **Current task**: Phase 8 / US5 learning content, digital library and processing foundation.
+- **Status**: Completed T064-T069: schemas/migrations, approval/versioning/scope/signed URL, library search/saved resources, teacher/student UI, content-processing worker and US5 tests.
+- **Next task**: T070, implement student profile, enrollment and progress API in `apps/api/src/modules/academic-learning/`.
+- **Blocker**: PostgreSQL runtime, production storage provider and auth/session provider remain open; next phase should continue with typed service/in-memory contracts until providers are selected.
+- **Files in focus**: `apps/api/src/modules/academic-learning/`, future web student/parent pages.
+- **Verification**: `npm run typecheck --workspace=@hnlms/web`, `npm run typecheck --workspace=@hnlms/api`, `npm run typecheck --workspace=@hnlms/worker`, `npm test` (324 passed), and `npx playwright test apps/web/tests/e2e/us5-library.spec.ts` (2 passed).
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 
