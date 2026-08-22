@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T089 are complete; T090 is the next open task.
-- Current baseline: Phase 12 / US9 is complete; T090 Phase 13 online class foundation is next.
+- Tasks: `T001` to `T175`; T001-T090 are complete; T091 is the next open task.
+- Current baseline: Phase 13 / US10 has started; T090 online class schema/migration foundation is complete and T091 meeting adapter/webhook inbox is next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T090 by adding online provider mapping, online session, attendance sync and recording Drizzle entities plus migration 0014; API typecheck and focused database/package tests pass.
 - 2026-08-22: Completed Phase 12 / US9 T087-T089 by adding four-skill English placement/progress/manual review service, student/teacher English pathway UIs, integration test and US9 Playwright E2E.
 - 2026-08-22: Completed T086 by adding English pathway, level, skill record and placement rule Drizzle entities plus migration 0013; API typecheck passes.
 - 2026-08-22: Completed T085 and closed Phase 11 / US8 by adding assessment contract duplicate/retry tests and Playwright E2E for student/teacher assessment workspaces; API/web typechecks, focused contract and E2E checks pass.

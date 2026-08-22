@@ -6,3 +6,5 @@ export * from "./marketing-admission";
 export * from "./assessment-english";
 export * from "./academic-learning";
 export * from "./communication";
+
+export * from "./online-class";
