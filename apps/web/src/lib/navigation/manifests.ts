@@ -4,6 +4,7 @@ import {
   BookOpen,
   Building2,
   ClipboardList,
+  GraduationCap,
   LayoutDashboard,
   Megaphone,
   MessageSquare,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 import type { ComponentType } from "react";
 
+export type WorkspaceKey = "admin" | "teacher" | "student" | "parent";
 export type NavIcon = ComponentType<{ size?: number }>;
 export type NavigationManifest = NavigationItem & {
   icon?: NavIcon;
@@ -25,13 +27,21 @@ export type NavigationContext = {
   effectiveModules: ReadonlySet<string>;
 };
 
-export const lmsNavigation: readonly NavigationManifest[] = [
+export const adminNavigation: readonly NavigationManifest[] = [
   {
     key: "overview",
     labelKey: "overview",
     href: "/admin",
     icon: LayoutDashboard,
-    roles: ["organization_admin", "branch_manager", "consultant", "teacher", "student", "parent"],
+    roles: [
+      "organization_admin",
+      "branch_manager",
+      "consultant",
+      "academic_affairs",
+      "finance_officer",
+      "hr_officer",
+      "payroll_officer",
+    ],
   },
   {
     key: "admission",
@@ -39,6 +49,7 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     href: "/admin/admission",
     icon: Users,
     moduleKey: "admission",
+    roles: ["organization_admin", "branch_manager", "consultant", "admission_manager"],
     children: [
       {
         key: "leads",
@@ -54,19 +65,19 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     href: "/admin/marketing",
     icon: Megaphone,
     moduleKey: "marketing",
-    roles: ["organization_admin", "branch_manager", "consultant"],
+    roles: ["organization_admin", "branch_manager", "marketing_manager"],
     children: [
       {
         key: "content",
         labelKey: "landingContent",
         href: "/admin/marketing/content",
-        roles: ["organization_admin", "branch_manager"],
+        roles: ["organization_admin", "branch_manager", "marketing_manager"],
       },
       {
         key: "publicPreview",
         labelKey: "publicPreview",
         href: "/admin/marketing/preview",
-        roles: ["organization_admin", "branch_manager", "consultant"],
+        roles: ["organization_admin", "branch_manager", "marketing_manager"],
       },
     ],
   },
@@ -76,60 +87,53 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     href: "/admin/academic",
     icon: BookOpen,
     moduleKey: "academic",
+    roles: ["organization_admin", "branch_manager", "academic_manager", "academic_affairs"],
     children: [
       {
         key: "programs",
         labelKey: "academicPrograms",
         href: "/admin/academic/programs",
-        roles: ["organization_admin", "branch_manager"],
+        roles: ["organization_admin", "branch_manager", "academic_manager"],
       },
       {
         key: "classes",
         labelKey: "academicClasses",
         href: "/admin/academic/classes",
-        roles: ["organization_admin", "branch_manager", "teacher"],
+        roles: ["organization_admin", "branch_manager", "academic_manager", "academic_affairs"],
+      },
+      {
+        key: "managedStudents",
+        labelKey: "managedStudents",
+        href: "/admin/academic/students",
+        roles: ["organization_admin", "branch_manager", "academic_affairs"],
+      },
+      {
+        key: "teachingAssignments",
+        labelKey: "teachingAssignments",
+        href: "/admin/academic/teacher-assignments",
+        roles: ["organization_admin", "branch_manager", "academic_manager", "academic_affairs"],
       },
     ],
   },
   {
-    key: "learning",
-    labelKey: "learning",
+    key: "learningAdmin",
+    labelKey: "learningAdmin",
     href: "/admin/learning",
     icon: ClipboardList,
     moduleKey: "learning",
+    roles: ["organization_admin", "academic_manager", "content_reviewer"],
     children: [
       {
-        key: "teacherContent",
-        labelKey: "teacherContent",
-        href: "/admin/teacher/content",
-        roles: ["organization_admin", "teacher"],
+        key: "learningContentAdmin",
+        labelKey: "learningContentAdmin",
+        href: "/admin/learning/content",
+        roles: ["organization_admin", "academic_manager", "content_reviewer"],
       },
       {
-        key: "studentLibrary",
-        labelKey: "studentLibrary",
-        href: "/admin/student/library",
-        roles: ["organization_admin", "teacher", "student", "parent"],
-      },
-    ],
-  },
-  {
-    key: "students",
-    labelKey: "students",
-    href: "/admin/student",
-    icon: Users,
-    roles: ["organization_admin", "branch_manager", "teacher", "student", "parent"],
-    children: [
-      {
-        key: "studentProgress",
-        labelKey: "studentProgress",
-        href: "/admin/student",
-        roles: ["organization_admin", "branch_manager", "teacher", "student"],
-      },
-      {
-        key: "parentPortal",
-        labelKey: "parentPortal",
-        href: "/admin/parent",
-        roles: ["organization_admin", "branch_manager", "parent"],
+        key: "learningLibraryAdmin",
+        labelKey: "learningLibraryAdmin",
+        href: "/admin/learning/library",
+        roles: ["organization_admin", "academic_manager", "content_reviewer"],
       },
     ],
   },
@@ -139,25 +143,19 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     href: "/admin/communication",
     icon: MessageSquare,
     moduleKey: "communication",
-    roles: ["organization_admin", "branch_manager", "teacher", "student", "parent"],
+    roles: ["organization_admin", "branch_manager", "academic_affairs", "support_staff"],
     children: [
       {
         key: "communicationCenter",
         labelKey: "communicationCenter",
         href: "/admin/communication",
-        roles: ["organization_admin", "branch_manager", "teacher"],
+        roles: ["organization_admin", "branch_manager", "academic_affairs", "support_staff"],
       },
       {
         key: "notificationInbox",
         labelKey: "notificationInbox",
         href: "/admin/communication/notifications",
-        roles: ["organization_admin", "branch_manager", "teacher", "student", "parent"],
-      },
-      {
-        key: "parentConversations",
-        labelKey: "parentConversations",
-        href: "/admin/parent/conversations",
-        roles: ["organization_admin", "branch_manager", "parent"],
+        roles: ["organization_admin", "branch_manager", "academic_affairs", "support_staff"],
       },
     ],
   },
@@ -167,7 +165,15 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     href: "/admin/finance",
     icon: Wallet,
     moduleKey: "finance",
-    roles: ["organization_admin", "branch_manager", "finance_officer", "student", "parent"],
+    roles: ["organization_admin", "branch_manager", "finance_officer"],
+  },
+  {
+    key: "payroll",
+    labelKey: "payroll",
+    href: "/admin/payroll",
+    icon: Wallet,
+    moduleKey: "payroll",
+    roles: ["organization_admin", "payroll_officer"],
   },
   {
     key: "people",
@@ -183,10 +189,130 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     href: "/admin/reporting",
     icon: BarChart3,
     moduleKey: "reporting",
-    roles: ["organization_admin", "branch_manager", "finance_officer"],
+    roles: ["organization_admin", "branch_manager", "finance_officer", "executive"],
   },
   { key: "settings", labelKey: "settings", href: "/ui-preview", icon: Settings, roles: ["organization_admin"] },
 ];
+
+export const teacherNavigation: readonly NavigationManifest[] = [
+  {
+    key: "teacherHome",
+    labelKey: "teacherHome",
+    href: "/teacher",
+    icon: LayoutDashboard,
+    roles: ["teacher", "teaching_assistant"],
+  },
+  {
+    key: "teacherClasses",
+    labelKey: "teacherClasses",
+    href: "/teacher/classes",
+    icon: BookOpen,
+    roles: ["teacher", "teaching_assistant"],
+  },
+  {
+    key: "teacherContent",
+    labelKey: "teacherContent",
+    href: "/teacher/content",
+    icon: ClipboardList,
+    moduleKey: "learning",
+    roles: ["teacher"],
+  },
+  {
+    key: "teacherMessages",
+    labelKey: "teacherMessages",
+    href: "/teacher/messages",
+    icon: MessageSquare,
+    moduleKey: "communication",
+    roles: ["teacher", "teaching_assistant"],
+  },
+  {
+    key: "teacherPayroll",
+    labelKey: "teacherPayroll",
+    href: "/teacher/payroll",
+    icon: Wallet,
+    moduleKey: "payroll",
+    roles: ["teacher", "teaching_assistant"],
+  },
+];
+
+export const studentNavigation: readonly NavigationManifest[] = [
+  { key: "studentHome", labelKey: "studentHome", href: "/student", icon: GraduationCap, roles: ["student"] },
+  {
+    key: "studentProgress",
+    labelKey: "studentProgress",
+    href: "/student/progress",
+    icon: BarChart3,
+    roles: ["student"],
+  },
+  {
+    key: "studentLibrary",
+    labelKey: "studentLibrary",
+    href: "/student/library",
+    icon: ClipboardList,
+    moduleKey: "learning",
+    roles: ["student"],
+  },
+  {
+    key: "studentMessages",
+    labelKey: "studentMessages",
+    href: "/student/messages",
+    icon: MessageSquare,
+    moduleKey: "communication",
+    roles: ["student"],
+  },
+  {
+    key: "studentBilling",
+    labelKey: "studentBilling",
+    href: "/student/billing",
+    icon: Wallet,
+    moduleKey: "finance",
+    roles: ["student"],
+  },
+];
+
+export const parentNavigation: readonly NavigationManifest[] = [
+  { key: "parentHome", labelKey: "parentHome", href: "/parent", icon: Users, roles: ["parent"] },
+  {
+    key: "parentStudents",
+    labelKey: "parentStudents",
+    href: "/parent/students",
+    icon: GraduationCap,
+    roles: ["parent"],
+  },
+  {
+    key: "parentConversations",
+    labelKey: "parentConversations",
+    href: "/parent/conversations",
+    icon: MessageSquare,
+    moduleKey: "communication",
+    roles: ["parent"],
+  },
+  {
+    key: "notificationInbox",
+    labelKey: "notificationInbox",
+    href: "/parent/notifications",
+    icon: MessageSquare,
+    moduleKey: "communication",
+    roles: ["parent"],
+  },
+  {
+    key: "parentPayments",
+    labelKey: "parentPayments",
+    href: "/parent/payments",
+    icon: Wallet,
+    moduleKey: "finance",
+    roles: ["parent"],
+  },
+];
+
+export const workspaceNavigation: Record<WorkspaceKey, readonly NavigationManifest[]> = {
+  admin: adminNavigation,
+  teacher: teacherNavigation,
+  student: studentNavigation,
+  parent: parentNavigation,
+};
+
+export const lmsNavigation = adminNavigation;
 
 export const mockNavigationContext: NavigationContext = {
   role: "organization_admin",
@@ -198,9 +324,29 @@ export const mockNavigationContext: NavigationContext = {
     "learning",
     "communication",
     "finance",
+    "payroll",
     "hrm",
     "reporting",
   ]),
+};
+
+export const mockWorkspaceContexts: Record<WorkspaceKey, NavigationContext> = {
+  admin: mockNavigationContext,
+  teacher: {
+    role: "teacher",
+    permissions: new Set(["navigation:read"]),
+    effectiveModules: mockNavigationContext.effectiveModules,
+  },
+  student: {
+    role: "student",
+    permissions: new Set(["navigation:read"]),
+    effectiveModules: mockNavigationContext.effectiveModules,
+  },
+  parent: {
+    role: "parent",
+    permissions: new Set(["navigation:read"]),
+    effectiveModules: mockNavigationContext.effectiveModules,
+  },
 };
 
 export function isNavigationVisible(item: NavigationManifest, context: NavigationContext): boolean {
@@ -220,6 +366,13 @@ export function filterNavigation(
     if (item.children && children.length === 0 && !item.href.startsWith("/admin$")) return [];
     return [{ ...item, children }];
   });
+}
+
+export function getNavigationForWorkspace(
+  workspace: WorkspaceKey,
+  context: NavigationContext = mockWorkspaceContexts[workspace],
+) {
+  return filterNavigation(workspaceNavigation[workspace], context);
 }
 
 export function isNavigationActive(pathname: string, item: NavigationManifest): boolean {

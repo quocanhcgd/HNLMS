@@ -127,6 +127,8 @@ Before ending every task:
 
 - 2026-08-22: Chuẩn hóa toàn bộ nội dung public landing/catalog/program detail và ProgramCard sang tiếng Việt đầy đủ dấu; thêm quy định ngôn ngữ bắt buộc áp dụng cho mọi phase/task vào constitution, PROJECT_MEMORY và ai-task-continuity. Landing E2E 2/2 và full Vitest 310 tests pass.
 
+- 2026-08-22: Completed Role & Workspace Correction before Phase 11: formalized business operating model and role-workspace matrix, separated self-service portals from `/admin` into `/teacher`, `/student`, `/parent`, kept `/admin` for staff operations only, added legacy redirects and workspace-specific navigation. Verification: web typecheck, production build, full Vitest 338 tests pass; focused Playwright retry is blocked by current localhost:3100 dev server returning HTTP 500 / webServer exits early.
+
 ## Live Coding Status
 
 - Dashboard: `https://quocanhcgd.github.io/HNLMS/`.

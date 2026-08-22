@@ -18,24 +18,23 @@ import {
 import { Bell, ChevronDown, Languages, LogOut, Moon, Search, Settings, Settings2, Sun, UserRound } from "lucide-react";
 import { UiButton, UiTextInput } from "@/components/ui";
 import {
-  filterNavigation,
+  getNavigationForWorkspace,
   isNavigationActive,
-  lmsNavigation,
-  mockNavigationContext,
   type NavigationManifest,
+  type WorkspaceKey,
 } from "@/lib/navigation/manifests";
 import { useDisclosure } from "@mantine/hooks";
 import { useUI } from "@/lib/providers";
 import type { MessageKey } from "@/lib/i18n/messages";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+export function AppShell({ children, workspace = "admin" }: { children: React.ReactNode; workspace?: WorkspaceKey }) {
   const pathname = usePathname();
   const { t, locale, setLocale } = useUI();
   const { setColorScheme } = useMantineColorScheme();
   const [collapsed, setCollapsed] = useState(false);
   const [searchOpened, setSearchOpened] = useState(false);
   const [mobileOpened, { open: openMobile, close: closeMobile }] = useDisclosure(false);
-  const navigationItems = filterNavigation(lmsNavigation, mockNavigationContext);
+  const navigationItems = getNavigationForWorkspace(workspace);
   const navigation = <Navigation pathname={pathname} t={t} items={navigationItems} />;
   const breadcrumb = getBreadcrumb(pathname, navigationItems, t);
   const toggleNavigation = () => {
@@ -61,7 +60,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     KHÔNG GIAN
                   </Text>
                   <Text size="sm" fw={600}>
-                    {t("branch")}
+                    {workspace === "admin"
+                      ? t("branch")
+                      : workspace === "teacher"
+                        ? t("teacherHome")
+                        : workspace === "student"
+                          ? t("studentHome")
+                          : t("parentHome")}
                   </Text>
                 </div>
                 <ChevronDown size={15} />

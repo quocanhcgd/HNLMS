@@ -131,7 +131,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T064 [P] [US5] Tạo `LearningContent`, `LibraryResource`, file metadata và version migrations trong `apps/api/src/modules/academic-learning/`
 - [x] T065 [US5] Implement content approval, versioning, access scope và private signed URL trong `apps/api/src/modules/academic-learning/` và `apps/api/src/shared/storage/`
 - [x] T066 [US5] Implement library search/filter/category và saved resources trong `apps/api/src/modules/academic-learning/`
-- [x] T067 [US5] Implement teacher content editor và student library/player UI trong `apps/web/src/app/admin/teacher/content/` và `apps/web/src/app/admin/student/library/`
+- [x] T067 [US5] Implement teacher content editor và student library/player UI trong `apps/web/src/app/teacher/content/` và `apps/web/src/app/student/library/`
 - [x] T068 [US5] Add document processing/indexing worker trong `worker/src/jobs/content-processing/`
 - [x] T069 [US5] Add US5 authorization, contract and E2E tests trong `apps/api/tests/authorization/us5-content-scope.spec.ts` và `apps/web/tests/e2e/us5-library.spec.ts`
 
@@ -144,8 +144,8 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T070 [P] [US6] Tạo student, enrollment, parent link và delegation migrations/entities trong `apps/api/src/modules/academic-learning/` và `apps/api/src/modules/communication/`
 - [x] T071 [US6] Implement enrollment, progress, attendance, score và completion state trong `apps/api/src/modules/academic-learning/`
 - [x] T072 [US6] Implement parent delegation grant/revoke/expiry và scoped data resolver trong `apps/api/src/modules/communication/`
-- [x] T073 [US6] Implement student/parent portals cho lịch, tiến độ, điểm, học phí và bài tập trong `apps/web/src/app/admin/student/` và `apps/web/src/app/admin/parent/`
-- [x] T074 [US6] Implement three-party conversation, member scope, message và attachment policy trong `apps/api/src/modules/communication/` và `apps/web/src/app/admin/parent/conversations/`
+- [x] T073 [US6] Implement student/parent portals cho lịch, tiến độ, điểm, học phí và bài tập trong `apps/web/src/app/student/` và `apps/web/src/app/parent/`
+- [x] T074 [US6] Implement three-party conversation, member scope, message và attachment policy trong `apps/api/src/modules/communication/` và `apps/web/src/app/parent/conversations/`
 - [x] T075 [US6] Add US6 authorization matrix and E2E tests trong `apps/api/tests/authorization/us6-parent-delegation.spec.ts` và `apps/web/tests/e2e/us6-parent.spec.ts`
 
 ## Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)
@@ -169,7 +169,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [ ] T081 [P] [US8] Tạo assessment bank, assessment, attempt, result migrations/entities trong `apps/api/src/modules/assessment-english/`
 - [ ] T082 [US8] Implement question approval, blueprint, time window, attempts limit và scoring policy trong `apps/api/src/modules/assessment-english/`
 - [ ] T083 [US8] Implement timed attempt state machine, autosave, submit idempotency và timeout handling trong `apps/api/src/modules/assessment-english/`
-- [ ] T084 [US8] Implement assessment engine UI và result/recommendation UI trong `apps/web/src/app/admin/student/assessment/` và `apps/web/src/app/admin/teacher/assessment/`
+- [ ] T084 [US8] Implement assessment engine UI và result/recommendation UI trong `apps/web/src/app/student/assessment/` và `apps/web/src/app/teacher/assessment/`
 - [ ] T085 [US8] Add assessment contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us8-assessment.contract.spec.ts` và `apps/web/tests/e2e/us8-assessment.spec.ts`
 
 ## Phase 12: User Story 9 - Lộ trình Tiếng Anh (P1)
@@ -180,7 +180,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 - [ ] T086 [P] [US9] Tạo English pathway, level, skill record và placement rule entities trong `apps/api/src/modules/assessment-english/`
 - [ ] T087 [US9] Implement four-skill placement, progress và manual review workflow trong `apps/api/src/modules/assessment-english/`
-- [ ] T088 [US9] Implement English learning activities và teacher review UI trong `apps/web/src/app/admin/student/english/` và `apps/web/src/app/admin/teacher/english/`
+- [ ] T088 [US9] Implement English learning activities và teacher review UI trong `apps/web/src/app/student/english/` và `apps/web/src/app/teacher/english/`
 - [ ] T089 [US9] Add skill-level calculation and E2E tests trong `apps/api/tests/integration/us9-english.spec.ts` và `apps/web/tests/e2e/us9-english.spec.ts`
 
 ## Phase 13: User Story 10 - Lớp học online (P1)
@@ -192,7 +192,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [ ] T090 [P] [US10] Tạo online session, provider mapping, attendance sync và recording entities trong `apps/api/src/modules/online-class/`
 - [ ] T091 [US10] Implement meeting provider adapter và signed webhook inbox trong `packages/integration-adapters/` và `apps/api/src/modules/integrations/meeting/`
 - [ ] T092 [US10] Implement meeting sync worker, reconciliation và recording permission link trong `worker/src/jobs/meeting-sync/`
-- [ ] T093 [US10] Implement online session teacher/student/parent UI trong `apps/web/src/app/admin/teacher/online/`, `apps/web/src/app/admin/student/online/` và `apps/web/src/app/admin/parent/online/`
+- [ ] T093 [US10] Implement online session teacher/student/parent UI trong `apps/web/src/app/teacher/online/`, `apps/web/src/app/student/online/` và `apps/web/src/app/parent/online/`
 - [ ] T094 [US10] Add provider contract, duplicate webhook and E2E tests trong `apps/api/tests/contract/us10-meeting.contract.spec.ts` và `apps/web/tests/e2e/us10-online.spec.ts`
 
 ## Phase 14: User Story 11 - Tài chính, thanh toán và kế toán (P1)
@@ -205,7 +205,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [ ] T096 [US11] Implement invoice, discount, receivable, refund và receipt services trong `apps/api/src/modules/billing-payment/`
 - [ ] T097 [US11] Implement payment provider adapter, signed webhook, idempotency và reconciliation trong `packages/integration-adapters/` và `apps/api/src/modules/integrations/payment/`
 - [ ] T098 [US11] Implement accounting/ERP outbox worker, retry, duplicate prevention và reconcile trong `worker/src/jobs/accounting-sync/`
-- [ ] T099 [US11] Implement finance portal, invoice view, payment flow và receipt UI trong `apps/web/src/app/admin/finance/` và `apps/web/src/app/admin/student/billing/`
+- [ ] T099 [US11] Implement finance portal, invoice view, payment flow và receipt UI trong `apps/web/src/app/admin/finance/`, `apps/web/src/app/student/billing/` và `apps/web/src/app/parent/payments/`
 - [ ] T100 [US11] Add payment/ERP contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us11-finance.contract.spec.ts` và `apps/web/tests/e2e/us11-payment.spec.ts`
 
 ## Phase 15: User Story 12 - Nhân sự và quản lý giáo viên (P1)
@@ -218,7 +218,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [ ] T102 [US12] Implement employee lifecycle, contract, branch assignment và certification management trong `apps/api/src/modules/hrm-teacher/`
 - [ ] T103 [US12] Implement attendance/shift/leave approval và balance service trong `apps/api/src/modules/hrm-teacher/`
 - [ ] T104 [US12] Implement teacher capability, workload, class assignment và substitute flow trong `apps/api/src/modules/hrm-teacher/`
-- [ ] T105 [US12] Implement HRM and teacher portals trong `apps/web/src/app/admin/hrm/` và `apps/web/src/app/admin/teacher/`
+- [ ] T105 [US12] Implement HRM and teacher portals trong `apps/web/src/app/admin/hrm/` và `apps/web/src/app/teacher/`
 - [ ] T106 [US12] Add HRM authorization and E2E tests trong `apps/api/tests/authorization/us12-hrm.spec.ts` và `apps/web/tests/e2e/us12-hrm.spec.ts`
 
 ## Phase 16: User Story 13 - Payroll, thu chi và tài chính chi nhánh (P1)
@@ -232,7 +232,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [ ] T109 [US13] Implement branch budget, income/expense ledger, approval routing và document validation trong `apps/api/src/modules/payroll-finance/`
 - [ ] T110 [US13] Implement payroll calculation engine theo salary/hour/class, allowance, deduction, tax, insurance và calculation version trong `apps/api/src/modules/payroll-finance/`
 - [ ] T111 [US13] Implement payroll approve/lock/adjustment workflow và payslip publication trong `apps/api/src/modules/payroll-finance/`
-- [ ] T112 [US13] Implement payroll/branch finance portal trong `apps/web/src/app/admin/finance/payroll/` và `apps/web/src/app/admin/finance/branch-finance/`
+- [ ] T112 [US13] Implement payroll/branch finance portal trong `apps/web/src/app/admin/payroll/` và `apps/web/src/app/admin/finance/branch-finance/`
 - [ ] T113 [US13] Add payroll invariant, lock bypass, multi-branch allocation and E2E tests trong `apps/api/tests/integration/us13-payroll.spec.ts` và `apps/web/tests/e2e/us13-payroll.spec.ts`
 
 ## Phase 17: User Story 14 - AI hỗ trợ và tự động hóa có kiểm soát (P1)

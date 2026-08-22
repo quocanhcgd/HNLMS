@@ -49,7 +49,7 @@ const rows: Row[] = [
 ];
 const role = { "Đang học": "info", "Hoàn thành": "success", "Cần hỗ trợ": "warning" } as const;
 
-export function StudentPortalWorkspace({ section }: { section: StudentPortalSection }) {
+export function StudentPortalWorkspace({ section: _section }: { section: StudentPortalSection }) {
   const [query, setQuery] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
   const data = useMemo(

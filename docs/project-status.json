@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T08:46:55.133Z",
+  "updatedAt": "2026-08-22T09:24:28.117Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T075/T080 US6-US7 authorization contract và E2E tests; Phase 9/10 hoàn tất",
+    "activity": "Role & Workspace Correction: tách admin/teacher/student/parent, cập nhật navigation/matrix và redirect",
     "startedAt": null,
-    "updatedAt": "2026-08-22T08:46:55.133Z"
+    "updatedAt": "2026-08-22T09:24:28.117Z"
   },
   "nextTask": {
     "id": "T081",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "6368a08",
-    "message": "feat(web): add communication center",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/6368a08"
+    "sha": "5580f93",
+    "message": "fix(web): add sidebar labels for portal and communication",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/5580f93"
   },
   "ci": {
     "status": "unknown",

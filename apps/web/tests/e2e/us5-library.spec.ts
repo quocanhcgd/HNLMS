@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.describe("US5 learning content and library UI", () => {
   test("teacher manages learning content drafts and approval queue", async ({ page }) => {
-    await page.goto("/admin/teacher/content");
+    await page.goto("/teacher/content");
     await expect(page.locator(".pageHeader").getByText("Soạn học liệu", { exact: true })).toBeVisible({
       timeout: 15_000,
     });
@@ -12,7 +12,7 @@ test.describe("US5 learning content and library UI", () => {
   });
 
   test("student searches, filters, saves and opens library resources", async ({ page }) => {
-    await page.goto("/admin/student/library");
+    await page.goto("/student/library");
     await expect(page.locator(".pageHeader").getByText("Thư viện học tập", { exact: true })).toBeVisible({
       timeout: 15_000,
     });

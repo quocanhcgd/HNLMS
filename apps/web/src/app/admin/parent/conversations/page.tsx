@@ -1,5 +1,4 @@
-import { ParentConversationWorkspace } from "./parent-conversation-workspace";
-
-export default function ParentConversationsPage() {
-  return <ParentConversationWorkspace />;
+import { redirect } from "next/navigation";
+export default function LegacyAdminParentConversationsRedirect() {
+  redirect("/parent/conversations");
 }

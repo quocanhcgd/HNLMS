@@ -1,5 +1,4 @@
-import { ParentPortalWorkspace } from "./parent-portal-workspace";
-
-export default function ParentPortalPage() {
-  return <ParentPortalWorkspace />;
+import { redirect } from "next/navigation";
+export default function LegacyAdminParentRedirect() {
+  redirect("/parent");
 }

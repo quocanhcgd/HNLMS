@@ -1,5 +1,4 @@
-import { StudentPortalWorkspace } from "./student-portal-workspace";
-
-export default function StudentPortalPage() {
-  return <StudentPortalWorkspace section="progress" />;
+import { redirect } from "next/navigation";
+export default function LegacyAdminStudentRedirect() {
+  redirect("/student");
 }
