@@ -264,12 +264,12 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Purpose**: Super-admin control plane, product plans, monthly/yearly/lifetime licenses, module dependencies, quotas, expiry and tenant isolation.
 
-- [ ] T125 [P] Tạo product plan, plan entitlement, license, license entitlement, license assignment và effective module state migrations trong `apps/api/src/modules/super-admin-license/`
-- [ ] T126 Implement super-admin plan/license issue, renew, revoke, override và audit APIs trong `apps/api/src/modules/super-admin-license/`
-- [ ] T127 Implement module install/enable/disable, dependency validation và backend license guards trong `apps/api/src/modules/module-registry/` và `apps/api/src/shared/module-guard/`
-- [ ] T128 Implement license verification sync, grace/expiry policy và selective module disable; module lõi và module còn entitlement vẫn hoạt động trong `apps/api/src/modules/license-runtime/`
-- [ ] T129 Implement super-admin license and tenant deployment UI trong `apps/web/src/app/(platform)/platform/license/` và `apps/web/src/app/(platform)/platform/tenants/`
-- [ ] T130 Add license signature, quota, expiry, grace, revoke, dependency and selective-disable tests trong `apps/api/tests/integration/license-lifecycle.spec.ts`
+- [x] T125 [P] Tạo product plan, plan entitlement, license, license entitlement, license assignment và effective module state migrations trong `apps/api/src/modules/super-admin-license/`
+- [x] T126 Implement super-admin plan/license issue, renew, revoke, override và audit APIs trong `apps/api/src/modules/super-admin-license/`
+- [x] T127 Implement module install/enable/disable, dependency validation và backend license guards trong `apps/api/src/modules/module-registry/` và `apps/api/src/shared/module-guard/`
+- [x] T128 Implement license verification sync, grace/expiry policy và selective module disable; module lõi và module còn entitlement vẫn hoạt động trong `apps/api/src/modules/license-runtime/`
+- [x] T129 Implement super-admin license and tenant deployment UI trong `apps/web/src/app/(platform)/platform/license/` và `apps/web/src/app/(platform)/platform/tenants/`
+- [x] T130 Add license signature, quota, expiry, grace, revoke, dependency and selective-disable tests trong `apps/api/tests/integration/license-lifecycle.spec.ts`
 
 ## Phase 20: Tenant Database Isolation and Migration
 

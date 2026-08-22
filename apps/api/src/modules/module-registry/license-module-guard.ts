@@ -1,0 +1,1 @@
+export type ModuleGuard={moduleKey:string;dependencies:string[]};export function validateModuleDependencies(module:ModuleGuard,enabled:Set<string>){for(const dependency of module.dependencies)if(!enabled.has(dependency))throw new Error(`dependency_blocked:${dependency}`);return true}

@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T13:54:23.970Z",
+  "updatedAt": "2026-08-22T14:07:30.638Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T124",
-    "title": "Add report scope, accuracy, export and performance tests trong apps/api/tests/authorization/us15-reporting.spec.ts và apps/web/tests/e2e/us15-reporting.spec.ts",
-    "phase": "Phase 18: User Story 15 - Vận hành và báo cáo đa chi nhánh (P2)",
+    "id": "T130",
+    "title": "Add license signature, quota, expiry, grace, revoke, dependency and selective-disable tests trong apps/api/tests/integration/license-lifecycle.spec.ts",
+    "phase": "Phase 19: Commercial Module and License Lifecycle",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành toàn bộ Phase 18 / US15: reporting, dashboard, export, scope tests",
+    "activity": "Hoàn thành toàn bộ Phase 19: commercial license lifecycle, guards, platform UI và tests",
     "startedAt": null,
-    "updatedAt": "2026-08-22T13:54:23.970Z"
+    "updatedAt": "2026-08-22T14:07:30.638Z"
   },
   "nextTask": {
     "id": "T094",
@@ -20,9 +20,9 @@
     "percent": 0
   },
   "overall": {
-    "done": 117,
+    "done": 123,
     "total": 175,
-    "percent": 66.9
+    "percent": 70.3
   },
   "phases": [
     {
@@ -135,9 +135,9 @@
     },
     {
       "name": "Phase 19: Commercial Module and License Lifecycle",
-      "done": 0,
+      "done": 6,
       "total": 6,
-      "percent": 0
+      "percent": 100
     },
     {
       "name": "Phase 20: Tenant Database Isolation and Migration",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "ef4dc1e",
-    "message": "feat: complete ai governance phase",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/ef4dc1e"
+    "sha": "eaa519e",
+    "message": "chore(worker): export reporting job",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/eaa519e"
   },
   "ci": {
     "status": "unknown",

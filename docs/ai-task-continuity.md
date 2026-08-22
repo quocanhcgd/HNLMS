@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Phase 18 / US15 reporting dashboards.
-- **Status**: Completed locally through T124: reporting service/export worker with branch scope enforcement, executive reporting dashboard, freshness metadata and reporting authorization/E2E coverage.
-- **Next task**: T125 Phase 19 / Commercial Module and License Lifecycle.
+- **Current task**: Phase 19 / Commercial Module and License Lifecycle.
+- **Status**: Completed locally through T130: commercial plan/entitlement/license schema, lifecycle evaluation, dependency/quota guards, platform license/tenant UI and license lifecycle integration/E2E tests.
+- **Next task**: T131 Phase 20 / Tenant database registry and migration foundation.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/reporting/`, `worker/src/jobs/reporting/`, `apps/web/src/app/admin/reporting/`, `apps/api/tests/authorization/us15-reporting.spec.ts`, `apps/web/tests/e2e/us15-reporting.spec.ts`.
-- **Verification**: API/worker/web typechecks passed; reporting authorization tests passed 2/2; reporting E2E passed 1/1; full Vitest passed 88 files/371 tests.
+- **Files in focus**: `apps/api/src/modules/super-admin-license/`, `apps/api/src/modules/module-registry/license-module-guard.ts`, `apps/api/src/modules/super-admin-license/commercial.service.ts`, `apps/web/src/app/(platform)/platform/license/`, `apps/web/src/app/(platform)/platform/tenants/`, `apps/api/tests/integration/license-lifecycle.spec.ts`.
+- **Verification**: API/worker/web typechecks passed; license lifecycle integration passed 2/2; platform E2E passed 1/1; full Vitest passed 89 files/373 tests.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

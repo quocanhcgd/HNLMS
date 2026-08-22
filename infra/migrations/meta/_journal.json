@@ -134,6 +134,13 @@
       "when": 1787406273141,
       "tag": "0018_gorgeous_slayback",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1787407422095,
+      "tag": "0019_fancy_emma_frost",
+      "breakpoints": true
     }
   ]
 }
