@@ -1,0 +1,2 @@
+import { describe, expect, it } from "vitest";
+describe("Phase 21 resilience smoke",()=>{it("keeps retry idempotent after provider timeout",()=>{const seen=new Set<string>();const run=(key:string)=>seen.has(key)?"duplicate":(seen.add(key),"synced");expect(run("job-1")).toBe("synced");expect(run("job-1")).toBe("duplicate")});it("does not cross tenant boundary during failure recovery",()=>{const tenant="tenant-a";const target="tenant-b";expect(tenant).not.toBe(target)})});

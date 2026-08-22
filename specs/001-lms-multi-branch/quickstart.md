@@ -2,7 +2,18 @@
 
 **Feature**: `001-lms-multi-branch`
 
-Tài liệu này là hướng dẫn kiểm chứng end-to-end ở mức nghiệp vụ. Cấu hình framework, provider và lệnh cụ thể được điền trong giai đoạn triển khai sau khi repository có source code.
+Tài liệu này là hướng dẫn kiểm chứng end-to-end ở mức nghiệp vụ. Repository hiện có source code và quality gates; các lệnh kiểm chứng cụ thể bên dưới là baseline cho release native.
+
+## Commands
+
+```bash
+npm install
+npm run typecheck
+npm test -- --run
+npm run status:generate
+```
+
+Native release scripts: `infra/release-scripts/preflight.sh`, `migration-preflight.sh`, `backup.sh`, `health-check.sh`, `activate.sh`, `rollback.sh`.
 
 ## Prerequisites
 

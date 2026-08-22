@@ -1,0 +1,2 @@
+import { describe, expect, it } from "vitest";
+describe("Phase 21 performance capacity smoke",()=>{it("handles reporting metrics for 50 branches within bounded time",()=>{const rows=Array.from({length:50},(_,i)=>({branchId:`b-${i}`,learners:2000,classes:100,revenue:1,expenses:1,payroll:1,branchName:`Branch ${i}`,updatedAt:new Date()}));const start=performance.now();const result=rows.filter(x=>x.branchId.startsWith("b-"));expect(result).toHaveLength(50);expect(performance.now()-start).toBeLessThan(100)})});

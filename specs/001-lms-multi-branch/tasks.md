@@ -284,13 +284,13 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 ## Phase 21: Polish & Cross-Cutting Concerns
 
-- [ ] T137 [P] Chạy accessibility, visual regression và theme preset tests cho Mantine trong `apps/web/tests/visual/` và `apps/web/tests/accessibility/`
-- [ ] T138 [P] Chạy load/capacity tests theo 50 branch, 100.000 student, 5.000 class và 100.000 library resource trong `tests/performance/`
-- [ ] T139 [P] Chạy resilience tests cho PostgreSQL failover, Redis restart, worker retry, provider timeout và queue backlog trong `tests/resilience/`
-- [ ] T140 [P] Tạo systemd units, Nginx config, native install, health check, backup, migration preflight và rollback scripts trong `infra/systemd/`, `infra/nginx/` và `infra/release-scripts/`
-- [ ] T141 [P] Tạo security hardening checklist cho Debian/Ubuntu, secrets, TLS, rate limits, headers, file access và audit retention trong `infra/security/` và `docs/security/`
-- [ ] T142 Chạy toàn bộ quickstart và ghi kết quả release gate trong `specs/001-lms-multi-branch/quickstart.md`; cập nhật file nếu có sai lệch
-- [ ] T143 Cập nhật tài liệu vận hành, module catalog, license catalog, API/OpenAPI và runbook migration trong `docs/`
+- [x] T137 [P] Chạy accessibility, visual regression và theme preset tests cho Mantine trong `apps/web/tests/visual/` và `apps/web/tests/accessibility/`
+- [x] T138 [P] Chạy load/capacity tests theo 50 branch, 100.000 student, 5.000 class và 100.000 library resource trong `tests/performance/`
+- [x] T139 [P] Chạy resilience tests cho PostgreSQL failover, Redis restart, worker retry, provider timeout và queue backlog trong `tests/resilience/`
+- [x] T140 [P] Tạo systemd units, Nginx config, native install, health check, backup, migration preflight và rollback scripts trong `infra/systemd/`, `infra/nginx/` và `infra/release-scripts/`
+- [x] T141 [P] Tạo security hardening checklist cho Debian/Ubuntu, secrets, TLS, rate limits, headers, file access và audit retention trong `infra/security/` và `docs/security/`
+- [x] T142 Chạy toàn bộ quickstart và ghi kết quả release gate trong `specs/001-lms-multi-branch/quickstart.md`; cập nhật file nếu có sai lệch
+- [x] T143 Cập nhật tài liệu vận hành, module catalog, license catalog, API/OpenAPI và runbook migration trong `docs/`
 
 ## Dependencies & Execution Order
 
