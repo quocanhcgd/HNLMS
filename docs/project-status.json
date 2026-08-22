@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T13:47:28.322Z",
+  "updatedAt": "2026-08-22T13:54:23.970Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T119",
-    "title": "Add AI policy, scope, provider failure, high-risk approval and E2E tests trong apps/api/tests/authorization/us14-ai.spec.ts và apps/web/tests/e2e/us14-ai.spec.ts",
-    "phase": "Phase 17: User Story 14 - AI hỗ trợ và tự động hóa có kiểm soát (P1)",
+    "id": "T124",
+    "title": "Add report scope, accuracy, export and performance tests trong apps/api/tests/authorization/us15-reporting.spec.ts và apps/web/tests/e2e/us15-reporting.spec.ts",
+    "phase": "Phase 18: User Story 15 - Vận hành và báo cáo đa chi nhánh (P2)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành toàn bộ Phase 17 / US14: AI gateway, policy, review, manual fallback và tests",
+    "activity": "Hoàn thành toàn bộ Phase 18 / US15: reporting, dashboard, export, scope tests",
     "startedAt": null,
-    "updatedAt": "2026-08-22T13:47:28.322Z"
+    "updatedAt": "2026-08-22T13:54:23.970Z"
   },
   "nextTask": {
     "id": "T094",
@@ -20,9 +20,9 @@
     "percent": 0
   },
   "overall": {
-    "done": 112,
+    "done": 117,
     "total": 175,
-    "percent": 64
+    "percent": 66.9
   },
   "phases": [
     {
@@ -129,9 +129,9 @@
     },
     {
       "name": "Phase 18: User Story 15 - Vận hành và báo cáo đa chi nhánh (P2)",
-      "done": 0,
+      "done": 5,
       "total": 5,
-      "percent": 0
+      "percent": 100
     },
     {
       "name": "Phase 19: Commercial Module and License Lifecycle",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "c8cfd25",
-    "message": "feat: complete payroll finance phase",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/c8cfd25"
+    "sha": "ef4dc1e",
+    "message": "feat: complete ai governance phase",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/ef4dc1e"
   },
   "ci": {
     "status": "unknown",

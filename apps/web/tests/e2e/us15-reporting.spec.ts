@@ -1,0 +1,1 @@
+import {expect,test} from "@playwright/test";test("US15 reporting dashboard",async({page})=>{await page.goto("/admin/reporting");await expect(page.getByText("Báo cáo vận hành",{exact:true})).toBeVisible();await expect(page.getByText("Hà Nội",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Xuất báo cáo"})).toBeVisible()});

@@ -254,11 +254,11 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Tạo dữ liệu hai chi nhánh, lọc/export báo cáo và xác minh không trộn dữ liệu.
 
-- [ ] T120 [P] [US15] Tạo reporting projections/materialized read models cho branch, enrollment, learning, HRM, payroll và finance trong `apps/api/src/modules/reporting/`
-- [ ] T121 [US15] Implement dashboard filters, scoped metrics, empty states và report freshness metadata trong `apps/api/src/modules/reporting/`
-- [ ] T122 [US15] Implement async export jobs và permission-scoped file delivery trong `worker/src/jobs/reporting/` và `apps/api/src/shared/storage/`
-- [ ] T123 [US15] Implement executive, branch manager và finance/reporting dashboards trong `apps/web/src/app/admin/reporting/`
-- [ ] T124 [US15] Add report scope, accuracy, export and performance tests trong `apps/api/tests/authorization/us15-reporting.spec.ts` và `apps/web/tests/e2e/us15-reporting.spec.ts`
+- [x] T120 [P] [US15] Tạo reporting projections/materialized read models cho branch, enrollment, learning, HRM, payroll và finance trong `apps/api/src/modules/reporting/`
+- [x] T121 [US15] Implement dashboard filters, scoped metrics, empty states và report freshness metadata trong `apps/api/src/modules/reporting/`
+- [x] T122 [US15] Implement async export jobs và permission-scoped file delivery trong `worker/src/jobs/reporting/` và `apps/api/src/shared/storage/`
+- [x] T123 [US15] Implement executive, branch manager và finance/reporting dashboards trong `apps/web/src/app/admin/reporting/`
+- [x] T124 [US15] Add report scope, accuracy, export and performance tests trong `apps/api/tests/authorization/us15-reporting.spec.ts` và `apps/web/tests/e2e/us15-reporting.spec.ts`
 
 ## Phase 19: Commercial Module and License Lifecycle
 

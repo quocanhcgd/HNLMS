@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Phase 17 / US14 AI governance.
-- **Status**: Completed locally through T119: AI task/policy/usage/review/appeal schema, scoped AI Gateway with minimization and high-risk/manual fallback, AI task worker, admin AI review UI and authorization/E2E coverage.
-- **Next task**: T120 Phase 18 / US15 reporting read models.
+- **Current task**: Phase 18 / US15 reporting dashboards.
+- **Status**: Completed locally through T124: reporting service/export worker with branch scope enforcement, executive reporting dashboard, freshness metadata and reporting authorization/E2E coverage.
+- **Next task**: T125 Phase 19 / Commercial Module and License Lifecycle.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/ai-governance/`, `worker/src/jobs/ai-tasks/`, `apps/web/src/app/admin/reporting/ai-review/`, `apps/api/tests/authorization/us14-ai.spec.ts`, `apps/web/tests/e2e/us14-ai.spec.ts`.
-- **Verification**: API/worker/web typechecks passed; AI authorization tests passed 2/2; AI E2E passed 1/1; full Vitest passed 87 files/369 tests.
+- **Files in focus**: `apps/api/src/modules/reporting/`, `worker/src/jobs/reporting/`, `apps/web/src/app/admin/reporting/`, `apps/api/tests/authorization/us15-reporting.spec.ts`, `apps/web/tests/e2e/us15-reporting.spec.ts`.
+- **Verification**: API/worker/web typechecks passed; reporting authorization tests passed 2/2; reporting E2E passed 1/1; full Vitest passed 88 files/371 tests.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 
