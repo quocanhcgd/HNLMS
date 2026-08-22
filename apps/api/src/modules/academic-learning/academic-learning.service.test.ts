@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AcademicLearningService, AcademicServiceError } from "./academic-learning.service";
+import { InMemoryPrivateObjectStorage } from "../../shared/storage";
 import { InMemoryAcademicRepository } from "./in-memory-academic-repository";
 
 const actor = { userId: "admin-1", organizationId: "org-1" };
@@ -158,5 +159,84 @@ describe("Phase 7 academic learning", () => {
         { courseId: "course-1", branchId: "branch-cg", code: "X", name: "Lớp", modality: "onsite", capacity: 10 },
       ),
     ).toThrow("not_found");
+  });
+
+  it("approves and versions learning content with class-scope protection", () => {
+    const { service, repository } = fixture();
+    const scopedActor = { ...actor, classIds: new Set(["class-1"]) };
+    const { content, version } = service.createLearningContentDraft(scopedActor, {
+      title: "Bài học IELTS Listening",
+      contentType: "lesson",
+      accessScope: "class",
+      classId: "class-1",
+      document: { blocks: [{ type: "text", value: "Warm-up" }] },
+    });
+
+    expect(content.status).toBe("draft");
+    expect(version.version).toBe(1);
+    expect(service.submitLearningContentForReview(scopedActor, content.id).status).toBe("in_review");
+    expect(service.publishLearningContent(scopedActor, content.id)).toMatchObject({
+      status: "published",
+      publishedByUserId: actor.userId,
+    });
+
+    const next = service.createLearningContentVersion(scopedActor, content.id, {
+      document: { blocks: [{ type: "text", value: "Updated" }] },
+      changeSummary: "Cập nhật nội dung nghe",
+    });
+    expect(next.version).toBe(2);
+    expect(repository.learningContents[0].currentVersion).toBe(2);
+    expect(() =>
+      service.createLearningContentDraft(actor, {
+        title: "Không đúng scope",
+        contentType: "lesson",
+        accessScope: "class",
+        classId: "class-1",
+        document: {},
+      }),
+    ).toThrow("class_outside_scope");
+  });
+
+  it("publishes library resources and creates private signed URLs for scoped files", () => {
+    const { service } = fixture();
+    const scopedActor = { ...actor, classIds: new Set(["class-1"]) };
+    const file = service.createFileAsset(scopedActor, {
+      storageKey: "org-1/library/listening.pdf",
+      originalFilename: "listening.pdf",
+      mimeType: "application/pdf",
+      sizeBytes: 4,
+      checksumSha256: "checksum-1",
+    });
+    const storage = new InMemoryPrivateObjectStorage({ signingSecret: "test-secret", baseUrl: "https://files.test" });
+    storage.put({
+      id: file.id,
+      storageKey: file.storageKey,
+      filename: file.originalFilename,
+      contentType: file.mimeType,
+      sizeBytes: 4,
+      checksum: file.checksumSha256,
+      ownerId: actor.userId,
+      organizationId: actor.organizationId,
+      classId: "class-1",
+      body: new Uint8Array([1, 2, 3, 4]),
+    });
+
+    const { resource } = service.createLibraryResourceDraft(scopedActor, {
+      title: "Listening handout",
+      kind: "document",
+      category: "IELTS",
+      accessScope: "class",
+      classId: "class-1",
+      fileAssetId: file.id,
+    });
+    service.submitLibraryResourceForReview(scopedActor, resource.id);
+    service.publishLibraryResource(scopedActor, resource.id);
+
+    const signed = service.createLibraryResourceSignedUrl(scopedActor, resource.id, storage, 60);
+    expect(signed.url).toContain("https://files.test");
+    expect(signed.expiresAt.getTime()).toBeGreaterThan(Date.now());
+    expect(() => service.createLibraryResourceSignedUrl(actor, resource.id, storage, 60)).toThrow(
+      "class_outside_scope",
+    );
   });
 });

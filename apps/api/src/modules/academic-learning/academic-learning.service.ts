@@ -2,6 +2,12 @@ export type AcademicStatus = "draft" | "published" | "retired";
 export type ClassStatus = "draft" | "open" | "full" | "in_progress" | "closed" | "cancelled";
 export type Modality = "onsite" | "online" | "hybrid";
 export type ScheduleStatus = "draft" | "confirmed" | "cancelled";
+export type LearningContentType = "lesson" | "video" | "exercise" | "document" | "quiz" | "assignment";
+export type LearningContentStatus = "draft" | "in_review" | "published" | "retired";
+export type LibraryResourceKind = "document" | "video" | "audio" | "image" | "slide" | "link" | "attachment";
+export type LibraryResourceStatus = "draft" | "in_review" | "published" | "retired";
+export type ResourceAccessScope = "organization" | "department" | "program" | "course" | "class" | "restricted";
+export type FileProcessingStatus = "pending" | "processing" | "ready" | "failed" | "quarantined";
 
 export type Department = { id: string; organizationId: string; code: string; name: string; status: AcademicStatus };
 export type Program = Department & { departmentId: string; description: string; version: number };
@@ -48,7 +54,87 @@ export type AcademicSchedule = {
   status: ScheduleStatus;
 };
 
-export type AcademicActor = { userId: string; organizationId: string; branchIds?: ReadonlySet<string> };
+export type FileAsset = {
+  id: string;
+  organizationId: string;
+  storageKey: string;
+  originalFilename: string;
+  mimeType: string;
+  sizeBytes: number;
+  checksumSha256: string;
+  processingStatus: FileProcessingStatus;
+  uploadedByUserId: string;
+};
+export type LearningContent = {
+  id: string;
+  organizationId: string;
+  ownerUserId: string;
+  title: string;
+  locale: string;
+  contentType: LearningContentType;
+  currentVersion: number;
+  status: LearningContentStatus;
+  accessScope: ResourceAccessScope;
+  departmentId?: string;
+  programId?: string;
+  courseId?: string;
+  classId?: string;
+  estimatedDurationMinutes?: number;
+  publishedByUserId?: string;
+  publishedAt?: string;
+};
+export type LearningContentVersion = {
+  id: string;
+  organizationId: string;
+  learningContentId: string;
+  version: number;
+  title: string;
+  schemaVersion: number;
+  document: unknown;
+  assetRefs?: unknown;
+  changeSummary?: string;
+  status: LearningContentStatus;
+  createdByUserId: string;
+};
+export type LibraryResource = {
+  id: string;
+  organizationId: string;
+  title: string;
+  description?: string;
+  kind: LibraryResourceKind;
+  category: string;
+  subject?: string;
+  locale: string;
+  currentVersion: number;
+  status: LibraryResourceStatus;
+  accessScope: ResourceAccessScope;
+  departmentId?: string;
+  programId?: string;
+  courseId?: string;
+  classId?: string;
+  usagePolicy?: unknown;
+  publishedByUserId?: string;
+  publishedAt?: string;
+  createdByUserId: string;
+};
+export type LibraryResourceVersion = {
+  id: string;
+  organizationId: string;
+  libraryResourceId: string;
+  version: number;
+  fileAssetId?: string;
+  externalUrl?: string;
+  metadata?: unknown;
+  changeSummary?: string;
+  status: LibraryResourceStatus;
+  createdByUserId: string;
+};
+export type AcademicActor = {
+  userId: string;
+  organizationId: string;
+  branchIds?: ReadonlySet<string>;
+  classIds?: ReadonlySet<string>;
+};
 export type AcademicErrorCode =
   "not_found" | "forbidden" | "invalid_input" | "invalid_status" | "capacity_exceeded" | "schedule_conflict" | string;
 export class AcademicServiceError extends Error {
@@ -68,6 +154,11 @@ export type AcademicRepository = {
   modules: AcademicModule[];
   classes: AcademicClass[];
   schedules: AcademicSchedule[];
+  fileAssets: FileAsset[];
+  learningContents: LearningContent[];
+  learningContentVersions: LearningContentVersion[];
+  libraryResources: LibraryResource[];
+  libraryResourceVersions: LibraryResourceVersion[];
 };
 
 const text = (value: string, field: string) => {
@@ -91,6 +182,8 @@ export class AcademicLearningService {
       modules: this.repository.modules.filter((x) => x.organizationId === actor.organizationId),
       classes: this.repository.classes.filter((x) => x.organizationId === actor.organizationId),
       schedules: this.repository.schedules.filter((x) => x.organizationId === actor.organizationId),
+      learningContents: this.repository.learningContents.filter((x) => x.organizationId === actor.organizationId),
+      libraryResources: this.repository.libraryResources.filter((x) => x.organizationId === actor.organizationId),
     };
   }
 
@@ -259,6 +352,280 @@ export class AcademicLearningService {
     return item;
   }
 
+  createFileAsset(
+    actor: AcademicActor,
+    input: Omit<FileAsset, "id" | "organizationId" | "processingStatus" | "uploadedByUserId"> & {
+      processingStatus?: FileProcessingStatus;
+    },
+  ): FileAsset {
+    if (!Number.isSafeInteger(input.sizeBytes) || input.sizeBytes < 0)
+      throw new AcademicServiceError("invalid_input", "file_size_invalid");
+    const item: FileAsset = {
+      id: this.newId("file"),
+      organizationId: actor.organizationId,
+      storageKey: text(input.storageKey, "storage_key"),
+      originalFilename: text(input.originalFilename, "original_filename"),
+      mimeType: text(input.mimeType, "mime_type"),
+      sizeBytes: input.sizeBytes,
+      checksumSha256: text(input.checksumSha256, "checksum_sha256"),
+      processingStatus: input.processingStatus ?? "ready",
+      uploadedByUserId: actor.userId,
+    };
+    this.repository.fileAssets.push(item);
+    return item;
+  }
+
+  createLearningContentDraft(
+    actor: AcademicActor,
+    input: {
+      title: string;
+      contentType: LearningContentType;
+      document: unknown;
+      accessScope?: ResourceAccessScope;
+      locale?: string;
+      classId?: string;
+      courseId?: string;
+      programId?: string;
+      departmentId?: string;
+      estimatedDurationMinutes?: number;
+    },
+  ): { content: LearningContent; version: LearningContentVersion } {
+    this.assertScope(actor, input);
+    const content: LearningContent = {
+      id: this.newId("learning-content"),
+      organizationId: actor.organizationId,
+      ownerUserId: actor.userId,
+      title: text(input.title, "title"),
+      locale: input.locale ?? "vi",
+      contentType: input.contentType,
+      currentVersion: 1,
+      status: "draft",
+      accessScope: input.accessScope ?? "organization",
+      departmentId: input.departmentId,
+      programId: input.programId,
+      courseId: input.courseId,
+      classId: input.classId,
+      estimatedDurationMinutes: input.estimatedDurationMinutes,
+    };
+    const version = this.createLearningVersion(actor, content, {
+      title: content.title,
+      document: input.document,
+      status: "draft",
+      changeSummary: "Initial draft",
+    });
+    this.repository.learningContents.push(content);
+    this.repository.learningContentVersions.push(version);
+    return { content, version };
+  }
+
+  createLearningContentVersion(
+    actor: AcademicActor,
+    contentId: string,
+    input: { title?: string; document: unknown; assetRefs?: unknown; changeSummary?: string },
+  ): LearningContentVersion {
+    const content = this.learningContent(actor, contentId);
+    if (content.status === "retired") throw new AcademicServiceError("invalid_status", "retired_content");
+    this.assertScope(actor, content);
+    const version = this.createLearningVersion(actor, content, {
+      title: input.title ?? content.title,
+      document: input.document,
+      assetRefs: input.assetRefs,
+      changeSummary: input.changeSummary,
+      status: "draft",
+      version: content.currentVersion + 1,
+    });
+    content.currentVersion = version.version;
+    content.status = "draft";
+    content.title = version.title;
+    this.repository.learningContentVersions.push(version);
+    return version;
+  }
+
+  submitLearningContentForReview(actor: AcademicActor, contentId: string): LearningContent {
+    const content = this.learningContent(actor, contentId);
+    if (content.status !== "draft") throw new AcademicServiceError("invalid_status", "content_not_draft");
+    content.status = "in_review";
+    this.currentLearningVersion(content).status = "in_review";
+    return content;
+  }
+
+  publishLearningContent(actor: AcademicActor, contentId: string): LearningContent {
+    const content = this.learningContent(actor, contentId);
+    if (content.status !== "in_review") throw new AcademicServiceError("invalid_status", "content_not_in_review");
+    content.status = "published";
+    content.publishedByUserId = actor.userId;
+    content.publishedAt = new Date().toISOString();
+    this.currentLearningVersion(content).status = "published";
+    return content;
+  }
+
+  createLibraryResourceDraft(
+    actor: AcademicActor,
+    input: {
+      title: string;
+      kind: LibraryResourceKind;
+      category: string;
+      fileAssetId?: string;
+      externalUrl?: string;
+      description?: string;
+      subject?: string;
+      accessScope?: ResourceAccessScope;
+      locale?: string;
+      classId?: string;
+      courseId?: string;
+      programId?: string;
+      departmentId?: string;
+      usagePolicy?: unknown;
+      metadata?: unknown;
+    },
+  ): { resource: LibraryResource; version: LibraryResourceVersion } {
+    this.assertScope(actor, input);
+    if (input.fileAssetId) this.fileAsset(actor, input.fileAssetId);
+    if (!input.fileAssetId && !input.externalUrl)
+      throw new AcademicServiceError("invalid_input", "resource_target_required");
+    const resource: LibraryResource = {
+      id: this.newId("library-resource"),
+      organizationId: actor.organizationId,
+      title: text(input.title, "title"),
+      description: input.description?.trim(),
+      kind: input.kind,
+      category: text(input.category, "category"),
+      subject: input.subject?.trim(),
+      locale: input.locale ?? "vi",
+      currentVersion: 1,
+      status: "draft",
+      accessScope: input.accessScope ?? "organization",
+      departmentId: input.departmentId,
+      programId: input.programId,
+      courseId: input.courseId,
+      classId: input.classId,
+      usagePolicy: input.usagePolicy,
+      createdByUserId: actor.userId,
+    };
+    const version: LibraryResourceVersion = {
+      id: this.newId("library-resource-version"),
+      organizationId: actor.organizationId,
+      libraryResourceId: resource.id,
+      version: 1,
+      fileAssetId: input.fileAssetId,
+      externalUrl: input.externalUrl,
+      metadata: input.metadata,
+      status: "draft",
+      createdByUserId: actor.userId,
+    };
+    this.repository.libraryResources.push(resource);
+    this.repository.libraryResourceVersions.push(version);
+    return { resource, version };
+  }
+
+  submitLibraryResourceForReview(actor: AcademicActor, resourceId: string): LibraryResource {
+    const resource = this.libraryResource(actor, resourceId);
+    if (resource.status !== "draft") throw new AcademicServiceError("invalid_status", "resource_not_draft");
+    resource.status = "in_review";
+    this.currentLibraryVersion(resource).status = "in_review";
+    return resource;
+  }
+
+  publishLibraryResource(actor: AcademicActor, resourceId: string): LibraryResource {
+    const resource = this.libraryResource(actor, resourceId);
+    if (resource.status !== "in_review") throw new AcademicServiceError("invalid_status", "resource_not_in_review");
+    resource.status = "published";
+    resource.publishedByUserId = actor.userId;
+    resource.publishedAt = new Date().toISOString();
+    this.currentLibraryVersion(resource).status = "published";
+    return resource;
+  }
+
+  createLibraryResourceVersion(
+    actor: AcademicActor,
+    resourceId: string,
+    input: { fileAssetId?: string; externalUrl?: string; metadata?: unknown; changeSummary?: string },
+  ): LibraryResourceVersion {
+    const resource = this.libraryResource(actor, resourceId);
+    if (resource.status === "retired") throw new AcademicServiceError("invalid_status", "retired_resource");
+    this.assertScope(actor, resource);
+    if (input.fileAssetId) this.fileAsset(actor, input.fileAssetId);
+    if (!input.fileAssetId && !input.externalUrl)
+      throw new AcademicServiceError("invalid_input", "resource_target_required");
+    const version: LibraryResourceVersion = {
+      id: this.newId("library-resource-version"),
+      organizationId: actor.organizationId,
+      libraryResourceId: resource.id,
+      version: resource.currentVersion + 1,
+      fileAssetId: input.fileAssetId,
+      externalUrl: input.externalUrl,
+      metadata: input.metadata,
+      changeSummary: input.changeSummary,
+      status: "draft",
+      createdByUserId: actor.userId,
+    };
+    resource.currentVersion = version.version;
+    resource.status = "draft";
+    this.repository.libraryResourceVersions.push(version);
+    return version;
+  }
+
+  createLibraryResourceSignedUrl(
+    actor: AcademicActor,
+    resourceId: string,
+    storage: {
+      createSignedUrl(input: { objectId: string; context: any; operation: "download"; expiresInSeconds?: number }): {
+        url: string;
+        token: string;
+        expiresAt: Date;
+      };
+    },
+    expiresInSeconds?: number,
+  ) {
+    const resource = this.libraryResource(actor, resourceId);
+    if (resource.status !== "published") throw new AcademicServiceError("invalid_status", "resource_not_published");
+    this.assertScope(actor, resource);
+    const version = this.currentLibraryVersion(resource);
+    if (!version.fileAssetId) throw new AcademicServiceError("invalid_input", "resource_has_no_file");
+    const file = this.fileAsset(actor, version.fileAssetId);
+    return storage.createSignedUrl({
+      objectId: file.id,
+      operation: "download",
+      expiresInSeconds,
+      context: {
+        userId: actor.userId,
+        organizationId: actor.organizationId,
+        branchIds: actor.branchIds ?? new Set(),
+        classIds: actor.classIds ?? new Set(),
+        studentIds: new Set(),
+        permissions: new Set(),
+        roles: new Set(),
+      },
+    });
+  }
+
+  private createLearningVersion(
+    actor: AcademicActor,
+    content: LearningContent,
+    input: {
+      title: string;
+      document: unknown;
+      assetRefs?: unknown;
+      changeSummary?: string;
+      status: LearningContentStatus;
+      version?: number;
+    },
+  ): LearningContentVersion {
+    return {
+      id: this.newId("learning-content-version"),
+      organizationId: actor.organizationId,
+      learningContentId: content.id,
+      version: input.version ?? content.currentVersion,
+      title: text(input.title, "title"),
+      schemaVersion: 1,
+      document: input.document,
+      assetRefs: input.assetRefs,
+      changeSummary: input.changeSummary,
+      status: input.status,
+      createdByUserId: actor.userId,
+    };
+  }
+
   private program(actor: AcademicActor, id: string) {
     const item = this.repository.programs.find((x) => x.id === id && x.organizationId === actor.organizationId);
     if (!item) throw new AcademicServiceError("not_found", "program_not_found");
@@ -269,6 +636,42 @@ export class AcademicLearningService {
     if (!item) throw new AcademicServiceError("not_found", "class_not_found");
     return item;
   }
+
+  private learningContent(actor: AcademicActor, id: string) {
+    const item = this.repository.learningContents.find((x) => x.id === id && x.organizationId === actor.organizationId);
+    if (!item) throw new AcademicServiceError("not_found", "learning_content_not_found");
+    return item;
+  }
+  private currentLearningVersion(content: LearningContent) {
+    const item = this.repository.learningContentVersions.find(
+      (x) => x.learningContentId === content.id && x.version === content.currentVersion,
+    );
+    if (!item) throw new AcademicServiceError("not_found", "learning_content_version_not_found");
+    return item;
+  }
+  private libraryResource(actor: AcademicActor, id: string) {
+    const item = this.repository.libraryResources.find((x) => x.id === id && x.organizationId === actor.organizationId);
+    if (!item) throw new AcademicServiceError("not_found", "library_resource_not_found");
+    return item;
+  }
+  private currentLibraryVersion(resource: LibraryResource) {
+    const item = this.repository.libraryResourceVersions.find(
+      (x) => x.libraryResourceId === resource.id && x.version === resource.currentVersion,
+    );
+    if (!item) throw new AcademicServiceError("not_found", "library_resource_version_not_found");
+    return item;
+  }
+  private fileAsset(actor: AcademicActor, id: string) {
+    const item = this.repository.fileAssets.find((x) => x.id === id && x.organizationId === actor.organizationId);
+    if (!item) throw new AcademicServiceError("not_found", "file_asset_not_found");
+    return item;
+  }
+  private assertScope(actor: AcademicActor, item: { classId?: string; accessScope?: ResourceAccessScope }) {
+    if (item.classId && (!actor.classIds || !actor.classIds.has(item.classId))) {
+      throw new AcademicServiceError("forbidden", "class_outside_scope");
+    }
+  }
+
   private require<T>(item: T | undefined): asserts item is T {
     if (!item) throw new AcademicServiceError("not_found");
   }

@@ -14,7 +14,8 @@ describe("shared page/data states", () => {
     ])
       expect(index).toContain(name);
   });
-  it("uses EmptyState in the lead list", () => {
-    expect(readFileSync("apps/web/src/app/admin/leads/page.tsx", "utf8")).toContain("<EmptyState");
+  it("uses the shared data table empty state in the lead list", () => {
+    expect(readFileSync("apps/web/src/app/admin/leads/page.tsx", "utf8")).toContain("UiDataTable");
+    expect(readFileSync("apps/web/src/app/admin/leads/page.tsx", "utf8")).toContain("emptyTitle");
   });
 });

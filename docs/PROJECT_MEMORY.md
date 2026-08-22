@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T064 are complete; T065 is the next open task.
-- Current baseline: Phase 8 / US5 data foundation has started; T064 LearningContent, LibraryResource, file metadata and version migrations are complete; T065 content approval/versioning/access scope/private signed URL is next.
+- Tasks: `T001` to `T175`; T001-T065 are complete; T066 is the next open task.
+- Current baseline: Phase 8 / US5 content/approval/versioning foundation is complete; T066 library search/filter/category/saved resources is next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T065 by adding `LearningContent` and `LibraryResource` approval/versioning, class-scope protection, file asset integration and private signed URL service path; updated lead-list composition tests to expect `UiDataTable` instead of direct `EmptyState`; full Vitest now passes 319 tests.
 - 2026-08-22: Completed T064 by adding academic learning content/library/file schemas and Drizzle migration 0007 for `file_assets`, `learning_contents`, `learning_content_versions`, `library_resources` and `library_resource_versions`; API typecheck and API node test pass.
 - 2026-08-22: Formalized authenticated shell/topbar rules after UI review: breadcrumb moved to topbar, page headers no longer duplicate breadcrumbs, sidebar collapse resizes to icon rail, topbar search opens on demand, utility actions stay right-aligned, and table headers follow primary button color.
 - 2026-08-22: Added UI consistency mandate: one TanStack Table pattern, one page layout language and shared semantic colors across pages; noted current UI drift risk around ad-hoc Mantine tables/cards/status colors.
