@@ -50,6 +50,13 @@
       "when": 1787369482299,
       "tag": "0006_daily_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1787380544033,
+      "tag": "0007_round_cloak",
+      "breakpoints": true
     }
   ]
 }

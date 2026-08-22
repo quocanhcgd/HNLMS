@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T055 consultant portal, notes, next actions and conversion flow.
-- **Status**: Completed with consultant work queue, lead detail/timeline, required future next actions and guarded enrollment conversion preview.
-- **Next task**: T056, link entrance-assessment assignment from lead into the assessment module.
-- **Blocker**: PostgreSQL runtime service and authentication/provider decisions remain open.
-- **Files in focus**: `apps/api/src/modules/assessment-english/` for T056.
-- **Verification**: 297 unit/contract tests, workspace typecheck, lint and format check pass; 2/2 focused T055 E2E pass. Full Playwright reached 31/35 under eight-worker cold compilation; all four failures (three navigation timeouts and one transient Axe theme result) passed isolated reruns.
+- **Current task**: T064 academic learning content/library/file schema foundation.
+- **Status**: Completed with Drizzle schemas and migration 0007 for `file_assets`, `learning_contents`, `learning_content_versions`, `library_resources` and `library_resource_versions`.
+- **Next task**: T065, implement content approval, versioning, access scope and private signed URL in `apps/api/src/modules/academic-learning/` and `apps/api/src/shared/storage/`.
+- **Blocker**: PostgreSQL runtime service and authentication/provider decisions remain open; storage provider production decision remains open, so T065 should use existing storage abstraction/mock policy until provider is chosen.
+- **Files in focus**: `apps/api/src/modules/academic-learning/`, `apps/api/src/shared/storage/`.
+- **Verification**: `npm run typecheck --workspace=@hnlms/api` and `npm run test --workspace=@hnlms/api` pass.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

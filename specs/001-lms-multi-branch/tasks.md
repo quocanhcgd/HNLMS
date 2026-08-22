@@ -128,7 +128,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Publish tài liệu theo lớp/ngành, học viên đúng quyền tìm và mở được; người ngoài quyền bị từ chối.
 
-- [ ] T064 [P] [US5] Tạo `LearningContent`, `LibraryResource`, file metadata và version migrations trong `apps/api/src/modules/academic-learning/`
+- [x] T064 [P] [US5] Tạo `LearningContent`, `LibraryResource`, file metadata và version migrations trong `apps/api/src/modules/academic-learning/`
 - [ ] T065 [US5] Implement content approval, versioning, access scope và private signed URL trong `apps/api/src/modules/academic-learning/` và `apps/api/src/shared/storage/`
 - [ ] T066 [US5] Implement library search/filter/category và saved resources trong `apps/api/src/modules/academic-learning/`
 - [ ] T067 [US5] Implement teacher content editor và student library/player UI trong `apps/web/src/app/admin/teacher/content/` và `apps/web/src/app/admin/student/library/`
