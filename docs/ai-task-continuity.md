@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T090 Phase 13 / US10 online class foundation.
-- **Status**: Completed locally: added `online-class` schema module with provider mapping, online session, attendance sync and recording entities plus Drizzle migration `0014_greedy_magdalene.sql`.
-- **Next task**: T091 meeting provider adapter and signed webhook inbox.
+- **Current task**: T091 Phase 13 / US10 meeting provider adapter and signed webhook inbox.
+- **Status**: Completed locally: added `@hnlms/integration-adapters` package with deterministic meeting adapter and HMAC webhook signing/verification; added API meeting webhook inbox service with signature verification, event parsing and idempotent event storage.
+- **Next task**: T092 meeting sync worker, reconciliation and recording permission link.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/online-class/schema.ts`, `apps/api/src/database/schema/online-class.ts`, `infra/migrations/0014_greedy_magdalene.sql`.
-- **Verification**: API typecheck passed; focused package-boundary/database tests passed. Full Vitest should be run before commit/push.
+- **Files in focus**: `packages/integration-adapters/`, `apps/api/src/modules/integrations/meeting/`, `apps/api/tests/unit/meeting-webhook-inbox.test.ts`.
+- **Verification**: Integration-adapters typecheck, API typecheck and focused webhook inbox/package-boundary tests passed. Full Vitest should be run before commit/push.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

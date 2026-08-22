@@ -190,7 +190,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 **Independent Test**: Tạo session, join đúng quyền, nhận attendance/recording event và xử lý duplicate webhook.
 
 - [x] T090 [P] [US10] Tạo online session, provider mapping, attendance sync và recording entities trong `apps/api/src/modules/online-class/`
-- [ ] T091 [US10] Implement meeting provider adapter và signed webhook inbox trong `packages/integration-adapters/` và `apps/api/src/modules/integrations/meeting/`
+- [x] T091 [US10] Implement meeting provider adapter và signed webhook inbox trong `packages/integration-adapters/` và `apps/api/src/modules/integrations/meeting/`
 - [ ] T092 [US10] Implement meeting sync worker, reconciliation và recording permission link trong `worker/src/jobs/meeting-sync/`
 - [ ] T093 [US10] Implement online session teacher/student/parent UI trong `apps/web/src/app/teacher/online/`, `apps/web/src/app/student/online/` và `apps/web/src/app/parent/online/`
 - [ ] T094 [US10] Add provider contract, duplicate webhook and E2E tests trong `apps/api/tests/contract/us10-meeting.contract.spec.ts` và `apps/web/tests/e2e/us10-online.spec.ts`

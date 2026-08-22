@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 describe("package boundaries", () => {
   it("contains all shared package entrypoints", () => {
-    const packages = ["domain-contracts", "authorization", "module-sdk", "license-contracts", "ui", "theme-presets"];
+    const packages = ["domain-contracts", "authorization", "module-sdk", "license-contracts", "ui", "theme-presets", "integration-adapters"];
     for (const name of packages) {
       expect(existsSync(join(process.cwd(), "packages", name, "src", "index.ts"))).toBe(true);
     }
