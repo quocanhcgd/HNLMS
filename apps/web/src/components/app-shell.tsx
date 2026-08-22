@@ -15,7 +15,7 @@ import {
   Tooltip,
   useMantineColorScheme,
 } from "@mantine/core";
-import { Bell, ChevronDown, Languages, LogOut, Moon, Search, Settings, Settings2, Sun, UserRound } from "lucide-react";
+import { Bell, ChevronDown, Languages, LogOut, Moon, Search, Settings, Settings2, Shuffle, Sun, UserRound } from "lucide-react";
 import { UiButton, UiTextInput } from "@/components/ui";
 import {
   getNavigationForWorkspace,
@@ -126,6 +126,7 @@ export function AppShell({ children, workspace = "admin" }: { children: React.Re
                 <Search size={19} />
               </ActionIcon>
             </Tooltip>
+            {workspace === "admin" ? <TemporaryRoleSwitcher /> : null}
             <Tooltip label={locale === "vi" ? "Chuyển sang English" : "Switch to Vietnamese"}>
               <ActionIcon
                 variant="subtle"
@@ -210,6 +211,38 @@ export function AppShell({ children, workspace = "admin" }: { children: React.Re
         </footer>
       </main>
     </div>
+  );
+}
+
+function TemporaryRoleSwitcher() {
+  const roleLinks = [
+    { href: "/admin", label: "Quản trị vận hành", description: "Nhân sự nội bộ" },
+    { href: "/teacher", label: "Giảng viên / Trợ giảng", description: "Cổng giảng dạy" },
+    { href: "/student", label: "Học viên", description: "Cổng học tập" },
+    { href: "/parent", label: "Phụ huynh", description: "Cổng theo dõi" },
+  ];
+
+  return (
+    <Menu position="bottom-end" shadow="md" width={260}>
+      <Menu.Target>
+        <ActionIcon variant="filled" size="lg" aria-label="Chuyển vai trò kiểm thử" title="Tạm thời chuyển vai trò kiểm thử">
+          <Shuffle size={18} />
+        </ActionIcon>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Label>Chuyển vai trò tạm thời</Menu.Label>
+        {roleLinks.map((role) => (
+          <Menu.Item component={Link} href={role.href} key={role.href}>
+            <Text size="sm" fw={600}>
+              {role.label}
+            </Text>
+            <Text size="xs" c="dimmed">
+              {role.description}
+            </Text>
+          </Menu.Item>
+        ))}
+      </Menu.Dropdown>
+    </Menu>
   );
 }
 

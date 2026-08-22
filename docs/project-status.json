@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T09:24:28.117Z",
+  "updatedAt": "2026-08-22T09:54:13.398Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T080",
-    "title": "Add US7 contract/E2E tests trong apps/api/tests/contract/us7-communication.contract.spec.ts và apps/web/tests/e2e/us7-communication.spec.ts",
-    "phase": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
+    "id": "T081",
+    "title": "Tạo assessment bank, assessment, attempt, result migrations/entities trong apps/api/src/modules/assessment-english/",
+    "phase": "Phase 11: User Story 8 - Thi đầu vào, thi thử và xếp lớp (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Role & Workspace Correction: tách admin/teacher/student/parent, cập nhật navigation/matrix và redirect",
+    "activity": "Hoàn thành nút tạm thời chuyển đổi vai trò trong quản trị; đã điều chỉnh Menu.Target để ổn định runtime",
     "startedAt": null,
-    "updatedAt": "2026-08-22T09:24:28.117Z"
+    "updatedAt": "2026-08-22T09:54:13.398Z"
   },
   "nextTask": {
     "id": "T081",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "5580f93",
-    "message": "fix(web): add sidebar labels for portal and communication",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/5580f93"
+    "sha": "7509d3b",
+    "message": "feat(web): add temporary role switcher",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/7509d3b"
   },
   "ci": {
     "status": "unknown",
