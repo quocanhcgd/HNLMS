@@ -1,0 +1,1 @@
+import {expect,test} from "@playwright/test";test("Phase19 commercial license UI",async({page})=>{await page.goto("/platform/license");await expect(page.getByText("License & module",{exact:true})).toBeVisible();await page.goto("/platform/tenants");await expect(page.getByText("Tenants & deployment",{exact:true})).toBeVisible()});
