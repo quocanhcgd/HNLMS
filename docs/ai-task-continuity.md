@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Phase 14 / US11 billing, payment and accounting.
-- **Status**: Completed locally through T100: billing schema/migration, invoice/payment/refund service foundation, payment provider adapter and signed webhook/idempotency, accounting sync worker duplicate prevention, admin/student/parent finance UI, contract and E2E tests.
-- **Next task**: T101 Phase 15 / US12 employee, HRM and teacher foundation.
+- **Current task**: Phase 15 / US12 HRM and teacher management.
+- **Status**: Completed locally through T106: HRM schema/migration, employee lifecycle/leave/substitute services, admin HRM portal, teacher portal and authorization/E2E coverage.
+- **Next task**: T107 Phase 16 / US13 branch finance and payroll foundation.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/billing-payment/`, `apps/api/src/modules/integrations/payment/`, `worker/src/jobs/accounting-sync/`, `apps/web/src/app/admin/finance/`, `apps/web/src/app/student/billing/`, `apps/web/src/app/parent/payments/`.
-- **Verification**: API/worker/web/integration-adapters typechecks passed; payment contract passed; payment E2E passed 2/2; full Vitest passed 84 files/365 tests.
+- **Files in focus**: `apps/api/src/modules/hrm-teacher/`, `apps/web/src/app/admin/hrm/`, `apps/web/src/app/teacher/page.tsx`, `apps/api/tests/authorization/us12-hrm.spec.ts`, `apps/web/tests/e2e/us12-hrm.spec.ts`.
+- **Verification**: API/worker/web typechecks passed; HRM authorization test passed; HRM E2E passed 1/1; full Vitest passed 85 files/366 tests.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

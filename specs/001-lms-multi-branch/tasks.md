@@ -214,12 +214,12 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Tạo giáo viên, phân công lớp, ghi công/nghỉ phép và hoàn thành performance review.
 
-- [ ] T101 [P] [US12] Tạo employee profile, employment contract, work schedule, attendance, leave và review entities trong `apps/api/src/modules/hrm-teacher/`
-- [ ] T102 [US12] Implement employee lifecycle, contract, branch assignment và certification management trong `apps/api/src/modules/hrm-teacher/`
-- [ ] T103 [US12] Implement attendance/shift/leave approval và balance service trong `apps/api/src/modules/hrm-teacher/`
-- [ ] T104 [US12] Implement teacher capability, workload, class assignment và substitute flow trong `apps/api/src/modules/hrm-teacher/`
-- [ ] T105 [US12] Implement HRM and teacher portals trong `apps/web/src/app/admin/hrm/` và `apps/web/src/app/teacher/`
-- [ ] T106 [US12] Add HRM authorization and E2E tests trong `apps/api/tests/authorization/us12-hrm.spec.ts` và `apps/web/tests/e2e/us12-hrm.spec.ts`
+- [x] T101 [P] [US12] Tạo employee profile, employment contract, work schedule, attendance, leave và review entities trong `apps/api/src/modules/hrm-teacher/`
+- [x] T102 [US12] Implement employee lifecycle, contract, branch assignment và certification management trong `apps/api/src/modules/hrm-teacher/`
+- [x] T103 [US12] Implement attendance/shift/leave approval và balance service trong `apps/api/src/modules/hrm-teacher/`
+- [x] T104 [US12] Implement teacher capability, workload, class assignment và substitute flow trong `apps/api/src/modules/hrm-teacher/`
+- [x] T105 [US12] Implement HRM and teacher portals trong `apps/web/src/app/admin/hrm/` và `apps/web/src/app/teacher/`
+- [x] T106 [US12] Add HRM authorization and E2E tests trong `apps/api/tests/authorization/us12-hrm.spec.ts` và `apps/web/tests/e2e/us12-hrm.spec.ts`
 
 ## Phase 16: User Story 13 - Payroll, thu chi và tài chính chi nhánh (P1)
 

@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T13:18:41.696Z",
+  "updatedAt": "2026-08-22T13:31:55.443Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T100",
-    "title": "Add payment/ERP contract, duplicate/retry and E2E tests trong apps/api/tests/contract/us11-finance.contract.spec.ts và apps/web/tests/e2e/us11-payment.spec.ts",
-    "phase": "Phase 14: User Story 11 - Tài chính, thanh toán và kế toán (P1)",
+    "id": "T106",
+    "title": "Add HRM authorization and E2E tests trong apps/api/tests/authorization/us12-hrm.spec.ts và apps/web/tests/e2e/us12-hrm.spec.ts",
+    "phase": "Phase 15: User Story 12 - Nhân sự và quản lý giáo viên (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành toàn bộ Phase 14 / US11: billing, payment, accounting, UI và tests",
+    "activity": "Hoàn thành toàn bộ Phase 15 / US12: HRM, teacher management, portals và tests",
     "startedAt": null,
-    "updatedAt": "2026-08-22T13:18:41.696Z"
+    "updatedAt": "2026-08-22T13:31:55.443Z"
   },
   "nextTask": {
     "id": "T094",
@@ -20,9 +20,9 @@
     "percent": 0
   },
   "overall": {
-    "done": 99,
+    "done": 105,
     "total": 175,
-    "percent": 56.6
+    "percent": 60
   },
   "phases": [
     {
@@ -111,9 +111,9 @@
     },
     {
       "name": "Phase 15: User Story 12 - Nhân sự và quản lý giáo viên (P1)",
-      "done": 0,
+      "done": 6,
       "total": 6,
-      "percent": 0
+      "percent": 100
     },
     {
       "name": "Phase 16: User Story 13 - Payroll, thu chi và tài chính chi nhánh (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "0279eb6",
-    "message": "test: add us10 online class coverage",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/0279eb6"
+    "sha": "bdab109",
+    "message": "feat: complete billing payment phase",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/bdab109"
   },
   "ci": {
     "status": "unknown",

@@ -1,11 +1,1 @@
-import { PageHeader } from "@/components/app-shell";
-export default function TeacherHomePage() {
-  return (
-    <div className="page">
-      <PageHeader
-        title="Tổng quan giảng dạy"
-        subtitle="Lịch dạy, lớp được phân công, bài cần chấm và việc cần xử lý của giáo viên."
-      />
-    </div>
-  );
-}
+import { PageHeader } from "@/components/app-shell";import { Group,Paper,Text } from "@mantine/core";import { UiStatusBadge } from "@/components/ui";export default function TeacherPage(){return <div className="page"><PageHeader title="Tổng quan giảng dạy" subtitle="Lớp được phân công, tải giảng dạy, nghỉ phép và đánh giá gần đây."/><Paper className="panel" p="lg" withBorder><Group justify="space-between"><div><Text fw={700}>Lớp đang dạy</Text><Text size="sm" c="dimmed">IF-2609 · TOEIC-2609 · 18 giờ/tuần</Text></div><UiStatusBadge role="success">Đang làm việc</UiStatusBadge></Group></Paper></div>}
