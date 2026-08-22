@@ -1,11 +1,9 @@
 import { eq, and, sql } from "drizzle-orm";
-import type { NodePGDatabase } from "drizzle-orm/node-postgres";
+import type { NodePgDatabase } from "drizzle-orm/node-postgres";
 import {
   assessmentAssignments,
-  assessmentResults,
   assessments,
   type AssessmentAssignment,
-  type Assessment,
 } from "./schema";
 import type {
   AssessmentLeadReference,
@@ -19,14 +17,14 @@ import type {
  * Maps between the service domain types and the Drizzle ORM tables.
  */
 export class DrizzleEntranceAssessmentRepository implements EntranceAssessmentRepository {
-  constructor(private readonly db: NodePGDatabase<Record<string, never>>) {}
+  constructor(private readonly db: NodePgDatabase<Record<string, never>>) {}
 
   async findLead(input: { organizationId: string; leadId: string }): Promise<AssessmentLeadReference | null> {
     // Leads are resolved via the marketing-admission module.
     // For the assessment module we only need a minimal reference.
     // The caller should pre-populate this via the shared Drizzle instance.
     // Here we delegate to a lightweight query joining leads table.
-    const rows = await this.db.execute(sql
+    const rows = await this.db.execute(sql`
       SELECT l.id, l.organization_id, l.status,
              COALESCE(
                (SELECT la.consultant_user_id
@@ -39,10 +37,10 @@ export class DrizzleEntranceAssessmentRepository implements EntranceAssessmentRe
                NULL
              ) AS active_consultant_user_id
       FROM leads l
-      WHERE l.id = 
-        AND l.organization_id = 
+      WHERE l.id = ${input.leadId}
+        AND l.organization_id = ${input.organizationId}
       LIMIT 1
-    );
+    `);
 
     const row = rows.rows[0] as
       | { id: string; organization_id: string; status: string; active_consultant_user_id: string | null }
@@ -134,12 +132,12 @@ export class DrizzleEntranceAssessmentRepository implements EntranceAssessmentRe
     leadId: string;
   }): Promise<EntranceAssessmentAssignment> {
     const a = input.assignment;
-    await this.db.execute(sql
+    await this.db.execute(sql`
       UPDATE leads
       SET status = 'awaiting_assessment', updated_at = NOW()
-      WHERE id = 
-        AND organization_id = 
-    );
+      WHERE id = ${input.leadId}
+        AND organization_id = ${a.organizationId}
+    `);
 
     const rows = await this.db
       .insert(assessmentAssignments)
@@ -171,12 +169,12 @@ export class DrizzleEntranceAssessmentRepository implements EntranceAssessmentRe
     nextLeadStatus: "consulting" | "class_proposed";
     completedAt: Date;
   }): Promise<EntranceAssessmentAssignment> {
-    await this.db.execute(sql
+    await this.db.execute(sql`
       UPDATE leads
-      SET status = , updated_at = 
-      WHERE id = 
-        AND organization_id = 
-    );
+      SET status = ${input.nextLeadStatus}, updated_at = ${input.completedAt}
+      WHERE id = ${input.leadId}
+        AND organization_id = ${input.organizationId}
+    `);
 
     const rows = await this.db
       .update(assessmentAssignments)

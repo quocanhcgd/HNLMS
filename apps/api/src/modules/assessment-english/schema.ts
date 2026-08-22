@@ -143,9 +143,9 @@ export const assessmentResults = pgTable(
 
 // ── Derived types ──────────────────────────────────────────────────────
 
-export type Assessment = typeof assessments.;
-export type NewAssessment = typeof assessments.;
-export type AssessmentAssignment = typeof assessmentAssignments.;
-export type NewAssessmentAssignment = typeof assessmentAssignments.;
-export type AssessmentResult = typeof assessmentResults.;
-export type NewAssessmentResult = typeof assessmentResults.;
+export type Assessment = typeof assessments.$inferSelect;
+export type NewAssessment = typeof assessments.$inferInsert;
+export type AssessmentAssignment = typeof assessmentAssignments.$inferSelect;
+export type NewAssessmentAssignment = typeof assessmentAssignments.$inferInsert;
+export type AssessmentResult = typeof assessmentResults.$inferSelect;
+export type NewAssessmentResult = typeof assessmentResults.$inferInsert;

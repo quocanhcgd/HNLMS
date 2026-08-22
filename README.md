@@ -1,15 +1,15 @@
 # HN LMS
 
 [![CI](https://github.com/quocanhcgd/HNLMS/actions/workflows/ci.yml/badge.svg)](https://github.com/quocanhcgd/HNLMS/actions/workflows/ci.yml)
-[![Project progress](https://img.shields.io/badge/progress-56%2F175%20tasks-15aebb)](https://quocanhcgd.github.io/HNLMS/)
+[![Project progress](https://img.shields.io/badge/progress-57%2F175%20tasks-15aebb)](https://quocanhcgd.github.io/HNLMS/)
 
 LMS đa ngành, đa chi nhánh với public landing, tuyển sinh, học tập, assessment, multimedia learning, HRM, payroll, finance, reporting và AI governance.
 
 ## Project progress
 
-- Completed: **56 / 175 tasks** (**32.0%**)
+- Completed: **57 / 175 tasks** (**32.6%**)
 - Current phase: **Phase 1 - Setup**
-- Next task: **T057 - US3 integration/contract/E2E tests**
+- Next task: **T058 - Academic entities and migrations**
 - Live dashboard: **https://quocanhcgd.github.io/HNLMS/**
 - Source checklist: [tasks.md](./specs/001-lms-multi-branch/tasks.md)
 - Full-stack gate: [full-stack-readiness.md](./specs/001-lms-multi-branch/checklists/full-stack-readiness.md)
@@ -40,3 +40,4 @@ Mở `http://localhost:3100/ui-preview` hoặc route `/admin`, `/admin/leads`, `
 - Data: PostgreSQL, Redis, private S3-compatible storage.
 - Media: TipTap, Zod, Uppy, Vidstack, WaveSurfer.js, PDF.js, FFmpeg, Sharp, LibreOffice.
 - Deployment: Debian/Ubuntu, Nginx, systemd, versioned artifacts; no Docker in production baseline.
+
