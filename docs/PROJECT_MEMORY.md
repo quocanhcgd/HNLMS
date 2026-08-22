@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T074 and T076-T079 are complete; T075/T080 are the next open test tasks.
-- Current baseline: Phase 9/10 work is proceeding in parallel; T070-T074 and T076-T079 are complete; T075/T080 authorization/contract/E2E tests are next.
+- Tasks: `T001` to `T175`; T001-T080 are complete; T081 is the next open task.
+- Current baseline: Phase 9 and Phase 10 are complete through T080; T081 Phase 11 assessment schema/migration is next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T075/T080 and closed Phase 9/10 by adding US6 parent delegation authorization tests, US6 parent E2E, US7 communication contract tests and US7 communication E2E; web/API/worker typechecks, full Vitest 335 tests and focused Playwright 2/2 pass.
 - 2026-08-22: Completed T079 by adding communication center, notification inbox and parent conversation pages using shared PageHeader/PageToolbar/UiDataTable patterns; web typecheck and full Vitest 333 tests pass.
 - 2026-08-22: Completed T078 by adding deterministic notification worker for in-app/email delivery, retry/error result handling and worker tests; worker typecheck and full Vitest 333 tests pass.
 - 2026-08-22: Completed T074/T077 by extending communication service with three-party parent-teacher conversations, member lifecycle, attachment policy, message moderation, notification audience resolution and delivery creation; API typecheck and full Vitest 330 tests pass.

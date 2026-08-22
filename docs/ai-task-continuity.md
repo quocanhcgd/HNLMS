@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Parallel Phase 9+10 test closure.
-- **Status**: Completed T070-T074 and T076-T079, including communication center and notification inbox UI.
-- **Next tasks**: T075 US6 authorization/E2E tests and T080 US7 contract/E2E tests.
+- **Current task**: Phase 9 and Phase 10 closed through T080.
+- **Status**: Completed T070-T080: enrollment, parent delegation, student/parent portals, three-party conversations, communication schemas/services, notification worker, communication UI and US6/US7 tests.
+- **Next task**: T081 Phase 11 / US8 assessment assignment/result migrations/entities in `apps/api/src/modules/assessment-english/`.
 - **Blocker**: PostgreSQL runtime, production storage provider and auth/session provider remain open; continue with typed service/in-memory/demo contracts until providers are selected.
-- **Files in focus**: `apps/api/tests/authorization/`, `apps/api/tests/contract/`, `apps/web/tests/e2e/`.
-- **Verification**: `npm run typecheck --workspace=@hnlms/web` passed; `npm test -- --run` passed (333 tests).
+- **Files in focus**: `apps/api/src/modules/assessment-english/`, `apps/api/tests/contract/`, future assessment UI routes.
+- **Verification**: web/API/worker typechecks passed; `npm test -- --run` passed (335 tests); focused Playwright US6/US7 passed 2/2.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 
