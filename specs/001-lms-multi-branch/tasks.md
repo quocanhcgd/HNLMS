@@ -241,12 +241,12 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: AI task đúng scope chạy được; task ngoài scope bị chặn; high-risk output không tự thay đổi dữ liệu.
 
-- [ ] T114 [P] [US14] Tạo AI task, policy decision, provider usage, review và appeal entities trong `apps/api/src/modules/ai-governance/`
-- [ ] T115 [US14] Implement AI Gateway data permission/minimization, prompt/model version và provider adapter trong `apps/api/src/modules/ai-governance/` và `packages/integration-adapters/`
-- [ ] T116 [US14] Implement confidence/source/safety validation, high-risk review gate và manual fallback trong `apps/api/src/modules/ai-governance/`
-- [ ] T117 [US14] Implement AI jobs cho consultation, content, recommendation, dropout warning và anomaly detection trong `worker/src/jobs/ai-tasks/`
-- [ ] T118 [US14] Implement AI review, explanation, feedback và appeal UI trong `apps/web/src/app/admin/reporting/ai-review/`
-- [ ] T119 [US14] Add AI policy, scope, provider failure, high-risk approval and E2E tests trong `apps/api/tests/authorization/us14-ai.spec.ts` và `apps/web/tests/e2e/us14-ai.spec.ts`
+- [x] T114 [P] [US14] Tạo AI task, policy decision, provider usage, review và appeal entities trong `apps/api/src/modules/ai-governance/`
+- [x] T115 [US14] Implement AI Gateway data permission/minimization, prompt/model version và provider adapter trong `apps/api/src/modules/ai-governance/` và `packages/integration-adapters/`
+- [x] T116 [US14] Implement confidence/source/safety validation, high-risk review gate và manual fallback trong `apps/api/src/modules/ai-governance/`
+- [x] T117 [US14] Implement AI jobs cho consultation, content, recommendation, dropout warning và anomaly detection trong `worker/src/jobs/ai-tasks/`
+- [x] T118 [US14] Implement AI review, explanation, feedback và appeal UI trong `apps/web/src/app/admin/reporting/ai-review/`
+- [x] T119 [US14] Add AI policy, scope, provider failure, high-risk approval and E2E tests trong `apps/api/tests/authorization/us14-ai.spec.ts` và `apps/web/tests/e2e/us14-ai.spec.ts`
 
 ## Phase 18: User Story 15 - Vận hành và báo cáo đa chi nhánh (P2)
 

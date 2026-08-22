@@ -1,0 +1,1 @@
+import {expect,test} from "@playwright/test";test("US14 AI review",async({page})=>{await page.goto("/admin/reporting/ai-review");await expect(page.getByText("AI review",{exact:true})).toBeVisible();await expect(page.getByText("Cảnh báo học viên có nguy cơ bỏ học",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Duyệt kết quả"})).toBeVisible()});

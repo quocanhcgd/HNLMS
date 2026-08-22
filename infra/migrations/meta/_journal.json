@@ -127,6 +127,13 @@
       "when": 1787405807821,
       "tag": "0017_wide_bulldozer",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1787406273141,
+      "tag": "0018_gorgeous_slayback",
+      "breakpoints": true
     }
   ]
 }

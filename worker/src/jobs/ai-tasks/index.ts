@@ -1,0 +1,1 @@
+export type AiTaskJob={organizationId:string;taskType:string;scope:string;input:Record<string,unknown>;risk:"low"|"medium"|"high"};export class AiTaskWorker{constructor(private readonly gateway:any){}process(actor:any,job:AiTaskJob){return this.gateway.run(actor,job)}}
