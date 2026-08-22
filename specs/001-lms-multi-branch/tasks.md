@@ -145,7 +145,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T071 [US6] Implement enrollment, progress, attendance, score và completion state trong `apps/api/src/modules/academic-learning/`
 - [x] T072 [US6] Implement parent delegation grant/revoke/expiry và scoped data resolver trong `apps/api/src/modules/communication/`
 - [x] T073 [US6] Implement student/parent portals cho lịch, tiến độ, điểm, học phí và bài tập trong `apps/web/src/app/admin/student/` và `apps/web/src/app/admin/parent/`
-- [ ] T074 [US6] Implement three-party conversation, member scope, message và attachment policy trong `apps/api/src/modules/communication/` và `apps/web/src/app/admin/parent/conversations/`
+- [x] T074 [US6] Implement three-party conversation, member scope, message và attachment policy trong `apps/api/src/modules/communication/` và `apps/web/src/app/admin/parent/conversations/`
 - [ ] T075 [US6] Add US6 authorization matrix and E2E tests trong `apps/api/tests/authorization/us6-parent-delegation.spec.ts` và `apps/web/tests/e2e/us6-parent.spec.ts`
 
 ## Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)
@@ -155,7 +155,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 **Independent Test**: Gửi thông báo theo branch/class/role và xác minh delivery/read state đúng scope.
 
 - [x] T076 [P] [US7] Tạo conversation, member, message, notification và delivery migrations trong `apps/api/src/modules/communication/`
-- [ ] T077 [US7] Implement conversation moderation, member lifecycle và notification audience resolver trong `apps/api/src/modules/communication/`
+- [x] T077 [US7] Implement conversation moderation, member lifecycle và notification audience resolver trong `apps/api/src/modules/communication/`
 - [ ] T078 [US7] Implement notification worker cho email/in-app channels trong `worker/src/jobs/notifications/`
 - [ ] T079 [US7] Implement communication center và notification inbox trong `apps/web/src/app/admin/communication/`
 - [ ] T080 [US7] Add US7 contract/E2E tests trong `apps/api/tests/contract/us7-communication.contract.spec.ts` và `apps/web/tests/e2e/us7-communication.spec.ts`

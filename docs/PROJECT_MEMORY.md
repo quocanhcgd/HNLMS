@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T073 and T076 are complete; T074 and T077 are the next open parallel tasks.
-- Current baseline: Phase 9/10 work is proceeding in parallel; T070-T073 and T076 are complete; T074 three-party conversation plus T077 moderation/notification resolver are next.
+- Tasks: `T001` to `T175`; T001-T074, T076 and T077 are complete; T075/T078/T079/T080 are the next open parallel tasks.
+- Current baseline: Phase 9/10 work is proceeding in parallel; T070-T074 and T076-T077 are complete; T075 tests plus T078 notification worker, T079 UI and T080 tests are next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T074/T077 by extending communication service with three-party parent-teacher conversations, member lifecycle, attachment policy, message moderation, notification audience resolution and delivery creation; API typecheck and full Vitest 330 tests pass.
 - 2026-08-22: Completed T073 by adding student and parent portal pages for schedule, progress, scores, tuition and homework using the shared PageHeader/PageToolbar/UiDataTable pattern; web typecheck and full Vitest 328 tests pass.
 - 2026-08-22: Completed T076 by adding communication conversation/member/message/notification/delivery schemas with migration 0011; full Vitest 328 tests pass. Phase 9 T073 remains open for student/parent portals.
 - 2026-08-22: Completed T072 by adding communication service and in-memory repository for parent links, delegation grant/revoke/expiry and parent scoped data resolver; API typecheck and full Vitest 328 tests pass.

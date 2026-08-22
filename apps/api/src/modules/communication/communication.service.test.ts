@@ -61,3 +61,60 @@ describe("Phase 9 parent delegation", () => {
     expect(active.status).toBe("revoked");
   });
 });
+
+describe("Phase 9/10 conversations and notifications", () => {
+  it("creates three-party parent-teacher conversations and enforces membership and moderation", () => {
+    const { service, repository } = fixture();
+    const link = service.linkParent(actor, {
+      studentId: "student-10",
+      parentUserId: parent.userId,
+      relationship: "Mẹ",
+    });
+    service.grantDelegation(actor, { parentLinkId: link.id, permissions: ["message_teacher"] });
+
+    const conversation = service.createThreePartyConversation(actor, {
+      parentLinkId: link.id,
+      teacherUserId: "teacher-1",
+      subject: "Trao đổi tiến độ học viên",
+      initialMessage: "Phụ huynh cần cập nhật tiến độ tuần này.",
+    });
+    expect(conversation).toMatchObject({ type: "parent_teacher", relatedStudentId: "student-10", status: "open" });
+    expect(repository.conversationMembers.map((x) => x.role).sort()).toEqual(["moderator", "parent", "teacher"]);
+    expect(repository.messages[0]).toMatchObject({ senderUserId: actor.userId, status: "sent" });
+
+    const parentMessage = service.sendMessage(parent, conversation.id, { body: "Gia đình đã nắm lịch học." });
+    expect(parentMessage.senderUserId).toBe(parent.userId);
+    expect(() =>
+      service.sendMessage({ ...actor, userId: "outsider" }, conversation.id, { body: "Không được gửi" }),
+    ).toThrow("conversation_member_required");
+    expect(() => service.moderateMessage(parent, parentMessage.id, "hidden")).toThrow("moderator_required");
+    expect(service.moderateMessage(actor, parentMessage.id, "hidden").status).toBe("hidden");
+  });
+
+  it("manages member lifecycle and resolves notification audiences", () => {
+    const { service } = fixture();
+    const conversation = service.createConversation(actor, {
+      type: "class",
+      subject: "Thông báo lớp IF-2609",
+      relatedClassId: "class-1",
+      memberUserIds: ["teacher-1", "student-1"],
+    });
+    service.addConversationMember(actor, conversation.id, { userId: "parent-1", role: "parent" });
+    service.changeConversationMemberStatus(actor, conversation.id, "student-1", "muted");
+    service.changeConversationMemberStatus(actor, conversation.id, "teacher-1", "left");
+
+    const notification = service.createNotification(actor, {
+      title: "Nhắc lịch học",
+      body: "Lớp IF-2609 học lúc 18:00 hôm nay.",
+      audience: { conversationId: conversation.id, userIds: ["branch-manager-1"] },
+    });
+    expect(service.resolveNotificationAudience(actor, notification.audience)).toEqual([
+      "admin-1",
+      "branch-manager-1",
+      "parent-1",
+    ]);
+    const deliveries = service.publishNotification(actor, notification.id, ["in_app", "email"]);
+    expect(deliveries).toHaveLength(6);
+    expect(deliveries.every((x) => x.status === "pending")).toBe(true);
+  });
+});

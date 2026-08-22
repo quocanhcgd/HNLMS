@@ -5,11 +5,11 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 ## Active Handoff
 
 - **Current task**: Parallel Phase 9+10 delivery for portals and communication.
-- **Status**: Completed T070-T073 and T076: enrollment/parent delegation services, student/parent portals, and conversation/member/message/notification/delivery schemas.
-- **Next tasks**: T074 three-party conversation service/UI and T077 moderation/notification resolver.
+- **Status**: Completed T070-T074 and T076-T077: enrollment/parent delegation, student/parent portals, communication schemas, three-party conversation, moderation, member lifecycle and notification audience resolver.
+- **Next tasks**: T075 US6 auth/E2E tests, T078 notification worker, T079 communication UI, T080 US7 contract/E2E tests.
 - **Blocker**: PostgreSQL runtime, production storage provider and auth/session provider remain open; continue with typed service/in-memory/demo contracts until providers are selected.
-- **Files in focus**: `apps/api/src/modules/communication/`, `apps/web/src/app/admin/parent/conversations/`, `apps/web/src/app/admin/communication/`.
-- **Verification**: `npm run typecheck --workspace=@hnlms/web` passed; `npm test -- --run` passed (328 tests).
+- **Files in focus**: `apps/api/tests/authorization/`, `worker/src/jobs/notifications/`, `apps/web/src/app/admin/communication/`, `apps/web/src/app/admin/parent/conversations/`.
+- **Verification**: `npm run typecheck --workspace=@hnlms/api` passed; `npm test -- --run` passed (330 tests).
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

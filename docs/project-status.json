@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T08:33:39.300Z",
+  "updatedAt": "2026-08-22T08:37:21.816Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T073",
-    "title": "Implement student/parent portals cho lịch, tiến độ, điểm, học phí và bài tập trong apps/web/src/app/admin/student/ và apps/web/src/app/admin/parent/",
-    "phase": "Phase 9: User Story 6 - Học tập, phụ huynh và trao đổi ba bên (P1)",
+    "id": "T077",
+    "title": "Implement conversation moderation, member lifecycle và notification audience resolver trong apps/api/src/modules/communication/",
+    "phase": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T073 student/parent portals theo chuẩn giao diện chung",
+    "activity": "Hoàn thành T074/T077 conversation moderation/member lifecycle/notification resolver",
     "startedAt": null,
-    "updatedAt": "2026-08-22T08:33:39.300Z"
+    "updatedAt": "2026-08-22T08:37:21.816Z"
   },
   "nextTask": {
-    "id": "T074",
-    "title": "Implement three-party conversation, member scope, message và attachment policy trong apps/api/src/modules/communication/ và apps/web/src/app/admin/parent/conversations/",
+    "id": "T075",
+    "title": "Add US6 authorization matrix and E2E tests trong apps/api/tests/authorization/us6-parent-delegation.spec.ts và apps/web/tests/e2e/us6-parent.spec.ts",
     "percent": 0
   },
   "overall": {
-    "done": 74,
+    "done": 76,
     "total": 175,
-    "percent": 42.3
+    "percent": 43.4
   },
   "phases": [
     {
@@ -75,15 +75,15 @@
     },
     {
       "name": "Phase 9: User Story 6 - Học tập, phụ huynh và trao đổi ba bên (P1)",
-      "done": 4,
+      "done": 5,
       "total": 6,
-      "percent": 66.7
+      "percent": 83.3
     },
     {
       "name": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
-      "done": 1,
+      "done": 2,
       "total": 5,
-      "percent": 20
+      "percent": 40
     },
     {
       "name": "Phase 11: User Story 8 - Thi đầu vào, thi thử và xếp lớp (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "fa654d1",
-    "message": "feat(api): add communication notification schemas",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/fa654d1"
+    "sha": "60ebc1f",
+    "message": "feat(web): add student and parent portals",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/60ebc1f"
   },
   "ci": {
     "status": "unknown",
