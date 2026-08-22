@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T093 Phase 13 / US10 online class UI.
-- **Status**: Completed locally: added `/teacher/online`, `/student/online` and `/parent/online` UI using shared PageHeader/PageToolbar/UiDataTable pattern, with navigation and i18n updates.
-- **Next task**: T094 US10 integration and E2E tests.
+- **Current task**: T094 Phase 13 / US10 online class integration and E2E tests.
+- **Status**: Completed locally and Phase 13 / US10 is closed: added integration flow from signed webhook inbox to meeting sync worker and Playwright coverage for teacher/student/parent online workspaces.
+- **Next task**: T095 Phase 14 / US11 billing, invoices and payments foundation.
 - **Blocker**: None.
-- **Files in focus**: `apps/web/src/app/teacher/online/`, `apps/web/src/app/student/online/`, `apps/web/src/app/parent/online/`, `apps/web/src/lib/navigation/manifests.ts`, `apps/web/src/lib/i18n/messages.ts`.
-- **Verification**: Web typecheck passed; navigation tests passed; teacher/student/parent online routes returned HTTP 200. Full Vitest should be run before commit/push.
+- **Files in focus**: `apps/api/tests/integration/us10-online-class.spec.ts`, `apps/web/tests/e2e/us10-online-class.spec.ts`.
+- **Verification**: API/worker/web typechecks passed; US10 integration passed; US10 Playwright E2E passed 3/3; full Vitest passed 83 files/363 tests.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 
