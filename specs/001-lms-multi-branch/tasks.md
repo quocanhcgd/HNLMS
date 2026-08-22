@@ -157,7 +157,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T076 [P] [US7] Tạo conversation, member, message, notification và delivery migrations trong `apps/api/src/modules/communication/`
 - [x] T077 [US7] Implement conversation moderation, member lifecycle và notification audience resolver trong `apps/api/src/modules/communication/`
 - [x] T078 [US7] Implement notification worker cho email/in-app channels trong `worker/src/jobs/notifications/`
-- [ ] T079 [US7] Implement communication center và notification inbox trong `apps/web/src/app/admin/communication/`
+- [x] T079 [US7] Implement communication center và notification inbox trong `apps/web/src/app/admin/communication/`
 - [ ] T080 [US7] Add US7 contract/E2E tests trong `apps/api/tests/contract/us7-communication.contract.spec.ts` và `apps/web/tests/e2e/us7-communication.spec.ts`
 
 ## Phase 11: User Story 8 - Thi đầu vào, thi thử và xếp lớp (P1)

@@ -6,6 +6,7 @@ import {
   ClipboardList,
   LayoutDashboard,
   Megaphone,
+  MessageSquare,
   Settings,
   Users,
   Wallet,
@@ -133,6 +134,34 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     ],
   },
   {
+    key: "communication",
+    labelKey: "communication",
+    href: "/admin/communication",
+    icon: MessageSquare,
+    moduleKey: "communication",
+    roles: ["organization_admin", "branch_manager", "teacher", "student", "parent"],
+    children: [
+      {
+        key: "communicationCenter",
+        labelKey: "communicationCenter",
+        href: "/admin/communication",
+        roles: ["organization_admin", "branch_manager", "teacher"],
+      },
+      {
+        key: "notificationInbox",
+        labelKey: "notificationInbox",
+        href: "/admin/communication/notifications",
+        roles: ["organization_admin", "branch_manager", "teacher", "student", "parent"],
+      },
+      {
+        key: "parentConversations",
+        labelKey: "parentConversations",
+        href: "/admin/parent/conversations",
+        roles: ["organization_admin", "branch_manager", "parent"],
+      },
+    ],
+  },
+  {
     key: "finance",
     labelKey: "finance",
     href: "/admin/finance",
@@ -162,7 +191,16 @@ export const lmsNavigation: readonly NavigationManifest[] = [
 export const mockNavigationContext: NavigationContext = {
   role: "organization_admin",
   permissions: new Set(["navigation:read"]),
-  effectiveModules: new Set(["admission", "marketing", "academic", "learning", "finance", "hrm", "reporting"]),
+  effectiveModules: new Set([
+    "admission",
+    "marketing",
+    "academic",
+    "learning",
+    "communication",
+    "finance",
+    "hrm",
+    "reporting",
+  ]),
 };
 
 export function isNavigationVisible(item: NavigationManifest, context: NavigationContext): boolean {

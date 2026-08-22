@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T08:39:23.392Z",
+  "updatedAt": "2026-08-22T08:43:36.634Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T078",
-    "title": "Implement notification worker cho email/in-app channels trong worker/src/jobs/notifications/",
+    "id": "T079",
+    "title": "Implement communication center và notification inbox trong apps/web/src/app/admin/communication/",
     "phase": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T078 notification worker email/in-app",
+    "activity": "Hoàn thành T079 communication center và notification inbox UI",
     "startedAt": null,
-    "updatedAt": "2026-08-22T08:39:23.392Z"
+    "updatedAt": "2026-08-22T08:43:36.634Z"
   },
   "nextTask": {
     "id": "T075",
@@ -20,9 +20,9 @@
     "percent": 0
   },
   "overall": {
-    "done": 77,
+    "done": 78,
     "total": 175,
-    "percent": 44
+    "percent": 44.6
   },
   "phases": [
     {
@@ -81,9 +81,9 @@
     },
     {
       "name": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
-      "done": 3,
+      "done": 4,
       "total": 5,
-      "percent": 60
+      "percent": 80
     },
     {
       "name": "Phase 11: User Story 8 - Thi đầu vào, thi thử và xếp lớp (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "acea198",
-    "message": "feat(api): add conversation and notification services",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/acea198"
+    "sha": "1054eaa",
+    "message": "feat(worker): add notification delivery worker",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/1054eaa"
   },
   "ci": {
     "status": "unknown",
