@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T081 Phase 11 / US8 assessment foundation.
-- **Status**: Completed locally: added assessment banks, questions, question versions, attempts, and extended assessments/results schema with Drizzle migration `0012_tense_shocker.sql`.
-- **Next task**: T082 Phase 11 / US8 question approval, blueprint, time window, attempt limit and scoring policy service logic.
+- **Current task**: T082 Phase 11 / US8 assessment policy service.
+- **Status**: Completed locally: added assessment question approval, publication validation for blueprint/time window/attempt limit/scoring policy, in-memory policy repository and focused tests.
+- **Next task**: T083 Phase 11 / US8 timed attempt state machine, autosave, submit idempotency and timeout handling.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/assessment-english/schema.ts`, `infra/migrations/0012_tense_shocker.sql`, `infra/migrations/meta/0012_snapshot.json`, `specs/001-lms-multi-branch/tasks.md`.
-- **Verification**: `npm run typecheck --workspace=@hnlms/api` passed; focused Vitest assessment/database tests passed. Full Vitest should be run before commit/push if time allows.
+- **Files in focus**: `apps/api/src/modules/assessment-english/assessment-policy.service.ts`, `apps/api/src/modules/assessment-english/in-memory-assessment-policy-repository.ts`, `apps/api/src/modules/assessment-english/assessment-policy.service.test.ts`.
+- **Verification**: API typecheck passed; focused assessment policy/entrance tests passed. Full Vitest should be run before commit/push.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

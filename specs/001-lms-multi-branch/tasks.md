@@ -167,7 +167,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 **Independent Test**: Tạo đề, làm/nộp bài, retry submit không tạo attempt trùng và kết quả được công bố theo policy.
 
 - [x] T081 [P] [US8] Tạo assessment bank, assessment, attempt, result migrations/entities trong `apps/api/src/modules/assessment-english/`
-- [ ] T082 [US8] Implement question approval, blueprint, time window, attempts limit và scoring policy trong `apps/api/src/modules/assessment-english/`
+- [x] T082 [US8] Implement question approval, blueprint, time window, attempts limit và scoring policy trong `apps/api/src/modules/assessment-english/`
 - [ ] T083 [US8] Implement timed attempt state machine, autosave, submit idempotency và timeout handling trong `apps/api/src/modules/assessment-english/`
 - [ ] T084 [US8] Implement assessment engine UI và result/recommendation UI trong `apps/web/src/app/student/assessment/` và `apps/web/src/app/teacher/assessment/`
 - [ ] T085 [US8] Add assessment contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us8-assessment.contract.spec.ts` và `apps/web/tests/e2e/us8-assessment.spec.ts`
