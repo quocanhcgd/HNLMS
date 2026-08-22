@@ -8,6 +8,10 @@ export type LibraryResourceKind = "document" | "video" | "audio" | "image" | "sl
 export type LibraryResourceStatus = "draft" | "in_review" | "published" | "retired";
 export type ResourceAccessScope = "organization" | "department" | "program" | "course" | "class" | "restricted";
 export type FileProcessingStatus = "pending" | "processing" | "ready" | "failed" | "quarantined";
+export type StudentStatus = "prospective" | "active" | "paused" | "graduated" | "archived";
+export type EnrollmentStatus = "pending" | "active" | "completed" | "cancelled" | "withdrawn";
+export type EnrollmentCompletionState = "not_started" | "in_progress" | "completed" | "at_risk";
+export type AttendanceStatus = "present" | "late" | "absent" | "excused";
 export type SavedLibraryResource = {
   id: string;
   organizationId: string;
@@ -59,6 +63,53 @@ export type AcademicSchedule = {
   teacherUserId: string | null;
   onlineSessionKey: string | null;
   status: ScheduleStatus;
+};
+
+export type Student = {
+  id: string;
+  organizationId: string;
+  userId?: string;
+  studentCode: string;
+  fullName: string;
+  displayName?: string;
+  dateOfBirth?: string;
+  guardianContact?: unknown;
+  privacyFlags?: unknown;
+  status: StudentStatus;
+  createdByUserId: string;
+};
+export type EnrollmentAttendance = {
+  sessionId: string;
+  occurredAt: string;
+  status: AttendanceStatus;
+  note?: string;
+  recordedByUserId: string;
+};
+export type EnrollmentScore = {
+  assessmentId: string;
+  title: string;
+  score: number;
+  maxScore: number;
+  weight?: number;
+  recordedAt: string;
+  recordedByUserId: string;
+};
+export type Enrollment = {
+  id: string;
+  organizationId: string;
+  studentId: string;
+  classId: string;
+  enrollmentCode: string;
+  status: EnrollmentStatus;
+  progressPercent: number;
+  completionState: EnrollmentCompletionState;
+  attendance: EnrollmentAttendance[];
+  scores: EnrollmentScore[];
+  enrolledAt: string;
+  startedAt?: string;
+  completedAt?: string;
+  financeReferenceId?: string;
+  createdByUserId: string;
 };
 
 export type FileAsset = {
@@ -187,6 +238,8 @@ export type AcademicRepository = {
   libraryResources: LibraryResource[];
   libraryResourceVersions: LibraryResourceVersion[];
   savedLibraryResources: SavedLibraryResource[];
+  students: Student[];
+  enrollments: Enrollment[];
 };
 
 const text = (value: string, field: string) => {
@@ -210,6 +263,8 @@ export class AcademicLearningService {
       modules: this.repository.modules.filter((x) => x.organizationId === actor.organizationId),
       classes: this.repository.classes.filter((x) => x.organizationId === actor.organizationId),
       schedules: this.repository.schedules.filter((x) => x.organizationId === actor.organizationId),
+      students: this.repository.students.filter((x) => x.organizationId === actor.organizationId),
+      enrollments: this.repository.enrollments.filter((x) => x.organizationId === actor.organizationId),
       learningContents: this.repository.learningContents.filter((x) => x.organizationId === actor.organizationId),
       libraryResources: this.repository.libraryResources.filter((x) => x.organizationId === actor.organizationId),
       savedLibraryResources: this.repository.savedLibraryResources.filter(
@@ -381,6 +436,185 @@ export class AcademicLearningService {
     if (!item) throw new AcademicServiceError("not_found", "schedule_not_found");
     item.status = "confirmed";
     return item;
+  }
+
+  createStudent(
+    actor: AcademicActor,
+    input: {
+      studentCode: string;
+      fullName: string;
+      userId?: string;
+      displayName?: string;
+      dateOfBirth?: string;
+      guardianContact?: unknown;
+      privacyFlags?: unknown;
+      status?: StudentStatus;
+    },
+  ): Student {
+    const studentCode = text(input.studentCode, "student_code");
+    if (
+      this.repository.students.some((x) => x.organizationId === actor.organizationId && x.studentCode === studentCode)
+    ) {
+      throw new AcademicServiceError("invalid_input", "student_code_duplicated");
+    }
+    if (
+      input.userId &&
+      this.repository.students.some((x) => x.organizationId === actor.organizationId && x.userId === input.userId)
+    ) {
+      throw new AcademicServiceError("invalid_input", "student_user_duplicated");
+    }
+    const item: Student = {
+      id: this.newId("student"),
+      organizationId: actor.organizationId,
+      userId: input.userId,
+      studentCode,
+      fullName: text(input.fullName, "full_name"),
+      displayName: input.displayName?.trim(),
+      dateOfBirth: input.dateOfBirth?.trim(),
+      guardianContact: input.guardianContact,
+      privacyFlags: input.privacyFlags,
+      status: input.status ?? "active",
+      createdByUserId: actor.userId,
+    };
+    this.repository.students.push(item);
+    return item;
+  }
+
+  enrollStudent(
+    actor: AcademicActor,
+    input: {
+      studentId: string;
+      classId: string;
+      enrollmentCode: string;
+      financeReferenceId?: string;
+      enrolledAt?: string;
+    },
+  ): Enrollment {
+    const student = this.student(actor, input.studentId);
+    if (student.status !== "active" && student.status !== "prospective")
+      throw new AcademicServiceError("invalid_status", "student_not_enrollable");
+    const academicClass = this.class(actor, input.classId);
+    if (academicClass.status !== "open" && academicClass.status !== "in_progress")
+      throw new AcademicServiceError("invalid_status", "class_not_open");
+    if (academicClass.enrolledCount >= academicClass.capacity) throw new AcademicServiceError("capacity_exceeded");
+    if (
+      this.repository.enrollments.some(
+        (x) =>
+          x.organizationId === actor.organizationId &&
+          x.studentId === input.studentId &&
+          x.classId === input.classId &&
+          x.status !== "cancelled" &&
+          x.status !== "withdrawn",
+      )
+    ) {
+      throw new AcademicServiceError("invalid_input", "student_already_enrolled");
+    }
+    const enrollmentCode = text(input.enrollmentCode, "enrollment_code");
+    if (
+      this.repository.enrollments.some(
+        (x) => x.organizationId === actor.organizationId && x.enrollmentCode === enrollmentCode,
+      )
+    ) {
+      throw new AcademicServiceError("invalid_input", "enrollment_code_duplicated");
+    }
+    const item: Enrollment = {
+      id: this.newId("enrollment"),
+      organizationId: actor.organizationId,
+      studentId: input.studentId,
+      classId: input.classId,
+      enrollmentCode,
+      status: "active",
+      progressPercent: 0,
+      completionState: "not_started",
+      attendance: [],
+      scores: [],
+      enrolledAt: input.enrolledAt ?? new Date().toISOString(),
+      startedAt: new Date().toISOString(),
+      financeReferenceId: input.financeReferenceId,
+      createdByUserId: actor.userId,
+    };
+    academicClass.enrolledCount += 1;
+    if (academicClass.enrolledCount >= academicClass.capacity && academicClass.status === "open")
+      academicClass.status = "full";
+    this.repository.enrollments.push(item);
+    return item;
+  }
+
+  updateEnrollmentProgress(actor: AcademicActor, enrollmentId: string, progressPercent: number): Enrollment {
+    const enrollment = this.enrollment(actor, enrollmentId);
+    if (!Number.isFinite(progressPercent) || progressPercent < 0 || progressPercent > 100)
+      throw new AcademicServiceError("invalid_input", "progress_percent_invalid");
+    enrollment.progressPercent = Math.round(progressPercent);
+    this.refreshCompletionState(enrollment);
+    return enrollment;
+  }
+
+  recordAttendance(
+    actor: AcademicActor,
+    enrollmentId: string,
+    input: Omit<EnrollmentAttendance, "recordedByUserId">,
+  ): Enrollment {
+    const enrollment = this.enrollment(actor, enrollmentId);
+    const existing = enrollment.attendance.find((x) => x.sessionId === input.sessionId);
+    const item: EnrollmentAttendance = { ...input, recordedByUserId: actor.userId };
+    if (existing) Object.assign(existing, item);
+    else enrollment.attendance.push(item);
+    this.refreshCompletionState(enrollment);
+    return enrollment;
+  }
+
+  recordScore(
+    actor: AcademicActor,
+    enrollmentId: string,
+    input: Omit<EnrollmentScore, "recordedAt" | "recordedByUserId"> & { recordedAt?: string },
+  ): Enrollment {
+    const enrollment = this.enrollment(actor, enrollmentId);
+    if (
+      !Number.isFinite(input.score) ||
+      !Number.isFinite(input.maxScore) ||
+      input.maxScore <= 0 ||
+      input.score < 0 ||
+      input.score > input.maxScore
+    )
+      throw new AcademicServiceError("invalid_input", "score_invalid");
+    const item: EnrollmentScore = {
+      ...input,
+      title: text(input.title, "title"),
+      recordedAt: input.recordedAt ?? new Date().toISOString(),
+      recordedByUserId: actor.userId,
+    };
+    const existing = enrollment.scores.find((x) => x.assessmentId === input.assessmentId);
+    if (existing) Object.assign(existing, item);
+    else enrollment.scores.push(item);
+    this.refreshCompletionState(enrollment);
+    return enrollment;
+  }
+
+  completeEnrollment(actor: AcademicActor, enrollmentId: string): Enrollment {
+    const enrollment = this.enrollment(actor, enrollmentId);
+    if (enrollment.status !== "active") throw new AcademicServiceError("invalid_status", "enrollment_not_active");
+    enrollment.status = "completed";
+    enrollment.progressPercent = 100;
+    enrollment.completionState = "completed";
+    enrollment.completedAt = new Date().toISOString();
+    return enrollment;
+  }
+
+  cancelEnrollment(
+    actor: AcademicActor,
+    enrollmentId: string,
+    status: Extract<EnrollmentStatus, "cancelled" | "withdrawn"> = "cancelled",
+  ): Enrollment {
+    const enrollment = this.enrollment(actor, enrollmentId);
+    if (enrollment.status === "completed") throw new AcademicServiceError("invalid_status", "completed_enrollment");
+    if (enrollment.status !== status) {
+      enrollment.status = status;
+      const academicClass = this.class(actor, enrollment.classId);
+      academicClass.enrolledCount = Math.max(0, academicClass.enrolledCount - 1);
+      if (academicClass.status === "full" && academicClass.enrolledCount < academicClass.capacity)
+        academicClass.status = "open";
+    }
+    return enrollment;
   }
 
   createFileAsset(
@@ -761,6 +995,49 @@ export class AcademicLearningService {
     return item;
   }
 
+  private student(actor: AcademicActor, id: string) {
+    const item = this.repository.students.find((x) => x.id === id && x.organizationId === actor.organizationId);
+    if (!item) throw new AcademicServiceError("not_found", "student_not_found");
+    return item;
+  }
+  private enrollment(actor: AcademicActor, id: string) {
+    const item = this.repository.enrollments.find((x) => x.id === id && x.organizationId === actor.organizationId);
+    if (!item) throw new AcademicServiceError("not_found", "enrollment_not_found");
+    if (item.classId && actor.classIds && !actor.classIds.has(item.classId))
+      throw new AcademicServiceError("forbidden", "class_outside_scope");
+    return item;
+  }
+  private refreshCompletionState(enrollment: Enrollment) {
+    if (enrollment.status === "completed") {
+      enrollment.completionState = "completed";
+      return;
+    }
+    if (enrollment.progressPercent >= 100) {
+      enrollment.completionState = "completed";
+      return;
+    }
+    const absentCount = enrollment.attendance.filter((x) => x.status === "absent").length;
+    const scoreAverage = this.weightedScorePercent(enrollment.scores);
+    if (absentCount >= 3 || (scoreAverage !== null && scoreAverage < 50)) {
+      enrollment.completionState = "at_risk";
+      return;
+    }
+    enrollment.completionState =
+      enrollment.progressPercent > 0 || enrollment.attendance.length > 0 || enrollment.scores.length > 0
+        ? "in_progress"
+        : "not_started";
+  }
+  private weightedScorePercent(scores: EnrollmentScore[]) {
+    if (!scores.length) return null;
+    let totalWeight = 0;
+    let weighted = 0;
+    for (const score of scores) {
+      const weight = score.weight ?? 1;
+      totalWeight += weight;
+      weighted += (score.score / score.maxScore) * 100 * weight;
+    }
+    return totalWeight > 0 ? weighted / totalWeight : null;
+  }
   private learningContent(actor: AcademicActor, id: string) {
     const item = this.repository.learningContents.find((x) => x.id === id && x.organizationId === actor.organizationId);
     if (!item) throw new AcademicServiceError("not_found", "learning_content_not_found");

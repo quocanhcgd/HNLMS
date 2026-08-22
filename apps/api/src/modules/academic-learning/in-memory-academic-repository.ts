@@ -5,12 +5,15 @@ import type {
   AcademicSchedule,
   Course,
   Department,
+  Enrollment,
   FileAsset,
   LearningContent,
   LearningContentVersion,
   LibraryResource,
   LibraryResourceVersion,
   Program,
+  SavedLibraryResource,
+  Student,
 } from "./academic-learning.service";
 
 export class InMemoryAcademicRepository implements AcademicRepository {
@@ -20,16 +23,12 @@ export class InMemoryAcademicRepository implements AcademicRepository {
   modules: AcademicModule[] = [];
   classes: AcademicClass[] = [];
   schedules: AcademicSchedule[] = [];
+  students: Student[] = [];
+  enrollments: Enrollment[] = [];
   fileAssets: FileAsset[] = [];
   learningContents: LearningContent[] = [];
   learningContentVersions: LearningContentVersion[] = [];
   libraryResources: LibraryResource[] = [];
   libraryResourceVersions: LibraryResourceVersion[] = [];
-  savedLibraryResources: {
-    id: string;
-    organizationId: string;
-    userId: string;
-    libraryResourceId: string;
-    savedAt: string;
-  }[] = [];
+  savedLibraryResources: SavedLibraryResource[] = [];
 }

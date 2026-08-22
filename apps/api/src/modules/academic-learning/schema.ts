@@ -48,6 +48,7 @@ export const fileProcessingStatus = pgEnum("file_processing_status", [
   "failed",
   "quarantined",
 ]);
+export const attendanceStatus = pgEnum("attendance_status", ["present", "late", "absent", "excused"]);
 export const studentStatus = pgEnum("student_status", ["prospective", "active", "paused", "graduated", "archived"]);
 export const enrollmentStatus = pgEnum("enrollment_status", [
   "pending",
@@ -265,6 +266,72 @@ export const students = pgTable(
     ),
     organizationUserUnique: uniqueIndex("students_organization_user_unique").on(table.organizationId, table.userId),
     organizationStatusIndex: index("students_organization_status_index").on(table.organizationId, table.status),
+  }),
+);
+
+export const enrollmentAttendances = pgTable(
+  "enrollment_attendances",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    enrollmentId: uuid("enrollment_id")
+      .notNull()
+      .references(() => enrollments.id),
+    sessionId: text("session_id").notNull(),
+    occurredAt: timestamp("occurred_at", { withTimezone: true }).notNull().defaultNow(),
+    status: attendanceStatus("status").notNull().default("present"),
+    note: text("note"),
+    recordedByUserId: uuid("recorded_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    enrollmentSessionUnique: uniqueIndex("enrollment_attendances_enrollment_session_unique").on(
+      table.enrollmentId,
+      table.sessionId,
+    ),
+    organizationEnrollmentIndex: index("enrollment_attendances_organization_enrollment_index").on(
+      table.organizationId,
+      table.enrollmentId,
+    ),
+  }),
+);
+
+export const enrollmentScores = pgTable(
+  "enrollment_scores",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    enrollmentId: uuid("enrollment_id")
+      .notNull()
+      .references(() => enrollments.id),
+    assessmentId: text("assessment_id").notNull(),
+    title: text("title").notNull(),
+    score: integer("score").notNull().default(0),
+    maxScore: integer("max_score").notNull().default(100),
+    weight: integer("weight"),
+    recordedAt: timestamp("recorded_at", { withTimezone: true }).notNull().defaultNow(),
+    recordedByUserId: uuid("recorded_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    enrollmentAssessmentUnique: uniqueIndex("enrollment_scores_enrollment_assessment_unique").on(
+      table.enrollmentId,
+      table.assessmentId,
+    ),
+    organizationEnrollmentIndex: index("enrollment_scores_organization_enrollment_index").on(
+      table.organizationId,
+      table.enrollmentId,
+    ),
   }),
 );
 
@@ -543,6 +610,10 @@ export type StudentRow = typeof students.$inferSelect;
 export type NewStudentRow = typeof students.$inferInsert;
 export type EnrollmentRow = typeof enrollments.$inferSelect;
 export type NewEnrollmentRow = typeof enrollments.$inferInsert;
+export type EnrollmentAttendanceRow = typeof enrollmentAttendances.$inferSelect;
+export type NewEnrollmentAttendanceRow = typeof enrollmentAttendances.$inferInsert;
+export type EnrollmentScoreRow = typeof enrollmentScores.$inferSelect;
+export type NewEnrollmentScoreRow = typeof enrollmentScores.$inferInsert;
 export type FileAssetRow = typeof fileAssets.$inferSelect;
 export type NewFileAssetRow = typeof fileAssets.$inferInsert;
 export type LearningContentRow = typeof learningContents.$inferSelect;

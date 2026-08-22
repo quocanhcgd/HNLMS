@@ -71,6 +71,13 @@
       "when": 1787384930548,
       "tag": "0009_overrated_white_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1787386180558,
+      "tag": "0010_curious_wendell_vaughn",
+      "breakpoints": true
     }
   ]
 }

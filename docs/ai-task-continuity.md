@@ -5,11 +5,11 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 ## Active Handoff
 
 - **Current task**: Phase 9 / US6 learning, parent delegation and three-party communication.
-- **Status**: Completed T070: student/enrollment schemas in academic-learning, parent link/delegation schemas in communication, database exports and Drizzle migration 0009.
-- **Next task**: T071, implement enrollment, progress, attendance, score and completion state in `apps/api/src/modules/academic-learning/`.
+- **Status**: Completed T070-T071: student/enrollment and parent link/delegation schemas, attendance/score migration, enrollment service, progress, attendance, score and completion/at-risk state transitions.
+- **Next task**: T072, implement parent delegation grant/revoke/expiry and scoped data resolver in `apps/api/src/modules/communication/`.
 - **Blocker**: PostgreSQL runtime, production storage provider and auth/session provider remain open; continue with typed service/in-memory contracts until providers are selected.
-- **Files in focus**: `apps/api/src/modules/academic-learning/academic-learning.service.ts`, `apps/api/src/modules/academic-learning/in-memory-academic-repository.ts`, `apps/api/src/modules/academic-learning/schema.ts`, `apps/api/src/modules/academic-learning/academic-learning.service.test.ts`.
-- **Verification**: `npm run typecheck --workspace=@hnlms/api` passed; `npm test -- --run` passed (324 tests).
+- **Files in focus**: `apps/api/src/modules/communication/`, `apps/api/src/modules/academic-learning/`, future parent/student portal pages.
+- **Verification**: `npm run typecheck --workspace=@hnlms/api` passed; `npm test -- --run` passed (326 tests).
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

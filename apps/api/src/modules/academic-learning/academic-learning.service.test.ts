@@ -282,4 +282,113 @@ describe("Phase 7 academic learning", () => {
     expect(service.toggleSavedLibraryResource(actor, grammar.id)).toEqual({ saved: false });
     expect(service.listSavedLibraryResources(actor)).toEqual([]);
   });
+  it("enrolls students and updates progress, attendance, scores and completion state", () => {
+    const { service } = fixture();
+    const department = service.createDepartment(actor, { code: "ENG", name: "Ngoại ngữ" });
+    const program = service.createProgram(actor, { departmentId: department.id, code: "IELTS", name: "IELTS" });
+    const course = service.createCourse(actor, {
+      programId: program.id,
+      code: "IELTS-F",
+      name: "Foundation",
+      durationWeeks: 12,
+    });
+    service.publishProgram(actor, program.id);
+    course.status = "published";
+    const academicClass = service.openClass(actor, {
+      courseId: course.id,
+      code: "IF-01",
+      name: "Lớp IELTS Foundation",
+      modality: "hybrid",
+      capacity: 1,
+    });
+    const student = service.createStudent(actor, { studentCode: "HV001", fullName: "Nguyễn An" });
+
+    const enrollment = service.enrollStudent(actor, {
+      studentId: student.id,
+      classId: academicClass.id,
+      enrollmentCode: "ENR001",
+    });
+    expect(enrollment).toMatchObject({ status: "active", progressPercent: 0, completionState: "not_started" });
+    expect(academicClass).toMatchObject({ enrolledCount: 1, status: "full" });
+
+    service.updateEnrollmentProgress(actor, enrollment.id, 35);
+    expect(enrollment.completionState).toBe("in_progress");
+    service.recordAttendance(actor, enrollment.id, {
+      sessionId: "buoi-1",
+      occurredAt: "2026-09-01T12:00:00.000Z",
+      status: "present",
+    });
+    service.recordScore(actor, enrollment.id, {
+      assessmentId: "quiz-1",
+      title: "Quiz 1",
+      score: 8,
+      maxScore: 10,
+      weight: 1,
+    });
+    expect(enrollment.attendance).toHaveLength(1);
+    expect(enrollment.scores[0]).toMatchObject({ title: "Quiz 1", recordedByUserId: actor.userId });
+
+    service.completeEnrollment(actor, enrollment.id);
+    expect(enrollment).toMatchObject({ status: "completed", progressPercent: 100, completionState: "completed" });
+    expect(enrollment.completedAt).toBeTruthy();
+  });
+
+  it("guards enrollment capacity, duplicates and at-risk state", () => {
+    const { service } = fixture();
+    const department = service.createDepartment(actor, { code: "ENG", name: "Ngoại ngữ" });
+    const program = service.createProgram(actor, { departmentId: department.id, code: "IELTS", name: "IELTS" });
+    const course = service.createCourse(actor, {
+      programId: program.id,
+      code: "IELTS-F",
+      name: "Foundation",
+      durationWeeks: 12,
+    });
+    service.publishProgram(actor, program.id);
+    course.status = "published";
+    const academicClass = service.openClass(actor, {
+      courseId: course.id,
+      code: "IF-02",
+      name: "Lớp giới hạn",
+      modality: "onsite",
+      capacity: 2,
+    });
+    const first = service.createStudent(actor, {
+      studentCode: "HV010",
+      fullName: "Học viên Một",
+      userId: "student-user-1",
+    });
+    const second = service.createStudent(actor, { studentCode: "HV011", fullName: "Học viên Hai" });
+    expect(() => service.createStudent(actor, { studentCode: "HV010", fullName: "Trùng mã" })).toThrow(
+      "student_code_duplicated",
+    );
+    expect(() =>
+      service.createStudent(actor, { studentCode: "HV012", fullName: "Trùng user", userId: "student-user-1" }),
+    ).toThrow("student_user_duplicated");
+
+    const enrollment = service.enrollStudent(actor, {
+      studentId: first.id,
+      classId: academicClass.id,
+      enrollmentCode: "ENR010",
+    });
+    expect(() =>
+      service.enrollStudent(actor, { studentId: first.id, classId: academicClass.id, enrollmentCode: "ENR011" }),
+    ).toThrow("student_already_enrolled");
+    service.enrollStudent(actor, { studentId: second.id, classId: academicClass.id, enrollmentCode: "ENR012" });
+    const third = service.createStudent(actor, { studentCode: "HV013", fullName: "Học viên Ba" });
+    expect(() =>
+      service.enrollStudent(actor, { studentId: third.id, classId: academicClass.id, enrollmentCode: "ENR013" }),
+    ).toThrow("class_not_open");
+
+    service.recordScore(actor, enrollment.id, {
+      assessmentId: "quiz-risk",
+      title: "Quiz cần hỗ trợ",
+      score: 4,
+      maxScore: 10,
+    });
+    expect(enrollment.completionState).toBe("at_risk");
+    service.cancelEnrollment(actor, enrollment.id, "withdrawn");
+    expect(enrollment.status).toBe("withdrawn");
+    expect(academicClass.enrolledCount).toBe(1);
+    expect(academicClass.status).toBe("open");
+  });
 });
