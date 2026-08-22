@@ -154,7 +154,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Gửi thông báo theo branch/class/role và xác minh delivery/read state đúng scope.
 
-- [ ] T076 [P] [US7] Tạo conversation, member, message, notification và delivery migrations trong `apps/api/src/modules/communication/`
+- [x] T076 [P] [US7] Tạo conversation, member, message, notification và delivery migrations trong `apps/api/src/modules/communication/`
 - [ ] T077 [US7] Implement conversation moderation, member lifecycle và notification audience resolver trong `apps/api/src/modules/communication/`
 - [ ] T078 [US7] Implement notification worker cho email/in-app channels trong `worker/src/jobs/notifications/`
 - [ ] T079 [US7] Implement communication center và notification inbox trong `apps/web/src/app/admin/communication/`

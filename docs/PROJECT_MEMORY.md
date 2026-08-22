@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T072 are complete; T073 is the next open task.
-- Current baseline: Phase 9 / US6 is in progress; T070-T072 student/enrollment schemas, enrollment progress/attendance/score and parent delegation grant/revoke/expiry scoped resolver are complete; T073 student/parent portals are next.
+- Tasks: `T001` to `T175`; T001-T072 and T076 are complete; T073/T074 and T077 are the next open parallel tasks.
+- Current baseline: Phase 9/10 work is proceeding in parallel; T070-T072 and T076 schemas/services are complete; T073 portals plus T074/T077 conversation/notification services are next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T076 by adding communication conversation/member/message/notification/delivery schemas with migration 0011; full Vitest 328 tests pass. Phase 9 T073 remains open for student/parent portals.
 - 2026-08-22: Completed T072 by adding communication service and in-memory repository for parent links, delegation grant/revoke/expiry and parent scoped data resolver; API typecheck and full Vitest 328 tests pass.
 - 2026-08-22: Completed T071 by implementing student enrollment, progress updates, attendance, score recording, completion/at-risk state transitions, in-memory repository support and migration 0010 for enrollment attendance/score tables; API typecheck and full Vitest 326 tests pass.
 - 2026-08-22: Completed T070 by adding student/enrollment schemas in academic-learning, parent link/delegation schemas in communication, database exports and Drizzle migration 0009; API typecheck and full Vitest 324 tests pass.
