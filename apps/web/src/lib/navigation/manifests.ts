@@ -114,9 +114,23 @@ export const lmsNavigation: readonly NavigationManifest[] = [
   {
     key: "students",
     labelKey: "students",
-    href: "/admin/students",
+    href: "/admin/student",
     icon: Users,
     roles: ["organization_admin", "branch_manager", "teacher", "student", "parent"],
+    children: [
+      {
+        key: "studentProgress",
+        labelKey: "studentProgress",
+        href: "/admin/student",
+        roles: ["organization_admin", "branch_manager", "teacher", "student"],
+      },
+      {
+        key: "parentPortal",
+        labelKey: "parentPortal",
+        href: "/admin/parent",
+        roles: ["organization_admin", "branch_manager", "parent"],
+      },
+    ],
   },
   {
     key: "finance",

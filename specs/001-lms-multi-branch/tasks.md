@@ -144,7 +144,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T070 [P] [US6] Tạo student, enrollment, parent link và delegation migrations/entities trong `apps/api/src/modules/academic-learning/` và `apps/api/src/modules/communication/`
 - [x] T071 [US6] Implement enrollment, progress, attendance, score và completion state trong `apps/api/src/modules/academic-learning/`
 - [x] T072 [US6] Implement parent delegation grant/revoke/expiry và scoped data resolver trong `apps/api/src/modules/communication/`
-- [ ] T073 [US6] Implement student/parent portals cho lịch, tiến độ, điểm, học phí và bài tập trong `apps/web/src/app/admin/student/` và `apps/web/src/app/admin/parent/`
+- [x] T073 [US6] Implement student/parent portals cho lịch, tiến độ, điểm, học phí và bài tập trong `apps/web/src/app/admin/student/` và `apps/web/src/app/admin/parent/`
 - [ ] T074 [US6] Implement three-party conversation, member scope, message và attachment policy trong `apps/api/src/modules/communication/` và `apps/web/src/app/admin/parent/conversations/`
 - [ ] T075 [US6] Add US6 authorization matrix and E2E tests trong `apps/api/tests/authorization/us6-parent-delegation.spec.ts` và `apps/web/tests/e2e/us6-parent.spec.ts`
 
