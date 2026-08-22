@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Parallel Phase 9+10 delivery for portals and communication.
-- **Status**: Completed T070-T074 and T076-T077: enrollment/parent delegation, student/parent portals, communication schemas, three-party conversation, moderation, member lifecycle and notification audience resolver.
-- **Next tasks**: T075 US6 auth/E2E tests, T078 notification worker, T079 communication UI, T080 US7 contract/E2E tests.
+- **Current task**: Parallel Phase 9+10 delivery for tests and communication UI.
+- **Status**: Completed T070-T074 and T076-T078, including notification worker for in-app/email channels.
+- **Next tasks**: T079 communication center/notification inbox, T075 US6 auth/E2E tests and T080 US7 contract/E2E tests.
 - **Blocker**: PostgreSQL runtime, production storage provider and auth/session provider remain open; continue with typed service/in-memory/demo contracts until providers are selected.
-- **Files in focus**: `apps/api/tests/authorization/`, `worker/src/jobs/notifications/`, `apps/web/src/app/admin/communication/`, `apps/web/src/app/admin/parent/conversations/`.
-- **Verification**: `npm run typecheck --workspace=@hnlms/api` passed; `npm test -- --run` passed (330 tests).
+- **Files in focus**: `apps/web/src/app/admin/communication/`, `apps/web/src/app/admin/parent/conversations/`, `apps/api/tests/authorization/`, `apps/api/tests/contract/`, `apps/web/tests/e2e/`.
+- **Verification**: `npm run typecheck --workspace=@hnlms/worker` passed; `npm test -- --run` passed (333 tests).
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

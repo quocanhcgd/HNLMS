@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T08:37:21.816Z",
+  "updatedAt": "2026-08-22T08:39:23.392Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T077",
-    "title": "Implement conversation moderation, member lifecycle và notification audience resolver trong apps/api/src/modules/communication/",
+    "id": "T078",
+    "title": "Implement notification worker cho email/in-app channels trong worker/src/jobs/notifications/",
     "phase": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T074/T077 conversation moderation/member lifecycle/notification resolver",
+    "activity": "Hoàn thành T078 notification worker email/in-app",
     "startedAt": null,
-    "updatedAt": "2026-08-22T08:37:21.816Z"
+    "updatedAt": "2026-08-22T08:39:23.392Z"
   },
   "nextTask": {
     "id": "T075",
@@ -20,9 +20,9 @@
     "percent": 0
   },
   "overall": {
-    "done": 76,
+    "done": 77,
     "total": 175,
-    "percent": 43.4
+    "percent": 44
   },
   "phases": [
     {
@@ -81,9 +81,9 @@
     },
     {
       "name": "Phase 10: User Story 7 - Trao đổi nội bộ và thông báo (P2)",
-      "done": 2,
+      "done": 3,
       "total": 5,
-      "percent": 40
+      "percent": 60
     },
     {
       "name": "Phase 11: User Story 8 - Thi đầu vào, thi thử và xếp lớp (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "60ebc1f",
-    "message": "feat(web): add student and parent portals",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/60ebc1f"
+    "sha": "acea198",
+    "message": "feat(api): add conversation and notification services",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/acea198"
   },
   "ci": {
     "status": "unknown",
