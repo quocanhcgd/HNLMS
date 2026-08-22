@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T084 are complete; T085 is the next open task.
-- Current baseline: Phase 11 is nearly complete; T081-T084 assessment backend and UI are complete, and T085 assessment contract/E2E tests are next.
+- Tasks: `T001` to `T175`; T001-T085 are complete; T086 is the next open task.
+- Current baseline: Phase 11 / US8 is complete; T086 Phase 12 English pathway foundation is next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T085 and closed Phase 11 / US8 by adding assessment contract duplicate/retry tests and Playwright E2E for student/teacher assessment workspaces; API/web typechecks, focused contract and E2E checks pass.
 - 2026-08-22: Completed T084 by adding student assessment engine/results UI and teacher grading/recommendation UI in their proper workspaces with shared PageHeader/PageToolbar/UiDataTable pattern; web typecheck, focused navigation tests and route smoke checks pass.
 - 2026-08-22: Completed T083 by adding timed assessment attempt service, start idempotency, autosave, submit idempotency and timeout auto-submit handling with in-memory repository and tests; API typecheck and assessment module tests pass.
 - 2026-08-22: Completed T082 by adding assessment policy service for question approval, blueprint/time-window/attempt-limit/scoring-policy publication validation, in-memory repository and focused tests; API typecheck passes.

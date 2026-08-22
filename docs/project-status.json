@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T12:08:03.208Z",
+  "updatedAt": "2026-08-22T12:15:48.192Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T084",
-    "title": "Implement assessment engine UI và result/recommendation UI trong apps/web/src/app/student/assessment/ và apps/web/src/app/teacher/assessment/",
+    "id": "T085",
+    "title": "Add assessment contract, duplicate/retry and E2E tests trong apps/api/tests/contract/us8-assessment.contract.spec.ts và apps/web/tests/e2e/us8-assessment.spec.ts",
     "phase": "Phase 11: User Story 8 - Thi đầu vào, thi thử và xếp lớp (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T084: UI assessment engine và result/recommendation trong student/teacher workspace",
+    "activity": "Hoàn thành T085: assessment contract duplicate/retry và E2E tests; đóng Phase 11 / US8",
     "startedAt": null,
-    "updatedAt": "2026-08-22T12:08:03.208Z"
+    "updatedAt": "2026-08-22T12:15:48.192Z"
   },
   "nextTask": {
-    "id": "T085",
-    "title": "Add assessment contract, duplicate/retry and E2E tests trong apps/api/tests/contract/us8-assessment.contract.spec.ts và apps/web/tests/e2e/us8-assessment.spec.ts",
+    "id": "T086",
+    "title": "Tạo English pathway, level, skill record và placement rule entities trong apps/api/src/modules/assessment-english/",
     "percent": 0
   },
   "overall": {
-    "done": 84,
+    "done": 85,
     "total": 175,
-    "percent": 48
+    "percent": 48.6
   },
   "phases": [
     {
@@ -87,9 +87,9 @@
     },
     {
       "name": "Phase 11: User Story 8 - Thi đầu vào, thi thử và xếp lớp (P1)",
-      "done": 4,
+      "done": 5,
       "total": 5,
-      "percent": 80
+      "percent": 100
     },
     {
       "name": "Phase 12: User Story 9 - Lộ trình Tiếng Anh (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "bef0969",
-    "message": "feat(api): add assessment attempt state machine",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/bef0969"
+    "sha": "7c1aa69",
+    "message": "feat(web): add assessment workspaces",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/7c1aa69"
   },
   "ci": {
     "status": "unknown",

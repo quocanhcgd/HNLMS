@@ -170,7 +170,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T082 [US8] Implement question approval, blueprint, time window, attempts limit và scoring policy trong `apps/api/src/modules/assessment-english/`
 - [x] T083 [US8] Implement timed attempt state machine, autosave, submit idempotency và timeout handling trong `apps/api/src/modules/assessment-english/`
 - [x] T084 [US8] Implement assessment engine UI và result/recommendation UI trong `apps/web/src/app/student/assessment/` và `apps/web/src/app/teacher/assessment/`
-- [ ] T085 [US8] Add assessment contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us8-assessment.contract.spec.ts` và `apps/web/tests/e2e/us8-assessment.spec.ts`
+- [x] T085 [US8] Add assessment contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us8-assessment.contract.spec.ts` và `apps/web/tests/e2e/us8-assessment.spec.ts`
 
 ## Phase 12: User Story 9 - Lộ trình Tiếng Anh (P1)
 

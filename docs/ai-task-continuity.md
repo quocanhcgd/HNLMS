@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T084 Phase 11 / US8 assessment UI.
-- **Status**: Completed locally: added `/student/assessment` assessment engine/results UI and `/teacher/assessment` grading/recommendation UI using shared PageHeader/PageToolbar/UiDataTable pattern; navigation/i18n updated for teacher/student workspaces.
-- **Next task**: T085 Phase 11 / US8 assessment contract, duplicate/retry and E2E tests.
+- **Current task**: T085 Phase 11 / US8 assessment contract and E2E tests.
+- **Status**: Completed locally: added US8 contract tests for assessment policy publication, duplicate/retry idempotency, attempt limit, autosave, conflicting submit retry and timeout auto-submit; added Playwright E2E for `/student/assessment` and `/teacher/assessment`.
+- **Next task**: T086 Phase 12 / US9 English pathway foundation.
 - **Blocker**: None.
-- **Files in focus**: `apps/web/src/app/student/assessment/`, `apps/web/src/app/teacher/assessment/`, `apps/web/src/lib/navigation/manifests.ts`, `apps/web/src/lib/i18n/messages.ts`.
-- **Verification**: Web typecheck passed; focused navigation/workspace/page composition tests passed; local routes `/student/assessment` and `/teacher/assessment` return 200. Full Vitest should be run before commit/push.
+- **Files in focus**: `apps/api/tests/contract/us8-assessment.contract.spec.ts`, `apps/web/tests/e2e/us8-assessment.spec.ts`, `specs/001-lms-multi-branch/tasks.md`.
+- **Verification**: API and web typechecks passed; US8 contract test passed; US8 Playwright focused E2E passed. Full Vitest should be run before commit/push.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 
