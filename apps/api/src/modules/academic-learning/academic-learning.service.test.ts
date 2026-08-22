@@ -239,4 +239,47 @@ describe("Phase 7 academic learning", () => {
       "class_outside_scope",
     );
   });
+
+  it("searches, facets and saves published library resources", () => {
+    const { service } = fixture();
+    const file = service.createFileAsset(actor, {
+      storageKey: "org-1/library/grammar.pdf",
+      originalFilename: "grammar.pdf",
+      mimeType: "application/pdf",
+      sizeBytes: 1,
+      checksumSha256: "checksum-grammar",
+    });
+    const grammar = service.createLibraryResourceDraft(actor, {
+      title: "IELTS Grammar Pack",
+      description: "Ngữ pháp nền tảng cho IELTS",
+      kind: "document",
+      category: "IELTS",
+      subject: "Grammar",
+      fileAssetId: file.id,
+      tags: ["ielts", "grammar"],
+    }).resource;
+    service.submitLibraryResourceForReview(actor, grammar.id);
+    service.publishLibraryResource(actor, grammar.id);
+
+    const speaking = service.createLibraryResourceDraft(actor, {
+      title: "Speaking warm-up video",
+      kind: "video",
+      category: "Speaking",
+      subject: "Fluency",
+      externalUrl: "https://video.invalid/warm-up",
+    }).resource;
+    service.submitLibraryResourceForReview(actor, speaking.id);
+    service.publishLibraryResource(actor, speaking.id);
+
+    expect(service.searchLibraryResources(actor, { query: "grammar" }).map((x) => x.id)).toEqual([grammar.id]);
+    expect(service.searchLibraryResources(actor, { categories: ["Speaking"] }).map((x) => x.id)).toEqual([speaking.id]);
+    expect(service.listLibraryResourceCategories(actor)).toEqual(["IELTS", "Speaking"]);
+    expect(service.listLibraryResourceStats(actor).byKind).toMatchObject({ document: 1, video: 1 });
+
+    expect(service.toggleSavedLibraryResource(actor, grammar.id)).toEqual({ saved: true });
+    expect(service.searchLibraryResources(actor, { includeSavedByUser: true }).map((x) => x.id)).toEqual([grammar.id]);
+    expect(service.listSavedLibraryResources(actor).map((x) => x.id)).toEqual([grammar.id]);
+    expect(service.toggleSavedLibraryResource(actor, grammar.id)).toEqual({ saved: false });
+    expect(service.listSavedLibraryResources(actor)).toEqual([]);
+  });
 });

@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T065 content approval, versioning, access scope and private signed URL.
-- **Status**: Completed with service methods for learning content/library resource drafts, review, publish, versioning and scoped signed URL path; tests updated for shared table composition assertions.
-- **Next task**: T066, implement library search/filter/category and saved resources in `apps/api/src/modules/academic-learning/`.
-- **Blocker**: PostgreSQL runtime service, storage provider production decision and authentication/session provider remain open; library search/service should continue using in-memory repository and typed search filters until backend persistence/runtime is ready.
-- **Files in focus**: `apps/api/src/modules/academic-learning/`, `tests/unit/page-compositions.test.ts`, `tests/unit/ui-compositions.test.ts`.
-- **Verification**: `npm run typecheck --workspace=@hnlms/api` and `npm test` both pass; full suite now reports 319 passed tests.
+- **Current task**: T066 library search/filter/category and saved resources.
+- **Status**: Completed with `saved_library_resources` schema, library search/filter/stats/category and toggle-saved service methods.
+- **Next task**: T067, implement teacher content editor and student library/player UI in `apps/web/src/app/admin/teacher/content/` and `apps/web/src/app/admin/student/library/`.
+- **Blocker**: PostgreSQL runtime, storage provider production decision and auth/session provider remain open; next UI work can proceed against mock/in-memory backend.
+- **Files in focus**: `apps/api/src/modules/academic-learning/academic-learning.service.ts`, `apps/api/src/modules/academic-learning/schema.ts`, `apps/web/src/app/admin/teacher/content/`, `apps/web/src/app/admin/student/library/`.
+- **Verification**: `npm run typecheck --workspace=@hnlms/api` and `npm test` both pass; full suite now reports 320 passed tests.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

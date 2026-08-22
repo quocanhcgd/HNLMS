@@ -8,6 +8,13 @@ export type LibraryResourceKind = "document" | "video" | "audio" | "image" | "sl
 export type LibraryResourceStatus = "draft" | "in_review" | "published" | "retired";
 export type ResourceAccessScope = "organization" | "department" | "program" | "course" | "class" | "restricted";
 export type FileProcessingStatus = "pending" | "processing" | "ready" | "failed" | "quarantined";
+export type SavedLibraryResource = {
+  id: string;
+  organizationId: string;
+  userId: string;
+  libraryResourceId: string;
+  savedAt: string;
+};
 
 export type Department = { id: string; organizationId: string; code: string; name: string; status: AcademicStatus };
 export type Program = Department & { departmentId: string; description: string; version: number };
@@ -113,6 +120,7 @@ export type LibraryResource = {
   courseId?: string;
   classId?: string;
   usagePolicy?: unknown;
+  tags?: string[];
   publishedByUserId?: string;
   publishedAt?: string;
   createdByUserId: string;
@@ -134,6 +142,25 @@ export type AcademicActor = {
   organizationId: string;
   branchIds?: ReadonlySet<string>;
   classIds?: ReadonlySet<string>;
+};
+export type LibraryResourceFilter = {
+  query?: string;
+  kinds?: LibraryResourceKind[];
+  statuses?: LibraryResourceStatus[];
+  categories?: string[];
+  subjects?: string[];
+  classId?: string;
+  courseId?: string;
+  programId?: string;
+  departmentId?: string;
+  includeSavedByUser?: boolean;
+  excludeSavedByUser?: boolean;
+};
+export type LibraryResourceStats = {
+  total: number;
+  byKind: Record<string, number>;
+  byCategory: Record<string, number>;
+  bySubject: Record<string, number>;
 };
 export type AcademicErrorCode =
   "not_found" | "forbidden" | "invalid_input" | "invalid_status" | "capacity_exceeded" | "schedule_conflict" | string;
@@ -159,6 +186,7 @@ export type AcademicRepository = {
   learningContentVersions: LearningContentVersion[];
   libraryResources: LibraryResource[];
   libraryResourceVersions: LibraryResourceVersion[];
+  savedLibraryResources: SavedLibraryResource[];
 };
 
 const text = (value: string, field: string) => {
@@ -184,6 +212,9 @@ export class AcademicLearningService {
       schedules: this.repository.schedules.filter((x) => x.organizationId === actor.organizationId),
       learningContents: this.repository.learningContents.filter((x) => x.organizationId === actor.organizationId),
       libraryResources: this.repository.libraryResources.filter((x) => x.organizationId === actor.organizationId),
+      savedLibraryResources: this.repository.savedLibraryResources.filter(
+        (x) => x.organizationId === actor.organizationId,
+      ),
     };
   }
 
@@ -476,6 +507,7 @@ export class AcademicLearningService {
       programId?: string;
       departmentId?: string;
       usagePolicy?: unknown;
+      tags?: string[];
       metadata?: unknown;
     },
   ): { resource: LibraryResource; version: LibraryResourceVersion } {
@@ -500,6 +532,7 @@ export class AcademicLearningService {
       courseId: input.courseId,
       classId: input.classId,
       usagePolicy: input.usagePolicy,
+      tags: input.tags,
       createdByUserId: actor.userId,
     };
     const version: LibraryResourceVersion = {
@@ -624,6 +657,97 @@ export class AcademicLearningService {
       status: input.status,
       createdByUserId: actor.userId,
     };
+  }
+
+  searchLibraryResources(actor: AcademicActor, filters: LibraryResourceFilter): LibraryResource[] {
+    let items = this.repository.libraryResources.filter(
+      (x) => x.organizationId === actor.organizationId && x.status === "published",
+    );
+    if (filters.query) {
+      const query = filters.query.toLowerCase();
+      items = items.filter(
+        (x) =>
+          x.title.toLowerCase().includes(query) ||
+          x.description?.toLowerCase().includes(query) ||
+          x.subject?.toLowerCase().includes(query) ||
+          x.tags?.toString().toLowerCase().includes(query),
+      );
+    }
+    if (filters.kinds?.length) items = items.filter((x) => filters.kinds!.includes(x.kind));
+    if (filters.statuses?.length) items = items.filter((x) => filters.statuses!.includes(x.status));
+    if (filters.categories?.length) items = items.filter((x) => filters.categories!.includes(x.category));
+    if (filters.subjects?.length) items = items.filter((x) => x.subject && filters.subjects!.includes(x.subject));
+    if (filters.classId) items = items.filter((x) => x.classId === filters.classId);
+    if (filters.courseId) items = items.filter((x) => x.courseId === filters.courseId);
+    if (filters.programId) items = items.filter((x) => x.programId === filters.programId);
+    if (filters.departmentId) items = items.filter((x) => x.departmentId === filters.departmentId);
+    const savedIds = new Set(
+      this.repository.savedLibraryResources
+        .filter((x) => x.organizationId === actor.organizationId && x.userId === actor.userId)
+        .map((x) => x.libraryResourceId),
+    );
+    if (filters.includeSavedByUser) items = items.filter((x) => savedIds.has(x.id));
+    if (filters.excludeSavedByUser) items = items.filter((x) => !savedIds.has(x.id));
+    return items;
+  }
+
+  listLibraryResourceStats(
+    actor: AcademicActor,
+    filters: Omit<LibraryResourceFilter, "includeSavedByUser" | "excludeSavedByUser"> = {},
+  ): LibraryResourceStats {
+    const resources = this.searchLibraryResources(actor, { ...filters, statuses: filters.statuses ?? ["published"] });
+    const byKind: Record<string, number> = {};
+    const byCategory: Record<string, number> = {};
+    const bySubject: Record<string, number> = {};
+    for (const resource of resources) {
+      byKind[resource.kind] = (byKind[resource.kind] ?? 0) + 1;
+      byCategory[resource.category] = (byCategory[resource.category] ?? 0) + 1;
+      if (resource.subject) bySubject[resource.subject] = (bySubject[resource.subject] ?? 0) + 1;
+    }
+    return { total: resources.length, byKind, byCategory, bySubject };
+  }
+
+  listLibraryResourceCategories(actor: AcademicActor): string[] {
+    const categories = new Set(
+      this.repository.libraryResources
+        .filter((x) => x.organizationId === actor.organizationId && x.status === "published")
+        .map((x) => x.category),
+    );
+    return [...categories].sort();
+  }
+
+  toggleSavedLibraryResource(actor: AcademicActor, resourceId: string): { saved: boolean } {
+    const resource = this.libraryResource(actor, resourceId);
+    if (resource.status !== "published") throw new AcademicServiceError("invalid_status", "resource_not_published");
+    this.assertScope(actor, resource);
+    const existing = this.repository.savedLibraryResources.find(
+      (x) =>
+        x.organizationId === actor.organizationId && x.userId === actor.userId && x.libraryResourceId === resourceId,
+    );
+    if (existing) {
+      this.repository.savedLibraryResources = this.repository.savedLibraryResources.filter((x) => x.id !== existing.id);
+      return { saved: false };
+    }
+    const item: SavedLibraryResource = {
+      id: this.newId("saved-library-resource"),
+      organizationId: actor.organizationId,
+      userId: actor.userId,
+      libraryResourceId: resourceId,
+      savedAt: new Date().toISOString(),
+    };
+    this.repository.savedLibraryResources.push(item);
+    return { saved: true };
+  }
+
+  listSavedLibraryResources(actor: AcademicActor): LibraryResource[] {
+    const ids = new Set(
+      this.repository.savedLibraryResources
+        .filter((x) => x.organizationId === actor.organizationId && x.userId === actor.userId)
+        .map((x) => x.libraryResourceId),
+    );
+    return this.repository.libraryResources.filter(
+      (x) => x.organizationId === actor.organizationId && x.status === "published" && ids.has(x.id),
+    );
   }
 
   private program(actor: AcademicActor, id: string) {

@@ -25,4 +25,11 @@ export class InMemoryAcademicRepository implements AcademicRepository {
   learningContentVersions: LearningContentVersion[] = [];
   libraryResources: LibraryResource[] = [];
   libraryResourceVersions: LibraryResourceVersion[] = [];
+  savedLibraryResources: {
+    id: string;
+    organizationId: string;
+    userId: string;
+    libraryResourceId: string;
+    savedAt: string;
+  }[] = [];
 }

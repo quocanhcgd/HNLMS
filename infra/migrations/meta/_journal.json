@@ -57,6 +57,13 @@
       "when": 1787380544033,
       "tag": "0007_round_cloak",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1787383499191,
+      "tag": "0008_gray_sphinx",
+      "breakpoints": true
     }
   ]
 }

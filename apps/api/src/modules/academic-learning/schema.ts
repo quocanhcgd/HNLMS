@@ -423,6 +423,33 @@ export const libraryResourceVersions = pgTable(
   }),
 );
 
+export const savedLibraryResources = pgTable(
+  "saved_library_resources",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    libraryResourceId: uuid("library_resource_id")
+      .notNull()
+      .references(() => libraryResources.id),
+    savedAt: timestamp("saved_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    userResourceUnique: uniqueIndex("saved_library_resources_user_resource_unique").on(
+      table.userId,
+      table.libraryResourceId,
+    ),
+    organizationUserIndex: index("saved_library_resources_organization_user_index").on(
+      table.organizationId,
+      table.userId,
+    ),
+  }),
+);
+
 export type DepartmentRow = typeof departments.$inferSelect;
 export type ProgramRow = typeof programs.$inferSelect;
 export type CourseRow = typeof courses.$inferSelect;
@@ -439,3 +466,5 @@ export type LibraryResourceRow = typeof libraryResources.$inferSelect;
 export type NewLibraryResourceRow = typeof libraryResources.$inferInsert;
 export type LibraryResourceVersionRow = typeof libraryResourceVersions.$inferSelect;
 export type NewLibraryResourceVersionRow = typeof libraryResourceVersions.$inferInsert;
+export type SavedLibraryResourceRow = typeof savedLibraryResources.$inferSelect;
+export type NewSavedLibraryResourceRow = typeof savedLibraryResources.$inferInsert;
