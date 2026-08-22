@@ -1,29 +1,39 @@
 "use client";
-import { useState } from "react";
-import {
-  Alert,
-  Badge,
-  Card,
-  Group,
-  NumberInput,
-  Select,
-  SimpleGrid,
-  Stack,
-  Table,
-  Text,
-  TextInput,
-  Title,
-} from "@mantine/core";
-import { BookOpen, CalendarClock, GraduationCap, Plus } from "lucide-react";
-import { PageHeader } from "@/components/app-shell";
-import { UiButton, UiSelect } from "@/components/ui";
 
-type Section = "programs" | "classes";
-const programs = [
+import { useMemo, useState } from "react";
+import type { ColumnDef, SortingState } from "@tanstack/react-table";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { Alert, Badge, Card, Group, NumberInput, Select, Stack, Table, Text, Title } from "@mantine/core";
+import { ArrowDown, ArrowUp, ArrowUpDown, CalendarClock, GraduationCap, Plus, Search } from "lucide-react";
+import { PageHeader } from "@/components/app-shell";
+import { PageToolbar, UiBadge, UiButton, UiSelect, UiTable, UiTextInput } from "@/components/ui";
+
+type AcademicSection = "programs" | "classes";
+type ProgramRow = { department: string; code: string; name: string; status: string; version: number };
+type ClassRow = {
+  program: string;
+  code: string;
+  branch: string;
+  modality: string;
+  capacity: number;
+  enrolled: number;
+  teacher: string;
+  schedule: string;
+  status: string;
+};
+
+const programs: ProgramRow[] = [
   { department: "Ngoại ngữ", code: "IELTS", name: "Lộ trình IELTS", status: "Đã công bố", version: 2 },
   { department: "Kỹ năng", code: "BIZ", name: "Tiếng Anh doanh nghiệp", status: "Bản nháp", version: 1 },
 ];
-const classes = [
+
+const classes: ClassRow[] = [
   {
     program: "IELTS Foundation",
     code: "IF-2609",
@@ -59,198 +69,225 @@ const classes = [
   },
 ];
 
-export function AcademicWorkspace({ initialSection = "programs" }: { initialSection?: Section }) {
-  const [section, setSection] = useState<Section>(initialSection);
+function SortIndicator({ direction }: { direction: false | "asc" | "desc" }) {
+  if (direction === "asc") return <ArrowUp size={14} />;
+  if (direction === "desc") return <ArrowDown size={14} />;
+  return <ArrowUpDown size={14} opacity={0.5} />;
+}
+
+export function AcademicWorkspace({ section }: { section: AcademicSection }) {
   const [feedback, setFeedback] = useState("");
-  const [programName, setProgramName] = useState("");
-  const [className, setClassName] = useState("");
+  const [query, setQuery] = useState("");
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [status, setStatus] = useState<string | null>("all");
   const [capacity, setCapacity] = useState<number | string>(12);
+
+  const programColumns = useMemo<ColumnDef<ProgramRow>[]>(
+    () => [
+      { accessorKey: "department", header: "Ngành" },
+      { accessorKey: "code", header: "Mã" },
+      {
+        accessorKey: "name",
+        header: "Chương trình",
+        cell: ({ row }) => (
+          <div>
+            <Text fw={600}>{row.original.name}</Text>
+            <Text size="xs" c="dimmed">
+              Mục tiêu, học phần, điều kiện hoàn thành
+            </Text>
+          </div>
+        ),
+      },
+      { accessorKey: "version", header: "Phiên bản", cell: ({ getValue }) => `v${getValue<number>()}` },
+      {
+        accessorKey: "status",
+        header: "Trạng thái",
+        cell: ({ getValue }) => (
+          <UiBadge color={getValue<string>() === "Đã công bố" ? "teal" : "yellow"}>{getValue<string>()}</UiBadge>
+        ),
+      },
+    ],
+    [],
+  );
+
+  const classColumns = useMemo<ColumnDef<ClassRow>[]>(
+    () => [
+      { accessorKey: "program", header: "Khóa học" },
+      { accessorKey: "code", header: "Lớp", cell: ({ getValue }) => <Text fw={600}>{getValue<string>()}</Text> },
+      {
+        accessorKey: "branch",
+        header: "Chi nhánh",
+        cell: ({ row }) => (
+          <div>
+            {row.original.branch}
+            <Text size="xs" c="dimmed">
+              {row.original.modality}
+            </Text>
+          </div>
+        ),
+      },
+      {
+        accessorKey: "schedule",
+        header: "Lịch học",
+        cell: ({ getValue }) => (
+          <Group gap="xs">
+            <CalendarClock size={15} />
+            {getValue<string>()}
+          </Group>
+        ),
+      },
+      { accessorKey: "teacher", header: "Giảng viên" },
+      {
+        accessorKey: "enrolled",
+        header: "Sức chứa",
+        cell: ({ row }) => `${row.original.enrolled}/${row.original.capacity}`,
+      },
+      {
+        accessorKey: "status",
+        header: "Trạng thái",
+        cell: ({ getValue }) => (
+          <UiBadge color={getValue<string>() === "Đủ chỗ" ? "gray" : "teal"}>{getValue<string>()}</UiBadge>
+        ),
+      },
+    ],
+    [],
+  );
+
+  const data = section === "programs" ? programs : classes;
+  const columns = section === "programs" ? programColumns : classColumns;
+  const filteredData = useMemo(
+    () =>
+      data.filter((item) => {
+        const value = JSON.stringify(item).toLowerCase();
+        const matchesQuery = value.includes(query.toLowerCase());
+        const matchesStatus = status === "all" || !status || ("status" in item && item.status === status);
+        return matchesQuery && matchesStatus;
+      }),
+    [data, query, status],
+  );
+  const table = useReactTable<ProgramRow | ClassRow>({
+    data: filteredData,
+    columns: columns as ColumnDef<ProgramRow | ClassRow>[],
+    state: { sorting, globalFilter: query },
+    onSortingChange: setSorting,
+    onGlobalFilterChange: setQuery,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
+
+  const title = section === "programs" ? "Chương trình và học phần" : "Lớp học và lịch";
+  const subtitle =
+    section === "programs"
+      ? "Quản lý ngành, chương trình, khóa học và học phần."
+      : "Mở lớp, gán giảng viên, sức chứa và trạng thái tuyển sinh.";
+
   return (
     <div className="page">
-      <PageHeader
-        title="Quản lý đào tạo"
-        subtitle="Quản lý chương trình, khóa học, học phần, lớp học và lịch học theo chi nhánh."
-        action="Tạo chương trình"
-      />
+      <PageHeader title={title} subtitle={subtitle} />
       {feedback ? (
         <Alert color="teal" mb="md" title="Cập nhật đào tạo" withCloseButton onClose={() => setFeedback("")}>
           {feedback}
         </Alert>
       ) : null}
-      <Group mb="lg">
-        <UiButton
-          variant={section === "programs" ? "filled" : "default"}
-          leftSection={<BookOpen size={16} />}
-          onClick={() => setSection("programs")}
-        >
-          Chương trình và học phần
-        </UiButton>
-        <UiButton
-          variant={section === "classes" ? "filled" : "default"}
-          leftSection={<GraduationCap size={16} />}
-          onClick={() => setSection("classes")}
-        >
-          Lớp học và lịch
-        </UiButton>
-      </Group>
-      {section === "programs" ? (
-        <Stack>
-          <Card withBorder>
-            <Group justify="space-between" mb="md">
-              <div>
-                <Title order={3}>Chương trình đào tạo</Title>
-                <Text c="dimmed" size="sm">
-                  Quản lý ngành, chương trình, khóa học và học phần.
-                </Text>
-              </div>
-              <UiButton
-                leftSection={<Plus size={16} />}
-                onClick={() => {
-                  setProgramName("Lộ trình giao tiếp cơ bản");
-                  setFeedback("Đã tạo bản nháp chương trình mới.");
-                }}
-              >
-                Tạo chương trình
-              </UiButton>
-            </Group>
-            <Table.ScrollContainer minWidth={760}>
-              <Table>
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Ngành</Table.Th>
-                    <Table.Th>Mã</Table.Th>
-                    <Table.Th>Chương trình</Table.Th>
-                    <Table.Th>Phiên bản</Table.Th>
-                    <Table.Th>Trạng thái</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                  {programs.map((item) => (
-                    <Table.Tr key={item.code}>
-                      <Table.Td>{item.department}</Table.Td>
-                      <Table.Td>{item.code}</Table.Td>
-                      <Table.Td>
-                        <Text fw={600}>{item.name}</Text>
-                        <Text size="xs" c="dimmed">
-                          Mục tiêu, học phần, điều kiện hoàn thành
-                        </Text>
-                      </Table.Td>
-                      <Table.Td>v{item.version}</Table.Td>
-                      <Table.Td>
-                        <Badge color={item.status === "Đã công bố" ? "teal" : "yellow"}>{item.status}</Badge>
-                      </Table.Td>
-                    </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
-            </Table.ScrollContainer>
-          </Card>
-          <SimpleGrid cols={{ base: 1, md: 3 }}>
-            <Card withBorder>
-              <Text size="xs" c="dimmed">
-                Ngành đào tạo
-              </Text>
-              <Title order={2}>4</Title>
-            </Card>
-            <Card withBorder>
-              <Text size="xs" c="dimmed">
-                Chương trình đã công bố
-              </Text>
-              <Title order={2}>12</Title>
-            </Card>
-            <Card withBorder>
-              <Text size="xs" c="dimmed">
-                Học phần đang sử dụng
-              </Text>
-              <Title order={2}>68</Title>
-            </Card>
-          </SimpleGrid>
-        </Stack>
-      ) : (
-        <Stack>
-          <Card withBorder>
-            <Group justify="space-between" mb="md">
-              <div>
-                <Title order={3}>Lớp học đang quản lý</Title>
-                <Text c="dimmed" size="sm">
-                  Mở lớp, gán giảng viên, sức chứa và trạng thái tuyển sinh.
-                </Text>
-              </div>
-              <UiButton
-                leftSection={<Plus size={16} />}
-                onClick={() => {
-                  setClassName("Lớp IELTS Foundation tháng 10");
-                  setFeedback("Đã tạo lớp ở trạng thái mở tuyển sinh.");
-                }}
-              >
-                Mở lớp mới
-              </UiButton>
-            </Group>
-            <Group mb="md">
-              <UiSelect
-                aria-label="Lọc chi nhánh"
-                placeholder="Tất cả chi nhánh"
-                data={["Tất cả chi nhánh", "Cầu Giấy", "Hai Bà Trưng", "Online"]}
+      <Card withBorder>
+        <Group justify="space-between" mb="md">
+          <div>
+            <Title order={3}>{section === "programs" ? "Danh mục chương trình đào tạo" : "Danh sách lớp học"}</Title>
+            <Text c="dimmed" size="sm">
+              Dữ liệu được lọc, sắp xếp và phân trang theo cùng một mẫu bảng nghiệp vụ.
+            </Text>
+          </div>
+          <UiButton
+            leftSection={section === "programs" ? <Plus size={16} /> : <GraduationCap size={16} />}
+            onClick={() =>
+              setFeedback(
+                section === "programs" ? "Đã tạo bản nháp chương trình mới." : "Đã tạo lớp ở trạng thái mở tuyển sinh.",
+              )
+            }
+          >
+            {section === "programs" ? "Tạo chương trình" : "Mở lớp mới"}
+          </UiButton>
+        </Group>
+        <PageToolbar className="toolbar">
+          <UiTextInput
+            aria-label="Tìm kiếm"
+            value={query}
+            onChange={(event) => setQuery(event.currentTarget.value)}
+            leftSection={<Search size={16} />}
+            placeholder={section === "programs" ? "Tìm ngành, mã, chương trình..." : "Tìm khóa học, lớp, giảng viên..."}
+          />
+          <UiSelect
+            aria-label="Lọc trạng thái"
+            value={status}
+            onChange={setStatus}
+            data={
+              section === "programs"
+                ? ["all", "Đã công bố", "Bản nháp"]
+                : ["all", "Mở tuyển sinh", "Sắp khai giảng", "Đủ chỗ"]
+            }
+          />
+          {section === "classes" ? (
+            <>
+              <Select
+                aria-label="Lọc hình thức"
+                placeholder="Tất cả hình thức"
+                data={["Trực tiếp", "Trực tuyến", "Kết hợp"]}
               />
-              <Select label="Hình thức" placeholder="Tất cả hình thức" data={["Trực tiếp", "Trực tuyến", "Kết hợp"]} />
-              <NumberInput label="Sức chứa lớp mới" value={capacity} onChange={setCapacity} min={1} />
-              <TextInput
-                label="Tên lớp mẫu"
-                value={className}
-                onChange={(event) => setClassName(event.currentTarget.value)}
-                placeholder="Ví dụ: IELTS Foundation tháng 10"
-              />
-            </Group>
-            <Table.ScrollContainer minWidth={1050}>
-              <Table>
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Khóa học</Table.Th>
-                    <Table.Th>Lớp</Table.Th>
-                    <Table.Th>Chi nhánh</Table.Th>
-                    <Table.Th>Lịch học</Table.Th>
-                    <Table.Th>Giảng viên</Table.Th>
-                    <Table.Th>Sức chứa</Table.Th>
-                    <Table.Th>Trạng thái</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                  {classes.map((item) => (
-                    <Table.Tr key={item.code}>
-                      <Table.Td>{item.program}</Table.Td>
-                      <Table.Td>
-                        <Text fw={600}>{item.code}</Text>
-                      </Table.Td>
-                      <Table.Td>
-                        {item.branch}
-                        <Text size="xs" c="dimmed">
-                          {item.modality}
-                        </Text>
-                      </Table.Td>
-                      <Table.Td>
-                        <Group gap="xs">
-                          <CalendarClock size={15} />
-                          {item.schedule}
-                        </Group>
-                      </Table.Td>
-                      <Table.Td>{item.teacher}</Table.Td>
-                      <Table.Td>
-                        {item.enrolled}/{item.capacity}
-                      </Table.Td>
-                      <Table.Td>
-                        <Badge color={item.status === "Đủ chỗ" ? "gray" : "teal"}>{item.status}</Badge>
-                      </Table.Td>
-                    </Table.Tr>
+              <NumberInput aria-label="Sức chứa lớp mới" value={capacity} onChange={setCapacity} min={1} />
+            </>
+          ) : null}
+        </PageToolbar>
+        <Table.ScrollContainer minWidth={section === "programs" ? 760 : 1050}>
+          <UiTable verticalSpacing="md" horizontalSpacing="lg">
+            <Table.Thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Table.Tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <Table.Th key={header.id}>
+                      <button
+                        className="tableSortButton"
+                        type="button"
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        <SortIndicator direction={header.column.getIsSorted()} />
+                      </button>
+                    </Table.Th>
                   ))}
-                </Table.Tbody>
-              </Table>
-            </Table.ScrollContainer>
-          </Card>
-          <Alert color="yellow" title="Kiểm tra xung đột lịch">
-            Lịch mới sẽ được kiểm tra trùng giảng viên, phòng học và buổi học trực tuyến trước khi xác nhận.
-          </Alert>
-        </Stack>
-      )}
+                </Table.Tr>
+              ))}
+            </Table.Thead>
+            <Table.Tbody>
+              {table.getRowModel().rows.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <Table.Tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <Table.Td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Td>
+                    ))}
+                  </Table.Tr>
+                ))
+              ) : (
+                <Table.Tr>
+                  <Table.Td colSpan={columns.length}>
+                    <Text c="dimmed" ta="center" py="xl">
+                      Không tìm thấy dữ liệu phù hợp.
+                    </Text>
+                  </Table.Td>
+                </Table.Tr>
+              )}
+            </Table.Tbody>
+          </UiTable>
+        </Table.ScrollContainer>
+        <Text size="xs" c="dimmed" mt="sm">
+          TanStack Table · {table.getRowModel().rows.length}/{data.length} bản ghi · tìm kiếm và sắp xếp theo cột
+        </Text>
+      </Card>
+      {section === "classes" ? (
+        <Alert mt="md" color="yellow" title="Kiểm tra xung đột lịch">
+          Lịch mới sẽ được kiểm tra trùng giảng viên, phòng học và buổi học trực tuyến trước khi xác nhận.
+        </Alert>
+      ) : null}
     </div>
   );
 }

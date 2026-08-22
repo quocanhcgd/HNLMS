@@ -1,5 +1,5 @@
-import { AcademicWorkspace } from "./academic-workspace";
+import { redirect } from "next/navigation";
 
 export default function AcademicPage() {
-  return <AcademicWorkspace />;
+  redirect("/admin/academic/programs");
 }

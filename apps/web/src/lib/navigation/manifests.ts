@@ -78,13 +78,13 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     children: [
       {
         key: "programs",
-        labelKey: "academic",
+        labelKey: "academicPrograms",
         href: "/admin/academic/programs",
         roles: ["organization_admin", "branch_manager"],
       },
       {
         key: "classes",
-        labelKey: "learning",
+        labelKey: "academicClasses",
         href: "/admin/academic/classes",
         roles: ["organization_admin", "branch_manager", "teacher"],
       },
