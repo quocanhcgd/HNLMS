@@ -3,22 +3,22 @@ import { expect, test } from "@playwright/test";
 test("US2 visitor can browse published landing content and program details", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: /Hoc dung lo trinh/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Học đúng lộ trình/i })).toBeVisible();
   await expect(page.getByRole("heading", { name: "IELTS Foundation", exact: true })).toBeVisible();
   await expect(page.getByText("Thầy Minh Tuấn")).toHaveCount(0);
 
   await Promise.all([
     page.waitForURL(/\/programs$/, { timeout: 15_000 }),
-    page.getByRole("link", { name: "Xem tat ca" }).click(),
+    page.getByRole("link", { name: "Xem tất cả" }).click(),
   ]);
-  await expect(page.getByRole("link", { name: "Xem chi tiet IELTS Foundation" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Xem chi tiết IELTS Foundation" })).toBeVisible();
 
   await Promise.all([
     page.waitForURL(/\/programs\/ielts-foundation$/, { timeout: 15_000 }),
-    page.getByRole("link", { name: "Xem chi tiet IELTS Foundation" }).click(),
+    page.getByRole("link", { name: "Xem chi tiết IELTS Foundation" }).click(),
   ]);
   await expect(page.getByRole("heading", { name: "IELTS Foundation", level: 1 })).toBeVisible();
-  await expect(page.getByText("24 tuan").first()).toBeVisible();
+  await expect(page.getByText("24 tuần").first()).toBeVisible();
 });
 
 test("US2 consultation submits consent, source and a stable submission key", async ({ page }) => {
@@ -55,3 +55,6 @@ test("US2 consultation submits consent, source and a stable submission key", asy
   expect(submittedPayload?.client_submission_key).toEqual(expect.any(String));
   expect(String(submittedPayload?.client_submission_key)).not.toHaveLength(0);
 });
+
+
+

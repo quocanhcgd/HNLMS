@@ -28,10 +28,11 @@ export function ProgramCard({ program, priority = false }: { program: Program; p
           {program.format}
         </span>
       </div>
-      <Link href={`/programs/${program.slug}`} className="catalogCardLink" aria-label={`Xem chi tiet ${program.title}`}>
-        Xem lo trinh <span aria-hidden="true">-&gt;</span>
+      <Link href={`/programs/${program.slug}`} className="catalogCardLink" aria-label={`Xem chi tiết ${program.title}`}>
+        Xem lộ trình <span aria-hidden="true">-&gt;</span>
       </Link>
       {priority ? <span className="catalogCardPriority" aria-hidden="true" /> : null}
     </Paper>
   );
 }
+

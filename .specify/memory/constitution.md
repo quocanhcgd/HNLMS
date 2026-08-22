@@ -87,6 +87,7 @@ các yêu cầu an toàn thành bằng chứng có thể lặp lại thay vì gi
 
 - Stack chuẩn MUST dùng TypeScript trên Node.js LTS, Next.js cho web và NestJS cho backend
   modular monolith, trừ khi amendment constitution phê duyệt thay đổi.
+- Mọi nội dung hiển thị cho người dùng Việt Nam MUST dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên; không được dùng chuỗi tiếng Việt không dấu trong landing, portal, form, thông báo, trạng thái, metadata hoặc dữ liệu mẫu. Ngoại lệ chỉ gồm tên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - UI MUST dùng Mantine components, CSS Modules/Mantine styles và semantic theme tokens. Component
   nghiệp vụ MUST không hard-code màu thương hiệu, font hoặc radius khi đã có design token.
 - Theme MUST hỗ trợ preset, version, preview, publish, rollback, light/dark/system mode và kiểm tra
@@ -162,3 +163,4 @@ license hoặc AI MUST chặn release cho đến khi được xử lý hoặc c�
 duyệt theo quy định trên.
 
 **Version**: 1.1.0 | **Ratified**: 2026-08-19 | **Last Amended**: 2026-08-19
+

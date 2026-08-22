@@ -22,24 +22,24 @@ export const metadata: Metadata = {
 };
 
 const branches = [
-  ["Cau Giay", "Tang 4, 36 Hoang Quoc Viet", "8 lop dang tuyen"],
-  ["Hai Ba Trung", "Tang 2, 181 Dai Co Viet", "6 lop dang tuyen"],
-  ["Online Studio", "Lich hoc linh hoat tren toan quoc", "12 lop dang tuyen"],
+  ["Cầu Giấy", "Tầng 4, 36 Hoàng Quốc Việt", "8 lớp đang tuyển"],
+  ["Hai Bà Trưng", "Tầng 2, 181 Đại Cồ Việt", "6 lớp đang tuyển"],
+  ["Online Studio", "Lịch học linh hoạt trên toàn quốc", "12 lớp đang tuyển"],
 ];
 
 const stories = [
-  ["Minh Anh", "IELTS 7.0", "Tu 5.5 len 7.0 sau 8 thang. Dieu minh quy nhat la biet ro can lam gi o moi giai doan."],
+  ["Minh Anh", "IELTS 7.0", "Từ 5.5 lên 7.0 sau 8 tháng. Điều mình quý nhất là biết rõ cần làm gì ở mỗi giai đoạn."],
   [
     "Thanh Nam",
-    "Giao tiep doanh nghiep",
-    "Minh khong con ngai hop bang tieng Anh va tu tin thuyet trinh voi doi tac nuoc ngoai.",
+    "Giao tiếp doanh nghiệp",
+    "Mình không còn ngại họp bằng tiếng Anh và tự tin thuyết trình với đối tác nước ngoài.",
   ],
 ];
 
 const news = [
-  ["08.08.2026", "Mo lop IELTS Foundation cuoi thang 8", "Cau Giay"],
-  ["02.08.2026", "Workshop: Chon lo trinh IELTS phu hop", "Online"],
-  ["29.07.2026", "HN Learning dat chuan doi tac phat trien", "Thong bao"],
+  ["08.08.2026", "Mở lớp IELTS Foundation cuối tháng 8", "Cầu Giấy"],
+  ["02.08.2026", "Workshop: Chọn lộ trình IELTS phù hợp", "Online"],
+  ["29.07.2026", "HN Learning đạt chuẩn đối tác phát triển", "Thông báo"],
 ];
 
 export default function Landing() {
@@ -48,34 +48,34 @@ export default function Landing() {
       <section className="publicHero" aria-labelledby="hero-title">
         <div className="heroInner">
           <Badge className="heroBadge" variant="filled" leftSection={<Sparkles size={14} />}>
-            Ngoai ngu - Ky nang - Chuyen mon
+            Ngoại ngữ - Kỹ năng - Chuyên môn
           </Badge>
           <Title id="hero-title" order={1} className="heroTitle">
-            Hoc dung lo trinh.
+            Học đúng lộ trình.
             <br />
-            Tien bo co the nhin thay.
+            Tiến bộ có thể nhìn thấy.
           </Title>
           <Text fz={{ base: "md", sm: "lg" }} mt="xl" className="heroDescription">
-            Chuong trinh ca nhan hoa, giao vien dong hanh va he thong theo doi minh bach cho hoc vien va phu huynh.
+            Chương trình cá nhân hóa, giáo viên đồng hành và hệ thống theo dõi minh bạch cho học viên và phụ huynh.
           </Text>
           <Group mt={32} gap="md">
             <Button component={Link} href="#consultation" size="md" rightSection={<ArrowRight size={18} />}>
-              Dang ky tu van
+              Đăng ký tư vấn
             </Button>
             <Button component={Link} href="/programs" size="md" variant="white" color="dark">
-              Xem chuong trinh
+              Xem chương trình
             </Button>
           </Group>
         </div>
-        <div className="heroProof" aria-label="Thanh tuu cua HN Learning">
+        <div className="heroProof" aria-label="Thành tựu của HN Learning">
           <span>
-            <strong>12+</strong> nam dong hanh
+            <strong>12+</strong> năm đồng hành
           </span>
           <span>
-            <strong>8,500</strong> hoc vien tien bo
+            <strong>8,500</strong> học viên tiến bộ
           </span>
           <span>
-            <strong>94%</strong> hai long
+            <strong>94%</strong> hài lòng
           </span>
         </div>
       </section>
@@ -83,13 +83,13 @@ export default function Landing() {
       <section className="publicSection" id="programs" aria-labelledby="programs-title">
         <div className="sectionHeading">
           <div>
-            <Text className="sectionEyebrow">CHUONG TRINH</Text>
+            <Text className="sectionEyebrow">CHƯƠNG TRÌNH</Text>
             <Title id="programs-title" order={2}>
-              Bat dau tu muc tieu cua ban.
+              Bắt đầu từ mục tiêu của bạn.
             </Title>
           </div>
           <Button component={Link} href="/programs" variant="subtle" rightSection={<ArrowRight size={16} />}>
-            Xem tat ca
+            Xem tất cả
           </Button>
         </div>
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
@@ -102,19 +102,19 @@ export default function Landing() {
       <section className="publicSection publicSection--muted" aria-labelledby="pathway-title">
         <div className="pathwayLayout">
           <div>
-            <Text className="sectionEyebrow">LO TRINH MINH BACH</Text>
+            <Text className="sectionEyebrow">LỘ TRÌNH MINH BẠCH</Text>
             <Title id="pathway-title" order={2}>
-              Biet minh dang o dau va se di den dau.
+              Biết mình đang ở đâu và sẽ đi đến đâu.
             </Title>
             <Text c="dimmed" mt="md" maw={530}>
-              Moi lo trinh bat dau bang trao doi muc tieu va danh gia dau vao. Ban nhan duoc ke hoach hoc, moc tien do
-              va phan hoi deu dan.
+              Mỗi lộ trình bắt đầu bằng trao đổi mục tiêu và đánh giá đầu vào. Bạn nhận được kế hoạch học, mốc tiến độ
+              và phản hồi đều đặn.
             </Text>
             <Stack gap="md" mt="xl" className="pathwayChecklist">
               {[
-                "Danh gia dau vao theo ky nang",
-                "Ke hoach hoc theo muc tieu ca nhan",
-                "Bao cao tien do va dieu chinh dinh ky",
+                "Đánh giá đầu vào theo kỹ năng",
+                "Kế hoạch học theo mục tiêu cá nhân",
+                "Báo cáo tiến độ và điều chỉnh định kỳ",
               ].map((item) => (
                 <Group key={item} gap="sm">
                   <ThemeIcon variant="light" color="cyan" radius="xl">
@@ -128,10 +128,10 @@ export default function Landing() {
           <Paper className="pathwayCard" p="xl">
             <Text className="pathwayNumber">01 - 03</Text>
             <Title order={3} mt="xs">
-              Tu danh gia den ket qua
+              Từ đánh giá đến kết quả
             </Title>
             <div className="pathwaySteps">
-              {["Kham pha muc tieu", "Xay lo trinh", "Theo doi tien bo"].map((step, index) => (
+              {["Khám phá mục tiêu", "Xây lộ trình", "Theo dõi tiến bộ"].map((step, index) => (
                 <div key={step}>
                   <span>0{index + 1}</span>
                   <Text fw={600}>{step}</Text>
@@ -145,9 +145,9 @@ export default function Landing() {
       <section className="publicSection" id="branches" aria-labelledby="branches-title">
         <div className="sectionHeading">
           <div>
-            <Text className="sectionEyebrow">KHONG GIAN HOC</Text>
+            <Text className="sectionEyebrow">KHÔNG GIAN HỌC</Text>
             <Title id="branches-title" order={2}>
-              Gan ban, dung nhu cau hoc.
+              Gần bạn, đúng nhu cầu học.
             </Title>
           </div>
         </div>
@@ -175,28 +175,28 @@ export default function Landing() {
         <div className="teamVisual">
           <div className="teamVisualFrame">
             <GraduationCap size={52} />
-            <Text fw={700}>Teaching with intent</Text>
+            <Text fw={700}>Dạy học bằng chuyên môn và sự tận tâm</Text>
           </div>
         </div>
         <div className="teamCopy">
-          <Text className="sectionEyebrow">DOI NGU</Text>
+          <Text className="sectionEyebrow">ĐỘI NGŨ</Text>
           <Title id="team-title" order={2}>
-            Giao vien day bang chuyen mon va su quan tam.
+            Giáo viên dạy bằng chuyên môn và sự quan tâm.
           </Title>
           <Text c="dimmed" mt="md">
-            Giao vien va co van hoc tap cung nhin vao muc tieu cua ban, dua phan hoi cu the va giu nhip hoc ben vung.
+            Giáo viên và cố vấn học tập cùng nhìn vào mục tiêu của bạn, đưa phản hồi cụ thể và giữ nhịp học bền vững.
           </Text>
           <Group mt="xl" gap="xl">
             <div>
               <Text className="teamStat">48</Text>
               <Text size="sm" c="dimmed">
-                giao vien, co van
+                giáo viên, cố vấn
               </Text>
             </div>
             <div>
               <Text className="teamStat">14</Text>
               <Text size="sm" c="dimmed">
-                nam kinh nghiem TB
+                năm kinh nghiệm trung bình
               </Text>
             </div>
           </Group>
@@ -206,9 +206,9 @@ export default function Landing() {
       <section className="publicSection publicSection--muted" aria-labelledby="stories-title">
         <div className="sectionHeading">
           <div>
-            <Text className="sectionEyebrow">CAU CHUYEN HOC VIEN</Text>
+            <Text className="sectionEyebrow">CÂU CHUYỆN HỌC VIÊN</Text>
             <Title id="stories-title" order={2}>
-              Ket qua den tu mot ke hoach ro rang.
+              Kết quả đến từ một kế hoạch rõ ràng.
             </Title>
           </div>
         </div>
@@ -236,13 +236,13 @@ export default function Landing() {
       <section className="publicSection" id="news" aria-labelledby="news-title">
         <div className="sectionHeading">
           <div>
-            <Text className="sectionEyebrow">TIN TUC VA THONG BAO</Text>
+            <Text className="sectionEyebrow">TIN TỨC VÀ THÔNG BÁO</Text>
             <Title id="news-title" order={2}>
-              Cap nhat tu HN Learning.
+              Cập nhật từ HN Learning.
             </Title>
           </div>
           <Button variant="subtle" rightSection={<ArrowRight size={16} />}>
-            Xem tat ca
+            Xem tất cả
           </Button>
         </div>
         <div className="newsList">
@@ -261,18 +261,21 @@ export default function Landing() {
 
       <section className="consultationBand" id="consultation" aria-labelledby="consultation-title">
         <div>
-          <Text className="sectionEyebrow">BAT DAU CUOC TRO CHUYEN</Text>
+          <Text className="sectionEyebrow">BẮT ĐẦU CUỘC TRÒ CHUYỆN</Text>
           <Title id="consultation-title" order={2}>
-            Chon dung lo trinh cho muc tieu cua ban.
+            Chọn đúng lộ trình cho mục tiêu của bạn.
           </Title>
           <Text mt="md" maw={590}>
-            Dat lich trao doi 20 phut voi co van. Chung toi se lang nghe muc tieu va goi y buoc bat dau phu hop.
+            Đặt lịch trao đổi 20 phút với cố vấn. Chúng tôi sẽ lắng nghe mục tiêu và gợi ý bước bắt đầu phù hợp.
           </Text>
         </div>
         <Button size="lg" variant="white" color="dark" component={Link} href="mailto:hello@hanoilearning.vn">
-          Nhan tu van
+          Nhận tư vấn
         </Button>
       </section>
     </main>
   );
 }
+
+
+

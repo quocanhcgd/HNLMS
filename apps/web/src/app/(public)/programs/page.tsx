@@ -40,10 +40,10 @@ export default function ProgramsPage() {
   return (
     <main className="publicMain">
       <Container size="lg" className="publicContainer" py="xl">
-        <Text className="sectionEyebrow">CATALOG</Text>
-        <Title order={1}>Tim lo trinh phu hop voi muc tieu cua ban.</Title>
+        <Text className="sectionEyebrow">DANH MỤC</Text>
+        <Title order={1}>Tìm lộ trình phù hợp với mục tiêu của bạn.</Title>
         <Text c="dimmed" mt="md" maw={680}>
-          Danh sach nay la noi ban khoai ngh, so sanh chu trinh va chon buoc tiep theo truoc khi dat tu van.
+          Danh sách này là nơi bạn khám phá, so sánh chương trình và chọn bước tiếp theo trước khi đặt tư vấn.
         </Text>
         {programs.length === 0 ? (
           <EmptyState />
@@ -58,3 +58,4 @@ export default function ProgramsPage() {
     </main>
   );
 }
+

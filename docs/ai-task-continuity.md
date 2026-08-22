@@ -38,3 +38,7 @@ Standing authorization (2026-08-22): normal coherent task/status checkpoints may
 - Preserve user changes and inspect dirty files before editing.
 - Record conflicts between spec, plan, constitution and implementation before proceeding.
 - Keep secrets and private learner media out of this file and Git.
+
+
+- **Quy định ngôn ngữ bắt buộc**: mọi nội dung hiển thị cho người dùng Việt Nam trong mọi phase/task phải là tiếng Việt hoàn chỉnh, có dấu; khi review phải rà soát cả hard-coded text, fixture, metadata, empty/loading/error state và E2E assertion.
+

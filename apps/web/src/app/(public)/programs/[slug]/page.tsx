@@ -15,7 +15,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: ProgramDetailParams }): Promise<Metadata> {
   const { slug } = await params;
   const program = getProgram(slug);
-  if (!program) return { title: "Chuong trinh khong tim thay" };
+  if (!program) return { title: "Không tìm thấy chương trình" };
   return { title: program.title, description: program.summary };
 }
 
@@ -29,7 +29,7 @@ export default async function ProgramDetailPage({ params }: { params: ProgramDet
     <main className="publicMain">
       <Container size="lg" className="publicContainer publicProgramDetail" py="xl">
         <Button component={Link} href="/programs" variant="subtle" leftSection={<ArrowLeft size={16} />}>
-          Quay lai danh sach
+          Quay lại danh sách
         </Button>
         <div className="programHero" aria-labelledby="program-title">
           <div>
@@ -54,11 +54,11 @@ export default async function ProgramDetailPage({ params }: { params: ProgramDet
               </Group>
             </Group>
             <Button mt="xl" component={Link} href="#consultation" rightSection={<ArrowRight size={18} />}>
-              Dang ky tu van
+              Đăng ký tư vấn
             </Button>
           </div>
           <div className="programQuickFacts">
-            <Text fw={600}>Thong tin moi truong hoc</Text>
+            <Text fw={600}>Thông tin môi trường học</Text>
             <Group gap="sm" mt="md">
               <Badge variant="outline" color="cyan">
                 {program.level}
@@ -71,7 +71,7 @@ export default async function ProgramDetailPage({ params }: { params: ProgramDet
               </Badge>
             </Group>
             <div className="programStepList">
-              {["Danh gia dau vao", "Nhan ke hoach hoc", "Bat dau hoc theo lich phu hop"].map((step) => (
+              {["Đánh giá đầu vào", "Nhận kế hoạch học", "Bắt đầu học theo lịch phù hợp"].map((step) => (
                 <Group key={step} gap="sm">
                   <ThemeIcon variant="light" color="cyan" radius="xl">
                     <Check size={16} />
@@ -83,7 +83,7 @@ export default async function ProgramDetailPage({ params }: { params: ProgramDet
           </div>
         </div>
         <Title order={2} mt="xl">
-          Cac chuong trinh lien quan
+          Các chương trình liên quan
         </Title>
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg" mt="lg">
           {siblings.map((item) => (
@@ -94,3 +94,4 @@ export default async function ProgramDetailPage({ params }: { params: ProgramDet
     </main>
   );
 }
+
