@@ -3,3 +3,4 @@ export * from "./identity-access";
 export * from "./authentication";
 export * from "./organization-branch";
 export * from "./marketing-admission";
+export * from "./assessment-english";
