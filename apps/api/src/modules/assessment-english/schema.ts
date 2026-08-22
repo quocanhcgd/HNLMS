@@ -1,4 +1,5 @@
 import { boolean, index, integer, jsonb, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import { students } from "../academic-learning/schema";
 import { organizations, users } from "../../database/schema/identity-access";
 import { leads } from "../marketing-admission/schema";
 
@@ -48,7 +49,146 @@ export const assessmentAttemptStatus = pgEnum("assessment_attempt_status", [
   "voided",
 ]);
 
+export const englishPathwayStatus = pgEnum("english_pathway_status", ["active", "inactive", "archived"]);
+export const englishLevelStatus = pgEnum("english_level_status", ["active", "inactive"]);
+export const englishSkillRecordSource = pgEnum("english_skill_record_source", ["placement", "assessment", "review", "migration"]);
+export const englishPlacementRuleStatus = pgEnum("english_placement_rule_status", ["draft", "active", "archived"]);
+
+
 // ── Tables ─────────────────────────────────────────────────────────────
+
+export const englishPathways = pgTable(
+  "english_pathways",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    code: text("code").notNull(),
+    name: text("name").notNull(),
+    description: text("description"),
+    tags: jsonb("tags"),
+    status: englishPathwayStatus("status").notNull().default("active"),
+    createdByUserId: uuid("created_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    organizationCodeUnique: uniqueIndex("english_pathways_organization_code_unique").on(table.organizationId, table.code),
+    organizationStatusIndex: index("english_pathways_organization_status_index").on(table.organizationId, table.status),
+  }),
+);
+
+export const englishLevels = pgTable(
+  "english_levels",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    pathwayId: uuid("pathway_id")
+      .notNull()
+      .references(() => englishPathways.id),
+    code: text("code").notNull(),
+    name: text("name").notNull(),
+    description: text("description"),
+    position: integer("position").notNull(),
+    expectedOutcomes: jsonb("expected_outcomes"),
+    status: englishLevelStatus("status").notNull().default("active"),
+    createdByUserId: uuid("created_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    pathwayPositionUnique: uniqueIndex("english_levels_pathway_position_unique").on(table.pathwayId, table.position),
+    pathwayCodeUnique: uniqueIndex("english_levels_pathway_code_unique").on(table.pathwayId, table.code),
+    organizationPathwayIndex: index("english_levels_organization_pathway_index").on(table.organizationId, table.pathwayId),
+  }),
+);
+
+export const englishSkillRecords = pgTable(
+  "english_skill_records",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    skill: text("skill").notNull(),
+    levelCode: text("level_code").notNull(),
+    score: integer("score"),
+    confidence: integer("confidence"),
+    source: englishSkillRecordSource("source").notNull(),
+    sourceRef: text("source_ref"),
+    notes: jsonb("notes"),
+    capturedAt: timestamp("captured_at", { withTimezone: true }).notNull().defaultNow(),
+    reviewedByUserId: uuid("reviewed_by_user_id").references(() => users.id),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    studentSkillSourceUnique: uniqueIndex("english_skill_records_student_skill_source_unique").on(
+      table.studentId,
+      table.skill,
+      table.source,
+      table.sourceRef,
+    ),
+    organizationStudentIndex: index("english_skill_records_organization_student_index").on(
+      table.organizationId,
+      table.studentId,
+      table.skill,
+    ),
+    organizationLevelIndex: index("english_skill_records_organization_level_index").on(
+      table.organizationId,
+      table.levelCode,
+      table.capturedAt,
+    ),
+  }),
+);
+
+export const englishPlacementRules = pgTable(
+  "english_placement_rules",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    pathwayId: uuid("pathway_id")
+      .notNull()
+      .references(() => englishPathways.id),
+    code: text("code").notNull(),
+    name: text("name").notNull(),
+    description: text("description"),
+    sourceAssessmentId: uuid("source_assessment_id").references(() => assessments.id),
+    skillWeights: jsonb("skill_weights"),
+    thresholds: jsonb("thresholds").notNull(),
+    status: englishPlacementRuleStatus("status").notNull().default("draft"),
+    createdByUserId: uuid("created_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    pathwayCodeUnique: uniqueIndex("english_placement_rules_pathway_code_unique").on(table.pathwayId, table.code),
+    organizationPathwayIndex: index("english_placement_rules_organization_pathway_index").on(
+      table.organizationId,
+      table.pathwayId,
+    ),
+    organizationAssessmentIndex: index("english_placement_rules_organization_assessment_index").on(
+      table.organizationId,
+      table.sourceAssessmentId,
+    ),
+  }),
+);
 
 /**
  * Tenant-scoped question banks for English placement/mock/practice assessments.
@@ -332,6 +472,14 @@ export const assessmentResults = pgTable(
 
 // ── Derived types ──────────────────────────────────────────────────────
 
+export type EnglishPathway = typeof englishPathways.$inferSelect;
+export type NewEnglishPathway = typeof englishPathways.$inferInsert;
+export type EnglishLevel = typeof englishLevels.$inferSelect;
+export type NewEnglishLevel = typeof englishLevels.$inferInsert;
+export type EnglishSkillRecord = typeof englishSkillRecords.$inferSelect;
+export type NewEnglishSkillRecord = typeof englishSkillRecords.$inferInsert;
+export type EnglishPlacementRule = typeof englishPlacementRules.$inferSelect;
+export type NewEnglishPlacementRule = typeof englishPlacementRules.$inferInsert;
 export type AssessmentBank = typeof assessmentBanks.$inferSelect;
 export type NewAssessmentBank = typeof assessmentBanks.$inferInsert;
 export type AssessmentQuestion = typeof assessmentQuestions.$inferSelect;
