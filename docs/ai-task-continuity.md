@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T092 Phase 13 / US10 meeting sync worker.
-- **Status**: Completed locally: added `worker/src/jobs/meeting-sync/` with session lifecycle reconciliation, attendance sync, unmatched participant warnings and recording permission links plus worker tests.
-- **Next task**: T093 online session teacher/student/parent UI.
+- **Current task**: T093 Phase 13 / US10 online class UI.
+- **Status**: Completed locally: added `/teacher/online`, `/student/online` and `/parent/online` UI using shared PageHeader/PageToolbar/UiDataTable pattern, with navigation and i18n updates.
+- **Next task**: T094 US10 integration and E2E tests.
 - **Blocker**: None.
-- **Files in focus**: `worker/src/jobs/meeting-sync/index.ts`, `tests/unit/meeting-sync-worker.test.ts`.
-- **Verification**: Worker typecheck and focused meeting-sync worker tests passed. Full Vitest should be run before commit/push.
+- **Files in focus**: `apps/web/src/app/teacher/online/`, `apps/web/src/app/student/online/`, `apps/web/src/app/parent/online/`, `apps/web/src/lib/navigation/manifests.ts`, `apps/web/src/lib/i18n/messages.ts`.
+- **Verification**: Web typecheck passed; navigation tests passed; teacher/student/parent online routes returned HTTP 200. Full Vitest should be run before commit/push.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

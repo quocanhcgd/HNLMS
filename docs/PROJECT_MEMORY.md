@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T092 are complete; T093 is the next open task.
-- Current baseline: Phase 13 / US10 is in progress; T090-T092 online class foundation, webhook inbox and meeting sync worker are complete, and T093 online class UI is next.
+- Tasks: `T001` to `T175`; T001-T093 are complete; T094 is the next open task.
+- Current baseline: Phase 13 / US10 is nearly complete; T090-T093 online class foundation, webhook inbox, sync worker and UI are complete, and T094 online class tests are next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed T093 by adding teacher/student/parent online session UIs with shared PageHeader/PageToolbar/UiDataTable, navigation and i18n updates; web typecheck passes and routes return HTTP 200.
 - 2026-08-22: Completed T092 by adding meeting sync worker for session lifecycle reconciliation, attendance sync, unmatched participant warnings and recording permission links; worker typecheck and focused tests pass.
 - 2026-08-22: Completed T091 by adding `@hnlms/integration-adapters` meeting adapter/HMAC webhook signing utilities and API signed webhook inbox with idempotent event storage; package/API typechecks and focused tests pass.
 - 2026-08-22: Completed T090 by adding online provider mapping, online session, attendance sync and recording Drizzle entities plus migration 0014; API typecheck and focused database/package tests pass.

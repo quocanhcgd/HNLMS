@@ -234,6 +234,14 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     roles: ["teacher"],
   },
   {
+    key: "teacherOnline",
+    labelKey: "teacherOnline",
+    href: "/teacher/online",
+    icon: BookOpen,
+    moduleKey: "online_class",
+    roles: ["teacher", "teaching_assistant"],
+  },
+  {
     key: "teacherMessages",
     labelKey: "teacherMessages",
     href: "/teacher/messages",
@@ -285,6 +293,14 @@ export const studentNavigation: readonly NavigationManifest[] = [
     roles: ["student"],
   },
   {
+    key: "studentOnline",
+    labelKey: "studentOnline",
+    href: "/student/online",
+    icon: BookOpen,
+    moduleKey: "online_class",
+    roles: ["student"],
+  },
+  {
     key: "studentMessages",
     labelKey: "studentMessages",
     href: "/student/messages",
@@ -309,6 +325,14 @@ export const parentNavigation: readonly NavigationManifest[] = [
     labelKey: "parentStudents",
     href: "/parent/students",
     icon: GraduationCap,
+    roles: ["parent"],
+  },
+  {
+    key: "parentOnline",
+    labelKey: "parentOnline",
+    href: "/parent/online",
+    icon: BookOpen,
+    moduleKey: "online_class",
     roles: ["parent"],
   },
   {
@@ -355,6 +379,7 @@ export const mockNavigationContext: NavigationContext = {
     "academic",
     "learning",
     "assessment",
+    "online_class",
     "communication",
     "finance",
     "payroll",

@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T12:44:28.328Z",
+  "updatedAt": "2026-08-22T12:51:29.985Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T092",
-    "title": "Implement meeting sync worker, reconciliation và recording permission link trong worker/src/jobs/meeting-sync/",
+    "id": "T093",
+    "title": "Implement online session teacher/student/parent UI trong apps/web/src/app/teacher/online/, apps/web/src/app/student/online/ và apps/web/src/app/parent/online/",
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành T092: meeting sync worker, reconciliation và recording permission link",
+    "activity": "Hoàn thành T093: UI online session teacher/student/parent workspace",
     "startedAt": null,
-    "updatedAt": "2026-08-22T12:44:28.328Z"
+    "updatedAt": "2026-08-22T12:51:29.985Z"
   },
   "nextTask": {
-    "id": "T093",
-    "title": "Implement online session teacher/student/parent UI trong apps/web/src/app/teacher/online/, apps/web/src/app/student/online/ và apps/web/src/app/parent/online/",
+    "id": "T094",
+    "title": "Add provider contract, duplicate webhook and E2E tests trong apps/api/tests/contract/us10-meeting.contract.spec.ts và apps/web/tests/e2e/us10-online.spec.ts",
     "percent": 0
   },
   "overall": {
-    "done": 92,
+    "done": 93,
     "total": 175,
-    "percent": 52.6
+    "percent": 53.1
   },
   "phases": [
     {
@@ -99,9 +99,9 @@
     },
     {
       "name": "Phase 13: User Story 10 - Lớp học online (P1)",
-      "done": 3,
+      "done": 4,
       "total": 5,
-      "percent": 60
+      "percent": 80
     },
     {
       "name": "Phase 14: User Story 11 - Tài chính, thanh toán và kế toán (P1)",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "7feb113",
-    "message": "feat(api): add meeting webhook inbox",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/7feb113"
+    "sha": "9efbe60",
+    "message": "feat(worker): add meeting sync reconciliation",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/9efbe60"
   },
   "ci": {
     "status": "unknown",
