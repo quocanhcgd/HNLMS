@@ -77,5 +77,3 @@ export const featuredPrograms = programs.slice(0, 3);
 export function getProgram(slug: string) {
   return programs.find((program) => program.slug === slug);
 }
-
-

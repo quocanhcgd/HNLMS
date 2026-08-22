@@ -1,10 +1,6 @@
 import { eq, and, sql } from "drizzle-orm";
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import {
-  assessmentAssignments,
-  assessments,
-  type AssessmentAssignment,
-} from "./schema";
+import { assessmentAssignments, assessments, type AssessmentAssignment } from "./schema";
 import type {
   AssessmentLeadReference,
   AssessmentReference,
@@ -43,8 +39,7 @@ export class DrizzleEntranceAssessmentRepository implements EntranceAssessmentRe
     `);
 
     const row = rows.rows[0] as
-      | { id: string; organization_id: string; status: string; active_consultant_user_id: string | null }
-      | undefined;
+      { id: string; organization_id: string; status: string; active_consultant_user_id: string | null } | undefined;
 
     if (!row) return null;
 

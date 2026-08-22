@@ -115,12 +115,12 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Mở lớp tại chi nhánh, phân công giáo viên, lưu lịch không trùng và công bố tuyển sinh.
 
-- [ ] T058 [P] [US4] Tạo department, program, course, module, class, schedule entities/migrations trong `apps/api/src/modules/academic-learning/`
-- [ ] T059 [US4] Implement program/course/module CRUD và publication lifecycle trong `apps/api/src/modules/academic-learning/`
-- [ ] T060 [US4] Implement class opening, capacity, modality, branch assignment và enrollment status trong `apps/api/src/modules/academic-learning/`
-- [ ] T061 [US4] Implement schedule conflict engine cho teacher, room và online session trong `apps/api/src/modules/academic-learning/`
-- [ ] T062 [US4] Implement academic admin UI dùng Mantine trong `apps/web/src/app/admin/academic/`
-- [ ] T063 [US4] Add US4 contract/integration/E2E tests trong `apps/api/tests/integration/us4-academic.spec.ts` và `apps/web/tests/e2e/us4-academic.spec.ts`
+- [x] T058 [P] [US4] Tạo department, program, course, module, class, schedule entities/migrations trong `apps/api/src/modules/academic-learning/`
+- [x] T059 [US4] Implement program/course/module CRUD và publication lifecycle trong `apps/api/src/modules/academic-learning/`
+- [x] T060 [US4] Implement class opening, capacity, modality, branch assignment và enrollment status trong `apps/api/src/modules/academic-learning/`
+- [x] T061 [US4] Implement schedule conflict engine cho teacher, room và online session trong `apps/api/src/modules/academic-learning/`
+- [x] T062 [US4] Implement academic admin UI dùng Mantine trong `apps/web/src/app/admin/academic/`
+- [x] T063 [US4] Add US4 contract/integration/E2E tests trong `apps/api/tests/integration/us4-academic.spec.ts` và `apps/web/tests/e2e/us4-academic.spec.ts`
 
 ## Phase 8: User Story 5 - Học liệu, bài giảng và thư viện số (P1)
 
@@ -430,3 +430,4 @@ Tất cả implementation tasks đều theo format `- [ ] T### [P?] [US#?] Descr
 - [ ] T175 Tạo full-stack readiness gate kiểm tra toàn bộ mục trong `checklists/full-stack-readiness.md`; không bắt đầu production rollout khi còn mục Critical chưa đạt
 
 **Checkpoint**: Full-stack implementation có thể bắt đầu theo MVP sau T161-T167 và T171-T172; production integration/rollout yêu cầu hoàn tất T168-T175 cùng các release gate tương ứng.
+

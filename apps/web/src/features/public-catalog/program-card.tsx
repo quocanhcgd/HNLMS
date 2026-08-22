@@ -35,4 +35,3 @@ export function ProgramCard({ program, priority = false }: { program: Program; p
     </Paper>
   );
 }
-

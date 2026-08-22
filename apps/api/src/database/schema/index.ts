@@ -4,3 +4,4 @@ export * from "./authentication";
 export * from "./organization-branch";
 export * from "./marketing-admission";
 export * from "./assessment-english";
+export * from "./academic-learning";

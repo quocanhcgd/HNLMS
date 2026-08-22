@@ -78,12 +78,12 @@ describe("T056 entrance assessment assignment", () => {
   });
 
   it("enforces tenant and consultant ownership without leaking cross-tenant records", async () => {
-    await expect(
-      service.assign({ userId: "consultant-2", organizationId: "org-1" }, input()),
-    ).rejects.toMatchObject({ code: "forbidden" } satisfies Partial<EntranceAssessmentError>);
-    await expect(
-      service.assign({ userId: "consultant-1", organizationId: "org-2" }, input()),
-    ).rejects.toMatchObject({ code: "not_found" } satisfies Partial<EntranceAssessmentError>);
+    await expect(service.assign({ userId: "consultant-2", organizationId: "org-1" }, input())).rejects.toMatchObject({
+      code: "forbidden",
+    } satisfies Partial<EntranceAssessmentError>);
+    await expect(service.assign({ userId: "consultant-1", organizationId: "org-2" }, input())).rejects.toMatchObject({
+      code: "not_found",
+    } satisfies Partial<EntranceAssessmentError>);
   });
 
   it("rejects closed/non-entrance assessments and terminal leads", async () => {

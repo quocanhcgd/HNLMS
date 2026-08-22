@@ -10,12 +10,12 @@ import {
   leadStatus,
 } from "../../apps/api/src/modules/marketing-admission/schema";
 
-function latestMigrationSql(): string {
+function allMigrationSql(): string {
   const journal = JSON.parse(readFileSync(resolve("infra/migrations/meta/_journal.json"), "utf-8")) as {
     entries: Array<{ tag: string }>;
   };
-  const latest = journal.entries.at(-1);
-  if (!latest) throw new Error("migration_journal_empty");
+  if (!journal.entries.length) throw new Error("migration_journal_empty");
+  return journal.entries.map(({ tag }) => readFileSync(resolve(`infra/migrations/${tag}.sql`), "utf-8")).join("`r`n");
   return readFileSync(resolve(`infra/migrations/${latest.tag}.sql`), "utf-8");
 }
 
@@ -43,8 +43,8 @@ describe("T053 admission entities", () => {
     expect(leadAssignmentStatus.enumValues).toEqual(["active", "transferred", "completed", "cancelled"]);
   });
 
-  it("generates consent, routing and follow-up constraints in the latest migration", () => {
-    const sql = latestMigrationSql();
+  it("generates consent, routing and follow-up constraints across the migration chain", () => {
+    const sql = allMigrationSql();
 
     expect(sql).toContain('CREATE TABLE "leads"');
     expect(sql).toContain('CREATE TABLE "lead_assignments"');

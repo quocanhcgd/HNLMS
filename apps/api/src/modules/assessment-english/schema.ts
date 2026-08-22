@@ -16,16 +16,9 @@ export const assessmentAssignmentStatus = pgEnum("assessment_assignment_status",
   "cancelled",
 ]);
 
-export const assessmentInvitationChannel = pgEnum("assessment_invitation_channel", [
-  "email",
-  "sms",
-  "manual",
-]);
+export const assessmentInvitationChannel = pgEnum("assessment_invitation_channel", ["email", "sms", "manual"]);
 
-export const assessmentResultPublicationStatus = pgEnum("assessment_result_publication_status", [
-  "draft",
-  "published",
-]);
+export const assessmentResultPublicationStatus = pgEnum("assessment_result_publication_status", ["draft", "published"]);
 
 // ── Tables ─────────────────────────────────────────────────────────────
 
@@ -53,10 +46,7 @@ export const assessments = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => ({
-    organizationStatusIndex: index("assessments_organization_status_index").on(
-      table.organizationId,
-      table.status,
-    ),
+    organizationStatusIndex: index("assessments_organization_status_index").on(table.organizationId, table.status),
   }),
 );
 
@@ -122,9 +112,7 @@ export const assessmentResults = pgTable(
     assessmentId: uuid("assessment_id")
       .notNull()
       .references(() => assessments.id),
-    publicationStatus: assessmentResultPublicationStatus("publication_status")
-      .notNull()
-      .default("draft"),
+    publicationStatus: assessmentResultPublicationStatus("publication_status").notNull().default("draft"),
     recommendedProgramId: text("recommended_program_id"),
     recommendedClassId: text("recommended_class_id"),
     createdByUserId: uuid("created_by_user_id")
