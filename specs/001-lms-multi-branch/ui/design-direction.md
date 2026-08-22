@@ -12,6 +12,20 @@ Giao diện mang tính vận hành giáo dục: yên tĩnh, rõ ràng, mật đ�
 - Không dùng gradient, orb, bokeh hoặc minh họa trang trí.
 - Không đặt card trong card. Section dùng layout phẳng; card chỉ cho item lặp, KPI hoặc tool có ranh giới thật.
 
+## Authenticated shell rules
+
+- Topbar is the only place for route breadcrumb and global utilities. Functional pages must not render their own breadcrumb line.
+- Sidebar collapse must reduce layout width, preserving only icon/logo navigation affordance; content area must expand accordingly.
+- Search in topbar is collapsed behind an icon and expands on demand.
+- Topbar global utility buttons are right-aligned; sidebar toggle stays at the left edge next to the sidebar.
+- Shared data table header color follows the filled primary button color and contrast token.
+
+## Consistency mandate
+
+- Một product space chỉ có một hệ layout và một ngôn ngữ màu. Không để dashboard, danh sách, chi tiết hoặc workflow tự chọn bố cục/màu riêng nếu không được catalog hóa.
+- Dữ liệu dạng bảng dùng một chuẩn TanStack Table 8.x; trang không tự render bảng khác kiểu.
+- Mọi màu hiển thị qua semantic tokens và status roles; tránh hard-code màu theo trang vì gây lệch giao diện giữa dark/light và giữa module.
+
 ## Theme
 
 - Mặc định là dark. Không dùng đen tuyệt đối; phân cấp surface bằng độ sáng và border.
@@ -40,4 +54,3 @@ Mật độ cao, ưu tiên tenant, database, license, quota, migration và sự 
 ### LMS application
 
 Shell ổn định gồm sidebar, header, breadcrumb, page header và content. Navigation phụ thuộc permission + entitlement. Mỗi vai trò có home riêng nhưng dùng cùng primitive và pattern.
-

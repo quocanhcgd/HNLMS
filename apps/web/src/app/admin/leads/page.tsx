@@ -4,17 +4,15 @@ import { useMemo, useState } from "react";
 import {
   type ColumnDef,
   type SortingState,
-  flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Avatar, Group, SegmentedControl, Table, Text } from "@mantine/core";
-import { ArrowDown, ArrowUp, ArrowUpDown, ListFilter, Search } from "lucide-react";
+import { Avatar, Group, SegmentedControl, Text } from "@mantine/core";
+import { ListFilter, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { EmptyState } from "@/components/domain";
-import { PageToolbar, UiBadge, UiTable, UiTextInput, UiButton, UiSelect } from "@/components/ui";
+import { PageToolbar, UiBadge, UiButton, UiDataTable, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
 import { useUI } from "@/lib/providers";
 
 type Lead = {
@@ -75,19 +73,13 @@ const leads: Lead[] = [
   },
 ];
 
-const colors: Record<string, string> = {
-  "Đang tư vấn": "blue",
-  "Chờ thi đầu vào": "yellow",
-  Mới: "cyan",
-  "Đề xuất lớp": "grape",
-  "Đã ghi danh": "teal",
+const statusRoles: Record<string, "primary" | "success" | "warning" | "info" | "neutral"> = {
+  "Đang tư vấn": "info",
+  "Chờ thi đầu vào": "warning",
+  Mới: "primary",
+  "Đề xuất lớp": "warning",
+  "Đã ghi danh": "success",
 };
-
-function SortIndicator({ direction }: { direction: false | "asc" | "desc" }) {
-  if (direction === "asc") return <ArrowUp size={14} />;
-  if (direction === "desc") return <ArrowDown size={14} />;
-  return <ArrowUpDown size={14} opacity={0.5} />;
-}
 
 export default function Leads() {
   const { t } = useUI();
@@ -102,7 +94,7 @@ export default function Leads() {
         header: "Khách hàng",
         cell: ({ row }) => (
           <Group gap="sm" wrap="nowrap">
-            <Avatar size={32} color="cyan">
+            <Avatar size={32} color="primary">
               {row.original.name.split(" ").at(-1)?.[0]}
             </Avatar>
             <div>
@@ -131,9 +123,7 @@ export default function Leads() {
         accessorKey: "status",
         header: "Trạng thái",
         cell: ({ getValue }) => (
-          <UiBadge variant="light" color={colors[String(getValue())]}>
-            {String(getValue())}
-          </UiBadge>
+          <UiStatusBadge role={statusRoles[String(getValue())] ?? "neutral"}>{String(getValue())}</UiStatusBadge>
         ),
       },
       {
@@ -195,47 +185,7 @@ export default function Leads() {
         <div style={{ flex: 1 }} />
         <SegmentedControl data={["Bảng", "Kanban"]} />
       </PageToolbar>
-      <div className="tableWrap">
-        <UiTable verticalSpacing="md" horizontalSpacing="lg">
-          <Table.Thead>
-            <Table.Tr>
-              {table.getHeaderGroups()[0]?.headers.map((header) => (
-                <Table.Th key={header.id}>
-                  <button
-                    className="tableSortButton"
-                    type="button"
-                    disabled={!header.column.getCanSort()}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                    {header.column.getCanSort() && <SortIndicator direction={header.column.getIsSorted()} />}
-                  </button>
-                </Table.Th>
-              ))}
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <Table.Tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <Table.Td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Td>
-                  ))}
-                </Table.Tr>
-              ))
-            ) : (
-              <Table.Tr>
-                <Table.Td colSpan={columns.length}>
-                  <EmptyState
-                    title="Không tìm thấy khách hàng"
-                    description="Hãy thay đổi từ khóa hoặc bộ lọc trạng thái."
-                  />
-                </Table.Td>
-              </Table.Tr>
-            )}
-          </Table.Tbody>
-        </UiTable>
-      </div>
+      <UiDataTable table={table} columnCount={columns.length} emptyTitle="Không tìm thấy khách hàng phù hợp." />
       <Text size="xs" c="dimmed" mt="sm">
         TanStack Table · {table.getRowModel().rows.length} / {leads.length} bản ghi · hỗ trợ tìm kiếm và sắp xếp theo
         cột

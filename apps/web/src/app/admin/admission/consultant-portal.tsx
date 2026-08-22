@@ -22,7 +22,16 @@ import {
 import { AlertTriangle, CalendarClock, CheckCircle2, Phone, Search, UserRoundPlus } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { ConfirmationSummary } from "@/components/domain";
-import { PageToolbar, UiBadge, UiButton, UiModal, UiSelect, UiTextInput } from "@/components/ui";
+import {
+  PageToolbar,
+  UiBadge,
+  UiButton,
+  UiModal,
+  UiSelect,
+  UiStatusBadge,
+  UiTextInput,
+  uiStatusRoleColor,
+} from "@/components/ui";
 import {
   convertLead,
   recordConsultation,
@@ -42,14 +51,14 @@ const statusLabels: Record<AdmissionStatus, string> = {
   disqualified: "Không phù hợp",
 };
 
-const statusColors: Record<AdmissionStatus, string> = {
-  new: "cyan",
-  contacted: "indigo",
-  consulting: "blue",
-  awaiting_assessment: "yellow",
-  class_proposed: "grape",
-  enrolled: "teal",
-  disqualified: "gray",
+const statusRoles: Record<AdmissionStatus, "primary" | "success" | "warning" | "info" | "neutral"> = {
+  new: "primary",
+  contacted: "info",
+  consulting: "info",
+  awaiting_assessment: "warning",
+  class_proposed: "warning",
+  enrolled: "success",
+  disqualified: "neutral",
 };
 
 const seedLeads: ConsultantLead[] = [
@@ -301,17 +310,20 @@ export function ConsultantPortal() {
                     style={{
                       textAlign: "left",
                       cursor: "pointer",
-                      background: lead.id === selected.id ? "var(--mantine-color-blue-light)" : undefined,
+                      background:
+                        lead.id === selected.id
+                          ? "color-mix(in srgb, var(--hn-dark-primary) 16%, var(--app-panel))"
+                          : undefined,
                     }}
                   >
                     <Group wrap="nowrap" align="flex-start">
-                      <Avatar color="cyan">{lead.fullName.split(" ").at(-1)?.[0]}</Avatar>
+                      <Avatar color="primary">{lead.fullName.split(" ").at(-1)?.[0]}</Avatar>
                       <div style={{ minWidth: 0, flex: 1 }}>
                         <Group justify="space-between" wrap="nowrap">
                           <Text fw={650} size="sm">
                             {lead.fullName}
                           </Text>
-                          <UiBadge color={statusColors[lead.status]}>{statusLabels[lead.status]}</UiBadge>
+                          <UiStatusBadge role={statusRoles[lead.status]}>{statusLabels[lead.status]}</UiStatusBadge>
                         </Group>
                         <Text size="xs" c="dimmed" truncate>
                           {lead.interest}
@@ -336,7 +348,7 @@ export function ConsultantPortal() {
             <Paper withBorder p="lg">
               <Group justify="space-between" align="flex-start">
                 <Group>
-                  <Avatar size={48} color="blue">
+                  <Avatar size={48} color="primary">
                     {selected.fullName.split(" ").at(-1)?.[0]}
                   </Avatar>
                   <div>
@@ -344,7 +356,7 @@ export function ConsultantPortal() {
                       <Text fz="xl" fw={700}>
                         {selected.fullName}
                       </Text>
-                      <UiBadge color={statusColors[selected.status]}>{statusLabels[selected.status]}</UiBadge>
+                      <UiStatusBadge role={statusRoles[selected.status]}>{statusLabels[selected.status]}</UiStatusBadge>
                     </Group>
                     <Text size="sm" c="dimmed">
                       {selected.phone} · {selected.email}
@@ -369,7 +381,12 @@ export function ConsultantPortal() {
                 </Group>
               </Group>
               {selected.duplicateWarning ? (
-                <Alert mt="md" color="yellow" icon={<AlertTriangle size={18} />} title="Cần kiểm tra hồ sơ trùng">
+                <Alert
+                  mt="md"
+                  color={uiStatusRoleColor.warning}
+                  icon={<AlertTriangle size={18} />}
+                  title="Cần kiểm tra hồ sơ trùng"
+                >
                   {selected.duplicateWarning}
                 </Alert>
               ) : null}
@@ -400,7 +417,7 @@ export function ConsultantPortal() {
                   </Text>
                 </div>
               </SimpleGrid>
-              <Paper mt="md" p="md" bg="var(--mantine-color-blue-light)">
+              <Paper mt="md" p="md" className="panelHighlight">
                 <Group align="flex-start" wrap="nowrap">
                   <ThemeIcon variant="light">
                     <CalendarClock size={17} />
@@ -508,7 +525,7 @@ export function ConsultantPortal() {
         size="lg"
       >
         <Stack>
-          <Alert color="blue" title="Xem trước chuyển đổi">
+          <Alert color="primary" title="Xem trước chuyển đổi">
             Thao tác sẽ tạo hoặc liên kết hồ sơ học viên, tạo ghi danh lớp và khởi tạo nghĩa vụ tài chính theo chính
             sách.
           </Alert>
@@ -558,7 +575,7 @@ export function ConsultantPortal() {
             <UiButton variant="default" onClick={() => setConversionOpened(false)}>
               Hủy
             </UiButton>
-            <UiButton color="teal" onClick={confirmConversion}>
+            <UiButton color={uiStatusRoleColor.success} onClick={confirmConversion}>
               Xác nhận ghi danh
             </UiButton>
           </Group>

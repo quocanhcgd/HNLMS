@@ -1,8 +1,9 @@
 "use client";
 
-import { Badge, Button, Group, Paper, Select, SimpleGrid, Tabs, Text, TextInput } from "@mantine/core";
+import { Button, Group, Paper, Select, SimpleGrid, Tabs, Text, TextInput } from "@mantine/core";
 import { useState } from "react";
 import { PageHeader } from "@/components/app-shell";
+import { UiStatusBadge } from "@/components/ui";
 import { getPreset, themePresetRegistry, tokenCssVariables, validateContrast } from "@/lib/theme/registry";
 
 const settingDefaults = {
@@ -93,9 +94,9 @@ export default function SettingsPage() {
                   Preview trên shell thật trước khi công bố.
                 </Text>
               </div>
-              <Badge color={previewKey ? "yellow" : "teal"} variant="light">
+              <UiStatusBadge role={previewKey ? "warning" : "success"}>
                 {previewKey ? "Đang preview" : `Đã publish ${activeKey}@${shown.version}`}
-              </Badge>
+              </UiStatusBadge>
             </Group>
             <Group mt="md" align="end">
               <Select
@@ -115,12 +116,12 @@ export default function SettingsPage() {
               </Button>
             </Group>
             <Group mt="md" gap="xs">
-              <Badge color={validateContrast(shown.light).valid ? "teal" : "red"} variant="light">
+              <UiStatusBadge role={validateContrast(shown.light).valid ? "success" : "danger"}>
                 Light contrast {validateContrast(shown.light).ratio.toFixed(2)}
-              </Badge>
-              <Badge color={validateContrast(shown.dark).valid ? "teal" : "red"} variant="light">
+              </UiStatusBadge>
+              <UiStatusBadge role={validateContrast(shown.dark).valid ? "success" : "danger"}>
                 Dark contrast {validateContrast(shown.dark).ratio.toFixed(2)}
-              </Badge>
+              </UiStatusBadge>
             </Group>
           </Paper>
         </Tabs.Panel>

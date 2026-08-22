@@ -5,29 +5,25 @@ import {
   type ColumnDef,
   type RowSelectionState,
   type SortingState,
-  flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ActionIcon,
-  type BadgeProps,
-  Button,
-  Checkbox,
-  Drawer,
-  Group,
-  Paper,
-  Stack,
-  Table,
-  Text,
-  Tooltip,
-} from "@mantine/core";
-import { ArrowDown, ArrowUp, ArrowUpDown, Check, CircleOff, Eye, GripVertical, Pencil, Search } from "lucide-react";
+import { ActionIcon, Button, Checkbox, Drawer, Group, Paper, Stack, Text, Tooltip } from "@mantine/core";
+import { Check, CircleOff, Eye, GripVertical, Pencil, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { EmptyState } from "@/components/domain";
-import { PageToolbar, UiBadge, UiTable, UiButton, UiSelect, UiTextInput } from "@/components/ui";
+import {
+  PageToolbar,
+  UiBadge,
+  UiButton,
+  UiDataTable,
+  UiSelect,
+  UiStatusBadge,
+  UiTextInput,
+  uiStatusRoleColor,
+  type UiStatusRole,
+} from "@/components/ui";
 
 /* ---------- types ---------- */
 
@@ -74,18 +70,12 @@ const kindLabels: Record<ContentKind, string> = {
   cta: "Kêu gọi HĐ",
 };
 
-const statusConfig: Record<ContentStatus, { label: string; color: string; variant: BadgeProps["variant"] }> = {
-  draft: { label: "Bản nháp", color: "gray", variant: "light" },
-  review: { label: "Đang duyệt", color: "yellow", variant: "light" },
-  published: { label: "Đã công bố", color: "green", variant: "light" },
-  revoked: { label: "Đã thu hồi", color: "red", variant: "light" },
+const statusConfig: Record<ContentStatus, { label: string; role: UiStatusRole }> = {
+  draft: { label: "Bản nháp", role: "neutral" },
+  review: { label: "Đang duyệt", role: "warning" },
+  published: { label: "Đã công bố", role: "success" },
+  revoked: { label: "Đã thu hồi", role: "danger" },
 };
-
-function SortIndicator({ direction }: { direction: false | "asc" | "desc" }) {
-  if (direction === "asc") return <ArrowUp size={14} />;
-  if (direction === "desc") return <ArrowDown size={14} />;
-  return <ArrowUpDown size={14} opacity={0.5} />;
-}
 
 function formatDate(iso: string | null): string {
   if (!iso) return "—";
@@ -343,11 +333,7 @@ export function ContentListWorkspace() {
         header: "Trạng thái",
         cell: ({ getValue }) => {
           const s = statusConfig[getValue() as ContentStatus];
-          return (
-            <UiBadge variant={s.variant} color={s.color}>
-              {s.label}
-            </UiBadge>
-          );
+          return <UiStatusBadge role={s.role}>{s.label}</UiStatusBadge>;
         },
       },
       {
@@ -379,7 +365,7 @@ export function ContentListWorkspace() {
               <Tooltip label="Xem trước">
                 <ActionIcon
                   variant="subtle"
-                  color="blue"
+                  color="primary"
                   size="sm"
                   onClick={() => setPreviewItem(item)}
                   aria-label={`Xem trước ${item.title}`}
@@ -407,7 +393,7 @@ export function ContentListWorkspace() {
                 <Tooltip label="Công bố">
                   <ActionIcon
                     variant="subtle"
-                    color="green"
+                    color={uiStatusRoleColor.success}
                     size="sm"
                     onClick={() => setConfirmAction({ type: "publish", item })}
                     aria-label={`Công bố ${item.title}`}
@@ -509,7 +495,7 @@ export function ContentListWorkspace() {
             <Text size="sm" c="dimmed">
               Đã chọn {selectedCount} nội dung
             </Text>
-            <UiButton variant="light" color="green" leftSection={<Check size={14} />}>
+            <UiButton variant="light" color={uiStatusRoleColor.success} leftSection={<Check size={14} />}>
               Công bố ({selectedCount})
             </UiButton>
             <UiButton variant="light" color="red" leftSection={<CircleOff size={14} />}>
@@ -518,48 +504,14 @@ export function ContentListWorkspace() {
           </Group>
         )}
       </PageToolbar>
-      <div className="tableWrap">
-        <UiTable verticalSpacing="md" horizontalSpacing="lg">
-          <Table.Thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Table.Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Table.Th key={header.id}>
-                    {header.isPlaceholder ? null : (
-                      <button
-                        className="tableSortButton"
-                        type="button"
-                        disabled={!header.column.getCanSort()}
-                        onClick={header.column.getToggleSortingHandler()}
-                      >
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {header.column.getCanSort() && <SortIndicator direction={header.column.getIsSorted()} />}
-                      </button>
-                    )}
-                  </Table.Th>
-                ))}
-              </Table.Tr>
-            ))}
-          </Table.Thead>
-          <Table.Tbody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <Table.Tr key={row.id} bg={row.getIsSelected() ? "blue.0" : undefined}>
-                  {row.getVisibleCells().map((cell) => (
-                    <Table.Td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Td>
-                  ))}
-                </Table.Tr>
-              ))
-            ) : (
-              <Table.Tr>
-                <Table.Td colSpan={columns.length}>
-                  <EmptyState title="Không tìm thấy nội dung" description="Hãy thay đổi từ khóa hoặc bộ lọc." />
-                </Table.Td>
-              </Table.Tr>
-            )}
-          </Table.Tbody>
-        </UiTable>
-      </div>
+      <UiDataTable
+        table={table}
+        columnCount={columns.length}
+        emptyTitle="Không tìm thấy nội dung phù hợp."
+        getRowProps={(row) => ({
+          className: row.getIsSelected() ? "tableRow--selected" : undefined,
+        })}
+      />
       <Text size="xs" c="dimmed" mt="sm">
         {filteredData.length} / {mockContent.length} bản ghi · hỗ trợ tìm kiếm, lọc, sắp xếp và chọn nhiều
       </Text>
@@ -579,12 +531,9 @@ export function ContentListWorkspace() {
               <UiBadge variant="outline" color="gray">
                 {kindLabels[previewItem.kind]}
               </UiBadge>
-              <UiBadge
-                variant={statusConfig[previewItem.status].variant}
-                color={statusConfig[previewItem.status].color}
-              >
+              <UiStatusBadge role={statusConfig[previewItem.status].role}>
                 {statusConfig[previewItem.status].label}
-              </UiBadge>
+              </UiStatusBadge>
               <Text size="xs" c="dimmed">
                 v{previewItem.version}
               </Text>
@@ -687,7 +636,7 @@ export function ContentListWorkspace() {
             Hủy
           </Button>
           <Button
-            color={confirmAction.type === "publish" ? "green" : "red"}
+            color={confirmAction.type === "publish" ? "teal" : "red"}
             onClick={() => {
               // TODO: wire to real service
               setConfirmAction(null);
@@ -808,9 +757,9 @@ function ContentEditForm({ content, onClose }: { content: LandingContent | null;
         {content && (
           <Paper p="sm" withBorder>
             <Group>
-              <UiBadge variant={statusConfig[content.status].variant} color={statusConfig[content.status].color}>
+              <UiStatusBadge role={statusConfig[content.status].role}>
                 {statusConfig[content.status].label}
-              </UiBadge>
+              </UiStatusBadge>
               <Text size="xs" c="dimmed">
                 Phiên bản v{content.version} · Tạo: {formatDate(content.createdAt)}
               </Text>

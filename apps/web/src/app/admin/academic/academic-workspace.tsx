@@ -2,20 +2,28 @@
 
 import { useMemo, useState } from "react";
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
-import {
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { Alert, Badge, Card, Group, NumberInput, Select, Stack, Table, Text, Title } from "@mantine/core";
-import { ArrowDown, ArrowUp, ArrowUpDown, CalendarClock, GraduationCap, Plus, Search } from "lucide-react";
+import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { Group, Text } from "@mantine/core";
+import { CalendarClock, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { PageToolbar, UiBadge, UiButton, UiSelect, UiTable, UiTextInput } from "@/components/ui";
+import { PageToolbar, UiDataTable, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
 
 type AcademicSection = "programs" | "classes";
-type ProgramRow = { department: string; code: string; name: string; status: string; version: number };
+type ProgramStatus = "Đã công bố" | "Bản nháp" | "Đang rà soát";
+type ClassStatus = "Mở tuyển sinh" | "Sắp khai giảng" | "Đủ chỗ" | "Đang học";
+
+type ProgramRow = {
+  department: string;
+  code: string;
+  name: string;
+  level: string;
+  moduleCount: number;
+  version: number;
+  owner: string;
+  status: ProgramStatus;
+  updatedAt: string;
+};
+
 type ClassRow = {
   program: string;
   code: string;
@@ -25,12 +33,44 @@ type ClassRow = {
   enrolled: number;
   teacher: string;
   schedule: string;
-  status: string;
+  startDate: string;
+  status: ClassStatus;
 };
 
 const programs: ProgramRow[] = [
-  { department: "Ngoại ngữ", code: "IELTS", name: "Lộ trình IELTS", status: "Đã công bố", version: 2 },
-  { department: "Kỹ năng", code: "BIZ", name: "Tiếng Anh doanh nghiệp", status: "Bản nháp", version: 1 },
+  {
+    department: "Ngoại ngữ",
+    code: "IELTS",
+    name: "Lộ trình IELTS",
+    level: "Foundation → Advanced",
+    moduleCount: 8,
+    version: 2,
+    owner: "Lan Anh",
+    status: "Đã công bố",
+    updatedAt: "20/08/2026",
+  },
+  {
+    department: "Kỹ năng",
+    code: "BIZ",
+    name: "Tiếng Anh doanh nghiệp",
+    level: "A2 → B2",
+    moduleCount: 5,
+    version: 1,
+    owner: "Quốc Huy",
+    status: "Bản nháp",
+    updatedAt: "18/08/2026",
+  },
+  {
+    department: "Ngoại ngữ",
+    code: "TOEIC",
+    name: "TOEIC 700+",
+    level: "Pre-Intermediate",
+    moduleCount: 6,
+    version: 3,
+    owner: "Mai Chi",
+    status: "Đang rà soát",
+    updatedAt: "21/08/2026",
+  },
 ];
 
 const classes: ClassRow[] = [
@@ -43,6 +83,7 @@ const classes: ClassRow[] = [
     enrolled: 11,
     teacher: "Lan Anh",
     schedule: "T2/T4/T6 · 18:00-19:30",
+    startDate: "01/09/2026",
     status: "Mở tuyển sinh",
   },
   {
@@ -54,6 +95,7 @@ const classes: ClassRow[] = [
     enrolled: 14,
     teacher: "Mai Chi",
     schedule: "T7 · 09:00-11:30",
+    startDate: "07/09/2026",
     status: "Sắp khai giảng",
   },
   {
@@ -65,27 +107,44 @@ const classes: ClassRow[] = [
     enrolled: 20,
     teacher: "Quốc Huy",
     schedule: "T3/T5 · 12:30-13:15",
+    startDate: "Đang học",
     status: "Đủ chỗ",
+  },
+  {
+    program: "TOEIC 700+",
+    code: "TOEIC-2609",
+    branch: "Cầu Giấy",
+    modality: "Trực tiếp",
+    capacity: 16,
+    enrolled: 9,
+    teacher: "Minh Tuấn",
+    schedule: "T2/T5 · 19:45-21:15",
+    startDate: "10/09/2026",
+    status: "Mở tuyển sinh",
   },
 ];
 
-function SortIndicator({ direction }: { direction: false | "asc" | "desc" }) {
-  if (direction === "asc") return <ArrowUp size={14} />;
-  if (direction === "desc") return <ArrowDown size={14} />;
-  return <ArrowUpDown size={14} opacity={0.5} />;
-}
+const programStatusRoles: Record<ProgramStatus, "success" | "warning" | "neutral"> = {
+  "Đã công bố": "success",
+  "Bản nháp": "neutral",
+  "Đang rà soát": "warning",
+};
+
+const classStatusRoles: Record<ClassStatus, "success" | "warning" | "neutral" | "info"> = {
+  "Mở tuyển sinh": "success",
+  "Sắp khai giảng": "warning",
+  "Đủ chỗ": "neutral",
+  "Đang học": "info",
+};
 
 export function AcademicWorkspace({ section }: { section: AcademicSection }) {
-  const [feedback, setFeedback] = useState("");
   const [query, setQuery] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [status, setStatus] = useState<string | null>("all");
-  const [capacity, setCapacity] = useState<number | string>(12);
+  const [branch, setBranch] = useState<string | null>("all");
 
   const programColumns = useMemo<ColumnDef<ProgramRow>[]>(
     () => [
-      { accessorKey: "department", header: "Ngành" },
-      { accessorKey: "code", header: "Mã" },
       {
         accessorKey: "name",
         header: "Chương trình",
@@ -93,27 +152,42 @@ export function AcademicWorkspace({ section }: { section: AcademicSection }) {
           <div>
             <Text fw={600}>{row.original.name}</Text>
             <Text size="xs" c="dimmed">
-              Mục tiêu, học phần, điều kiện hoàn thành
+              {row.original.code} · {row.original.level}
             </Text>
           </div>
         ),
       },
+      { accessorKey: "department", header: "Ngành" },
+      { accessorKey: "moduleCount", header: "Học phần", cell: ({ getValue }) => `${getValue<number>()} học phần` },
       { accessorKey: "version", header: "Phiên bản", cell: ({ getValue }) => `v${getValue<number>()}` },
+      { accessorKey: "owner", header: "Phụ trách" },
       {
         accessorKey: "status",
         header: "Trạng thái",
-        cell: ({ getValue }) => (
-          <UiBadge color={getValue<string>() === "Đã công bố" ? "teal" : "yellow"}>{getValue<string>()}</UiBadge>
-        ),
+        cell: ({ getValue }) => {
+          const value = getValue<ProgramStatus>();
+          return <UiStatusBadge role={programStatusRoles[value]}>{value}</UiStatusBadge>;
+        },
       },
+      { accessorKey: "updatedAt", header: "Cập nhật" },
     ],
     [],
   );
 
   const classColumns = useMemo<ColumnDef<ClassRow>[]>(
     () => [
-      { accessorKey: "program", header: "Khóa học" },
-      { accessorKey: "code", header: "Lớp", cell: ({ getValue }) => <Text fw={600}>{getValue<string>()}</Text> },
+      {
+        accessorKey: "code",
+        header: "Lớp",
+        cell: ({ row }) => (
+          <div>
+            <Text fw={600}>{row.original.code}</Text>
+            <Text size="xs" c="dimmed">
+              {row.original.program}
+            </Text>
+          </div>
+        ),
+      },
       {
         accessorKey: "branch",
         header: "Chi nhánh",
@@ -130,13 +204,14 @@ export function AcademicWorkspace({ section }: { section: AcademicSection }) {
         accessorKey: "schedule",
         header: "Lịch học",
         cell: ({ getValue }) => (
-          <Group gap="xs">
+          <Group gap="xs" wrap="nowrap">
             <CalendarClock size={15} />
-            {getValue<string>()}
+            <Text size="sm">{getValue<string>()}</Text>
           </Group>
         ),
       },
       { accessorKey: "teacher", header: "Giảng viên" },
+      { accessorKey: "startDate", header: "Khai giảng" },
       {
         accessorKey: "enrolled",
         header: "Sức chứa",
@@ -145,26 +220,35 @@ export function AcademicWorkspace({ section }: { section: AcademicSection }) {
       {
         accessorKey: "status",
         header: "Trạng thái",
-        cell: ({ getValue }) => (
-          <UiBadge color={getValue<string>() === "Đủ chỗ" ? "gray" : "teal"}>{getValue<string>()}</UiBadge>
-        ),
+        cell: ({ getValue }) => {
+          const value = getValue<ClassStatus>();
+          return <UiStatusBadge role={classStatusRoles[value]}>{value}</UiStatusBadge>;
+        },
       },
     ],
     [],
   );
 
-  const data = section === "programs" ? programs : classes;
-  const columns = section === "programs" ? programColumns : classColumns;
+  const isPrograms = section === "programs";
+  const data = isPrograms ? programs : classes;
+  const columns = isPrograms ? programColumns : classColumns;
+  const title = isPrograms ? "Chương trình đào tạo" : "Lớp học";
+  const subtitle = isPrograms
+    ? "Quản lý danh mục chương trình, phiên bản, học phần và trạng thái công bố."
+    : "Quản lý lớp, lịch học, giảng viên, sức chứa và trạng thái tuyển sinh.";
+
   const filteredData = useMemo(
     () =>
       data.filter((item) => {
-        const value = JSON.stringify(item).toLowerCase();
-        const matchesQuery = value.includes(query.toLowerCase());
-        const matchesStatus = status === "all" || !status || ("status" in item && item.status === status);
-        return matchesQuery && matchesStatus;
+        const searchable = JSON.stringify(item).toLowerCase();
+        const matchesQuery = searchable.includes(query.toLowerCase());
+        const matchesStatus = status === "all" || !status || item.status === status;
+        const matchesBranch = isPrograms || branch === "all" || !branch || ("branch" in item && item.branch === branch);
+        return matchesQuery && matchesStatus && matchesBranch;
       }),
-    [data, query, status],
+    [branch, data, isPrograms, query, status],
   );
+
   const table = useReactTable<ProgramRow | ClassRow>({
     data: filteredData,
     columns: columns as ColumnDef<ProgramRow | ClassRow>[],
@@ -176,118 +260,49 @@ export function AcademicWorkspace({ section }: { section: AcademicSection }) {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  const title = section === "programs" ? "Chương trình và học phần" : "Lớp học và lịch";
-  const subtitle =
-    section === "programs"
-      ? "Quản lý ngành, chương trình, khóa học và học phần."
-      : "Mở lớp, gán giảng viên, sức chứa và trạng thái tuyển sinh.";
-
   return (
     <div className="page">
-      <PageHeader title={title} subtitle={subtitle} />
-      {feedback ? (
-        <Alert color="teal" mb="md" title="Cập nhật đào tạo" withCloseButton onClose={() => setFeedback("")}>
-          {feedback}
-        </Alert>
-      ) : null}
-      <Card withBorder>
-        <Group justify="space-between" mb="md">
-          <div>
-            <Title order={3}>{section === "programs" ? "Danh mục chương trình đào tạo" : "Danh sách lớp học"}</Title>
-            <Text c="dimmed" size="sm">
-              Dữ liệu được lọc, sắp xếp và phân trang theo cùng một mẫu bảng nghiệp vụ.
-            </Text>
-          </div>
-          <UiButton
-            leftSection={section === "programs" ? <Plus size={16} /> : <GraduationCap size={16} />}
-            onClick={() =>
-              setFeedback(
-                section === "programs" ? "Đã tạo bản nháp chương trình mới." : "Đã tạo lớp ở trạng thái mở tuyển sinh.",
-              )
-            }
-          >
-            {section === "programs" ? "Tạo chương trình" : "Mở lớp mới"}
-          </UiButton>
-        </Group>
-        <PageToolbar className="toolbar">
-          <UiTextInput
-            aria-label="Tìm kiếm"
-            value={query}
-            onChange={(event) => setQuery(event.currentTarget.value)}
-            leftSection={<Search size={16} />}
-            placeholder={section === "programs" ? "Tìm ngành, mã, chương trình..." : "Tìm khóa học, lớp, giảng viên..."}
-          />
+      <PageHeader title={title} subtitle={subtitle} action={isPrograms ? "Tạo chương trình" : "Mở lớp mới"} />
+      <PageToolbar className="toolbar">
+        <UiTextInput
+          aria-label="Tìm kiếm"
+          value={query}
+          onChange={(event) => setQuery(event.currentTarget.value)}
+          style={{ minWidth: 260 }}
+          leftSection={<Search size={16} />}
+          placeholder={isPrograms ? "Tìm chương trình, mã, ngành..." : "Tìm lớp, khóa học, giảng viên..."}
+        />
+        <UiSelect
+          aria-label="Lọc trạng thái"
+          w={190}
+          value={status}
+          onChange={setStatus}
+          data={
+            isPrograms
+              ? [{ value: "all", label: "Tất cả trạng thái" }, "Đã công bố", "Bản nháp", "Đang rà soát"]
+              : [{ value: "all", label: "Tất cả trạng thái" }, "Mở tuyển sinh", "Sắp khai giảng", "Đủ chỗ", "Đang học"]
+          }
+        />
+        {!isPrograms ? (
           <UiSelect
-            aria-label="Lọc trạng thái"
-            value={status}
-            onChange={setStatus}
-            data={
-              section === "programs"
-                ? ["all", "Đã công bố", "Bản nháp"]
-                : ["all", "Mở tuyển sinh", "Sắp khai giảng", "Đủ chỗ"]
-            }
+            aria-label="Lọc chi nhánh"
+            w={180}
+            value={branch}
+            onChange={setBranch}
+            data={[{ value: "all", label: "Tất cả chi nhánh" }, "Cầu Giấy", "Hai Bà Trưng", "Online"]}
           />
-          {section === "classes" ? (
-            <>
-              <Select
-                aria-label="Lọc hình thức"
-                placeholder="Tất cả hình thức"
-                data={["Trực tiếp", "Trực tuyến", "Kết hợp"]}
-              />
-              <NumberInput aria-label="Sức chứa lớp mới" value={capacity} onChange={setCapacity} min={1} />
-            </>
-          ) : null}
-        </PageToolbar>
-        <Table.ScrollContainer minWidth={section === "programs" ? 760 : 1050}>
-          <UiTable verticalSpacing="md" horizontalSpacing="lg">
-            <Table.Thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <Table.Tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <Table.Th key={header.id}>
-                      <button
-                        className="tableSortButton"
-                        type="button"
-                        onClick={header.column.getToggleSortingHandler()}
-                      >
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        <SortIndicator direction={header.column.getIsSorted()} />
-                      </button>
-                    </Table.Th>
-                  ))}
-                </Table.Tr>
-              ))}
-            </Table.Thead>
-            <Table.Tbody>
-              {table.getRowModel().rows.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <Table.Tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <Table.Td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Td>
-                    ))}
-                  </Table.Tr>
-                ))
-              ) : (
-                <Table.Tr>
-                  <Table.Td colSpan={columns.length}>
-                    <Text c="dimmed" ta="center" py="xl">
-                      Không tìm thấy dữ liệu phù hợp.
-                    </Text>
-                  </Table.Td>
-                </Table.Tr>
-              )}
-            </Table.Tbody>
-          </UiTable>
-        </Table.ScrollContainer>
-        <Text size="xs" c="dimmed" mt="sm">
-          TanStack Table · {table.getRowModel().rows.length}/{data.length} bản ghi · tìm kiếm và sắp xếp theo cột
-        </Text>
-      </Card>
-      {section === "classes" ? (
-        <Alert mt="md" color="yellow" title="Kiểm tra xung đột lịch">
-          Lịch mới sẽ được kiểm tra trùng giảng viên, phòng học và buổi học trực tuyến trước khi xác nhận.
-        </Alert>
-      ) : null}
+        ) : null}
+      </PageToolbar>
+      <UiDataTable
+        table={table}
+        columnCount={columns.length}
+        minWidth={isPrograms ? 900 : 1050}
+        emptyTitle={isPrograms ? "Không tìm thấy chương trình phù hợp." : "Không tìm thấy lớp học phù hợp."}
+      />
+      <Text size="xs" c="dimmed" mt="sm">
+        TanStack Table · {table.getRowModel().rows.length}/{data.length} bản ghi · cùng chuẩn toolbar, bảng và trạng
+        thái với các trang quản trị khác
+      </Text>
     </div>
   );
 }

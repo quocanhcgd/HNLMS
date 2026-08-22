@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T03:43:58.209Z",
+  "updatedAt": "2026-08-22T06:31:45.147Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -12,7 +12,7 @@
     "percent": 0,
     "activity": "Hoàn thành toàn bộ Phase 7; sẵn sàng bắt đầu Phase 8",
     "startedAt": null,
-    "updatedAt": "2026-08-22T03:43:58.209Z"
+    "updatedAt": "2026-08-22T06:31:45.147Z"
   },
   "nextTask": {
     "id": "T064",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "3d34174",
-    "message": "fix(public): restore Vietnamese diacritics across landing content",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/3d34174"
+    "sha": "1d7dc83",
+    "message": "fix(ui): align academic navigation and TanStack tables",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/1d7dc83"
   },
   "ci": {
     "status": "unknown",

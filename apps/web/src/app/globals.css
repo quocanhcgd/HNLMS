@@ -29,6 +29,10 @@ a {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
+  transition: grid-template-columns 160ms ease;
+}
+.shellCollapsed {
+  grid-template-columns: 64px minmax(0, 1fr);
 }
 .sidebar {
   height: 100vh;
@@ -39,6 +43,12 @@ a {
   background: var(--app-shell);
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+.sidebarCollapsed {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .brand {
   height: 48px;
@@ -107,18 +117,30 @@ a {
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 16px;
+  flex-wrap: nowrap;
+  gap: 12px;
   padding: 0 28px;
   border-bottom: 1px solid var(--app-border);
   background: color-mix(in srgb, var(--mantine-color-body) 92%, transparent);
   backdrop-filter: blur(12px);
 }
-.searchBox {
-  flex: 1;
-  max-width: 520px;
+.topbarBreadcrumb {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--mantine-color-dimmed);
+  font-size: 13px;
+  font-weight: 600;
 }
+.topbarSearchInput {
+  width: min(360px, 36vw);
+}
+
 .topbarActions {
   margin-left: auto;
+  flex-shrink: 0;
 }
 .appFooter {
   margin-top: auto;
@@ -200,6 +222,9 @@ a {
 }
 .queueItem:last-child {
   border-bottom: 0;
+}
+.queueItem--schedule {
+  grid-template-columns: 52px 1fr;
 }
 .muted {
   color: var(--mantine-color-dimmed);
@@ -793,4 +818,39 @@ a {
 .swatch {
   color: #071014;
   font-weight: 650;
+}
+
+.tableRow--selected {
+  background: color-mix(in srgb, var(--hn-dark-primary) 12%, var(--app-panel));
+}
+.statusIcon--success {
+  color: var(--hn-dark-success);
+}
+.statusIcon--warning {
+  color: var(--hn-dark-warning);
+}
+
+.panelHighlight {
+  background: color-mix(in srgb, var(--hn-dark-primary) 16%, var(--app-panel));
+}
+
+.topbarNavToggle {
+  flex-shrink: 0;
+}
+@media (max-width: 700px) {
+  .topbarBreadcrumb {
+    display: none;
+  }
+}
+
+.tableWrap thead {
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+}
+.tableWrap thead th {
+  color: inherit;
+  border-bottom-color: color-mix(in srgb, var(--mantine-primary-color-filled) 70%, var(--app-border));
+}
+.tableWrap thead .tableSortButton {
+  color: inherit;
 }

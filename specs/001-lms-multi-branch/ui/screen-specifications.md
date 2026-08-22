@@ -1,5 +1,13 @@
 # Screen Specifications
 
+## Global authenticated shell
+
+Authenticated screens do not own shell-level controls. Breadcrumb is rendered once in the topbar from the active route. The sidebar toggle is placed at the left of the topbar and must actually resize the sidebar column. Search/locale/theme/notification/user actions are right-aligned; search opens an input only after clicking the search icon.
+
+## Global UI consistency rule
+
+Tất cả màn hình trong cùng product space phải dùng cùng một kiểu bố trí trang, cùng token màu và cùng component wrapper. Với dữ liệu dạng bảng/list nghiệp vụ, chuẩn duy nhất là TanStack Table 8.x thông qua shared data-table component; không để mỗi trang một kiểu bảng, toolbar, màu trạng thái, card/panel hoặc pagination khác nhau.
+
 ## Global list page
 
 Breadcrumb; page title + status/count; một primary action; search/filter/date/branch; column settings/export; data table; pagination. Filter, sort, page và tab nằm trên URL. Mobile đưa filter vào sheet và chỉ giữ search + primary action ở toolbar.

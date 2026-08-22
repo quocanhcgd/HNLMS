@@ -33,6 +33,8 @@ When documents conflict, stop and record the conflict in this file before coding
 - Next.js App Router only; no React Router.
 - TypeScript strict for web, API, worker and shared contracts.
 - Mantine for UI/theme; TanStack Table 8.x for data-table logic; `next-intl` for vi/en.
+- UI consistency is mandatory: authenticated data/list pages must use one shared TanStack Table 8.x data-table pattern, one page layout pattern and semantic color tokens; do not let each page invent its own table, toolbar, spacing or status colors.
+- Shell consistency is mandatory: authenticated breadcrumb belongs only in the topbar, sidebar collapse must resize the sidebar column, topbar search is icon-triggered, global topbar actions stay right-aligned, and table headers use the filled primary button color/contrast tokens.
 - PostgreSQL is transactional source of truth; Redis is cache/queue/short lock only.
 - Private object storage for all restricted media/files; signed URLs only after authorization.
 - Modular monolith API plus separate worker; no production Docker baseline.
@@ -81,6 +83,8 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Formalized authenticated shell/topbar rules after UI review: breadcrumb moved to topbar, page headers no longer duplicate breadcrumbs, sidebar collapse resizes to icon rail, topbar search opens on demand, utility actions stay right-aligned, and table headers follow primary button color.
+- 2026-08-22: Added UI consistency mandate: one TanStack Table pattern, one page layout language and shared semantic colors across pages; noted current UI drift risk around ad-hoc Mantine tables/cards/status colors.
 - 2026-08-20: Created UI prototype and component gallery.
 - 2026-08-20: Added TanStack Table 8.x to lead pipeline.
 - 2026-08-20: Restored corrupted data model/API contracts and added multimedia requirements T144-T160.
@@ -151,5 +155,3 @@ Before ending every task:
 - 2026-08-22: T054 added tenant-scoped duplicate detection, deterministic routing with branch fallback, consultant ownership/transfer and guarded lead lifecycle; 294 tests pass.
 - 2026-08-22: Fixed the API runtime by installing `@nestjs/platform-express`; Nest starts successfully on port `4100`, `/health` returns HTTP 200 with the expected payload, and CORS accepts the web origin `http://localhost:3100`. T055 remains the next task.
 - 2026-08-22: T055 added the consultant work queue and lead detail at `/admin/admission`, duplicate/assessment context, immutable consultation timeline, required future next actions, and guarded enrollment conversion preview with student/class/finance confirmation. Verification: 297 unit/contract tests, 2 focused T055 E2E, full typecheck/lint/format; the full 35-test Playwright pass had four cold parallel-load flakes and all four passed isolated reruns.
-
-

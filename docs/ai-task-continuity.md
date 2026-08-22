@@ -39,6 +39,6 @@ Standing authorization (2026-08-22): normal coherent task/status checkpoints may
 - Record conflicts between spec, plan, constitution and implementation before proceeding.
 - Keep secrets and private learner media out of this file and Git.
 
-
 - **Quy định ngôn ngữ bắt buộc**: mọi nội dung hiển thị cho người dùng Việt Nam trong mọi phase/task phải là tiếng Việt hoàn chỉnh, có dấu; khi review phải rà soát cả hard-coded text, fixture, metadata, empty/loading/error state và E2E assertion.
-
+- **Quy định đồng bộ UI bắt buộc**: mọi trang authenticated có dữ liệu dạng bảng/list phải dùng một pattern TanStack Table 8.x dùng chung, cùng page layout, toolbar, pagination, empty/loading/error state và semantic color tokens; không được để mỗi trang một kiểu bảng/bố cục/màu.
+- **Quy định shell/topbar bắt buộc**: breadcrumb chỉ render ở topbar theo route; PageHeader không lặp breadcrumb; nút đóng/mở sidebar nằm sát mép sidebar và phải resize cột sidebar; search topbar chỉ mở input khi bấm icon; các nút search/ngôn ngữ/theme/thông báo/user luôn căn phải; header bảng dùng màu filled primary button qua token.

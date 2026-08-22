@@ -1,28 +1,92 @@
 "use client";
-import { useState } from "react";
-import {
-  Badge,
-  Box,
-  Button,
-  Card,
-  Checkbox,
-  Divider,
-  Group,
-  SegmentedControl,
-  Stack,
-  Table,
-  Text,
-  Title,
-} from "@mantine/core";
+import { useMemo, useState } from "react";
+import { type ColumnDef, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { Box, Button, Card, Checkbox, Divider, Group, SegmentedControl, Stack, Text, Title } from "@mantine/core";
 import { ArrowRight, LockKeyhole, Plus, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { UiButton } from "@/components/ui";
+import { UiBadge, UiButton, UiDataTable, UiStatusBadge, type UiStatusRole } from "@/components/ui";
 import { accessNavigation, accessPermissionGroups, accessUsers, type AccessSection } from "./access-data";
+
+type ScopeGrantRow = {
+  userName: string;
+  userEmail?: string;
+  scopeType: string;
+  target: string;
+  status: string;
+  role: UiStatusRole;
+};
 
 export function AccessWorkspace() {
   const [section, setSection] = useState<AccessSection>("roles");
   const [selectedUser, setSelectedUser] = useState<string>(accessUsers[0].id);
   const user = accessUsers.find((item) => item.id === selectedUser) ?? accessUsers[0];
+  const grantRows = useMemo<ScopeGrantRow[]>(
+    () => [
+      {
+        userName: user.name,
+        userEmail: user.email,
+        scopeType: "Chi nhánh",
+        target: "Cơ sở Cầu Giấy",
+        status: "Đang hiệu lực",
+        role: "success",
+      },
+      {
+        userName: "Trần Hoàng Nam",
+        scopeType: "Lớp",
+        target: "IELTS Foundation A1",
+        status: "Có thời hạn",
+        role: "warning",
+      },
+    ],
+    [user.email, user.name],
+  );
+  const grantColumns = useMemo<ColumnDef<ScopeGrantRow>[]>(
+    () => [
+      {
+        accessorKey: "userName",
+        header: "Người dùng",
+        cell: ({ row }) => (
+          <div>
+            <Text fw={600} size="sm">
+              {row.original.userName}
+            </Text>
+            {row.original.userEmail ? (
+              <Text size="xs" c="dimmed">
+                {row.original.userEmail}
+              </Text>
+            ) : null}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "scopeType",
+        header: "Loại phạm vi",
+        cell: ({ getValue }) => <UiBadge variant="light">{String(getValue())}</UiBadge>,
+      },
+      { accessorKey: "target", header: "Đối tượng" },
+      {
+        accessorKey: "status",
+        header: "Hiệu lực",
+        cell: ({ row }) => (
+          <UiStatusBadge role={row.original.role} variant="dot">
+            {row.original.status}
+          </UiStatusBadge>
+        ),
+      },
+      {
+        id: "actions",
+        header: "",
+        cell: () => (
+          <Button variant="subtle" size="xs" rightSection={<ArrowRight size={14} />}>
+            Chi tiết
+          </Button>
+        ),
+        enableSorting: false,
+      },
+    ],
+    [],
+  );
+  const grantsTable = useReactTable({ data: grantRows, columns: grantColumns, getCoreRowModel: getCoreRowModel() });
   return (
     <div className="page">
       <PageHeader
@@ -55,7 +119,6 @@ export function AccessWorkspace() {
                   <Button
                     key={item.id}
                     variant={selectedUser === item.id ? "light" : "subtle"}
-                    color={selectedUser === item.id ? "cyan" : "gray"}
                     justify="space-between"
                     fullWidth
                     h="auto"
@@ -70,7 +133,7 @@ export function AccessWorkspace() {
                         {item.email}
                       </Text>
                     </Box>
-                    <Badge variant="light">{item.role}</Badge>
+                    <UiBadge variant="light">{item.role}</UiBadge>
                   </Button>
                 ))}
               </Stack>
@@ -89,9 +152,9 @@ export function AccessWorkspace() {
                 Vai trò hiện tại
               </Text>
               <Group mb="lg">
-                <Badge color="cyan" size="lg">
+                <UiStatusBadge role="primary" size="lg">
                   {user.role}
-                </Badge>
+                </UiStatusBadge>
                 <Text size="sm" c="dimmed">
                   {user.scope}
                 </Text>
@@ -127,66 +190,7 @@ export function AccessWorkspace() {
               </div>
               <UiButton leftSection={<Plus size={15} />}>Thêm phạm vi</UiButton>
             </Group>
-            <Table.ScrollContainer minWidth={700}>
-              <Table verticalSpacing="md">
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Người dùng</Table.Th>
-                    <Table.Th>Loại phạm vi</Table.Th>
-                    <Table.Th>Đối tượng</Table.Th>
-                    <Table.Th>Hiệu lực</Table.Th>
-                    <Table.Th />
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Text fw={600} size="sm">
-                        {user.name}
-                      </Text>
-                      <Text size="xs" c="dimmed">
-                        {user.email}
-                      </Text>
-                    </Table.Td>
-                    <Table.Td>
-                      <Badge variant="light">Chi nhánh</Badge>
-                    </Table.Td>
-                    <Table.Td>Cơ sở Cầu Giấy</Table.Td>
-                    <Table.Td>
-                      <Badge color="teal" variant="dot">
-                        Đang hiệu lực
-                      </Badge>
-                    </Table.Td>
-                    <Table.Td>
-                      <Button variant="subtle" size="xs" rightSection={<ArrowRight size={14} />}>
-                        Chi tiết
-                      </Button>
-                    </Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Text fw={600} size="sm">
-                        Trần Hoàng Nam
-                      </Text>
-                    </Table.Td>
-                    <Table.Td>
-                      <Badge variant="light">Lớp</Badge>
-                    </Table.Td>
-                    <Table.Td>IELTS Foundation A1</Table.Td>
-                    <Table.Td>
-                      <Badge color="yellow" variant="dot">
-                        Có thời hạn
-                      </Badge>
-                    </Table.Td>
-                    <Table.Td>
-                      <Button variant="subtle" size="xs" rightSection={<ArrowRight size={14} />}>
-                        Chi tiết
-                      </Button>
-                    </Table.Td>
-                  </Table.Tr>
-                </Table.Tbody>
-              </Table>
-            </Table.ScrollContainer>
+            <UiDataTable table={grantsTable} columnCount={grantColumns.length} minWidth={700} />
             <Group mt="lg" gap="xs">
               <LockKeyhole size={16} />
               <Text size="xs" c="dimmed">

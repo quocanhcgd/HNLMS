@@ -33,22 +33,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const { t, locale, setLocale } = useUI();
   const { setColorScheme } = useMantineColorScheme();
   const [collapsed, setCollapsed] = useState(false);
+  const [searchOpened, setSearchOpened] = useState(false);
   const [mobileOpened, { open: openMobile, close: closeMobile }] = useDisclosure(false);
-  const navigation = <Navigation pathname={pathname} t={t} />;
+  const navigationItems = filterNavigation(lmsNavigation, mockNavigationContext);
+  const navigation = <Navigation pathname={pathname} t={t} items={navigationItems} />;
+  const breadcrumb = getBreadcrumb(pathname, navigationItems, t);
+  const toggleNavigation = () => {
+    if (window.matchMedia("(max-width: 700px)").matches) {
+      openMobile();
+      return;
+    }
+    setCollapsed((value) => !value);
+  };
   return (
-    <div className="shell">
+    <div className={`shell ${collapsed ? "shellCollapsed" : ""}`}>
       <aside className={`sidebar ${collapsed ? "sidebarCollapsed" : ""}`}>
         <div className="brand">
           <div className="brandMark">HN</div>
           <span>HN LMS</span>
-          <ActionIcon
-            className="sidebarCollapse"
-            variant="subtle"
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            onClick={() => setCollapsed((value) => !value)}
-          >
-            <ChevronDown size={16} />
-          </ActionIcon>
         </div>
         <Menu position="bottom-start">
           <Menu.Target>
@@ -85,15 +87,40 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
       <main className="main">
-        <ActionIcon className="mobileNavTrigger" variant="subtle" aria-label="Open LMS navigation" onClick={openMobile}>
-          <ChevronDown size={18} />
-        </ActionIcon>
         <Drawer opened={mobileOpened} onClose={closeMobile} title="HN LMS" position="left" size="min(88vw, 320px)">
           {navigation}
         </Drawer>
         <header className="topbar">
-          <UiTextInput className="searchBox" leftSection={<Search size={16} />} placeholder={t("search")} />
+          <ActionIcon
+            className="topbarNavToggle"
+            variant="subtle"
+            aria-label={collapsed ? "Mở rộng sidebar" : "Thu gọn sidebar"}
+            onClick={toggleNavigation}
+          >
+            <ChevronDown size={18} />
+          </ActionIcon>
+          <div className="topbarBreadcrumb" aria-label="Breadcrumb">
+            {breadcrumb}
+          </div>
           <Group className="topbarActions" gap={6} wrap="nowrap">
+            {searchOpened ? (
+              <UiTextInput
+                className="topbarSearchInput"
+                leftSection={<Search size={16} />}
+                placeholder={t("search")}
+                autoFocus
+              />
+            ) : null}
+            <Tooltip label="Tìm kiếm">
+              <ActionIcon
+                variant={searchOpened ? "filled" : "subtle"}
+                size="lg"
+                onClick={() => setSearchOpened((value) => !value)}
+                aria-label={searchOpened ? "Đóng tìm kiếm" : "Mở tìm kiếm"}
+              >
+                <Search size={19} />
+              </ActionIcon>
+            </Tooltip>
             <Tooltip label={locale === "vi" ? "Chuyển sang English" : "Switch to Vietnamese"}>
               <ActionIcon
                 variant="subtle"
@@ -181,8 +208,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Navigation({ pathname, t }: { pathname: string; t: (key: MessageKey) => string }) {
-  const items: NavigationManifest[] = filterNavigation(lmsNavigation, mockNavigationContext);
+function Navigation({
+  pathname,
+  t,
+  items,
+}: {
+  pathname: string;
+  t: (key: MessageKey) => string;
+  items: NavigationManifest[];
+}) {
   return (
     <nav className="lmsNavigation" aria-label="LMS navigation">
       {items.map((item) => {
@@ -218,11 +252,21 @@ function Navigation({ pathname, t }: { pathname: string; t: (key: MessageKey) =>
   );
 }
 
+function getBreadcrumb(pathname: string, items: NavigationManifest[], t: (key: MessageKey) => string) {
+  for (const item of items) {
+    if (item.children?.length) {
+      const activeChild = item.children.find((child) => isNavigationActive(pathname, child));
+      if (activeChild) return `HN LMS / ${t(item.labelKey as MessageKey)} / ${t(activeChild.labelKey as MessageKey)}`;
+    }
+    if (isNavigationActive(pathname, item)) return `HN LMS / ${t(item.labelKey as MessageKey)}`;
+  }
+  return "HN LMS";
+}
+
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle: string; action?: string }) {
   return (
     <div className="pageHeader">
       <div>
-        <div className="eyebrow">HN LMS / {title}</div>
         <Text fz={26} fw={700}>
           {title}
         </Text>

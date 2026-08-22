@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Badge, Card, Divider, Group, SimpleGrid, Stack, Switch, Text, ThemeIcon } from "@mantine/core";
+import { Card, Divider, Group, SimpleGrid, Stack, Switch, Text } from "@mantine/core";
 import { Check, LockKeyhole, Power, TriangleAlert } from "lucide-react";
+import { UiBadge, UiStatusBadge, UiStatusIcon, type UiStatusRole } from "@/components/ui";
 import {
   defaultOrganizationModuleContext,
   getModuleReason,
@@ -11,13 +12,13 @@ import {
   setConfiguredModule,
 } from "./module-state";
 
-const statusColor = {
-  enabled: "teal",
-  disabled_by_configuration: "yellow",
-  missing_entitlement: "red",
-  dependency_not_effective: "orange",
-  module_not_installed: "gray",
-} as const;
+const statusRole: Record<string, UiStatusRole> = {
+  enabled: "success",
+  disabled_by_configuration: "warning",
+  missing_entitlement: "danger",
+  dependency_not_effective: "warning",
+  module_not_installed: "neutral",
+};
 
 export function OrganizationModuleManager() {
   const [context, setContext] = useState(defaultOrganizationModuleContext);
@@ -26,12 +27,12 @@ export function OrganizationModuleManager() {
 
   return (
     <Stack gap="xl">
-      <Card withBorder radius="lg" padding="lg" style={{ background: "var(--mantine-color-body)" }}>
+      <Card withBorder radius="lg" padding="lg" className="panel">
         <Group justify="space-between" align="flex-start" wrap="nowrap">
           <Group align="flex-start" wrap="nowrap">
-            <ThemeIcon size={46} radius="md" variant="light" color="cyan">
+            <UiStatusIcon role="primary" size={46} radius="md">
               <Power size={22} />
-            </ThemeIcon>
+            </UiStatusIcon>
             <div>
               <Text fw={700} size="lg">
                 Organization modules
@@ -42,9 +43,7 @@ export function OrganizationModuleManager() {
               </Text>
             </div>
           </Group>
-          <Badge variant="light" color="cyan">
-            Organization scope
-          </Badge>
+          <UiStatusBadge role="primary">Organization scope</UiStatusBadge>
         </Group>
       </Card>
 
@@ -69,7 +68,7 @@ export function OrganizationModuleManager() {
               .map((module) => {
                 const state = stateByKey.get(module.key)!;
                 const isCore = module.core === true;
-                const color = statusColor[state.reason];
+                const role = statusRole[state.reason] ?? "neutral";
                 return (
                   <Card key={module.key} withBorder radius="lg" padding="lg" component="article">
                     <Stack gap="md">
@@ -78,9 +77,9 @@ export function OrganizationModuleManager() {
                           <Group gap="xs">
                             <Text fw={650}>{module.name}</Text>
                             {isCore && (
-                              <Badge size="xs" variant="light" color="gray">
+                              <UiBadge size="xs" variant="light" color="gray">
                                 Core
-                              </Badge>
+                              </UiBadge>
                             )}
                           </Group>
                           <Text c="dimmed" size="sm" mt={5}>
@@ -105,34 +104,40 @@ export function OrganizationModuleManager() {
                       <Group gap="xs" justify="space-between" align="center">
                         <Group gap="xs">
                           {state.effectiveEnabled ? (
-                            <Check size={16} color="var(--mantine-color-teal-6)" />
+                            <Check size={16} className="statusIcon statusIcon--success" />
                           ) : (
-                            <TriangleAlert size={16} color="var(--mantine-color-orange-6)" />
+                            <TriangleAlert size={16} className="statusIcon statusIcon--warning" />
                           )}
                           <Text size="sm" fw={600}>
                             {state.effectiveEnabled ? "Effective" : "Not effective"}
                           </Text>
                         </Group>
-                        <Badge color={color} variant="light">
-                          {state.reason.replaceAll("_", " ")}
-                        </Badge>
+                        <UiStatusBadge role={role}>{state.reason.replaceAll("_", " ")}</UiStatusBadge>
                       </Group>
                       <Text size="xs" c="dimmed">
                         {getModuleReason(state)}
                       </Text>
                       <Group gap="xs">
-                        <Badge size="xs" variant="outline" color={state.installed ? "teal" : "gray"}>
+                        <UiStatusBadge size="xs" variant="outline" role={state.installed ? "success" : "neutral"}>
                           Installed
-                        </Badge>
-                        <Badge size="xs" variant="outline" color={state.configuredEnabled ? "teal" : "gray"}>
+                        </UiStatusBadge>
+                        <UiStatusBadge
+                          size="xs"
+                          variant="outline"
+                          role={state.configuredEnabled ? "success" : "neutral"}
+                        >
                           Configured
-                        </Badge>
-                        <Badge size="xs" variant="outline" color={state.licensedEnabled ? "teal" : "gray"}>
+                        </UiStatusBadge>
+                        <UiStatusBadge size="xs" variant="outline" role={state.licensedEnabled ? "success" : "neutral"}>
                           Entitled
-                        </Badge>
-                        <Badge size="xs" variant="outline" color={state.dependencySatisfied ? "teal" : "gray"}>
+                        </UiStatusBadge>
+                        <UiStatusBadge
+                          size="xs"
+                          variant="outline"
+                          role={state.dependencySatisfied ? "success" : "neutral"}
+                        >
                           Dependencies
-                        </Badge>
+                        </UiStatusBadge>
                       </Group>
                     </Stack>
                   </Card>
