@@ -218,6 +218,14 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     roles: ["teacher"],
   },
   {
+    key: "teacherAssessment",
+    labelKey: "teacherAssessment",
+    href: "/teacher/assessment",
+    icon: ClipboardList,
+    moduleKey: "assessment",
+    roles: ["teacher"],
+  },
+  {
     key: "teacherMessages",
     labelKey: "teacherMessages",
     href: "/teacher/messages",
@@ -250,6 +258,14 @@ export const studentNavigation: readonly NavigationManifest[] = [
     href: "/student/library",
     icon: ClipboardList,
     moduleKey: "learning",
+    roles: ["student"],
+  },
+  {
+    key: "studentAssessment",
+    labelKey: "studentAssessment",
+    href: "/student/assessment",
+    icon: ClipboardList,
+    moduleKey: "assessment",
     roles: ["student"],
   },
   {
@@ -322,6 +338,7 @@ export const mockNavigationContext: NavigationContext = {
     "marketing",
     "academic",
     "learning",
+    "assessment",
     "communication",
     "finance",
     "payroll",

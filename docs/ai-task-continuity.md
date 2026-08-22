@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: T083 Phase 11 / US8 timed assessment attempt service.
-- **Status**: Completed locally: added timed attempt state machine, start idempotency, autosave, submit idempotency and timeout auto-submit handling with in-memory repository and focused tests.
-- **Next task**: T084 Phase 11 / US8 assessment engine UI and result/recommendation UI under `/student/assessment` and `/teacher/assessment`, respecting workspace separation.
+- **Current task**: T084 Phase 11 / US8 assessment UI.
+- **Status**: Completed locally: added `/student/assessment` assessment engine/results UI and `/teacher/assessment` grading/recommendation UI using shared PageHeader/PageToolbar/UiDataTable pattern; navigation/i18n updated for teacher/student workspaces.
+- **Next task**: T085 Phase 11 / US8 assessment contract, duplicate/retry and E2E tests.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/assessment-english/assessment-attempt.service.ts`, `apps/api/src/modules/assessment-english/in-memory-assessment-attempt-repository.ts`, `apps/api/src/modules/assessment-english/assessment-attempt.service.test.ts`.
-- **Verification**: API typecheck passed; all assessment module tests passed. Full Vitest should be run before commit/push.
+- **Files in focus**: `apps/web/src/app/student/assessment/`, `apps/web/src/app/teacher/assessment/`, `apps/web/src/lib/navigation/manifests.ts`, `apps/web/src/lib/i18n/messages.ts`.
+- **Verification**: Web typecheck passed; focused navigation/workspace/page composition tests passed; local routes `/student/assessment` and `/teacher/assessment` return 200. Full Vitest should be run before commit/push.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 
