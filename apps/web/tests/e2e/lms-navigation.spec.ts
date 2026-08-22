@@ -10,7 +10,7 @@ test("LMS navigation shows grouped active submenu", async ({ page }) => {
 test("LMS mobile navigation opens in a drawer", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/admin");
-  await page.getByRole("button", { name: "Open LMS navigation" }).click();
+  await page.getByRole("button", { name: "Đóng/mở sidebar" }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await expect(page.getByRole("navigation", { name: "LMS navigation" })).toBeVisible();
 });

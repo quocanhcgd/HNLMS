@@ -98,8 +98,14 @@ export const lmsNavigation: readonly NavigationManifest[] = [
     moduleKey: "learning",
     children: [
       {
-        key: "library",
-        labelKey: "learning",
+        key: "teacherContent",
+        labelKey: "teacherContent",
+        href: "/admin/teacher/content",
+        roles: ["organization_admin", "teacher"],
+      },
+      {
+        key: "studentLibrary",
+        labelKey: "studentLibrary",
         href: "/admin/student/library",
         roles: ["organization_admin", "teacher", "student", "parent"],
       },

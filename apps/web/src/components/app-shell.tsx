@@ -94,7 +94,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <ActionIcon
             className="topbarNavToggle"
             variant="subtle"
-            aria-label={collapsed ? "Mở rộng sidebar" : "Thu gọn sidebar"}
+            aria-label="Đóng/mở sidebar"
             onClick={toggleNavigation}
           >
             <ChevronDown size={18} />
