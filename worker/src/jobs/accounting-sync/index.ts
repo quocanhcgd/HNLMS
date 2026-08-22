@@ -1,0 +1,2 @@
+export type AccountingSyncJob={organizationId:string;entityType:"invoice"|"payment"|"refund";entityId:string;idempotencyKey:string;payload:Record<string,unknown>};
+export class AccountingSyncWorker{private readonly synced=new Set<string>();async process(job:AccountingSyncJob){if(this.synced.has(job.idempotencyKey))return {duplicate:true,idempotencyKey:job.idempotencyKey};this.synced.add(job.idempotencyKey);return {duplicate:false,idempotencyKey:job.idempotencyKey,syncedAt:new Date()}}}

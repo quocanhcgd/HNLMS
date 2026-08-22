@@ -96,3 +96,14 @@ function normalizeEventType(value: string): MeetingWebhookEvent["eventType"] {
   }
   return "unknown";
 }
+
+
+export type PaymentProviderKind = "test" | "stripe" | "vnpay" | "momo" | "custom";
+export type PaymentCreateInput = { invoiceId: string; amount: number; currency: string; idempotencyKey: string; returnUrl?: string };
+export type PaymentCreateResult = { provider: PaymentProviderKind; providerTransactionId: string; checkoutUrl: string };
+export class DeterministicPaymentProviderAdapter {
+  constructor(public readonly provider: PaymentProviderKind = "test") {}
+  async createPayment(input: PaymentCreateInput): Promise<PaymentCreateResult> {
+    return { provider: this.provider, providerTransactionId: `tx-${input.idempotencyKey}`, checkoutUrl: `/payment/${input.invoiceId}/${input.idempotencyKey}` };
+  }
+}

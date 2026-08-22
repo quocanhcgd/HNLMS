@@ -201,12 +201,12 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Tạo invoice, xác nhận webhook lặp, cập nhật công nợ một lần và đồng bộ ERP không trùng.
 
-- [ ] T095 [P] [US11] Tạo invoice, payment transaction, refund và accounting sync migrations/entities trong `apps/api/src/modules/billing-payment/`
-- [ ] T096 [US11] Implement invoice, discount, receivable, refund và receipt services trong `apps/api/src/modules/billing-payment/`
-- [ ] T097 [US11] Implement payment provider adapter, signed webhook, idempotency và reconciliation trong `packages/integration-adapters/` và `apps/api/src/modules/integrations/payment/`
-- [ ] T098 [US11] Implement accounting/ERP outbox worker, retry, duplicate prevention và reconcile trong `worker/src/jobs/accounting-sync/`
-- [ ] T099 [US11] Implement finance portal, invoice view, payment flow và receipt UI trong `apps/web/src/app/admin/finance/`, `apps/web/src/app/student/billing/` và `apps/web/src/app/parent/payments/`
-- [ ] T100 [US11] Add payment/ERP contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us11-finance.contract.spec.ts` và `apps/web/tests/e2e/us11-payment.spec.ts`
+- [x] T095 [P] [US11] Tạo invoice, payment transaction, refund và accounting sync migrations/entities trong `apps/api/src/modules/billing-payment/`
+- [x] T096 [US11] Implement invoice, discount, receivable, refund và receipt services trong `apps/api/src/modules/billing-payment/`
+- [x] T097 [US11] Implement payment provider adapter, signed webhook, idempotency và reconciliation trong `packages/integration-adapters/` và `apps/api/src/modules/integrations/payment/`
+- [x] T098 [US11] Implement accounting/ERP outbox worker, retry, duplicate prevention và reconcile trong `worker/src/jobs/accounting-sync/`
+- [x] T099 [US11] Implement finance portal, invoice view, payment flow và receipt UI trong `apps/web/src/app/admin/finance/`, `apps/web/src/app/student/billing/` và `apps/web/src/app/parent/payments/`
+- [x] T100 [US11] Add payment/ERP contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us11-finance.contract.spec.ts` và `apps/web/tests/e2e/us11-payment.spec.ts`
 
 ## Phase 15: User Story 12 - Nhân sự và quản lý giáo viên (P1)
 

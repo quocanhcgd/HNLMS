@@ -8,3 +8,4 @@ export * from "./academic-learning";
 export * from "./communication";
 
 export * from "./online-class";
+export * from "./billing-payment";

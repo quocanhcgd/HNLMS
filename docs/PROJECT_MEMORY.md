@@ -12,8 +12,8 @@
 - Ngôn ngữ sản phẩm: mọi UI/content hướng tới người dùng Việt Nam phải dùng tiếng Việt hoàn chỉnh, có đầy đủ dấu và ngữ pháp tự nhiên trong mọi phase; chỉ giữ nguyên thương hiệu, tên riêng, thuật ngữ quốc tế và mã kỹ thuật.
 - API and worker skeletons now exist with TypeScript strict and API `/health`; the Nest Express runtime adapter is installed and the API smoke test passes on port `4100`; Drizzle/PostgreSQL database foundation and migration generation now exist; runtime PostgreSQL still required for migration execution.
 - Root quality tooling exists: ESLint 9, Prettier, Vitest 3 and Playwright 1.58; web/API/worker typecheck, lint, format check, unit smoke test and Chromium E2E pass.
-- Tasks: `T001` to `T175`; T001-T094 are complete; T095 is the next open task.
-- Current baseline: Phase 13 / US10 is complete; T095 Phase 14 billing/invoice/payment foundation is next.
+- Tasks: `T001` to `T175`; T001-T100 are complete; T101 is the next open task.
+- Current baseline: Phase 14 / US11 is complete; T101 Phase 15 HRM/teacher foundation is next.
 
 ## Source Of Truth Order
 
@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed Phase 14 / US11 T095-T100 by adding billing invoice/payment/refund/accounting schema, payment service/webhook/idempotency, accounting sync worker, admin/student/parent finance UI, contract/E2E coverage; all typechecks, payment E2E and full 365-test Vitest pass.
 - 2026-08-22: Completed T094 and closed Phase 13 / US10 by adding signed-webhook-to-sync integration coverage and teacher/student/parent online class Playwright E2E; API/worker/web typechecks and full 363-test Vitest pass.
 - 2026-08-22: Completed T093 by adding teacher/student/parent online session UIs with shared PageHeader/PageToolbar/UiDataTable, navigation and i18n updates; web typecheck passes and routes return HTTP 200.
 - 2026-08-22: Completed T092 by adding meeting sync worker for session lifecycle reconciliation, attendance sync, unmatched participant warnings and recording permission links; worker typecheck and focused tests pass.
