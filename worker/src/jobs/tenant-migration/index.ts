@@ -1,0 +1,1 @@
+export type TenantMigrationJob={organizationId:string;source:string;target:string;checksum:string;};export class TenantMigrationWorker{async run(job:TenantMigrationJob){return {organizationId:job.organizationId,status:"validated",checksum:job.checksum,source:job.source,target:job.target,finishedAt:new Date()}}}

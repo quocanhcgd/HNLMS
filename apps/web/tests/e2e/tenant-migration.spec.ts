@@ -1,0 +1,1 @@
+import {expect,test} from "@playwright/test";test("Phase20 tenant migration UI",async({page})=>{await page.goto("/platform/tenants/migrations");await expect(page.getByText("Tenant migration",{exact:true})).toBeVisible();await expect(page.getByText("Preflight ready",{exact:true})).toBeVisible();await expect(page.getByRole("button",{name:"Bắt đầu cutover"})).toBeVisible()});

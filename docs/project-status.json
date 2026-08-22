@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-22T14:07:30.638Z",
+  "updatedAt": "2026-08-22T14:25:16.837Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T130",
-    "title": "Add license signature, quota, expiry, grace, revoke, dependency and selective-disable tests trong apps/api/tests/integration/license-lifecycle.spec.ts",
-    "phase": "Phase 19: Commercial Module and License Lifecycle",
+    "id": "T136",
+    "title": "Add tenant isolation, migration, downtime, rollback and no-cross-tenant-impact E2E tests trong apps/api/tests/integration/tenant-migration.spec.ts và apps/web/tests/e2e/tenant-migration.spec.ts",
+    "phase": "Phase 20: Tenant Database Isolation and Migration",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành toàn bộ Phase 19: commercial license lifecycle, guards, platform UI và tests",
+    "activity": "Hoàn thành toàn bộ Phase 20: tenant registry, migration, isolation, cutover và tests",
     "startedAt": null,
-    "updatedAt": "2026-08-22T14:07:30.638Z"
+    "updatedAt": "2026-08-22T14:25:16.837Z"
   },
   "nextTask": {
     "id": "T094",
@@ -20,9 +20,9 @@
     "percent": 0
   },
   "overall": {
-    "done": 123,
+    "done": 129,
     "total": 175,
-    "percent": 70.3
+    "percent": 73.7
   },
   "phases": [
     {
@@ -141,9 +141,9 @@
     },
     {
       "name": "Phase 20: Tenant Database Isolation and Migration",
-      "done": 0,
+      "done": 6,
       "total": 6,
-      "percent": 0
+      "percent": 100
     },
     {
       "name": "Phase 21: Polish & Cross-Cutting Concerns",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "eaa519e",
-    "message": "chore(worker): export reporting job",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/eaa519e"
+    "sha": "b967ea6",
+    "message": "test: add commercial license e2e",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/b967ea6"
   },
   "ci": {
     "status": "unknown",

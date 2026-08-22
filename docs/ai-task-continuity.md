@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Phase 19 / Commercial Module and License Lifecycle.
-- **Status**: Completed locally through T130: commercial plan/entitlement/license schema, lifecycle evaluation, dependency/quota guards, platform license/tenant UI and license lifecycle integration/E2E tests.
-- **Next task**: T131 Phase 20 / Tenant database registry and migration foundation.
+- **Current task**: Phase 20 / Tenant Database Isolation and Migration.
+- **Status**: Completed locally through T136: tenant registry/provisioning/migration state schema, quota/isolation service, SaaS-to-dedicated preflight/cutover, migration worker and platform migration UI/tests.
+- **Next task**: T137 Phase 21 / Polish and cross-cutting release gates.
 - **Blocker**: None.
-- **Files in focus**: `apps/api/src/modules/super-admin-license/`, `apps/api/src/modules/module-registry/license-module-guard.ts`, `apps/api/src/modules/super-admin-license/commercial.service.ts`, `apps/web/src/app/(platform)/platform/license/`, `apps/web/src/app/(platform)/platform/tenants/`, `apps/api/tests/integration/license-lifecycle.spec.ts`.
-- **Verification**: API/worker/web typechecks passed; license lifecycle integration passed 2/2; platform E2E passed 1/1; full Vitest passed 89 files/373 tests.
+- **Files in focus**: `apps/api/src/modules/tenant-platform/`, `worker/src/jobs/tenant-migration/`, `apps/web/src/app/(platform)/platform/tenants/migrations/`, `apps/api/tests/integration/tenant-migration.spec.ts`, `apps/web/tests/e2e/tenant-migration.spec.ts`.
+- **Verification**: API/worker/web typechecks passed; tenant integration passed 1/1; migration E2E passed 1/1; full Vitest passed 90 files/374 tests.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

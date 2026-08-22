@@ -275,12 +275,12 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Purpose**: SaaS database riêng từng tenant, dedicated instance, provisioning, backup, one-way migration và scheduled downtime.
 
-- [ ] T131 [P] Tạo tenant database registry, provisioning state, migration state và scheduled downtime entities trong `apps/api/src/modules/tenant-platform/`
-- [ ] T132 Implement tenant database provisioner, per-tenant migration runner, backup/restore metadata và quota isolation trong `apps/api/src/modules/tenant-platform/`
-- [ ] T133 Implement one-way SaaS-to-dedicated migration preflight, final sync, checksum/data validation và license activation trong `apps/api/src/modules/tenant-platform/`
-- [ ] T134 Implement scheduled maintenance/read-only mode, notice delivery, cutover, rollback và tenant B isolation trong `apps/api/src/modules/tenant-platform/` và `worker/src/jobs/tenant-migration/`
-- [ ] T135 Implement super-admin migration API/UI và deployment-state view trong `apps/api/src/modules/tenant-platform/` và `apps/web/src/app/(platform)/platform/tenants/migrations/`
-- [ ] T136 Add tenant isolation, migration, downtime, rollback and no-cross-tenant-impact E2E tests trong `apps/api/tests/integration/tenant-migration.spec.ts` và `apps/web/tests/e2e/tenant-migration.spec.ts`
+- [x] T131 [P] Tạo tenant database registry, provisioning state, migration state và scheduled downtime entities trong `apps/api/src/modules/tenant-platform/`
+- [x] T132 Implement tenant database provisioner, per-tenant migration runner, backup/restore metadata và quota isolation trong `apps/api/src/modules/tenant-platform/`
+- [x] T133 Implement one-way SaaS-to-dedicated migration preflight, final sync, checksum/data validation và license activation trong `apps/api/src/modules/tenant-platform/`
+- [x] T134 Implement scheduled maintenance/read-only mode, notice delivery, cutover, rollback và tenant B isolation trong `apps/api/src/modules/tenant-platform/` và `worker/src/jobs/tenant-migration/`
+- [x] T135 Implement super-admin migration API/UI và deployment-state view trong `apps/api/src/modules/tenant-platform/` và `apps/web/src/app/(platform)/platform/tenants/migrations/`
+- [x] T136 Add tenant isolation, migration, downtime, rollback and no-cross-tenant-impact E2E tests trong `apps/api/tests/integration/tenant-migration.spec.ts` và `apps/web/tests/e2e/tenant-migration.spec.ts`
 
 ## Phase 21: Polish & Cross-Cutting Concerns
 

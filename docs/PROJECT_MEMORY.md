@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-22: Completed Phase 20 T131-T136 by adding tenant registry/provisioning/migration schema, isolation/quota service, SaaS-to-dedicated preflight/cutover, migration worker, platform migration UI and tenant isolation/E2E tests; all typechecks and full 374-test Vitest pass.
 - 2026-08-22: Completed Phase 19 T125-T130 by adding commercial license schema/migration, license lifecycle evaluation, dependency/quota guards, platform license/tenant UI and signature/quota/expiry/dependency integration/E2E tests; all typechecks and full 373-test Vitest pass.
 - 2026-08-22: Completed Phase 18 / US15 T120-T124 by adding reporting scope/export services, executive dashboard UI, freshness metadata and reporting scope/E2E tests; all typechecks and full 371-test Vitest pass.
 - 2026-08-22: Completed Phase 17 / US14 T114-T119 by adding AI governance schema, scoped/minimized AI Gateway, provider/manual fallback, AI task worker, AI review UI and authorization/E2E tests; all typechecks and full 369-test Vitest pass.
