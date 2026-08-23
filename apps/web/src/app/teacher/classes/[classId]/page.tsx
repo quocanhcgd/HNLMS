@@ -3,8 +3,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable, type ColumnDef, type SortingState } from "@tanstack/react-table";
-import { Group, Paper, SimpleGrid, Stack, Text, Textarea } from "@mantine/core";
-import { CalendarClock, ClipboardCheck, Edit3, FileCheck2, FileText, MessageCircle, Search, UsersRound } from "lucide-react";
+import { Group, Paper, SimpleGrid, Stack, Text, Textarea, ThemeIcon } from "@mantine/core";
+import { AlertTriangle, CalendarClock, CheckCircle2, ClipboardCheck, Edit3, FileCheck2, FileText, MessageCircle, Search, UsersRound } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { UiButton, UiDataTable, UiModal, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
 
@@ -23,6 +23,7 @@ const tabs = [
 
 function ClassDetailTabContent({ activeKey, summary }: { activeKey: string; summary: string }) {
   if (activeKey === "schedule") return <ScheduleTab />;
+  if (activeKey === "overview") return <OverviewTab />;
   return (
     <>
       <Group justify="space-between" mb="md"><div><Text fw={700}>{summary.split(".")[0]}</Text><Text size="sm" c="dimmed">{summary}</Text></div><UiButton variant="default">Làm mới dữ liệu</UiButton></Group>
@@ -41,6 +42,21 @@ export default function TeacherClassDetailPage() {
     <nav className="classDetailTabs" aria-label="Các chức năng của lớp học">{tabs.map((tab) => { const Icon = tab.icon; return <Link key={tab.key} href={`/teacher/classes/if-2609/${tab.key}`} className={`classDetailTab ${tab.key === activeKey ? "active" : ""}`} aria-current={tab.key === activeKey ? "page" : undefined}><Icon size={16}/><span>{tab.label}</span></Link>; })}</nav>
     <Paper className="panel classDetailContent" p="lg" withBorder><Group justify="space-between" mb="md"><div><Text fw={700}>{active.label}</Text><Text size="sm" c="dimmed">{active.summary}</Text></div><UiButton variant="default">Làm mới dữ liệu</UiButton></Group><ClassDetailTabContent activeKey={active.key} summary={active.summary} /></Paper>
   </div>;
+}
+
+function OverviewTab() {
+  return <Stack gap="md">
+    <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="sm">
+      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Sĩ số</Text><Text fw={700} fz="xl">18/18</Text><UiStatusBadge role="success">Đủ sĩ số</UiStatusBadge></Paper>
+      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Tiến độ lớp</Text><Text fw={700} fz="xl">62%</Text><Text size="sm" c="dimmed">Unit 5/8</Text></Paper>
+      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Điểm danh gần nhất</Text><Text fw={700} fz="xl">14/16</Text><Text size="sm" c="dimmed">87,5% tham dự</Text></Paper>
+      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Việc cần xử lý</Text><Text fw={700} fz="xl">4</Text><UiStatusBadge role="warning">Cần xem hôm nay</UiStatusBadge></Paper>
+    </SimpleGrid>
+    <SimpleGrid cols={{ base: 1, lg: 2 }} spacing="md">
+      <Paper className="panel" p="lg" withBorder><Group mb="md"><ThemeIcon color="yellow" variant="light"><AlertTriangle size={18}/></ThemeIcon><div><Text fw={700}>Học viên cần hỗ trợ</Text><Text size="sm" c="dimmed">Giáo viên ghi nhận, học vụ tiếp nhận handoff.</Text></div></Group><Stack gap="sm"><Group justify="space-between"><div><Text fw={600}>Nguyễn Minh Anh</Text><Text size="xs" c="dimmed">Vắng 2 buổi · homework trễ</Text></div><UiStatusBadge role="warning">Theo dõi</UiStatusBadge></Group><Group justify="space-between"><div><Text fw={600}>Trần Gia Huy</Text><Text size="xs" c="dimmed">Speaking confidence thấp</Text></div><UiStatusBadge role="info">Cần review</UiStatusBadge></Group><UiButton variant="default">Gửi học vụ</UiButton></Stack></Paper>
+      <Paper className="panel" p="lg" withBorder><Group mb="md"><ThemeIcon color="green" variant="light"><CheckCircle2 size={18}/></ThemeIcon><div><Text fw={700}>Checklist buổi kế tiếp</Text><Text size="sm" c="dimmed">Tách rõ trước/trong/sau buổi dạy.</Text></div></Group><Stack gap="sm"><Text size="sm">✓ Bài giảng và bài tập trên lớp đã công bố</Text><Text size="sm">✓ Bài kiểm tra đã sẵn sàng</Text><Text size="sm">○ Bài tập về nhà chưa công bố</Text><Text size="sm">○ Xác nhận slot online với học vụ</Text></Stack></Paper>
+    </SimpleGrid>
+  </Stack>;
 }
 
 function ScheduleTab() {
