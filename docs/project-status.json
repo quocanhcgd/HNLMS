@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T07:53:17.161Z",
+  "updatedAt": "2026-08-23T08:09:32.346Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Bổ sung upload file bài giảng/tài liệu trong modal học liệu, validation và E2E setInputFiles",
+    "activity": "Hoàn thiện Tab Bài tập: lọc loại, tạo bài, hàng đợi chấm và phân biệt chấm trên lớp/homework",
     "startedAt": null,
-    "updatedAt": "2026-08-23T07:53:17.161Z"
+    "updatedAt": "2026-08-23T08:09:32.346Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "01ca666",
-    "message": "feat(web): activate all session material actions",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/01ca666"
+    "sha": "7173696",
+    "message": "feat(web): enable session material file upload",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/7173696"
   },
   "ci": {
     "status": "unknown",
