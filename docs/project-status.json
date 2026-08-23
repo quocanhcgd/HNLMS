@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T07:16:16.775Z",
+  "updatedAt": "2026-08-23T07:28:51.147Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Sửa crash khi bấm Xem/thêm học liệu: chuyển bảng sang hook component hợp lệ và thêm E2E click",
+    "activity": "Hoàn thiện toàn bộ action học liệu: thêm, xem lại, chỉnh sửa, công bố và preview student",
     "startedAt": null,
-    "updatedAt": "2026-08-23T07:16:16.775Z"
+    "updatedAt": "2026-08-23T07:28:51.147Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "35bf442",
-    "message": "feat(web): manage session materials inline",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/35bf442"
+    "sha": "c01e919",
+    "message": "fix(web): prevent session material action crash",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/c01e919"
   },
   "ci": {
     "status": "unknown",
