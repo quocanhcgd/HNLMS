@@ -4,7 +4,7 @@ const tabChecks = [
   ["sessions", "Toàn bộ lịch buổi học của khóa"],
   ["assignments", "Chờ chấm trên lớp"],
   ["materials", "tài liệu lớp"],
-  ["attendance", "Tỷ lệ tham dự"],
+  ["attendance", "tham dự"],
   ["scores", "Điểm trung bình"],
   ["feedback", "Phản hồi buổi học gần nhất"],
 ] as const;
