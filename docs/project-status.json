@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T02:51:37.500Z",
+  "updatedAt": "2026-08-23T04:27:37.792Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Viết lại teacher/student workspace và bổ sung lesson delivery theo buổi dạy: học liệu, chấm trên lớp, homework review, in-system viewer",
+    "activity": "Bổ sung dữ liệu mẫu lớp đang dạy để review luồng teacher trước buổi dạy",
     "startedAt": null,
-    "updatedAt": "2026-08-23T02:51:37.500Z"
+    "updatedAt": "2026-08-23T04:27:37.792Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "af0fb55",
-    "message": "test: fix multimedia player e2e selector",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/af0fb55"
+    "sha": "3789dd2",
+    "message": "docs: update teacher student flow status",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/3789dd2"
   },
   "ci": {
     "status": "unknown",
