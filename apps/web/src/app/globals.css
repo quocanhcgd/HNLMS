@@ -869,3 +869,43 @@ a {
   outline-offset: 4px;
   border-radius: 4px;
 }
+
+.classDetailTabs {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border-bottom: 1px solid var(--app-border);
+  scrollbar-width: thin;
+  margin-bottom: 16px;
+  padding-bottom: 2px;
+}
+.classDetailTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0 13px;
+  color: var(--mantine-color-dimmed);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.classDetailTab:hover {
+  color: var(--mantine-color-text);
+  background: color-mix(in srgb, var(--mantine-primary-color-filled) 8%, transparent);
+}
+.classDetailTab.active {
+  color: var(--mantine-primary-color-filled);
+  border-bottom-color: var(--mantine-primary-color-filled);
+  font-weight: 650;
+}
+.classDetailTab:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: -2px;
+}
+.classDetailContent {
+  width: 100%;
+}
