@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T12:41:36.730Z",
+  "updatedAt": "2026-08-23T14:04:29.998Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Sửa cột ghi chú điểm danh thành input controlled, lưu state theo học viên và khóa sau chốt",
+    "activity": "Sửa ghi chú điểm danh tránh crash khi re-render, lưu ghi chú khi blur và khóa sau chốt",
     "startedAt": null,
-    "updatedAt": "2026-08-23T12:41:36.730Z"
+    "updatedAt": "2026-08-23T14:04:29.998Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "998d26a",
-    "message": "feat(web): activate teacher attendance tab",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/998d26a"
+    "sha": "cdbd375",
+    "message": "fix(web): enable attendance notes",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/cdbd375"
   },
   "ci": {
     "status": "unknown",
