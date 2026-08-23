@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T10:45:45.056Z",
+  "updatedAt": "2026-08-23T11:34:59.353Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Bổ sung chỉnh sửa bài tập: mở form với dữ liệu hiện tại, lưu thay đổi và giữ trạng thái giao bài",
+    "activity": "Hoàn thiện Tab Tài liệu: lọc, thêm, xem preview, chỉnh sửa và công bố học liệu cho học viên",
     "startedAt": null,
-    "updatedAt": "2026-08-23T10:45:45.056Z"
+    "updatedAt": "2026-08-23T11:34:59.353Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "db0cc6c",
-    "message": "feat(web): implement class assignment delivery flow",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/db0cc6c"
+    "sha": "14504e4",
+    "message": "feat(web): enable assignment editing",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/14504e4"
   },
   "ci": {
     "status": "unknown",

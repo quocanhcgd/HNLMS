@@ -3,7 +3,7 @@ const tabChecks = [
   ["students", "Danh sách học viên"],
   ["sessions", "Toàn bộ lịch buổi học của khóa"],
   ["assignments", "Chờ chấm trên lớp"],
-  ["materials", "Học liệu buổi kế tiếp"],
+  ["materials", "tài liệu lớp"],
   ["attendance", "Tỷ lệ tham dự"],
   ["scores", "Điểm trung bình"],
   ["feedback", "Phản hồi buổi học gần nhất"],
