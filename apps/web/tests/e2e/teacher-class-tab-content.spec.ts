@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 const tabChecks = [
   ["students", "Danh sách học viên"],
-  ["sessions", "Buổi tuần này"],
+  ["sessions", "Toàn bộ lịch buổi học của khóa"],
   ["assignments", "Chờ chấm trên lớp"],
   ["materials", "Học liệu buổi kế tiếp"],
   ["attendance", "Tỷ lệ tham dự"],
