@@ -2,6 +2,7 @@ import type { NavigationItem } from "@hnlms/ui";
 import {
   BarChart3,
   BookOpen,
+  CalendarClock,
   Building2,
   ClipboardList,
   GraduationCap,
@@ -242,6 +243,14 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     roles: ["teacher", "teaching_assistant"],
   },
   {
+    key: "teacherWorklog",
+    labelKey: "teacherWorklog",
+    href: "/teacher/worklog",
+    icon: ClipboardList,
+    moduleKey: "academic",
+    roles: ["teacher", "teaching_assistant"],
+  },
+  {
     key: "teacherMessages",
     labelKey: "teacherMessages",
     href: "/teacher/messages",
@@ -261,6 +270,9 @@ export const teacherNavigation: readonly NavigationManifest[] = [
 
 export const studentNavigation: readonly NavigationManifest[] = [
   { key: "studentHome", labelKey: "studentHome", href: "/student", icon: GraduationCap, roles: ["student"] },
+  { key: "studentSchedule", labelKey: "studentSchedule", href: "/student/schedule", icon: CalendarClock, moduleKey: "academic", roles: ["student"] },
+  { key: "studentScores", labelKey: "studentScores", href: "/student/scores", icon: BarChart3, moduleKey: "academic", roles: ["student"] },
+  { key: "studentHomework", labelKey: "studentHomework", href: "/student/homework", icon: ClipboardList, moduleKey: "learning", roles: ["student"] },
   {
     key: "studentProgress",
     labelKey: "studentProgress",

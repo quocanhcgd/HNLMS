@@ -52,6 +52,15 @@ describe("LMS navigation manifests", () => {
     expect(adminHrefs).toContain("/admin/learning/content");
   });
 
+  it("keeps teacher and student learning flows in business order", () => {
+    const teacherHrefs = flatten(getNavigationForWorkspace("teacher")).map((item) => item.href);
+    const studentHrefs = flatten(getNavigationForWorkspace("student")).map((item) => item.href);
+    expect(teacherHrefs).toContain("/teacher/worklog");
+    expect(studentHrefs).toEqual(expect.arrayContaining(["/student/schedule", "/student/scores", "/student/homework"]));
+    expect(teacherHrefs.every((href) => href.startsWith("/teacher"))).toBe(true);
+    expect(studentHrefs.every((href) => href.startsWith("/student"))).toBe(true);
+  });
+
   it("uses workspace-specific navigation for teacher, student and parent", () => {
     expect(flatten(getNavigationForWorkspace("teacher")).map((item) => item.href)).toContain("/teacher/content");
     expect(flatten(getNavigationForWorkspace("student")).map((item) => item.href)).toContain("/student/library");

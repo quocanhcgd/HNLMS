@@ -56,9 +56,13 @@ Scheduling is an academic operation using HRM capability data. Teacher assignmen
 
 Payroll is a cross-functional stream: HRM provides contracts/leave/attendance, academic affairs confirms teaching sessions, payroll calculates salary/teaching/assistant fees, finance disburses and reconciles. Payroll UI belongs to `/admin/payroll`; personal payslip/worklog self-service belongs to `/teacher/payroll` and `/teacher/worklogs`.
 
+### Teacher lesson delivery
+
+Before each assigned teaching session, the teacher prepares and publishes a session pack containing the lesson, in-class exercise, assessment/checkpoint, homework and reference materials. Each item has its own visibility and completion state but is delivered from the class session workspace. In-class exercises can be graded during the session; homework remains in a pending-review queue and is graded after the session. Teachers may attach private media/documents, but the student experience is an in-system viewer/player with signed access; downloading is not the default learning flow.
+
 ### Student self-service
 
-Students use `/student`. They see only their own schedule, learning progress, scores, homework, library, assessments, online sessions, billing and messages.
+Students use `/student`. They see only their own schedule, lesson packs, progress, scores, homework, library, assessments, online sessions, billing and messages. A published session pack is opened in the system: lesson/video/audio/PDF content is viewed or played inline, in-class exercises are submitted during class, and homework is submitted for later teacher review. Students do not need to download teaching materials to study.
 
 ### Parent self-service
 
