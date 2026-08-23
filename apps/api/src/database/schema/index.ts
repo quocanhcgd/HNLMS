@@ -14,3 +14,4 @@ export * from "./payroll-finance";
 export * from "./ai-governance";
 export * from "./commercial-license";
 export * from "../../modules/tenant-platform/schema";
+export * from "./multimedia";

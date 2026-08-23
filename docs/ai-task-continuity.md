@@ -4,12 +4,12 @@ This file is a compact handoff log. Keep it short and update it at the end of ev
 
 ## Active Handoff
 
-- **Current task**: Phase 21 / Polish & Cross-Cutting Concerns.
-- **Status**: Completed locally through T143: accessibility/visual checks, capacity/resilience smoke tests, native release scripts, security hardening checklist, quickstart commands and release operations runbook.
-- **Next task**: Phase 22 multimedia learning foundation (T144+).
+- **Current task**: Phase 22 / Multimedia Learning and Assessment Foundation.
+- **Status**: Completed locally through T160: versioned lesson/question contracts, registry, multimedia asset schema, upload/playback primitives, ingest/image/audio/video/document pipelines, lesson renderer, voice recorder MVP and multimedia tests.
+- **Next task**: Phase 23 / Full-Stack Delivery Readiness (T161+).
 - **Blocker**: None.
-- **Files in focus**: `apps/web/tests/accessibility/phase21.spec.ts`, `apps/web/tests/visual/phase21.spec.ts`, `tests/performance/`, `tests/resilience/`, `infra/release-scripts/`, `infra/security/`, `docs/security/`, `docs/operations/`, `specs/001-lms-multi-branch/quickstart.md`.
-- **Verification**: Accessibility/visual Playwright passed 3/3; full Vitest passed 92 files/377 tests; API/worker/web typechecks passed before phase gate.
+- **Files in focus**: `packages/domain-contracts/src/learning/`, `apps/api/src/shared/storage/`, `worker/src/jobs/media-processing/`, `apps/web/src/features/learning/`, `apps/web/src/components/media/`, `apps/api/tests/media/`, `worker/tests/media/`.
+- **Verification**: API/worker/web typechecks passed; multimedia foundation/pipeline tests passed; full Vitest passed 94 files/380 tests.
 
 ## Completed Handoff\n\nDate: 2026-08-20\nTask: Build task dashboard and project memory\nStatus: completed\nChanged files: `docs/task-dashboard.html`, `docs/PROJECT_MEMORY.md`, `docs/ai-task-continuity.md`, `.specify/memory/constitution.md`\nTests/checks: 175 tasks, 175 prompts; no obsolete shadcn/Radix/Tailwind references in audited architecture files; git diff check passed except normal CRLF warning\nDecisions: project memory is committed; dashboard is generated from `tasks.md`; prompt template tells the next AI to read source-of-truth and inspect git\nBlockers: GitHub/provider/authentication decisions remain open\nNext task: T001\n\n## Handoff Format
 

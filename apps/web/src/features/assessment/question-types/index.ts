@@ -1,0 +1,1 @@
+export const questionTypes={choice:{key:"choice",validate:(value:unknown)=>Array.isArray(value)},trueFalse:{key:"true_false",validate:(value:unknown)=>typeof value==="boolean"},text:{key:"text",validate:(value:unknown)=>typeof value==="string"},speaking:{key:"speaking",validate:(value:unknown)=>typeof value==="string"}};

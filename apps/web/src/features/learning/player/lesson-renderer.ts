@@ -1,0 +1,1 @@
+export function renderLesson(document:{title:string;blocks:Array<{id:string;type:string;data:Record<string,unknown>}>}){return {title:document.title,blocks:document.blocks.map(block=>({id:block.id,component:`${block.type}Block`,data:block.data}))}}

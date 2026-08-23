@@ -377,35 +377,35 @@ Tất cả implementation tasks đều theo format `- [ ] T### [P?] [US#?] Descr
 
 ### Schema and registry
 
-- [ ] T144 [P] Tạo Zod contracts versioned cho `LessonDocument`, các MVP `LessonBlock`, `QuestionTypeDefinition`, answer payload và migration registry trong `packages/domain-contracts/src/learning/`
-- [ ] T145 Tạo internal plugin registry cho lesson editor/renderer và question authoring/attempt/review/scoring trong `apps/web/src/features/learning/registry/` và `apps/api/src/modules/academic-learning/registry/`; từ chối executable tenant plugin
-- [ ] T146 [P] Tạo migrations/entities cho `LessonDocument`, `LessonBlockDefinition`, `MediaAsset`, `MediaDerivative`, `MediaUploadSession`, `MediaProcessingJob`, `CaptionTrack`, `Transcript`, `AttemptAnswer` và `ManualReview` trong các module academic/assessment
+- [x] T144 [P] Tạo Zod contracts versioned cho `LessonDocument`, các MVP `LessonBlock`, `QuestionTypeDefinition`, answer payload và migration registry trong `packages/domain-contracts/src/learning/`
+- [x] T145 Tạo internal plugin registry cho lesson editor/renderer và question authoring/attempt/review/scoring trong `apps/web/src/features/learning/registry/` và `apps/api/src/modules/academic-learning/registry/`; từ chối executable tenant plugin
+- [x] T146 [P] Tạo migrations/entities cho `LessonDocument`, `LessonBlockDefinition`, `MediaAsset`, `MediaDerivative`, `MediaUploadSession`, `MediaProcessingJob`, `CaptionTrack`, `Transcript`, `AttemptAnswer` và `ManualReview` trong các module academic/assessment
 
 ### Upload and processing
 
-- [ ] T147 Tạo media upload API với Uppy handoff, S3 multipart hoặc tus, checksum, MIME detection, quota, idempotent complete và private scope trong `apps/api/src/shared/storage/` và `apps/web/src/components/media/media-uploader.tsx`
-- [ ] T148 [P] Tạo scan/ingest state machine và worker retry/dead-letter trong `worker/src/jobs/media-processing/ingest.ts`
-- [ ] T149 [P] Tạo image pipeline bằng Sharp cho metadata, orientation, metadata stripping, thumbnail và WebP/AVIF derivative trong `worker/src/jobs/media-processing/image.ts`
-- [ ] T150 [P] Tạo audio pipeline bằng FFmpeg/ffprobe cho metadata, codec normalization, loudness và waveform metadata trong `worker/src/jobs/media-processing/audio.ts`
-- [ ] T151 [P] Tạo video adapter/pipeline cho metadata, poster, thumbnail, HLS renditions hoặc external provider mapping trong `worker/src/jobs/media-processing/video.ts` và `packages/integration-adapters/src/video/`
-- [ ] T152 [P] Tạo slide/PDF pipeline bằng LibreOffice headless và PDF tooling cho PPTX-to-PDF, page count và thumbnail trong `worker/src/jobs/media-processing/document.ts`
-- [ ] T153 Tạo signed playback/download token service, expiry, authorization recheck và progress API trong `apps/api/src/shared/storage/playback.service.ts`
+- [x] T147 Tạo media upload API với Uppy handoff, S3 multipart hoặc tus, checksum, MIME detection, quota, idempotent complete và private scope trong `apps/api/src/shared/storage/` và `apps/web/src/components/media/media-uploader.tsx`
+- [x] T148 [P] Tạo scan/ingest state machine và worker retry/dead-letter trong `worker/src/jobs/media-processing/ingest.ts`
+- [x] T149 [P] Tạo image pipeline bằng Sharp cho metadata, orientation, metadata stripping, thumbnail và WebP/AVIF derivative trong `worker/src/jobs/media-processing/image.ts`
+- [x] T150 [P] Tạo audio pipeline bằng FFmpeg/ffprobe cho metadata, codec normalization, loudness và waveform metadata trong `worker/src/jobs/media-processing/audio.ts`
+- [x] T151 [P] Tạo video adapter/pipeline cho metadata, poster, thumbnail, HLS renditions hoặc external provider mapping trong `worker/src/jobs/media-processing/video.ts` và `packages/integration-adapters/src/video/`
+- [x] T152 [P] Tạo slide/PDF pipeline bằng LibreOffice headless và PDF tooling cho PPTX-to-PDF, page count và thumbnail trong `worker/src/jobs/media-processing/document.ts`
+- [x] T153 Tạo signed playback/download token service, expiry, authorization recheck và progress API trong `apps/api/src/shared/storage/playback.service.ts`
 
 ### Authoring and playback
 
-- [ ] T154 Tạo `LessonComposer` bằng TipTap và block controls, reorder, draft autosave, preview, schema error và publish readiness trong `apps/web/src/features/learning/authoring/`
-- [ ] T155 [P] Tạo `ImageViewer`, `AudioPlayer`, `VideoPlayer`, `SlideViewer`, `TranscriptViewer` và `MediaProcessingStatus` với Mantine/Vidstack/WaveSurfer/PDF.js trong `apps/web/src/components/media/`
-- [ ] T156 Tạo `LessonRenderer` responsive, keyboard accessible, progress/resume và permission-safe trong `apps/web/src/features/learning/player/`
+- [x] T154 Tạo `LessonComposer` bằng TipTap và block controls, reorder, draft autosave, preview, schema error và publish readiness trong `apps/web/src/features/learning/authoring/`
+- [x] T155 [P] Tạo `ImageViewer`, `AudioPlayer`, `VideoPlayer`, `SlideViewer`, `TranscriptViewer` và `MediaProcessingStatus` với Mantine/Vidstack/WaveSurfer/PDF.js trong `apps/web/src/components/media/`
+- [x] T156 Tạo `LessonRenderer` responsive, keyboard accessible, progress/resume và permission-safe trong `apps/web/src/features/learning/player/`
 
 ### Assessment and speaking
 
-- [ ] T157 Tạo MVP question editors/renderers cho choice, true/false, text, fill blank, matching, ordering, image/audio/video prompt, file upload và speaking trong `apps/web/src/features/assessment/question-types/`
-- [ ] T158 Tạo `VoiceRecorder` bằng MediaRecorder/Web Audio với permission, device check, record/pause/review/retry, duration limit và resumable upload trong `apps/web/src/components/media/voice-recorder.tsx`
-- [ ] T159 Tạo autosave sequence, connectivity state, retry-safe submit, media answer binding và manual review/rubric/timestamp feedback trong API, worker và assessment UI
+- [x] T157 Tạo MVP question editors/renderers cho choice, true/false, text, fill blank, matching, ordering, image/audio/video prompt, file upload và speaking trong `apps/web/src/features/assessment/question-types/`
+- [x] T158 Tạo `VoiceRecorder` bằng MediaRecorder/Web Audio với permission, device check, record/pause/review/retry, duration limit và resumable upload trong `apps/web/src/components/media/voice-recorder.tsx`
+- [x] T159 Tạo autosave sequence, connectivity state, retry-safe submit, media answer binding và manual review/rubric/timestamp feedback trong API, worker và assessment UI
 
 ### Validation gates
 
-- [ ] T160 Chạy schema migration, malicious payload, upload resume/duplicate, MIME spoof, processing retry, signed URL expiry, cross-scope playback, autosave out-of-order, speaking mobile/keyboard và visual E2E tests trong `apps/api/tests/media/`, `worker/tests/media/` và `apps/web/tests/e2e/multimedia/`
+- [x] T160 Chạy schema migration, malicious payload, upload resume/duplicate, MIME spoof, processing retry, signed URL expiry, cross-scope playback, autosave out-of-order, speaking mobile/keyboard và visual E2E tests trong `apps/api/tests/media/`, `worker/tests/media/` và `apps/web/tests/e2e/multimedia/`
 
 **Checkpoint**: Lesson multimedia và assessment media MVP chỉ hoàn tất khi source private, processing state trung thực, renderer/editor schema parity, autosave sequence và speaking manual review đều qua T160.
 

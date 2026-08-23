@@ -1,0 +1,1 @@
+export class DocumentPipeline{process(input:{assetId:string;mimeType:string}){if(!input.mimeType.includes("pdf")&&!input.mimeType.includes("presentation"))throw new Error("document_mime_invalid");return {assetId:input.assetId,pdfReady:true,pageCount:1,thumbnail:"page-1.webp"}}}

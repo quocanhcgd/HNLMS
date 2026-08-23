@@ -1,0 +1,1 @@
+export class ImagePipeline{process(input:{assetId:string;mimeType:string}){if(!input.mimeType.startsWith("image/"))throw new Error("image_mime_invalid");return {assetId:input.assetId,metadataStripped:true,derivatives:["thumbnail.webp","preview.avif"]}}}

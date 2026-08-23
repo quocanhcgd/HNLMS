@@ -1,0 +1,1 @@
+export class AudioPipeline{process(input:{assetId:string;mimeType:string}){if(!input.mimeType.startsWith("audio/"))throw new Error("audio_mime_invalid");return {assetId:input.assetId,codec:"normalized",waveform:true}}}

@@ -70,3 +70,4 @@ export function parseAssessmentAnswer(input: unknown): AssessmentAnswer {
   return assessmentAnswerSchema.parse(input);
 }
 export * from "./remote-command";
+export * from "./learning/index";

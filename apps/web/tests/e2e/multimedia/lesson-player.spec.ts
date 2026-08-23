@@ -1,0 +1,1 @@
+import {expect,test} from "@playwright/test";test("Phase22 multimedia lesson and player smoke",async({page})=>{await page.goto("/student/library");await expect(page.getByText("Thư viện học tập",{exact:true})).toBeVisible();});

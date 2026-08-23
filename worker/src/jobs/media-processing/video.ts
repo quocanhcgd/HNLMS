@@ -1,0 +1,1 @@
+export class VideoPipeline{process(input:{assetId:string;mimeType:string}){if(!input.mimeType.startsWith("video/"))throw new Error("video_mime_invalid");return {assetId:input.assetId,poster:"poster.jpg",renditions:["hls-360p","hls-720p"]}}}

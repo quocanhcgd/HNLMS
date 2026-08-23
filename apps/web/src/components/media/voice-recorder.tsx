@@ -1,0 +1,2 @@
+import { useRef, useState } from "react";
+export function VoiceRecorder(){const[status,setStatus]=useState<"idle"|"recording"|"ready">("idle");const media=useRef<MediaRecorder|null>(null);return <div><button type="button" onClick={async()=>{if(status==="recording"){media.current?.stop();setStatus("ready");return}const stream=await navigator.mediaDevices.getUserMedia({audio:true});media.current=new MediaRecorder(stream);media.current.start();setStatus("recording")}}>{status==="recording"?"Dừng ghi":"Ghi âm trả lời"}</button><span>{status}</span></div>}

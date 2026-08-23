@@ -1,0 +1,2 @@
+export type RegistryEntry={key:string;version:number;render:(data:Record<string,unknown>)=>unknown};export class LearningRegistry{private entries=new Map<string,RegistryEntry>();register(entry:RegistryEntry){if(this.entries.has(entry.key))throw new Error("registry_duplicate");this.entries.set(entry.key,entry)}get(key:string){return this.entries.get(key)}keys(){return [...this.entries.keys()]}}
+export const learningRegistry=new LearningRegistry();

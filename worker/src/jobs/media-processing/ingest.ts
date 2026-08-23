@@ -1,0 +1,1 @@
+export type MediaJob={assetId:string;mimeType:string;attempt:number};export class MediaIngestWorker{process(job:MediaJob){if(job.attempt>3)return {status:"dead_letter"};if(!job.mimeType.startsWith("image/")&&!job.mimeType.startsWith("audio/")&&!job.mimeType.startsWith("video/")&&!job.mimeType.includes("pdf"))return {status:"rejected"};return {status:"ready",assetId:job.assetId}}}
