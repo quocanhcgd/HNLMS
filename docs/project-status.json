@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T05:12:28.025Z",
+  "updatedAt": "2026-08-23T05:27:10.272Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành Tab 1 Lịch học: lịch tuần, buổi kế tiếp, phòng/link, trạng thái duyệt và đề xuất đổi lịch",
+    "activity": "Hoàn thiện bộ lọc lịch học và form đề xuất đổi lịch chờ học vụ duyệt",
     "startedAt": null,
-    "updatedAt": "2026-08-23T05:12:28.025Z"
+    "updatedAt": "2026-08-23T05:27:10.272Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "a7cf646",
-    "message": "fix(web): remove out-of-scope teacher class tabs",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/a7cf646"
+    "sha": "dd8bfdd",
+    "message": "feat(web): complete teacher class schedule tab",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/dd8bfdd"
   },
   "ci": {
     "status": "unknown",
