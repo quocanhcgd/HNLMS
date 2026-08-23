@@ -7,6 +7,7 @@ import { Group, Paper, SimpleGrid, Stack, Text, Textarea, ThemeIcon } from "@man
 import { AlertTriangle, CalendarClock, CheckCircle2, ClipboardCheck, Edit3, FileCheck2, FileText, MessageCircle, Search, UsersRound } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { UiButton, UiDataTable, UiModal, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
+import { DetailTabContent } from "./detail-tab-content";
 
 const tabs = [
   { key: "schedule", label: "Lịch học", icon: CalendarClock, summary: "Lịch tuần, lịch buổi học và thay đổi thời khóa biểu." },
@@ -24,12 +25,8 @@ const tabs = [
 function ClassDetailTabContent({ activeKey, summary }: { activeKey: string; summary: string }) {
   if (activeKey === "schedule") return <ScheduleTab />;
   if (activeKey === "overview") return <OverviewTab />;
-  return (
-    <>
-      <Group justify="space-between" mb="md"><div><Text fw={700}>{summary.split(".")[0]}</Text><Text size="sm" c="dimmed">{summary}</Text></div><UiButton variant="default">Làm mới dữ liệu</UiButton></Group>
-      <Paper className="classInfoCallout" p="lg"><Text fw={700}>Luồng xử lý hiện tại</Text><Text size="sm" c="dimmed" mt="xs">Trước buổi dạy: chuẩn bị học liệu. Trong buổi dạy: điểm danh và chấm bài trên lớp. Sau buổi dạy: chấm bài về nhà, xác nhận worklog và gửi thông tin cho học vụ/payroll.</Text></Paper>
-    </>
-  );
+  if (["students", "sessions", "assignments", "materials", "attendance", "scores", "feedback"].includes(activeKey)) return <DetailTabContent activeKey={activeKey} />;
+  return <Paper className="classInfoCallout" p="lg"><Text fw={700}>{summary.split(".")[0]}</Text><Text size="sm" c="dimmed" mt="xs">{summary}</Text></Paper>;
 }
 
 export default function TeacherClassDetailPage() {
