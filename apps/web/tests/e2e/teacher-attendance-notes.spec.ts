@@ -1,0 +1,2 @@
+import { expect, test } from "@playwright/test";
+test("teacher can edit attendance note before locking", async ({ page }) => { await page.goto("/teacher/classes/if-2609/attendance"); const note = page.getByLabel("Ghi chú Nguyễn Minh Anh"); await note.fill("Cần gọi phụ huynh xác minh lý do vắng"); await expect(note).toHaveValue("Cần gọi phụ huynh xác minh lý do vắng"); await page.getByRole("button", { name: "Chốt điểm danh" }).click(); await expect(note).toBeDisabled(); });
