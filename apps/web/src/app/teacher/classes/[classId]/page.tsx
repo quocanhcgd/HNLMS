@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Group, Paper, Stack, Text } from "@mantine/core";
-import { CalendarClock, ClipboardCheck, FileCheck2, FileText, GraduationCap, MessageCircle, UsersRound } from "lucide-react";
+import { CalendarClock, ClipboardCheck, FileCheck2, FileText, MessageCircle, UsersRound } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { UiButton, UiStatusBadge } from "@/components/ui";
 
@@ -15,9 +15,7 @@ const tabs = [
   { key: "materials", label: "Tài liệu", icon: FileText, summary: "Bài giảng, tài liệu tham khảo và nội dung mở trực tiếp trong hệ thống." },
   { key: "attendance", label: "Điểm danh", icon: ClipboardCheck, summary: "Ghi nhận có mặt, muộn, vắng và ghi chú từng học viên." },
   { key: "scores", label: "Bảng điểm", icon: FileCheck2, summary: "Điểm bài trên lớp, bài kiểm tra và bài tập đã công bố." },
-  { key: "teacherAttendance", label: "Điểm danh giáo viên", icon: GraduationCap, summary: "Xác nhận giờ dạy và worklog để chuyển payroll." },
   { key: "feedback", label: "Phản hồi buổi học", icon: MessageCircle, summary: "Ghi nhận phản hồi lớp và vấn đề cần học vụ hỗ trợ." },
-  { key: "certificates", label: "Mẫu chứng chỉ", icon: FileText, summary: "Theo dõi điều kiện hoàn thành và đề xuất cấp chứng chỉ." },
   { key: "notifications", label: "Thông báo", icon: MessageCircle, summary: "Thông báo đến học viên, phụ huynh và học vụ trong scope lớp." },
 ];
 
