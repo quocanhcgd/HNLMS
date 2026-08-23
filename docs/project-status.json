@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T05:59:43.041Z",
+  "updatedAt": "2026-08-23T06:08:32.397Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thiện nội dung riêng từng tab bằng component detail riêng, KPI và bảng nghiệp vụ",
+    "activity": "Biến Tab Các buổi học thành luồng tương tác: chọn buổi, xem chi tiết và mở học liệu/điểm danh/worklog/bài tập",
     "startedAt": null,
-    "updatedAt": "2026-08-23T05:59:43.041Z"
+    "updatedAt": "2026-08-23T06:08:32.397Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "25f7113",
-    "message": "feat(web): complete teacher class detail tabs",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/25f7113"
+    "sha": "c4079ee",
+    "message": "feat(web): add business content to teacher class tabs",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/c4079ee"
   },
   "ci": {
     "status": "unknown",
