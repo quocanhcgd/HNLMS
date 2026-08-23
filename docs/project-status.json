@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T06:45:38.373Z",
+  "updatedAt": "2026-08-23T07:16:16.775Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Kết hợp học liệu vào từng dòng buổi học: xem lại, thêm mới, chỉnh sửa và xem trước quyền học viên",
+    "activity": "Sửa crash khi bấm Xem/thêm học liệu: chuyển bảng sang hook component hợp lệ và thêm E2E click",
     "startedAt": null,
-    "updatedAt": "2026-08-23T06:45:38.373Z"
+    "updatedAt": "2026-08-23T07:16:16.775Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "4797f45",
-    "message": "feat(web): model all course sessions in teacher class",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/4797f45"
+    "sha": "35bf442",
+    "message": "feat(web): manage session materials inline",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/35bf442"
   },
   "ci": {
     "status": "unknown",
