@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T02:03:42.714Z",
+  "updatedAt": "2026-08-23T02:51:37.500Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
   "currentTask": {
-    "id": "T160",
-    "title": "Chạy schema migration, malicious payload, upload resume/duplicate, MIME spoof, processing retry, signed URL expiry, cross-scope playback, autosave out-of-order, speaking mobile/keyboard và visual E2E tests trong apps/api/tests/media/, worker/tests/media/ và apps/web/tests/e2e/multimedia/",
-    "phase": "Phase 22: Multimedia Learning and Assessment Foundation",
+    "id": "T094",
+    "title": "Add provider contract, duplicate webhook and E2E tests trong apps/api/tests/contract/us10-meeting.contract.spec.ts và apps/web/tests/e2e/us10-online.spec.ts",
+    "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành toàn bộ Phase 22: multimedia lesson, media processing, player, speaking và tests",
+    "activity": "Viết lại teacher/student workspace và bổ sung lesson delivery theo buổi dạy: học liệu, chấm trên lớp, homework review, in-system viewer",
     "startedAt": null,
-    "updatedAt": "2026-08-23T02:03:42.714Z"
+    "updatedAt": "2026-08-23T02:51:37.500Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "a5b51b8",
-    "message": "feat: complete polish release phase",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/a5b51b8"
+    "sha": "af0fb55",
+    "message": "test: fix multimedia player e2e selector",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/af0fb55"
   },
   "ci": {
     "status": "unknown",
