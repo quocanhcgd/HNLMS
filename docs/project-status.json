@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T04:45:40.761Z",
+  "updatedAt": "2026-08-23T04:49:51.678Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Bổ sung teacher class detail tabs theo luồng nghiệp vụ và route tab động",
+    "activity": "Loại bỏ panel Buổi kế tiếp cần chuẩn bị, đưa bảng lớp đang dạy lên full-width",
     "startedAt": null,
-    "updatedAt": "2026-08-23T04:45:40.761Z"
+    "updatedAt": "2026-08-23T04:49:51.678Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "7694348",
-    "message": "feat(web): add teacher classes sample data",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/7694348"
+    "sha": "65abdaf",
+    "message": "feat(web): add teacher class detail workspace",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/65abdaf"
   },
   "ci": {
     "status": "unknown",
