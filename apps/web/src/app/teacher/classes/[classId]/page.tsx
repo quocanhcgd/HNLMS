@@ -27,7 +27,7 @@ function ClassDetailTabContent({ activeKey, summary }: { activeKey: string; summ
   return (
     <>
       <Group justify="space-between" mb="md"><div><Text fw={700}>{summary.split(".")[0]}</Text><Text size="sm" c="dimmed">{summary}</Text></div><UiButton variant="default">Làm mới dữ liệu</UiButton></Group>
-      <Paper className="panelHighlight" p="lg"><Text fw={700}>Luồng xử lý hiện tại</Text><Text size="sm" c="dimmed" mt="xs">Trước buổi dạy: chuẩn bị học liệu. Trong buổi dạy: điểm danh và chấm bài trên lớp. Sau buổi dạy: chấm bài về nhà, xác nhận worklog và gửi thông tin cho học vụ/payroll.</Text></Paper>
+      <Paper className="classInfoCallout" p="lg"><Text fw={700}>Luồng xử lý hiện tại</Text><Text size="sm" c="dimmed" mt="xs">Trước buổi dạy: chuẩn bị học liệu. Trong buổi dạy: điểm danh và chấm bài trên lớp. Sau buổi dạy: chấm bài về nhà, xác nhận worklog và gửi thông tin cho học vụ/payroll.</Text></Paper>
     </>
   );
 }
@@ -47,10 +47,10 @@ export default function TeacherClassDetailPage() {
 function OverviewTab() {
   return <Stack gap="md">
     <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="sm">
-      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Sĩ số</Text><Text fw={700} fz="xl">18/18</Text><UiStatusBadge role="success">Đủ sĩ số</UiStatusBadge></Paper>
-      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Tiến độ lớp</Text><Text fw={700} fz="xl">62%</Text><Text size="sm" c="dimmed">Unit 5/8</Text></Paper>
-      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Điểm danh gần nhất</Text><Text fw={700} fz="xl">14/16</Text><Text size="sm" c="dimmed">87,5% tham dự</Text></Paper>
-      <Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Việc cần xử lý</Text><Text fw={700} fz="xl">4</Text><UiStatusBadge role="warning">Cần xem hôm nay</UiStatusBadge></Paper>
+      <Paper className="classInfoCard classInfoCard--success" p="md"><Text className="classInfoLabel">Sĩ số</Text><Text className="classInfoValue" fw={700} fz="xl">18/18</Text><UiStatusBadge role="success">Đủ sĩ số</UiStatusBadge></Paper>
+      <Paper className="classInfoCard classInfoCard--primary" p="md"><Text className="classInfoLabel">Tiến độ lớp</Text><Text className="classInfoValue" fw={700} fz="xl">62%</Text><Text className="classInfoMeta" size="sm">Unit 5/8</Text></Paper>
+      <Paper className="classInfoCard classInfoCard--info" p="md"><Text className="classInfoLabel">Điểm danh gần nhất</Text><Text className="classInfoValue" fw={700} fz="xl">14/16</Text><Text className="classInfoMeta" size="sm">87,5% tham dự</Text></Paper>
+      <Paper className="classInfoCard classInfoCard--warning" p="md"><Text className="classInfoLabel">Việc cần xử lý</Text><Text className="classInfoValue" fw={700} fz="xl">4</Text><UiStatusBadge role="warning">Cần xem hôm nay</UiStatusBadge></Paper>
     </SimpleGrid>
     <SimpleGrid cols={{ base: 1, lg: 2 }} spacing="md">
       <Paper className="panel" p="lg" withBorder><Group mb="md"><ThemeIcon color="yellow" variant="light"><AlertTriangle size={18}/></ThemeIcon><div><Text fw={700}>Học viên cần hỗ trợ</Text><Text size="sm" c="dimmed">Giáo viên ghi nhận, học vụ tiếp nhận handoff.</Text></div></Group><Stack gap="sm"><Group justify="space-between"><div><Text fw={600}>Nguyễn Minh Anh</Text><Text size="xs" c="dimmed">Vắng 2 buổi · homework trễ</Text></div><UiStatusBadge role="warning">Theo dõi</UiStatusBadge></Group><Group justify="space-between"><div><Text fw={600}>Trần Gia Huy</Text><Text size="xs" c="dimmed">Speaking confidence thấp</Text></div><UiStatusBadge role="info">Cần review</UiStatusBadge></Group><UiButton variant="default">Gửi học vụ</UiButton></Stack></Paper>
@@ -85,7 +85,7 @@ function ScheduleTab() {
   }), [mode, query]);
   const table = useReactTable({ data: filteredRows, columns, state: { sorting, globalFilter: query }, onSortingChange: setSorting, onGlobalFilterChange: setQuery, getCoreRowModel: getCoreRowModel(), getFilteredRowModel: getFilteredRowModel(), getSortedRowModel: getSortedRowModel() });
   return <Stack gap="md">
-    <SimpleGrid cols={{ base: 1, md: 3 }} spacing="sm"><Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Lịch cố định</Text><Text fw={700}>T2/T4/T6</Text><Text size="sm">18:00-19:30</Text></Paper><Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Buổi kế tiếp</Text><Text fw={700}>Thứ 2 · 24/08</Text><Text size="sm">Online · 18:00</Text></Paper><Paper className="panelHighlight" p="md"><Text size="sm" c="dimmed">Phê duyệt</Text><Text fw={700}>2/3 buổi đã xác nhận</Text><Text size="sm">1 buổi chờ học vụ</Text></Paper></SimpleGrid>
+    <SimpleGrid cols={{ base: 1, md: 3 }} spacing="sm"><Paper className="classInfoCard classInfoCard--primary" p="md"><Text className="classInfoLabel">Lịch cố định</Text><Text className="classInfoValue" fw={700}>T2/T4/T6</Text><Text className="classInfoMeta" size="sm">18:00-19:30</Text></Paper><Paper className="classInfoCard classInfoCard--info" p="md"><Text className="classInfoLabel">Buổi kế tiếp</Text><Text className="classInfoValue" fw={700}>Thứ 2 · 24/08</Text><Text className="classInfoMeta" size="sm">Online · 18:00</Text></Paper><Paper className="classInfoCard classInfoCard--warning" p="md"><Text className="classInfoLabel">Phê duyệt</Text><Text className="classInfoValue" fw={700}>2/3 buổi đã xác nhận</Text><Text className="classInfoMeta" size="sm">1 buổi chờ học vụ</Text></Paper></SimpleGrid>
     {requestSent ? <UiStatusBadge role="success">Đã gửi đề xuất đổi lịch, đang chờ học vụ duyệt.</UiStatusBadge> : null}
     <Group className="toolbar"><UiTextInput aria-label="Tìm buổi học" value={query} onChange={(event) => setQuery(event.currentTarget.value)} placeholder="Tìm ngày, nội dung, phòng..." leftSection={<Search size={16} />} /><UiSelect aria-label="Lọc hình thức" w={160} value={mode} onChange={setMode} data={[{ value: "all", label: "Tất cả hình thức" }, "Online", "Tại lớp"]} /><UiButton variant="default" leftSection={<Edit3 size={16} />} onClick={() => setRequestOpen(true)}>Đề xuất đổi lịch</UiButton></Group>
     <UiDataTable table={table} columnCount={columns.length} minWidth={1000} emptyTitle="Không có buổi học phù hợp." />

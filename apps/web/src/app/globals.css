@@ -909,3 +909,37 @@ a {
 .classDetailContent {
   width: 100%;
 }
+
+.classInfoCard {
+  border: 1px solid var(--app-border);
+  border-left: 4px solid var(--class-info-accent, var(--mantine-primary-color-filled));
+  background: var(--app-panel);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+.classInfoCard--primary { --class-info-accent: var(--mantine-primary-color-filled); }
+.classInfoCard--success { --class-info-accent: var(--hn-dark-success); }
+.classInfoCard--info { --class-info-accent: var(--mantine-color-blue-6); }
+.classInfoCard--warning { --class-info-accent: var(--hn-dark-warning); }
+.classInfoLabel {
+  display: block;
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 650;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.classInfoValue {
+  display: block;
+  margin-top: 6px;
+  color: var(--mantine-color-text);
+}
+.classInfoMeta {
+  display: block;
+  margin-top: 4px;
+  color: var(--mantine-color-dimmed);
+}
+.classInfoCallout {
+  border: 1px solid color-mix(in srgb, var(--mantine-primary-color-filled) 42%, var(--app-border));
+  border-left: 4px solid var(--mantine-primary-color-filled);
+  background: color-mix(in srgb, var(--mantine-primary-color-filled) 10%, var(--app-panel));
+}

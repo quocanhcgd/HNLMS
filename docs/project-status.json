@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T05:32:03.987Z",
+  "updatedAt": "2026-08-23T05:37:24.695Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thành Tab 2 Tổng quan: KPI lớp, học viên cần hỗ trợ, tiến độ, điểm danh và checklist buổi dạy",
+    "activity": "Tăng độ nổi bật thẻ thông tin Tab Lịch học và Tổng quan bằng card hierarchy, accent và contrast",
     "startedAt": null,
-    "updatedAt": "2026-08-23T05:32:03.987Z"
+    "updatedAt": "2026-08-23T05:37:24.695Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "72f7757",
-    "message": "feat(web): activate teacher schedule controls",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/72f7757"
+    "sha": "2f920f2",
+    "message": "feat(web): complete teacher class overview tab",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/2f920f2"
   },
   "ci": {
     "status": "unknown",
