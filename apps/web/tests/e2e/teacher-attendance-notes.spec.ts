@@ -1,2 +1,3 @@
 import { expect, test } from "@playwright/test";
 test("teacher can edit attendance note before locking", async ({ page }) => { await page.goto("/teacher/classes/if-2609/attendance"); const note = page.locator("input[aria-label=\"Ghi chú Nguyễn Minh Anh\"]").first(); await note.fill("Cần gọi phụ huynh xác minh lý do vắng"); await page.waitForTimeout(200); await expect(page.locator("input[placeholder=\"Nhập ghi chú...\"]").first()).toHaveValue("Cần gọi phụ huynh xác minh lý do vắng"); await page.getByRole("button", { name: "Chốt điểm danh" }).click(); await expect(page.locator("input[aria-label=\"Ghi chú Nguyễn Minh Anh\"]").first()).toBeDisabled(); });
+

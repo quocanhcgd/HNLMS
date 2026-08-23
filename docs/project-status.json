@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T14:07:08.716Z",
+  "updatedAt": "2026-08-23T14:20:48.311Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Sửa dứt điểm ghi chú điểm danh: capture value trước state update, không crash khi blur/chốt",
+    "activity": "Nối chọn buổi điểm danh với dataset theo từng buổi, reset filter/lock và hiển thị trạng thái bảng theo buổi",
     "startedAt": null,
-    "updatedAt": "2026-08-23T14:07:08.716Z"
+    "updatedAt": "2026-08-23T14:20:48.311Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "5153901",
-    "message": "fix(web): stabilize attendance note editing",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/5153901"
+    "sha": "5f561c4",
+    "message": "fix(web): persist attendance notes safely",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/5f561c4"
   },
   "ci": {
     "status": "unknown",
