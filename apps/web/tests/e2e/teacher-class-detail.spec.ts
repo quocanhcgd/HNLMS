@@ -6,5 +6,5 @@ test("teacher opens an assigned class and navigates its business tabs", async ({
   await expect(page.getByRole("link", { name: "Lịch học" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Bài tập" })).toBeVisible();
   await page.getByRole("link", { name: "Bài tập" }).click();
-  await expect(page.getByText("Bài tập trên lớp chấm ngay", { exact: false })).toBeVisible();
+  await expect(page.locator(".classDetailContent").getByText("Bài tập trên lớp chấm ngay", { exact: false }).first()).toBeVisible();
 });
