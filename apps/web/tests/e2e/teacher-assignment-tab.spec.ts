@@ -9,6 +9,11 @@ test("teacher creates and assigns homework to class",async({page})=>{
   await expect(page.getByText("Đã giao bài cho 18 học viên",{exact:false})).toBeVisible();
   await expect(page.getByText("Homework Unit 5",{exact:true})).toBeVisible();
   await expect(page.getByText("Đã giao",{exact:true}).last()).toBeVisible();
+  await page.getByRole("button", { name: "Chỉnh sửa" }).last().click();
+  await expect(page.getByText("Chỉnh sửa bài tập", { exact: true })).toBeVisible();
+  await page.getByLabel("Tên bài").fill("Homework Unit 5 - Updated");
+  await page.getByRole("button", { name: "Lưu thay đổi" }).click();
+  await expect(page.getByText("Homework Unit 5 - Updated", { exact: true })).toBeVisible();
   await page.getByText("Writing Task 1",{exact:true}).click();
   await expect(page.getByText("Hàng đợi xử lý bài tập",{exact:true})).toBeVisible();
 });
