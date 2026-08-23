@@ -83,6 +83,7 @@ Before ending every task:
 
 ## Recent Work Log
 
+- 2026-08-23: Added teacher class detail navigation: assigned class list links to a class workspace with tabs for schedule, students, sessions, assignments, materials, attendance, scores, teacher worklog, feedback, certificates and notifications.
 - 2026-08-23: Clarified and implemented teacher/student lesson-delivery flow: teachers prepare lesson, in-class exercise, assessment, homework and reference material per session; in-class work is graded immediately, homework enters later review, and students view/submit material inside the system.
 - 2026-08-23: Completed Phase 22 T144-T160 by adding versioned lesson/question contracts, registry, multimedia asset/upload/playback primitives, processing pipelines, lesson renderer, voice recorder MVP and multimedia tests; API/worker/web typechecks and full 380-test Vitest pass.
 - 2026-08-22: Completed Phase 21 T137-T143 by adding accessibility/visual checks, capacity/resilience smoke tests, backup and migration preflight scripts, security hardening checklist, quickstart release commands and operations runbook; accessibility/visual 3/3 and full 377-test Vitest pass.

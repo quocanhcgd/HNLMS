@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
@@ -74,7 +75,7 @@ export default function TeacherClassesPage() {
     {
       accessorKey: "classCode",
       header: "Lớp được phân công",
-      cell: ({ row }) => <div><Text fw={600}>{row.original.classCode}</Text><Text size="xs" c="dimmed">{row.original.course}</Text></div>,
+      cell: ({ row }) => <div><Link className="tableLinkButton" href={`/teacher/classes/${row.original.classCode.toLowerCase()}`}><Text fw={600}>{row.original.classCode}</Text></Link><Text size="xs" c="dimmed">{row.original.course}</Text></div>,
     },
     { accessorKey: "students", header: "Sĩ số", cell: ({ getValue }) => <Text>{getValue<number>()} học viên</Text> },
     { accessorKey: "schedule", header: "Lịch cố định" },
