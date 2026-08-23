@@ -11,6 +11,8 @@ test("all session material actions work", async ({ page }) => {
   await page.getByRole("button", { name: "Lưu thay đổi" }).click();
   await page.getByRole("button", { name: "Thêm học liệu" }).last().click();
   await expect(page.getByText("Thêm học liệu cho buổi học", { exact: true })).toBeVisible();
+  await page.locator('input[type="file"]').setInputFiles({ name: "bai-giang-unit-5.pdf", mimeType: "application/pdf", buffer: Buffer.from("sample lesson") });
+  await expect(page.getByText(/bai-giang-unit-5.pdf/)).toBeVisible();
   await page.getByRole("button", { name: "Thêm học liệu" }).last().click();
   await expect(page.getByText("Đã thêm học liệu vào buổi học.", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Xem trước như học viên" }).click();

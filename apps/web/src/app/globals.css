@@ -943,3 +943,7 @@ a {
   border-left: 4px solid var(--mantine-primary-color-filled);
   background: color-mix(in srgb, var(--mantine-primary-color-filled) 10%, var(--app-panel));
 }
+
+.mediaFileField { display: grid; gap: 6px; color: var(--mantine-color-text); font-size: var(--mantine-font-size-sm); font-weight: 600; }
+.mediaFileField input { width: 100%; padding: 9px; border: 1px dashed var(--app-border); border-radius: 6px; background: var(--app-panel); font-weight: 400; }
+.mediaFileField small { color: var(--mantine-color-dimmed); font-weight: 400; }
