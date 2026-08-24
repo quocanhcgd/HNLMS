@@ -25,7 +25,7 @@ const tabs = [
 function ClassDetailTabContent({ activeKey, summary }: { activeKey: string; summary: string }) {
   if (activeKey === "schedule") return <ScheduleTab />;
   if (activeKey === "overview") return <OverviewTab />;
-  if (["students", "sessions", "assignments", "materials", "attendance", "scores", "feedback"].includes(activeKey)) return <DetailTabContent activeKey={activeKey} />;
+  if (["students", "sessions", "assignments", "materials", "attendance", "scores", "feedback", "notifications"].includes(activeKey)) return <DetailTabContent activeKey={activeKey} />;
   return <Paper className="classInfoCallout" p="lg"><Text fw={700}>{summary.split(".")[0]}</Text><Text size="sm" c="dimmed" mt="xs">{summary}</Text></Paper>;
 }
 
