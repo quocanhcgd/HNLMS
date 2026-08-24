@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-24T01:37:44.430Z",
+  "updatedAt": "2026-08-24T02:01:26.063Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn thiện Tab Bảng điểm: chọn học viên, chấm/cập nhật điểm và công bố điểm",
+    "activity": "Hoàn thiện Tab Phản hồi buổi học: chọn buổi, phân loại, ưu tiên, ghi chú, lưu nháp và gửi học vụ",
     "startedAt": null,
-    "updatedAt": "2026-08-24T01:37:44.430Z"
+    "updatedAt": "2026-08-24T02:01:26.063Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "9dba896",
-    "message": "test: verify attendance session dataset switch",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/9dba896"
+    "sha": "3cd9fea",
+    "message": "feat(web): activate teacher scores tab",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/3cd9fea"
   },
   "ci": {
     "status": "unknown",
