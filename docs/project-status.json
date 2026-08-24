@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T14:24:39.428Z",
+  "updatedAt": "2026-08-24T01:37:44.430Z",
   "project": "HN-LMS",
   "repository": "https://github.com/quocanhcgd/HNLMS",
   "branch": "main",
@@ -10,9 +10,9 @@
     "phase": "Phase 13: User Story 10 - Lớp học online (P1)",
     "status": "completed",
     "percent": 100,
-    "activity": "Hoàn tất hiển thị dataset theo từng buổi điểm danh, thêm header buổi và kiểm thử chuyển buổi",
+    "activity": "Hoàn thiện Tab Bảng điểm: chọn học viên, chấm/cập nhật điểm và công bố điểm",
     "startedAt": null,
-    "updatedAt": "2026-08-23T14:24:39.428Z"
+    "updatedAt": "2026-08-24T01:37:44.430Z"
   },
   "nextTask": {
     "id": "T094",
@@ -179,9 +179,9 @@
     }
   ],
   "lastCommit": {
-    "sha": "a2c81e6",
-    "message": "feat(web): switch attendance by session",
-    "url": "https://github.com/quocanhcgd/HNLMS/commit/a2c81e6"
+    "sha": "9dba896",
+    "message": "test: verify attendance session dataset switch",
+    "url": "https://github.com/quocanhcgd/HNLMS/commit/9dba896"
   },
   "ci": {
     "status": "unknown",
