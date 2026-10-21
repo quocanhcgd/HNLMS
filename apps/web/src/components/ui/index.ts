@@ -11,4 +11,6 @@ export {
   type UiStatusRole,
 } from "./data-display";
 export { UiModal } from "./modal";
+export { UiRowActions, type UiRowAction, type UiRowActionsProps } from "./row-actions";
+export { UiConfirmModal, UiEditModal } from "./workflow-modal";
 export { PageToolbar } from "./page-toolbar";

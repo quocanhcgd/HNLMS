@@ -1,1 +1,11 @@
-import { expect, test } from "@playwright/test";test("teacher sends scoped class notification",async({page})=>{await page.goto("/teacher/classes/if-2609/notifications");await page.getByRole("button",{name:"Tạo thông báo"}).click();await expect(page.getByText("Tạo thông báo cho lớp",{exact:true})).toBeVisible();await page.getByRole("button",{name:"Gửi thông báo"}).click();await expect(page.getByText("Đã gửi thông báo trong phạm vi lớp.",{exact:true})).toBeVisible();});
+import { expect, test } from "@playwright/test";
+
+test("teacher sends scoped class notification", async ({ page }) => {
+  await page.goto("/teacher/classes/if-2609/notifications");
+  await page.getByRole("button", { name: "Tạo thông báo" }).click();
+  await expect(page.getByText("Tạo thông báo cho lớp", { exact: true })).toBeVisible();
+  await page.getByLabel("Tiêu đề").fill("Thông báo kiểm tra Unit 5");
+  await page.getByRole("button", { name: "Gửi thông báo" }).click();
+  await expect(page.getByText("Đã gửi thông báo trong phạm vi lớp.", { exact: true })).toBeVisible();
+  await expect(page.getByText("Thông báo kiểm tra Unit 5")).toBeVisible();
+});

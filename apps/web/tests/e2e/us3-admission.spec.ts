@@ -36,4 +36,61 @@ test.describe("US3 admission consultant workflow", () => {
     await expect(page.getByText("Đã ghi danh Teen B1 · TB1-2608")).toBeVisible();
     await expect(page.getByRole("button", { name: "Chuyển đổi ghi danh" })).toBeDisabled();
   });
+
+  test("admission manager sees the organization pipeline and can assign a lead", async ({ page }) => {
+    await page.goto("/login");
+    await page.getByLabel("Email").fill("admission-manager@demo.hnlms.vn");
+    await page.getByLabel("Mật khẩu").fill("DemoAccess@2026!");
+    await page.getByRole("button", { name: "Đăng nhập" }).click();
+    await expect(page.getByText("Điều hành tuyển sinh", { exact: true })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText("Work queue tuyển sinh toàn tổ chức", { exact: true })).toBeVisible();
+    await page.getByRole("row").filter({ hasText: "Lê Bảo Ngọc" }).getByRole("button", { name: "Phân công", exact: true }).click();
+    await expect(page.getByText("Phân công · Lê Bảo Ngọc", { exact: true })).toBeVisible();
+    await page.getByRole("textbox", { name: "Tư vấn viên phụ trách" }).click();
+    await page.getByRole("option", { name: "Lan Anh" }).click();
+    await page.getByRole("button", { name: "Lưu phân công" }).click();
+    await expect(page.getByText("Đã phân công Lê Bảo Ngọc cho Lan Anh.", { exact: true })).toBeVisible();
+  });
+
+  test("admission manager can inspect a lead and update its next workflow step", async ({ page }) => {
+    await page.goto("/login");
+    await page.getByLabel("Email").fill("admission-manager@demo.hnlms.vn");
+    await page.getByLabel("Mật khẩu").fill("DemoAccess@2026!");
+    await page.getByRole("button", { name: "Đăng nhập" }).click();
+    await expect(page.getByText("Điều hành tuyển sinh", { exact: true })).toBeVisible({ timeout: 15_000 });
+
+    const leadRow = page.getByRole("row").filter({ hasText: "Trần Hoàng Nam" });
+    await leadRow.getByRole("button", { name: "Xem hồ sơ", exact: true }).click();
+    await expect(page.getByText("Hồ sơ tuyển sinh · Trần Hoàng Nam", { exact: true })).toBeVisible();
+    await page.locator("body").press("Escape");
+
+    await leadRow.getByRole("button", { name: "Cập nhật bước", exact: true }).click();
+    await expect(page.getByText("Cập nhật bước · Trần Hoàng Nam", { exact: true })).toBeVisible();
+    await page.getByLabel("Bước tiếp theo").fill("Gọi xác nhận lịch thi đầu vào");
+    await page.getByRole("button", { name: "Lưu cập nhật", exact: true }).click();
+    await expect(page.getByText("Đã cập nhật bước xử lý cho Trần Hoàng Nam.", { exact: true })).toBeVisible();
+    await expect(leadRow).toContainText("Gọi xác nhận lịch thi đầu vào");
+  });
+
+  test("admission manager can access internal notifications and personal staff services", async ({ page }) => {
+    await page.goto("/login");
+    await page.getByLabel("Email").fill("admission-manager@demo.hnlms.vn");
+    await page.getByLabel("Mật khẩu").fill("DemoAccess@2026!");
+    await page.getByRole("button", { name: "Đăng nhập" }).click();
+    await expect(page.getByText("Điều hành tuyển sinh", { exact: true })).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByRole("link", { name: "Trao đổi nội bộ", exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Hộp thông báo", exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Lịch làm việc & chấm công", exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Xin nghỉ", exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Thu nhập & lương", exact: true })).toBeVisible();
+    await page.getByRole("link", { name: "Hộp thông báo", exact: true }).click();
+    await expect(page.getByText("Hộp thông báo", { exact: true }).first()).toBeVisible();
+    const notificationRow = page.getByRole("row").filter({ hasText: "Nhắc lịch học hôm nay" });
+    await notificationRow.getByRole("button", { name: "Xem thông báo", exact: true }).click();
+    await page.getByRole("button", { name: "Đánh dấu đã đọc", exact: true }).click();
+    await expect(notificationRow).toContainText("Đã đọc");
+    await page.getByRole("button", { name: "Đóng", exact: true }).click();
+    await page.getByRole("link", { name: "Lịch làm việc & chấm công", exact: true }).click();
+    await expect(page.getByText("Lịch làm việc & chấm công", { exact: true }).first()).toBeVisible();
+  });
 });

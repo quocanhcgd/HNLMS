@@ -14,7 +14,7 @@ Không space nào dùng navigation hoặc authorization context của space khá
 Tổng quan
 Tuyển sinh: Khách hàng tiềm năng, Lịch tư vấn, Thi đầu vào, Ghi danh
 Đào tạo: Ngành & chương trình, Khóa học, Lớp học, Lịch học, Phân công
-Học tập: Học liệu, Thư viện, Đánh giá, Tiếng Anh, Lớp online
+Học tập: Học liệu, Thư viện, Đánh giá đầu vào, Đánh giá thi thử, Hồ sơ năng lực, Lớp online
 Học viên: Hồ sơ, Phụ huynh & ủy quyền, Tiến độ, Điểm danh, Kết quả
 Trao đổi: Hội thoại, Thông báo
 Tài chính: Hóa đơn & công nợ, Thanh toán, Thu chi, Ngân sách, Payroll, Đồng bộ

@@ -9,11 +9,11 @@ Navigation là giao của role permission, scope và effective module entitlemen
 | Branch manager | Branch dashboard | Tuyển sinh, lớp, học viên, nhân sự, tài chính, báo cáo trong branch |
 | Consultant | Admission work queue | Leads, lịch tư vấn, thi đầu vào, đề xuất lớp, ghi danh |
 | Academic manager | Academic dashboard | Chương trình, lớp, lịch, phân công, học liệu, assessment |
-| Teacher | Lịch dạy hôm nay | Lớp phụ trách, điểm danh, học liệu, đánh giá, phản hồi, trao đổi |
+| Teacher | Lịch dạy hôm nay | Lớp phụ trách, điểm danh, học liệu, đánh giá đầu vào/thi thử, hồ sơ năng lực, phản hồi, trao đổi |
 | Finance officer | Finance work queue | Hóa đơn, thanh toán, công nợ, thu chi, đối soát, payroll theo quyền |
 | HR officer | HR work queue | Hồ sơ, hợp đồng, chấm công, nghỉ phép, đánh giá |
-| Student | Học tập hôm nay | Lịch, lớp, học liệu, bài thi, tiến độ, học phí, trao đổi |
-| Parent | Tổng quan học viên | Chọn học viên, lịch, điểm danh, tiến độ, học phí, trao đổi theo delegation |
+| Student | Học tập hôm nay | Lịch, lớp, học liệu, bài thi, điểm, hồ sơ năng lực, tiến độ, học phí, trao đổi |
+| Parent | Tổng quan học viên | Chọn học viên, lịch, điểm danh, điểm, hồ sơ năng lực, tiến độ, học phí, trao đổi theo delegation |
 
 ## Rules
 

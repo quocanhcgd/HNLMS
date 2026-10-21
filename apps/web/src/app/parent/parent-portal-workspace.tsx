@@ -3,13 +3,16 @@
 import { useMemo, useState } from "react";
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
-import { Text } from "@mantine/core";
-import { Search } from "lucide-react";
+import { Group, Paper, SimpleGrid, Stack, Text } from "@mantine/core";
+import { AlertTriangle, Bell, BookOpen, CreditCard, MessageCircle, Search } from "lucide-react";
+import Link from "next/link";
 import { PageHeader } from "@/components/app-shell";
-import { PageToolbar, UiDataTable, UiStatusBadge, UiTextInput } from "@/components/ui";
+import { PageToolbar, UiButton, UiDataTable, UiStatusBadge, UiTextInput } from "@/components/ui";
 
 type Row = {
+  studentId: string;
   student: string;
+  classId: string;
   classCode: string;
   schedule: string;
   progress: number;
@@ -20,7 +23,9 @@ type Row = {
 };
 const rows: Row[] = [
   {
-    student: "Nguyễn An",
+    studentId: "student-minh-anh",
+    student: "Nguyễn Minh Anh",
+    classId: "if-2609",
     classCode: "IF-2609",
     schedule: "T2/T4/T6 · 18:00",
     progress: 62,
@@ -30,7 +35,9 @@ const rows: Row[] = [
     delegation: "Đang hiệu lực",
   },
   {
-    student: "Nguyễn An",
+    studentId: "student-minh-anh",
+    student: "Nguyễn Minh Anh",
+    classId: "toeic-2609",
     classCode: "TOEIC-2609",
     schedule: "T2/T5 · 19:45",
     progress: 18,
@@ -79,6 +86,30 @@ export function ParentPortalWorkspace() {
           return <UiStatusBadge role={value === "Đang hiệu lực" ? "success" : "warning"}>{value}</UiStatusBadge>;
         },
       },
+      {
+        id: "actions",
+        header: "Thao tác",
+        enableSorting: false,
+        cell: ({ row }) => (
+          <Group gap="xs" wrap="nowrap">
+            <UiButton component={Link} href={`/parent/classes/${row.original.classId}`} size="compact-xs" variant="default">
+              Xem lớp
+            </UiButton>
+            <UiButton
+              component={Link}
+              href={`/parent/conversations?student=${row.original.studentId}&classId=${row.original.classId}`}
+              size="compact-xs"
+              variant="subtle"
+              leftSection={<MessageCircle size={14} />}
+            >
+              Trao đổi
+            </UiButton>
+            <UiButton component={Link} href={`/parent/classes?student=${row.original.studentId}`} size="compact-xs" variant="subtle">
+              Các lớp của con
+            </UiButton>
+          </Group>
+        ),
+      },
     ],
     [],
   );
@@ -98,6 +129,48 @@ export function ParentPortalWorkspace() {
         title="Cổng phụ huynh"
         subtitle="Theo dõi lịch học, tiến độ, điểm, học phí và bài tập theo phạm vi ủy quyền từng học viên."
       />
+      <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md" mb="md">
+        <Paper component={Link} href="/parent/students" className="classInfoCard classInfoCard--info" p="md">
+          <Text className="classInfoLabel">HỌC VIÊN ĐƯỢC THEO DÕI</Text>
+          <Text className="classInfoValue" fw={700}>
+            2
+          </Text>
+        </Paper>
+        <Paper component={Link} href="/parent/notifications" className="classInfoCard classInfoCard--warning" p="md">
+          <Text className="classInfoLabel">VIỆC CẦN LƯU Ý</Text>
+          <Text className="classInfoValue" fw={700}>
+            3
+          </Text>
+        </Paper>
+        <Paper component={Link} href="/parent/classes" className="classInfoCard classInfoCard--success" p="md">
+          <Text className="classInfoLabel">TỶ LỆ THAM DỰ</Text>
+          <Text className="classInfoValue" fw={700}>
+            87,5%
+          </Text>
+        </Paper>
+      </SimpleGrid>
+      <Paper className="classInfoCallout" p="md" mb="md">
+        <Group justify="space-between" align="flex-start" wrap="wrap" gap="md">
+          <Group gap="sm" align="flex-start" wrap="nowrap">
+            <AlertTriangle size={18} />
+            <Stack gap={2}>
+              <Text fw={600}>Việc cần xử lý</Text>
+              <Text size="sm" c="dimmed">Có bài tập sắp đến hạn và một hóa đơn chưa hoàn tất trong phạm vi theo dõi.</Text>
+            </Stack>
+          </Group>
+          <Group gap="xs">
+            <UiButton component={Link} href="/parent/classes/if-2609" size="compact-xs" variant="default" leftSection={<BookOpen size={14} />}>
+              Xem bài tập
+            </UiButton>
+            <UiButton component={Link} href="/parent/payments?student=student-minh-anh" size="compact-xs" variant="subtle" leftSection={<CreditCard size={14} />}>
+              Xem học phí
+            </UiButton>
+            <UiButton component={Link} href="/parent/notifications?student=student-minh-anh" size="compact-xs" variant="subtle" leftSection={<Bell size={14} />}>
+              Xem thông báo
+            </UiButton>
+          </Group>
+        </Group>
+      </Paper>
       <PageToolbar className="toolbar">
         <UiTextInput
           aria-label="Tìm kiếm"
@@ -108,12 +181,14 @@ export function ParentPortalWorkspace() {
           placeholder="Tìm học viên, lớp, học phí..."
         />
       </PageToolbar>
-      <UiDataTable
-        table={table}
-        columnCount={columns.length}
-        minWidth={1050}
-        emptyTitle="Không tìm thấy dữ liệu phụ huynh phù hợp."
-      />
+      <Paper className="panel parentTablePanel" p="md" withBorder>
+        <UiDataTable
+          table={table}
+          columnCount={columns.length}
+          minWidth={1160}
+          emptyTitle="Không tìm thấy dữ liệu phụ huynh phù hợp."
+        />
+      </Paper>
       <Text size="xs" c="dimmed" mt="sm">
         TanStack Table · {table.getRowModel().rows.length}/{rows.length} bản ghi · không tạo layout/bảng riêng.
       </Text>

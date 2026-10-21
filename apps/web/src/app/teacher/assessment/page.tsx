@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TeacherAssessmentWorkspace } from "./teacher-assessment-workspace";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Chấm bài & đề thi",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function TeacherAssessmentPage() {
-  return <TeacherAssessmentWorkspace />;
+  redirect("/teacher/assessment/entrance");
 }

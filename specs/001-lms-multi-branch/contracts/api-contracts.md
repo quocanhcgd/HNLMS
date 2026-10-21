@@ -54,11 +54,23 @@ Upload state: initiated, uploading, uploaded, scanning, processing, ready, rejec
 ## Assessment và practice
 
 - `GET /question-type-definitions`: registry question type effective; không trả executable plugin.
-- `POST /question-bank/items`: type key, schema version, prompt/media, answer schema, scoring config; runtime validation bắt buộc.
+- `GET /programs/{program_id}/competency-definitions`: competency groups, required state, rubric, score scale, normalization policy và version.
+- `POST /assessment-blueprints`: subject/program, competency definitions, score scales, rubric references, normalization rules, placement thresholds, target outcomes và immutable version.
+- `GET /program-competency/blueprints` và `GET /program-competency/blueprints/{blueprint_id}`: blueprint đã lọc theo subject/program scope.
+- `POST /program-competency/blueprints`: tạo draft blueprint version kế tiếp; `POST /program-competency/blueprints/{blueprint_id}/publish` chỉ publish bản draft đã qua validation.
+- `POST /question-bank/items`: type key, schema version, subject/program, competency group, prompt/media, answer schema, scoring config; runtime validation bắt buộc.
+- `POST /assessments`: kind (entrance/mock/practice), subject/program, blueprint version, audience, window, attempts, scoring policy và result visibility.
 - `POST /assessments/{id}/attempts`: unique business key, start/expiry/state.
 - `PUT /assessment-attempts/{id}/answers/{item_id}`: answer payload, `save_sequence`, optional media response; request cũ không ghi đè sequence mới.
-- `POST /assessment-attempts/{id}/submit`: idempotent; trả submission/result/manual-review state.
+- `POST /assessment-attempts/{id}/submit`: idempotent; trả submission/result/manual-review state và competency evidence candidates theo blueprint.
 - `POST /assessment-answers/{id}/manual-reviews`: rubric, score, feedback, optional timestamp annotations; audit.
+- `GET /students/{student_id}/competency-profiles?program_id=&subject=&class_id=`: baseline/current/target, competency states, evidence summary, confidence và class context theo scope.
+- `POST /competency-profiles/{profile_id}/reviews`: per-competency rubric results, evidence references, rationale, confidence và approval state.
+- `GET /competency-profiles/{profile_id}/evidence`: raw score/scale, normalized score/level, source, reviewer, class/enrollment/session reference, assessed time và immutable versions.
+- `GET /students/{student_id}/learning-output?enrollment_id=&program_id=&class_id=`: published schedule, materials, scores, attendance, feedback và competency summaries theo self/enrollment/program scope.
+- `GET /parent/students/{student_id}/learning-output?enrollment_id=&program_id=&class_id=`: cùng nguồn canonical nhưng kiểm tra độc lập `view_schedule`, `view_progress`, `view_scores`, `view_attendance`, `view_feedback` và `view_competency`; nhóm không có quyền trả rỗng/null cùng visibility metadata.
+- `POST /class-outputs/{id}/publish`: chỉ nhận output `confirmed` thuộc allowlist schedule/material/score/attendance/feedback/competency, yêu cầu quyền publish và class scope; idempotent theo organization/output, tạo immutable publication mapping, audit event và notification context link. Worklog, private note, internal handoff, grading queue và payroll luôn bị từ chối.
+- `GET /notifications?context_type=class-output`: trả notification đã lọc theo người nhận với context `{ contextType, contextId, outputType, classId, enrollmentId }`; không chứa private payload. Khi mở context link, API đích phải kiểm tra lại organization, enrollment/delegation và quyền theo loại output.
 
 Speaking upload phải dùng media upload session có purpose `assessment-response`, giới hạn duration/size và chỉ candidate/reviewer đúng scope truy cập.
 
@@ -67,6 +79,7 @@ Speaking upload phải dùng media upload session có purpose `assessment-respon
 - `POST /students/{student_id}/parent-delegations`.
 - `POST /conversations`, `POST /conversations/{id}/messages`.
 - `POST /classes/{class_id}/online-sessions`; join/recording chỉ cấp sau enrollment/delegation check.
+- `GET /students/{student_id}/learning-output?enrollment_id=&program_id=&class_id=`; chỉ self-scope và trả schedule/material/score/attendance/feedback/competency đã published.
 - `POST /payroll-periods/{id}/calculate|approve`; locked period chỉ adjustment.
 - `POST /finance/expense-requests`.
 
@@ -89,6 +102,12 @@ Speaking upload phải dùng media upload session có purpose `assessment-respon
 - Không publish lesson khi block schema không hợp lệ hoặc asset bắt buộc chưa ready.
 - Không cho tenant upload/execute JavaScript lesson/question plugin.
 - Không có attempt/submit/webhook/payment effect trùng.
+- Kết quả assessment đã publish chỉ tạo hoặc cập nhật competency evidence theo đúng subject/program/blueprint; không được ghi đè baseline/current snapshot ngoài workflow phê duyệt.
+- Không so sánh normalized score/level giữa hai blueprint hoặc policy không tương thích; regrade/correction phải tạo version/audit mới.
+- Class-scoped competency view dùng cùng profile/evidence với global view và không được tạo bản sao theo lớp.
+- Published class outputs phải xuất hiện ở student read model theo enrollment; parent read model phải kiểm tra delegation độc lập cho score, progress, attendance, feedback và competency summary.
+- Draft, grading queue, worklog, payroll state, private note, internal handoff và reviewer-only rationale không được trả qua student/parent endpoints.
+- Notification công bố class output chỉ chứa title/body công khai, recipient IDs và context link; không chứa reviewer rationale, worklog hoặc private payload. Mở context link phải kiểm tra authorization lại.
 - Không dùng MCP làm dependency runtime cho lesson renderer, player, recorder, uploader hoặc assessment engine.
 - Không tự chốt payment từ redirect, sửa payroll locked, hoặc áp dụng AI high-risk chưa review.
 - Không cutover tenant nếu thiếu backup, final sync, validation, target license và rollback readiness.

@@ -1,8 +1,9 @@
 {
   "name": "hnlms-workspace",
   "private": true,
+  "packageManager": "npm@10.5.0",
   "engines": {
-    "node": ">=20.12 <21"
+    "node": ">=20.19 <21"
   },
   "workspaces": [
     "apps/*",
@@ -20,8 +21,17 @@
     "test": "vitest run",
     "format": "prettier --write .",
     "format:check": "prettier --check \"apps/**/src/**/*.{ts,tsx,js,mjs,css,json,md}\" \"worker/src/**/*.{ts,js,json,md}\" \"packages/**/src/**/*.{ts,tsx,json,md}\" \"tests/**/*.{ts,tsx}\" \"*.{json,md,mjs}\" \"docs/development/**/*.{md,json}\"",
+    "test:unit": "vitest run tests/unit",
+    "test:contract": "vitest run apps/api/tests/contract",
+    "test:authorization": "vitest run apps/api/tests/authorization tests/unit/authorization-matrix.test.ts",
+    "test:migration": "vitest run apps/api/src/database/migration-smoke.test.ts tests/unit/migration-landing-content.test.ts tests/unit/t053-admission-schema.test.ts",
+    "ci:secret-scan": "node scripts/ci-secret-scan.mjs",
+    "ci:license-scan": "node scripts/ci-license-scan.mjs",
+    "readiness:check": "node scripts/readiness-gate.mjs",
+    "readiness:production": "node scripts/readiness-gate.mjs --production",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "check:services": "node scripts/check-local-services.mjs",
     "status:generate": "node scripts/update-project-status.mjs && node scripts/generate-task-dashboard.mjs",
     "status:start": "cross-env STATUS_TASK=$npm_config_task STATUS_STATE=in_progress STATUS_PERCENT=0 STATUS_ACTIVITY=\"Bắt đầu task\" npm run status:generate"
   },

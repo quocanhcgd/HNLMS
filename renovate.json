@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["npm", "github-actions"],
+  "schedule": ["before 6am on monday"],
+  "prConcurrentLimit": 10,
+  "rangeStrategy": "replace",
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "description": "Group non-breaking production updates",
+      "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "production dependencies"
+    },
+    {
+      "description": "Keep framework major upgrades explicit",
+      "matchPackageNames": ["next", "@nestjs/core", "@nestjs/platform-express", "react", "react-dom"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "breaking-change"]
+    }
+  ]
+}

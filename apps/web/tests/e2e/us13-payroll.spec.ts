@@ -1,1 +1,10 @@
-import {expect,test} from "@playwright/test";test("US13 payroll portals",async({page})=>{await page.goto("/admin/payroll");await expect(page.getByText("Kỳ lương tháng 08/2026",{exact:true})).toBeVisible();await page.goto("/admin/finance/branch-finance");await expect(page.getByText("Tài chính chi nhánh",{exact:true})).toBeVisible();await page.goto("/teacher/payroll");await expect(page.locator("main").getByText("Lương & công dạy",{exact:true})).toBeVisible()});
+import { expect, test } from "@playwright/test";
+
+test("US13 payroll portals", async ({ page }) => {
+  await page.goto("/admin/payroll");
+  await expect(page.locator("main").getByText("Kỳ lương tháng 08/2026", { exact: true })).toBeVisible();
+  await page.goto("/admin/finance/branch-finance");
+  await expect(page.locator("main").getByText("Tài chính chi nhánh", { exact: true })).toBeVisible();
+  await page.goto("/teacher/payroll");
+  await expect(page.locator("main").getByText("Lương & công dạy", { exact: true })).toBeVisible();
+});

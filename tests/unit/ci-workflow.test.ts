@@ -10,6 +10,11 @@ describe("CI workflow", () => {
       "npm run format:check",
       "npm run lint",
       "npm run typecheck",
+      "npm run readiness:check",
+      "npm run test:unit",
+      "npm run test:contract",
+      "npm run test:authorization",
+      "npm run test:migration",
       "npm test",
       "npm run test:e2e",
     ]) {
@@ -20,6 +25,10 @@ describe("CI workflow", () => {
   it("builds and checksums an immutable artifact", () => {
     expect(workflow).toContain("npm run build --workspaces --if-present");
     expect(workflow).toContain("sha256sum");
+    expect(workflow).toContain("sha256sum --check");
+    expect(workflow).toContain("npm audit --omit=dev --audit-level=high");
+    expect(workflow).toContain("npm run ci:license-scan");
+    expect(workflow).toContain("npm run ci:secret-scan");
     expect(workflow).toContain("actions/upload-artifact@v4");
     expect(workflow).toContain("if-no-files-found: error");
   });

@@ -118,6 +118,24 @@ describe("T082 assessment policy service", () => {
       code: "invalid_scoring_policy",
     } satisfies Partial<AssessmentPolicyError>);
   });
+
+  it("denies publishing an assessment outside the actor subject or program scope", async () => {
+    repository.assessments[0] = {
+      ...validAssessment(),
+      subjectId: "subject-math",
+      programId: "program-foundation",
+    };
+    const scopedActor = {
+      ...actor,
+      subjectIds: new Set(["subject-english"]),
+      programIds: new Set(["program-foundation"]),
+    };
+
+    await expect(service.publishAssessment(scopedActor, "assessment-1")).rejects.toMatchObject({
+      code: "forbidden",
+      message: "assessment_subject_scope_denied",
+    } satisfies Partial<AssessmentPolicyError>);
+  });
 });
 
 function validAssessment(): AssessmentPolicyReference {

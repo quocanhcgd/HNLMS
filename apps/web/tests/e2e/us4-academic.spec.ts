@@ -7,8 +7,8 @@ test.describe("US4 academic administration", () => {
     await expect(page).toHaveURL(/\/admin\/academic\/programs$/);
     await expect(page.getByRole("link", { name: "Đào tạo" }).first()).toBeVisible();
     await expect(page.getByRole("link", { name: "Đào tạo" })).toHaveCount(1);
-    await expect(page.getByText("Lộ trình IELTS", { exact: true })).toBeVisible();
-    await expect(page.getByText("Đã công bố", { exact: true })).toBeVisible();
+    await expect(page.getByText(/Teen B1|Nền tảng THCS|Luyện thi 10/, { exact: false }).first()).toBeVisible();
+    await expect(page.getByText("Đã công bố", { exact: true }).first()).toBeVisible();
     await expect(page.getByRole("button", { name: "Tạo chương trình" })).toBeVisible();
   });
 

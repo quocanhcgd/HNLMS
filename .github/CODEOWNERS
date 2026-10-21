@@ -1,0 +1,10 @@
+# Default review ownership. Keep this file aligned with the maintainers list in SECURITY.md.
+* @quocanhcgd
+
+# Security-sensitive boundaries require an explicit security owner review.
+/.github/ @quocanhcgd
+/apps/api/src/modules/identity-access/ @quocanhcgd
+/apps/api/src/shared/http/ @quocanhcgd
+/apps/api/src/shared/storage/ @quocanhcgd
+/infra/backup/ @quocanhcgd
+/infra/secrets/ @quocanhcgd

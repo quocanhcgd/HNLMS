@@ -143,20 +143,50 @@ Native release scripts: `infra/release-scripts/preflight.sh`, `migration-preflig
 - Recording private và permission theo LMS.
 - Provider timeout tạo trạng thái pending/retry, không báo thành công giả.
 
-## Scenario 7: Assessment và English pathway
+## Scenario 7: Assessment và hồ sơ năng lực đa ngành
 
 1. Tạo câu hỏi và duyệt vào bank.
-2. Tạo entrance assessment với rule xếp level.
+2. Tạo hai entrance assessment cho hai chương trình có blueprint khác nhau (ví dụ IELTS và Toán lớp 9).
 3. Cho candidate làm bài, submit một lần và gửi submit lặp.
-4. Tạo English pathway có listening, speaking, reading, writing.
-5. Nộp speaking/writing cần manual review.
+4. Tạo hồ sơ năng lực theo student + subject/program, có baseline, current và target.
+5. Nộp minh chứng cần manual review theo rubric; English chỉ yêu cầu listening/speaking/reading/writing khi blueprint khai báo.
 
 **Expected**:
 
 - Attempt không bị nhân đôi.
-- Kết quả đầu vào gán level/lớp đề xuất theo rule.
-- Bốn skill có tiến độ riêng.
-- Speaking/writing ở trạng thái chờ chấm cho đến khi teacher review.
+- Kết quả đầu vào tạo immutable evidence và gán level/lớp đề xuất theo blueprint của đúng chương trình.
+- Mỗi hồ sơ tách đầu vào, hiện tại, mục tiêu và tiến bộ theo nhóm năng lực; năng lực ngoài phạm vi không bị đánh dấu thiếu.
+- Speaking/writing hoặc nhóm năng lực cần manual review ở trạng thái chờ chấm cho đến khi teacher review.
+- Học viên có nhiều môn/lớp không bị ghi đè hồ sơ; view tổng hợp và view trong lớp dùng chung dữ liệu.
+
+## Scenario 7B: Class output propagation to student and parent
+
+1. Từ lớp, giáo viên công bố một học liệu, điểm, điểm danh, phản hồi và competency evidence đã xác nhận.
+2. Tạo một draft rubric, worklog và ghi chú nội bộ chưa công bố.
+3. Mở student portal và parent portal với delegation chỉ cho phép tiến độ/điểm.
+4. Mở lại context link từ notification theo lớp, buổi học và competency evidence.
+
+**Expected**:
+
+- Học viên thấy các output đã công bố với đúng môn/chương trình/lớp.
+- Phụ huynh chỉ thấy phần delegation cho phép; nếu không có quyền hồ sơ năng lực thì không thấy competency summary.
+- Draft, worklog, payroll state, private note và reviewer rationale không xuất hiện ở student/parent.
+- Notification không lộ dữ liệu ngoài scope và context link kiểm tra quyền lại khi mở.
+
+## Scenario 7C: Change impact and table interaction standard
+
+1. Ghi nhận một yêu cầu người dùng làm thay đổi một chức năng lớp học.
+2. Lập impact analysis cho teacher, academic, student, parent, finance/HR khi có liên quan; ghi rõ vai trò không bị ảnh hưởng.
+3. Kiểm tra màn hình có bảng chính và bảng phụ lặp cùng dữ liệu; hợp nhất thành một bảng có cột `Thao tác`.
+4. Mở `Sửa` từ một dòng, nhập dữ liệu trong modal, thử validation/dirty state rồi lưu.
+5. Thử `Xóa` với bản ghi nháp và bản ghi đã công bố/chốt.
+
+**Expected**:
+
+- Change item có owner, quyết định, tài liệu cập nhật và kiểm thử liên vai trò trước khi release.
+- Bảng không có bảng phụ lặp dữ liệu; command hiển thị theo permission/status.
+- Edit chỉ hoàn tất qua modal hợp lệ và có audit.
+- Bản ghi nháp có confirmation khi xóa; bản ghi đã công bố/chốt chuyển sang archive/void/adjustment, không xóa vật lý.
 
 ## Scenario 7A: Bài giảng và media processing
 

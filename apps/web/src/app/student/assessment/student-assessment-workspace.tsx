@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { Group, Paper, Progress, Radio, SimpleGrid, Stack, Text } from "@mantine/core";
 import { CheckCircle2, Clock, PlayCircle, Search, Send } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { PageToolbar, UiButton, UiDataTable, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
+import { PageToolbar, UiButton, UiDataTable, UiModal, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
 
 type AssessmentStatus = "available" | "in_progress" | "submitted" | "published";
 type StudentAssessment = {
@@ -62,20 +62,78 @@ const assessments: StudentAssessment[] = [
   },
 ];
 
+const DRAFT_STORAGE_KEY = "hnlms.student.assessment.entrance.draft";
+const INITIAL_REMAINING_SECONDS = 32 * 60 + 18;
+
+const formatRemaining = (seconds: number) => {
+  const safeSeconds = Math.max(0, seconds);
+  return `${Math.floor(safeSeconds / 60).toString().padStart(2, "0")}:${(safeSeconds % 60).toString().padStart(2, "0")}`;
+};
+
 export function StudentAssessmentWorkspace() {
+  const [assessmentItems, setAssessmentItems] = useState(assessments);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<string | null>("all");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [answer, setAnswer] = useState("B");
+  const [submitOpened, setSubmitOpened] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [selectedAssessment, setSelectedAssessment] = useState<StudentAssessment | null>(null);
+  const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
+  const [hydrated, setHydrated] = useState(false);
+  const endAtRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(DRAFT_STORAGE_KEY);
+      if (raw) {
+        const draft = JSON.parse(raw) as { answer?: string; endAt?: number; submitted?: boolean };
+        if (draft.answer === "A" || draft.answer === "B" || draft.answer === "C") setAnswer(draft.answer);
+        if (draft.submitted) {
+          setSubmitted(true);
+          setAssessmentItems((items) => items.map((item) => item.kind === "Entrance" ? { ...item, status: "submitted", score: "Chờ chấm", recommendation: "Đã nộp, chờ giáo viên chấm" } : item));
+        } else if (draft.endAt) {
+          endAtRef.current = draft.endAt;
+          setRemainingSeconds(Math.max(0, Math.ceil((draft.endAt - Date.now()) / 1000)));
+        }
+      }
+    } catch {
+      // Ignore an invalid local draft and start a fresh attempt.
+    } finally {
+      setHydrated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated || submitted) return;
+    if (endAtRef.current === null) endAtRef.current = Date.now() + remainingSeconds * 1000;
+    const timer = window.setInterval(() => {
+      const next = Math.max(0, Math.ceil(((endAtRef.current ?? Date.now()) - Date.now()) / 1000));
+      setRemainingSeconds(next);
+      if (next === 0) {
+        setSubmitted(true);
+        setAssessmentItems((items) => items.map((item) => item.kind === "Entrance" ? { ...item, status: "submitted", score: "Chờ chấm", recommendation: "Đã tự nộp khi hết giờ" } : item));
+        window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify({ answer, submitted: true }));
+      }
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [answer, hydrated, submitted]);
+
+  useEffect(() => {
+    if (!hydrated || submitted) return;
+    if (endAtRef.current === null) endAtRef.current = Date.now() + remainingSeconds * 1000;
+    window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify({ answer, endAt: endAtRef.current, submitted: false }));
+  }, [answer, hydrated, remainingSeconds, submitted]);
 
   const filtered = useMemo(
     () =>
-      assessments.filter((item) => {
+      assessmentItems.filter((item) => {
         const matchesQuery = JSON.stringify(item).toLowerCase().includes(query.toLowerCase());
         const matchesStatus = status === "all" || !status || item.status === status;
         return matchesQuery && matchesStatus;
       }),
-    [query, status],
+    [assessmentItems, query, status],
   );
 
   const columns = useMemo<ColumnDef<StudentAssessment>[]>(
@@ -103,6 +161,7 @@ export function StudentAssessmentWorkspace() {
       },
       { accessorKey: "score", header: "Điểm" },
       { accessorKey: "recommendation", header: "Khuyến nghị" },
+      { id: "actions", header: "Thao tác", enableSorting: false, cell: ({ row }) => <UiButton size="compact-xs" variant="default" onClick={() => { if (row.original.status === "available") setAssessmentItems((items) => items.map((item) => item.title === row.original.title ? { ...item, status: "in_progress" } : item)); setSelectedAssessment({ ...row.original, status: row.original.status === "available" ? "in_progress" : row.original.status }); }}>{row.original.status === "published" ? "Xem kết quả" : row.original.status === "available" ? "Bắt đầu" : "Mở bài"}</UiButton> },
     ],
     [],
   );
@@ -167,7 +226,7 @@ export function StudentAssessmentWorkspace() {
           <Stack>
             <Group justify="space-between">
               <Text size="sm">Thời gian còn lại</Text>
-              <UiStatusBadge role="warning">32:18</UiStatusBadge>
+              <UiStatusBadge role={remainingSeconds <= 300 ? "danger" : "warning"}>{formatRemaining(remainingSeconds)}</UiStatusBadge>
             </Group>
             <Progress value={28} aria-label="Tiến độ làm bài" />
             <Text fw={600}>Câu 3/20 · Listening</Text>
@@ -180,10 +239,10 @@ export function StudentAssessmentWorkspace() {
               </Stack>
             </Radio.Group>
             <Group justify="space-between">
-              <UiButton variant="default" leftSection={<CheckCircle2 size={16} />}>
-                Lưu tự động
+              <UiButton variant="default" leftSection={<CheckCircle2 size={16} />} onClick={() => { setSaved(true); if (endAtRef.current === null) endAtRef.current = Date.now() + remainingSeconds * 1000; window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify({ answer, endAt: endAtRef.current, submitted: false })); }}>
+                {saved ? "Đã lưu" : "Lưu tự động"}
               </UiButton>
-              <UiButton leftSection={<Send size={16} />}>Nộp bài</UiButton>
+              <UiButton disabled={submitted} leftSection={<Send size={16} />} onClick={() => setSubmitOpened(true)}>{submitted ? "Đã nộp" : "Nộp bài"}</UiButton>
             </Group>
           </Stack>
         </Paper>
@@ -213,6 +272,19 @@ export function StudentAssessmentWorkspace() {
           </Stack>
         </Paper>
       </SimpleGrid>
+      <UiModal opened={submitOpened} onClose={() => setSubmitOpened(false)} title="Xác nhận nộp bài">
+        <Stack gap="sm">
+          <Text size="sm">Sau khi nộp, bạn không thể sửa câu trả lời của bài kiểm tra này.</Text>
+          <Text size="sm" c="dimmed">Câu trả lời hiện tại: {answer}. Hệ thống sẽ lưu kết quả để giáo viên chấm.</Text>
+          <Group justify="flex-end">
+            <UiButton variant="default" onClick={() => setSubmitOpened(false)}>Tiếp tục làm</UiButton>
+            <UiButton onClick={() => { setSubmitted(true); setAssessmentItems((items) => items.map((item) => item.kind === "Entrance" ? { ...item, status: "submitted", score: "Chờ chấm", recommendation: "Đã nộp, chờ giáo viên chấm" } : item)); window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify({ answer, submitted: true })); setSubmitOpened(false); }}>Xác nhận nộp</UiButton>
+          </Group>
+        </Stack>
+      </UiModal>
+      <UiModal opened={selectedAssessment !== null} onClose={() => setSelectedAssessment(null)} title={selectedAssessment ? selectedAssessment.title : "Bài kiểm tra"}>
+        {selectedAssessment ? <Stack gap="sm"><Text size="sm">{selectedAssessment.kind} · {selectedAssessment.duration} · {selectedAssessment.window}</Text><UiStatusBadge role={statusRole[selectedAssessment.status]}>{statusLabel[selectedAssessment.status]}</UiStatusBadge><Text size="sm">{selectedAssessment.status === "published" ? `Điểm: ${selectedAssessment.score}. ${selectedAssessment.recommendation}` : selectedAssessment.recommendation}</Text><Group justify="flex-end"><UiButton onClick={() => setSelectedAssessment(null)}>Đóng</UiButton></Group></Stack> : null}
+      </UiModal>
     </div>
   );
 }

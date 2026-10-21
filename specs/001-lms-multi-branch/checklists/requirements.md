@@ -45,7 +45,12 @@
 - [x] Tuyển sinh bao phủ khách hàng tiềm năng, phân công tư vấn, thi đầu vào, đề xuất lớp và chuyển đổi ghi danh
 - [x] Phụ huynh dùng mô hình ủy quyền tùy chọn theo từng học viên và trao đổi ba bên
 - [x] Trao đổi nội bộ và thông báo có phạm vi theo vai trò, chi nhánh, lớp hoặc nghiệp vụ
-- [x] Học liệu, thư viện số, thi thử và chương trình Tiếng Anh có yêu cầu và kịch bản chấp nhận rõ ràng
+- [x] Học liệu, thư viện số, đánh giá đầu vào/thi thử và hồ sơ năng lực đa ngành có yêu cầu và kịch bản chấp nhận rõ ràng; English là một cấu hình chương trình
+- [x] Blueprint đầu vào, mốc baseline/current/target, minh chứng bất biến, rubric theo nhóm năng lực và view lớp dùng chung hồ sơ đã được quy định
+- [x] Đã phân loại dữ liệu lớp thành output công bố, trạng thái vận hành nội bộ và evidence nhạy cảm; quy định propagation sang student/parent portal và delegation
+- [x] Có quy trình ghi nhận change item và impact analysis liên vai trò/liên module trước khi triển khai yêu cầu phát sinh
+- [x] Mọi hạng mục hoàn thành có bằng chứng kiểm tra, rủi ro còn lại và đề xuất bước tiếp theo kèm owner/điều kiện bắt đầu hoặc điều kiện mở lại
+- [x] Có quy tắc một bảng chính, cột thao tác, modal chỉnh sửa và confirmation/archive cho xóa
 - [x] Lớp online tích hợp nền tảng họp, điểm danh và bản ghi theo quyền truy cập
 - [x] Tài chính học viên bao phủ biểu phí, hóa đơn, công nợ, thanh toán và đồng bộ kế toán/ERP
 - [x] UI foundation có ba không gian riêng, application shell, responsive sidebar, component contract, theme và routing acceptance
@@ -60,7 +65,7 @@
 
 ## Validation Notes
 
-- Đặc tả bao phủ 15 luồng nghiệp vụ cùng một luồng nền tảng UI, 83 yêu cầu chức năng và 34 tiêu chí thành công.
+- Đặc tả bao phủ 15 luồng nghiệp vụ cùng một luồng nền tảng UI, 103 yêu cầu chức năng và 38 tiêu chí thành công sau khi bổ sung mô hình năng lực đa ngành, propagation sang student/parent portal và change/UI governance.
 - UI foundation chốt ba product boundary, application shell, component contract, semantic theme, i18n, responsive, accessibility và một cơ chế routing duy nhất.
 - Phạm vi tài chính đã mở rộng từ học phí sang thu chi chi nhánh, ngân sách, công nợ nội bộ và payroll đầy đủ.
 - HRM bao phủ vòng đời nhân sự, chấm công, nghỉ phép, đào tạo, hiệu suất và quản lý giáo viên.
@@ -68,6 +73,9 @@
 - Quyết định phạm vi đã chốt: tích hợp kế toán/ERP, lớp online thông qua nền tảng họp trực tuyến, quyền phụ huynh cấu hình theo từng học viên, license hết hạn chỉ tắt module mất entitlement.
 - Mô hình thương mại đã chốt là hybrid: SaaS database riêng cho từng tenant và instance riêng cho khách hàng lớn; hỗ trợ migration một chiều với downtime có lịch.
 - Các năng lực AI nâng cao hoặc có rủi ro cao được tách tại phần `Proposed Future Enhancements`.
+- Rà soát liên module xác nhận không tạo overall level xuyên môn; hồ sơ thuộc học viên + chương trình/môn, còn lớp chỉ là context/view có scope.
+- Mọi yêu cầu phát sinh phải đi qua change item, impact analysis, business-owner decision và cross-role verification trước release.
+- Chuẩn bảng yêu cầu loại bỏ bảng phụ lặp dữ liệu; chỉnh sửa dùng modal, xóa dùng confirmation và archive/void/adjustment khi dữ liệu bất biến.
 
 ## Notes
 

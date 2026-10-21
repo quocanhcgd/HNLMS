@@ -1,32 +1,41 @@
 "use client";
 import { useMemo, useState } from "react";
+import type { CompetencyProfileReadModel } from "@hnlms/domain-contracts";
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { Group, Paper, Progress, SimpleGrid, Stack, Text } from "@mantine/core";
-import { BookOpenCheck, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { PageToolbar, UiDataTable, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
+import { PageToolbar, UiButton, UiDataTable, UiModal, UiSelect, UiStatusBadge, UiTextInput } from "@/components/ui";
+import { listStudentCompetencyProfiles } from "@/lib/competency-profiles";
 
-type SkillRow = { skill: string; level: string; percent: number; confidence: number; nextActivity: string; status: "Ổn định" | "Cần luyện thêm" | "Cần giáo viên rà soát" };
-const rows: SkillRow[] = [
-  { skill: "Listening", level: "A2", percent: 62, confidence: 88, nextActivity: "Nghe lấy ý chính Unit 4", status: "Ổn định" },
-  { skill: "Speaking", level: "A2", percent: 58, confidence: 54, nextActivity: "Gửi bài nói 2 phút", status: "Cần giáo viên rà soát" },
-  { skill: "Reading", level: "B1", percent: 70, confidence: 82, nextActivity: "Skimming practice", status: "Ổn định" },
-  { skill: "Writing", level: "A2", percent: 50, confidence: 66, nextActivity: "Viết đoạn mô tả biểu đồ", status: "Cần luyện thêm" },
-];
-const role = { "Ổn định": "success", "Cần luyện thêm": "warning", "Cần giáo viên rà soát": "danger" } as const;
 export function StudentEnglishWorkspace() {
-  const [query, setQuery] = useState(""); const [status, setStatus] = useState<string | null>("all"); const [sorting, setSorting] = useState<SortingState>([]);
-  const data = useMemo(() => rows.filter((x) => (status === "all" || !status || x.status === status) && JSON.stringify(x).toLowerCase().includes(query.toLowerCase())), [query, status]);
-  const columns = useMemo<ColumnDef<SkillRow>[]>(() => [
-    { accessorKey: "skill", header: "Kỹ năng", cell: ({ row }) => <div><Text fw={600}>{row.original.skill}</Text><Text size="xs" c="dimmed">Level {row.original.level}</Text></div> },
-    { accessorKey: "percent", header: "Tiến bộ", cell: ({ getValue }) => <Group gap="xs" wrap="nowrap"><Progress value={getValue<number>()} w={110} /><Text size="sm">{getValue<number>()}%</Text></Group> },
-    { accessorKey: "confidence", header: "Độ tin cậy", cell: ({ getValue }) => <UiStatusBadge role={getValue<number>() < 60 ? "warning" : "info"}>{getValue<number>()}%</UiStatusBadge> },
-    { accessorKey: "nextActivity", header: "Hoạt động tiếp theo" },
-    { accessorKey: "status", header: "Trạng thái", cell: ({ getValue }) => { const v = getValue<SkillRow["status"]>(); return <UiStatusBadge role={role[v]}>{v}</UiStatusBadge>; } },
+  const rows = useMemo(() => listStudentCompetencyProfiles("student-minh-anh"), []);
+  const [query, setQuery] = useState(""); const [subject, setSubject] = useState<string | null>("all"); const [program, setProgram] = useState<string | null>("all"); const [sorting, setSorting] = useState<SortingState>([]);
+  type StudentProfileRow = { studentId: string; studentName: string; subjectId: string; subjectName: string; programId: string; programName: string; className: string; competencies: CompetencyProfileReadModel[]; currentScore: number; targetScore: number; confidence: number };
+  const grouped = useMemo<StudentProfileRow[]>(() => Array.from(rows.reduce((groups, row) => {
+    const key = `${row.studentId}:${row.classId}:${row.programId}`;
+    const current = groups.get(key) ?? { studentId: row.studentId, studentName: row.studentName, subjectId: row.subjectId, subjectName: row.subjectName, programId: row.programId, programName: row.programName, className: row.className, competencies: [], currentScore: 0, targetScore: 0, confidence: 0 };
+    current.competencies.push(row);
+    groups.set(key, current);
+    return groups;
+  }, new Map<string, StudentProfileRow>()).values()).map((row) => ({
+    ...row,
+    currentScore: Math.round(row.competencies.reduce((sum, item) => sum + (item.current.normalizedScore ?? 0), 0) / row.competencies.length),
+    targetScore: Math.round(row.competencies.reduce((sum, item) => sum + (item.target.normalizedScore ?? 0), 0) / row.competencies.length),
+    confidence: Math.round(row.competencies.reduce((sum, item) => sum + item.confidence, 0) / row.competencies.length),
+  })), [rows]);
+  const data = useMemo(() => grouped.filter((row) => (subject === "all" || !subject || row.subjectId === subject) && (program === "all" || !program || row.programId === program) && JSON.stringify(row).toLowerCase().includes(query.toLowerCase())), [grouped, program, query, subject]);
+  const [selected, setSelected] = useState<StudentProfileRow | null>(null);
+  const columns = useMemo<ColumnDef<StudentProfileRow>[]>(() => [
+    { accessorKey: "studentName", header: "Học viên", cell: ({ row }) => <div><Text fw={600}>{row.original.studentName}</Text><Text size="xs" c="dimmed">{row.original.className} · {row.original.subjectName} · {row.original.programName}</Text></div> },
+    { id: "competencies", header: "Năng lực", cell: ({ row }) => <Text size="sm">{row.original.competencies.map((item) => item.competencyName).join(" · ")}</Text> },
+    { accessorKey: "currentScore", header: "Hiện tại", cell: ({ row }) => <Group gap="xs" wrap="nowrap"><Progress value={row.original.currentScore} w={90} /><Text size="sm">{row.original.currentScore}%</Text></Group> },
+    { accessorKey: "targetScore", header: "Mục tiêu", cell: ({ row }) => <Text size="sm">{row.original.targetScore}%</Text> },
+    { accessorKey: "confidence", header: "Tin cậy", cell: ({ getValue }) => <UiStatusBadge role="info">{getValue<number>()}%</UiStatusBadge> },
+    { id: "evidence", header: "Minh chứng", cell: ({ row }) => <Text size="sm">{row.original.competencies.length} minh chứng đã công bố</Text> },
+    { id: "actions", header: "Thao tác", enableSorting: false, cell: ({ row }) => <UiButton size="compact-xs" variant="subtle" rightSection={<ArrowRight size={14} />} onClick={() => setSelected(row.original)}>Xem chi tiết</UiButton> },
   ], []);
   const table = useReactTable({ data, columns, state: { sorting, globalFilter: query }, onSortingChange: setSorting, onGlobalFilterChange: setQuery, getCoreRowModel: getCoreRowModel(), getFilteredRowModel: getFilteredRowModel(), getSortedRowModel: getSortedRowModel() });
-  return <div className="page"><PageHeader title="Lộ trình tiếng Anh" subtitle="Theo dõi tiến bộ listening, speaking, reading, writing và hoạt động học phù hợp từng kỹ năng." />
-    <PageToolbar className="toolbar"><UiTextInput value={query} onChange={(e)=>setQuery(e.currentTarget.value)} leftSection={<Search size={16}/>} placeholder="Tìm kỹ năng, hoạt động..." style={{minWidth:280}}/><UiSelect w={210} value={status} onChange={setStatus} data={[{value:"all",label:"Tất cả trạng thái"},{value:"Ổn định",label:"Ổn định"},{value:"Cần luyện thêm",label:"Cần luyện thêm"},{value:"Cần giáo viên rà soát",label:"Cần giáo viên rà soát"}]}/></PageToolbar>
-    <SimpleGrid cols={{base:1, lg:2}} spacing="md"><Stack><UiDataTable table={table} columnCount={columns.length} minWidth={960} emptyTitle="Không tìm thấy dữ liệu lộ trình."/><Text size="xs" c="dimmed">{table.getRowModel().rows.length}/{rows.length} kỹ năng · TanStack Table chuẩn chung</Text></Stack><Paper className="panel" p="lg" withBorder><Group justify="space-between"><div><Text fw={700}>Mục tiêu hiện tại</Text><Text size="sm" c="dimmed">Hoàn thiện A2 đồng đều trước khi lên B1 Bridge.</Text></div><BookOpenCheck size={22}/></Group><Stack mt="md" gap="sm"><Text>Overall level: <b>A2</b></Text><Progress value={60}/><Text size="sm" c="dimmed">Ưu tiên speaking vì độ tin cậy thấp và cần giáo viên nhận xét thủ công.</Text></Stack></Paper></SimpleGrid></div>;
+  return <div className="page"><PageHeader title="Hồ sơ năng lực" subtitle="Mỗi học viên hiển thị một dòng theo lớp và chương trình; các kỹ năng được xem trong chi tiết." /><PageToolbar className="toolbar"><UiTextInput aria-label="Tìm hồ sơ năng lực" value={query} onChange={(event) => setQuery(event.currentTarget.value)} leftSection={<Search size={16} />} placeholder="Tìm học viên, môn, năng lực..." style={{ minWidth: 290 }} /><UiSelect aria-label="Lọc môn học" w={160} value={subject} onChange={setSubject} data={[{ value: "all", label: "Tất cả môn" }, { value: "english", label: "Tiếng Anh" }, { value: "math", label: "Toán" }, { value: "literature", label: "Ngữ văn" }]} /><UiSelect aria-label="Lọc chương trình" w={180} value={program} onChange={setProgram} data={[{ value: "all", label: "Tất cả chương trình" }, { value: "teen-b1", label: "Teen B1" }, { value: "math-foundation", label: "Nền tảng THCS" }, { value: "literature-grade-10", label: "Luyện thi 10" }]} /></PageToolbar><SimpleGrid cols={{ base: 1, sm: 3 }} spacing="md" mb="md"><Paper className="panel" p="md" withBorder><Text size="sm" c="dimmed">Hồ sơ đã công bố</Text><Text fz={24} fw={700}>{data.length}</Text></Paper><Paper className="panel" p="md" withBorder><Text size="sm" c="dimmed">Kỹ năng theo dõi</Text><Text fz={24} fw={700}>{data.reduce((sum, item) => sum + item.competencies.length, 0)}</Text></Paper><Paper className="panel" p="md" withBorder><Text size="sm" c="dimmed">Tiến bộ trung bình</Text><Text fz={24} fw={700}>{data.length ? Math.round(data.reduce((sum, item) => sum + item.currentScore, 0) / data.length) : 0}%</Text></Paper></SimpleGrid><UiDataTable table={table} columnCount={columns.length} minWidth={1180} emptyTitle="Chưa có hồ sơ năng lực đã công bố." /><Text size="xs" c="dimmed" mt="sm">Chỉ hiển thị minh chứng đã công bố; bản nháp, ghi chú riêng và hàng đợi chấm bài không được đưa vào cổng học viên.</Text><UiModal opened={selected !== null} onClose={() => setSelected(null)} title={selected ? `Chi tiết năng lực · ${selected.studentName}` : "Chi tiết năng lực"} size="lg"><Stack gap="md">{selected ? <><Text size="sm" c="dimmed">{selected.className} · {selected.subjectName} · {selected.programName}</Text>{selected.competencies.map((item) => <Paper key={item.profileId} className="panelHighlight" p="md"><Group justify="space-between"><Text fw={600}>{item.competencyName}</Text><UiStatusBadge role="info">Tin cậy {item.confidence}%</UiStatusBadge></Group><SimpleGrid cols={3} mt="sm"><div><Text size="xs" c="dimmed">Đầu vào</Text><Text size="sm">{item.baseline.label}</Text></div><div><Text size="xs" c="dimmed">Hiện tại</Text><Text size="sm">{item.current.label}</Text></div><div><Text size="xs" c="dimmed">Mục tiêu</Text><Text size="sm">{item.target.label}</Text></div></SimpleGrid><Text size="sm" mt="sm">{item.teacherFeedback ?? "Chưa có nhận xét giáo viên."}</Text><Text size="xs" c="dimmed" mt="xs">Minh chứng: {item.evidence.sourceLabel} · {item.evidence.summary}</Text></Paper>)}</> : null}</Stack></UiModal></div>;
 }

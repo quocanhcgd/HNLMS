@@ -14,10 +14,23 @@ describe("shared Mantine UI compositions", () => {
       "UiTable",
       "UiDataTable",
       "UiModal",
+      "UiRowActions",
+      "UiConfirmModal",
+      "UiEditModal",
       "PageToolbar",
     ]) {
       expect(index).toContain(name);
     }
+  });
+
+  it("keeps row actions in the primary class tables", () => {
+    const assignments = read("apps/web/src/app/teacher/classes/[classId]/assignment-tab.tsx");
+    const scores = read("apps/web/src/app/teacher/classes/[classId]/score-tab.tsx");
+    expect(assignments).toContain("UiRowActions");
+    expect(assignments).toContain("UiConfirmModal");
+    expect(assignments).not.toContain("Hàng đợi xử lý bài tập");
+    expect(scores).toContain("UiRowActions");
+    expect(scores).toContain("Hủy hiệu lực");
   });
 
   it("uses wrappers for the lead list controls", () => {

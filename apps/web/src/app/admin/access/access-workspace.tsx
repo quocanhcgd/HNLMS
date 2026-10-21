@@ -1,8 +1,8 @@
 "use client";
 import { useMemo, useState } from "react";
 import { type ColumnDef, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { Box, Button, Card, Checkbox, Divider, Group, SegmentedControl, Stack, Text, Title } from "@mantine/core";
-import { ArrowRight, LockKeyhole, Plus, ShieldCheck } from "lucide-react";
+import { Box, Button, Card, Checkbox, Divider, Group, Paper, SegmentedControl, SimpleGrid, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import { ArrowRight, CheckCircle2, LockKeyhole, Plus, ShieldCheck, UsersRound } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { UiBadge, UiButton, UiDataTable, UiStatusBadge, type UiStatusRole } from "@/components/ui";
 import { accessNavigation, accessPermissionGroups, accessUsers, type AccessSection } from "./access-data";
@@ -95,6 +95,8 @@ export function AccessWorkspace() {
         action="Lưu thay đổi"
       />
       <Box maw={1180}>
+        <Paper withBorder p="lg" mb="md" className="panelHighlight" style={{ background: "color-mix(in srgb, var(--hn-light-primary) 8%, var(--app-panel))", borderColor: "color-mix(in srgb, var(--hn-light-primary) 32%, var(--app-border))" }}><Group justify="space-between" align="flex-start" wrap="wrap"><Group gap="md"><ThemeIcon size={46} radius="md" color="primary"><ShieldCheck size={23} /></ThemeIcon><div><Text size="sm" c="dimmed">Quản trị truy cập</Text><Text fz={27} fw={800}>Phân quyền rõ ràng, kiểm soát theo phạm vi</Text><Text size="sm" c="dimmed" mt={4}>Vai trò quyết định chức năng; scope quyết định dữ liệu được phép xem và thao tác.</Text></div></Group><UiStatusBadge role="success" variant="dot">Policy đang áp dụng</UiStatusBadge></Group></Paper>
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} mb="md"><AccessMetric icon={<UsersRound size={18} />} label="Người dùng" value={`${accessUsers.length}`} detail="đang được quản lý" color="blue" /><AccessMetric icon={<ShieldCheck size={18} />} label="Vai trò" value={`${accessPermissionGroups.length}`} detail="nhóm quyền nghiệp vụ" color="violet" /><AccessMetric icon={<CheckCircle2 size={18} />} label="Grant hiệu lực" value={`${grantRows.filter((row) => row.status === "Đang hiệu lực").length}`} detail="đang áp dụng" color="teal" /><AccessMetric icon={<LockKeyhole size={18} />} label="Có thời hạn" value={`${grantRows.filter((row) => row.status === "Có thời hạn").length}`} detail="cần rà soát" color="orange" /></SimpleGrid>
         <SegmentedControl
           fullWidth
           mb="xl"
@@ -104,7 +106,7 @@ export function AccessWorkspace() {
         />
         {section === "roles" ? (
           <div className="dashboardGrid">
-            <Card withBorder radius="md" padding="lg">
+            <Card withBorder radius="md" padding="lg" className="panel">
               <Group justify="space-between" mb="md">
                 <div>
                   <Title order={3}>Người dùng</Title>
@@ -138,7 +140,7 @@ export function AccessWorkspace() {
                 ))}
               </Stack>
             </Card>
-            <Card withBorder radius="md" padding="lg">
+            <Card withBorder radius="md" padding="lg" className="panel">
               <Group justify="space-between" mb="md">
                 <div>
                   <Title order={3}>{user.name}</Title>
@@ -180,7 +182,7 @@ export function AccessWorkspace() {
             </Card>
           </div>
         ) : (
-          <Card withBorder radius="md" padding="lg">
+          <Card withBorder radius="md" padding="lg" className="panel">
             <Group justify="space-between" mb="md">
               <div>
                 <Title order={3}>Phạm vi dữ liệu</Title>
@@ -202,4 +204,8 @@ export function AccessWorkspace() {
       </Box>
     </div>
   );
+}
+
+function AccessMetric({ icon, label, value, detail, color }: { icon: React.ReactNode; label: string; value: string; detail: string; color: string }) {
+  return <Paper className="panel" p="md" withBorder><Group gap="sm" wrap="nowrap"><ThemeIcon color={color} variant="light" size={36} radius="md">{icon}</ThemeIcon><div><Text size="xs" c="dimmed">{label}</Text><Text fz={21} fw={750}>{value}</Text><Text size="xs" c="dimmed">{detail}</Text></div></Group></Paper>;
 }

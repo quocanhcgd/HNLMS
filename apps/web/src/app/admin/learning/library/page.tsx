@@ -1,12 +1,3 @@
-import { PageHeader } from "@/components/app-shell";
+import { OperationsRegistryWorkspace } from "../../operations-registry-workspace";
 
-export default function LearningLibraryAdminPage() {
-  return (
-    <div className="page">
-      <PageHeader
-        title="Thư viện quản trị"
-        subtitle="Quản lý tài nguyên thư viện, phạm vi truy cập và chính sách sử dụng."
-      />
-    </div>
-  );
-}
+export default function LearningLibraryAdminPage() { return <OperationsRegistryWorkspace section="library" />; }

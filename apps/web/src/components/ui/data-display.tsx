@@ -70,6 +70,7 @@ export function UiDataTable<TData extends RowData>({
                         className="tableSortButton"
                         type="button"
                         disabled={!header.column.getCanSort()}
+                        aria-label={header.column.getCanSort() ? `Sắp xếp theo ${header.column.id}` : undefined}
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}

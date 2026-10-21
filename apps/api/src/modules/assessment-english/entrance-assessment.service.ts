@@ -4,6 +4,13 @@ export type EntranceAssessmentActor = {
   userId: string;
   organizationId: string;
   canManageAllLeads?: boolean;
+  subjectIds?: ReadonlySet<string>;
+  programIds?: ReadonlySet<string>;
+  branchIds?: ReadonlySet<string>;
+  classIds?: ReadonlySet<string>;
+  certificationCodes?: ReadonlySet<string>;
+  isTeachingAssistant?: boolean;
+  canReviewAssessmentResults?: boolean;
 };
 
 export type AssessmentReference = {
@@ -12,6 +19,11 @@ export type AssessmentReference = {
   kind: "entrance" | "mock" | "practice";
   status: "draft" | "published" | "retired";
   title: string;
+  subjectId?: string;
+  programId?: string;
+  branchId?: string;
+  classId?: string;
+  requiredCertificationCode?: string;
   opensAt: Date | null;
   closesAt: Date | null;
 };
@@ -53,6 +65,10 @@ export type EntranceAssessmentResult = {
   id: string;
   organizationId: string;
   assessmentId: string;
+  subjectId?: string;
+  programId?: string;
+  branchId?: string;
+  classId?: string;
   publicationStatus: "draft" | "published";
   recommendedProgramId?: string;
   recommendedClassId?: string;
@@ -141,6 +157,34 @@ function assertLeadAccess(actor: EntranceAssessmentActor, lead: AssessmentLeadRe
   }
 }
 
+function assertAssessmentScope(actor: EntranceAssessmentActor, assessment: Pick<AssessmentReference, "subjectId" | "programId">): void {
+  if (assessment.subjectId && actor.subjectIds && !actor.subjectIds.has(assessment.subjectId)) {
+    throw new EntranceAssessmentError("forbidden", "assessment_subject_scope_denied");
+  }
+  if (assessment.programId && actor.programIds && !actor.programIds.has(assessment.programId)) {
+    throw new EntranceAssessmentError("forbidden", "assessment_program_scope_denied");
+  }
+}
+
+function assertAssessmentTeachingScope(
+  actor: EntranceAssessmentActor,
+  assessment: Pick<AssessmentReference, "branchId" | "classId" | "requiredCertificationCode">,
+): void {
+  if (assessment.branchId && actor.branchIds && !actor.branchIds.has(assessment.branchId)) {
+    throw new EntranceAssessmentError("forbidden", "assessment_branch_scope_denied");
+  }
+  if (assessment.classId && actor.classIds && !actor.classIds.has(assessment.classId)) {
+    throw new EntranceAssessmentError("forbidden", "assessment_class_scope_denied");
+  }
+  if (
+    assessment.requiredCertificationCode &&
+    actor.certificationCodes &&
+    !actor.certificationCodes.has(assessment.requiredCertificationCode)
+  ) {
+    throw new EntranceAssessmentError("forbidden", "assessment_certification_required");
+  }
+}
+
 export class EntranceAssessmentService {
   constructor(
     private readonly repository: EntranceAssessmentRepository,
@@ -187,6 +231,8 @@ export class EntranceAssessmentService {
     if (!assessment || assessment.organizationId !== actor.organizationId) {
       throw new EntranceAssessmentError("not_found", "assessment_not_found");
     }
+    assertAssessmentScope(actor, assessment);
+    assertAssessmentTeachingScope(actor, assessment);
     const assignedAt = this.now();
     if (
       assessment.kind !== "entrance" ||
@@ -249,6 +295,9 @@ export class EntranceAssessmentService {
     if (!assignment || assignment.organizationId !== actor.organizationId) {
       throw new EntranceAssessmentError("not_found", "assignment_not_found");
     }
+    if (actor.isTeachingAssistant && !actor.canReviewAssessmentResults) {
+      throw new EntranceAssessmentError("forbidden", "assessment_review_permission_required");
+    }
     if (!actor.canManageAllLeads && assignment.assignedByUserId !== actor.userId) {
       throw new EntranceAssessmentError("forbidden", "assignment_not_owned");
     }
@@ -262,6 +311,18 @@ export class EntranceAssessmentService {
       result.publicationStatus !== "published"
     ) {
       throw new EntranceAssessmentError("result_unavailable");
+    }
+    if (result.subjectId && actor.subjectIds && !actor.subjectIds.has(result.subjectId)) {
+      throw new EntranceAssessmentError("forbidden", "assessment_subject_scope_denied");
+    }
+    if (result.programId && actor.programIds && !actor.programIds.has(result.programId)) {
+      throw new EntranceAssessmentError("forbidden", "assessment_program_scope_denied");
+    }
+    if (result.branchId && actor.branchIds && !actor.branchIds.has(result.branchId)) {
+      throw new EntranceAssessmentError("forbidden", "assessment_branch_scope_denied");
+    }
+    if (result.classId && actor.classIds && !actor.classIds.has(result.classId)) {
+      throw new EntranceAssessmentError("forbidden", "assessment_class_scope_denied");
     }
     const completedAt = this.now();
     const completed = await this.repository.completeAssignmentAndUpdateLead({

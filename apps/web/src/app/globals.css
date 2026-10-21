@@ -1,12 +1,46 @@
 :root {
+  --app-bg: var(--hn-dark-background);
   --app-shell: var(--hn-dark-background);
   --app-panel: var(--hn-dark-surface);
   --app-border: color-mix(in srgb, var(--hn-dark-border) 65%, transparent);
+  --app-aurora-primary: color-mix(in srgb, var(--hn-dark-primary, #54d5e2) 28%, transparent);
+  --app-aurora-secondary: color-mix(in srgb, var(--hn-dark-info, #78b9f2) 20%, transparent);
+  --app-aurora-accent: color-mix(in srgb, var(--hn-dark-warning, #f1c75b) 10%, transparent);
+  --app-aurora-tertiary: color-mix(in srgb, var(--hn-dark-success, #67d391) 18%, transparent);
+  --app-aurora-danger: color-mix(in srgb, var(--hn-dark-validation, #f27878) 18%, transparent);
+  --app-nav-hover: color-mix(in srgb, var(--hn-dark-primary, #54d5e2) 18%, var(--hn-dark-surface, #111b24));
+  --app-nav-active: color-mix(in srgb, var(--hn-dark-primary, #54d5e2) 25%, var(--hn-dark-surface, #111b24));
+  --app-nav-accent: var(--hn-dark-primary, #54d5e2);
+  --app-message-bg: #15252f;
+  --app-message-border: #3c5967;
+  --app-message-text: #e9f4f6;
+  --app-message-meta: #b7d8df;
+  --app-message-mine-bg: #0f5962;
+  --app-message-mine-border: #58c7cc;
+  --app-message-mine-text: #efffff;
+  --app-message-mine-meta: #c5f0f1;
 }
 :root[data-mantine-color-scheme="light"] {
+  --app-bg: var(--hn-light-background);
   --app-shell: var(--hn-light-background);
   --app-panel: var(--hn-light-surface);
   --app-border: var(--hn-light-border);
+  --app-aurora-primary: color-mix(in srgb, var(--hn-light-primary, #098b97) 22%, transparent);
+  --app-aurora-secondary: color-mix(in srgb, var(--hn-light-info, #2f74b7) 15%, transparent);
+  --app-aurora-accent: color-mix(in srgb, var(--hn-light-warning, #b87512) 10%, transparent);
+  --app-aurora-tertiary: color-mix(in srgb, var(--hn-light-success, #208a51) 14%, transparent);
+  --app-aurora-danger: color-mix(in srgb, var(--hn-light-validation, #c23a3a) 14%, transparent);
+  --app-nav-hover: color-mix(in srgb, var(--hn-light-primary, #098b97) 16%, var(--hn-light-surface, #ffffff));
+  --app-nav-active: color-mix(in srgb, var(--hn-light-primary, #098b97) 22%, var(--hn-light-surface, #ffffff));
+  --app-nav-accent: var(--hn-light-primary, #098b97);
+  --app-message-bg: #f6f9fb;
+  --app-message-border: #b6c9d2;
+  --app-message-text: #1d2b33;
+  --app-message-meta: #356b73;
+  --app-message-mine-bg: #d8f3ef;
+  --app-message-mine-border: #72b7b0;
+  --app-message-mine-text: #123c3b;
+  --app-message-mine-meta: #356b73;
 }
 * {
   box-sizing: border-box;
@@ -88,18 +122,23 @@ a {
   min-height: 38px;
   padding: 8px 10px;
   border-radius: 6px;
-  color: var(--mantine-color-dimmed);
+  color: color-mix(in srgb, var(--mantine-color-text) 82%, var(--app-shell));
   font-size: 14px;
+  line-height: 1.25;
   margin: 1px 0;
+  transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
 }
-.navItem:hover {
-  background: var(--hn-light-surface-muted);
+.navItem:hover,
+.navItem:focus-visible {
+  background: var(--app-nav-hover);
   color: var(--mantine-color-text);
+  box-shadow: inset 3px 0 0 var(--app-nav-accent);
 }
 .navItem.active {
-  background: color-mix(in srgb, var(--hn-dark-primary) 18%, var(--app-panel));
-  color: var(--hn-dark-primary);
+  background: var(--app-nav-active);
+  color: var(--app-nav-accent);
   font-weight: 600;
+  box-shadow: inset 3px 0 0 currentColor;
 }
 .sidebarBottom {
   margin-top: auto;
@@ -109,6 +148,33 @@ a {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+.main,
+.platformMain {
+  background-color: var(--app-bg);
+  background-image:
+    radial-gradient(95% 70% at 0% -10%, var(--app-aurora-primary) 0%, transparent 68%),
+    radial-gradient(80% 65% at 100% 0%, var(--app-aurora-secondary) 0%, transparent 65%),
+    linear-gradient(160deg, transparent 45%, var(--app-aurora-accent) 100%);
+  background-size: 150% 150%, 140% 140%, 100% 100%;
+  background-position: 0% 0%, 100% 0%, center;
+  animation: appAuroraDrift 28s ease-in-out infinite alternate;
+}
+.sidebar,
+.platformSidebar {
+  background-image:
+    linear-gradient(160deg, color-mix(in srgb, var(--app-aurora-primary) 80%, transparent), transparent 48%),
+    linear-gradient(330deg, color-mix(in srgb, var(--app-aurora-secondary) 65%, transparent), transparent 78%);
+}
+@keyframes appAuroraDrift {
+  from { background-position: 0% 0%, 100% 0%, center; }
+  to { background-position: 18% 12%, 84% 26%, center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .main,
+  .platformMain {
+    animation: none;
+  }
 }
 .topbar {
   height: 64px;
@@ -123,6 +189,14 @@ a {
   border-bottom: 1px solid var(--app-border);
   background: color-mix(in srgb, var(--mantine-color-body) 92%, transparent);
   backdrop-filter: blur(12px);
+}
+:root[data-mantine-color-scheme="dark"] .topbar,
+:root[data-mantine-color-scheme="dark"] .platformTopbar {
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--hn-dark-primary) 12%, transparent), transparent 48%, color-mix(in srgb, var(--hn-dark-info) 9%, transparent));
+}
+:root[data-mantine-color-scheme="light"] .topbar,
+:root[data-mantine-color-scheme="light"] .platformTopbar {
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--hn-light-primary) 10%, transparent), transparent 48%, color-mix(in srgb, var(--hn-light-info) 7%, transparent));
 }
 .topbarBreadcrumb {
   min-width: 0;
@@ -178,7 +252,20 @@ a {
 .kpi {
   border: 1px solid var(--app-border);
   padding: 18px;
-  background: var(--app-panel);
+  --kpi-accent: var(--app-aurora-primary);
+  background-color: var(--app-panel);
+  background-image: linear-gradient(145deg, color-mix(in srgb, var(--kpi-accent) 70%, transparent), transparent 66%);
+  border-left: 3px solid color-mix(in srgb, var(--kpi-accent) 72%, var(--app-border));
+  transition: background-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.kpi--success { --kpi-accent: var(--app-aurora-tertiary); }
+.kpi--info { --kpi-accent: var(--app-aurora-secondary); }
+.kpi--warning { --kpi-accent: var(--app-aurora-accent); }
+.kpi--danger { --kpi-accent: var(--app-aurora-danger); }
+.kpi:hover,
+.kpi:focus-visible {
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--kpi-accent) 18%, transparent);
+  transform: translateY(-1px);
 }
 .kpiTop {
   display: flex;
@@ -203,7 +290,18 @@ a {
 }
 .panel {
   border: 1px solid var(--app-border);
-  background: light-dark(#fff, #0e171f);
+  --panel-accent: var(--app-aurora-primary);
+  background-color: var(--app-panel);
+  background-image: linear-gradient(145deg, color-mix(in srgb, var(--panel-accent) 76%, transparent), transparent 64%);
+}
+.panel:nth-child(4n + 2) {
+  --panel-accent: var(--app-aurora-secondary);
+}
+.panel:nth-child(4n + 3) {
+  --panel-accent: var(--app-aurora-accent);
+}
+.panel:nth-child(4n) {
+  --panel-accent: var(--app-aurora-tertiary);
 }
 .panelHeader {
   display: flex;
@@ -414,8 +512,8 @@ a {
 }
 
 :root[data-mantine-color-scheme="light"] .navItem.active {
-  background: color-mix(in srgb, var(--hn-light-primary) 14%, var(--app-panel));
-  color: var(--hn-light-primary);
+  background: var(--app-nav-active);
+  color: var(--app-nav-accent);
 }
 .tableSortButton:focus-visible {
   outline-color: var(--hn-dark-ring);
@@ -482,6 +580,7 @@ a {
   align-self: end;
   white-space: nowrap;
 }
+.dashboardOverviewSummary { min-width: min(100%, 390px); padding-top: 8px; }
 @media (max-width: 800px) {
   .publicDesktopNav {
     display: none;
@@ -504,8 +603,8 @@ a {
   .publicBrand span:last-child {
     display: none;
   }
-  .publicCta {
-    display: none;
+  .publicHeader .publicCta {
+    display: none !important;
   }
   .publicFooter {
     grid-template-columns: 1fr;
@@ -563,13 +662,16 @@ a {
   gap: 10px;
   padding: 8px 10px;
   border-radius: 6px;
-  color: var(--mantine-color-dimmed);
-  font-size: 13px;
+  color: color-mix(in srgb, var(--mantine-color-text) 82%, var(--app-panel));
+  font-size: 14px;
+  line-height: 1.25;
+  transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
 }
 .platformNavItem:hover,
 .platformNavItem:focus-visible {
-  background: color-mix(in srgb, var(--hn-dark-primary) 12%, var(--app-panel));
+  background: var(--app-nav-hover);
   color: var(--mantine-color-text);
+  box-shadow: inset 3px 0 0 var(--app-nav-accent);
 }
 .platformBottom {
   margin-top: auto;
@@ -633,6 +735,23 @@ a {
   display: grid;
   gap: 2px;
 }
+.navSection {
+  display: grid;
+  gap: 2px;
+}
+.navSection + .navSection {
+  margin-top: 12px;
+}
+.navSectionLabel {
+  margin: 8px 10px 4px;
+  color: var(--mantine-color-dimmed) !important;
+  font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em;
+  line-height: 1.2 !important;
+  text-transform: uppercase;
+}
 .navGroup {
   display: grid;
 }
@@ -651,15 +770,211 @@ a {
   gap: 2px;
 }
 .navSubItem {
-  color: var(--mantine-color-dimmed);
+  color: color-mix(in srgb, var(--mantine-color-text) 72%, var(--app-panel));
   font-size: 13px;
+  line-height: 1.3;
   padding: 7px 9px;
   border-radius: 5px;
 }
 .navSubItem:hover,
 .navSubItem.active {
   color: var(--mantine-color-text);
-  background: color-mix(in srgb, var(--hn-dark-primary) 10%, var(--app-panel));
+  background: var(--app-nav-hover);
+}
+.teacherCommunicationLayout {
+  display: grid;
+  grid-template-columns: minmax(280px, 350px) minmax(0, 1fr);
+  gap: 14px;
+  min-height: min(680px, calc(100vh - 250px));
+}
+.teacherConversationList,
+.teacherConversationThread {
+  min-width: 0;
+}
+.teacherConversationList {
+  display: flex;
+  flex-direction: column;
+  min-height: 560px;
+}
+.teacherConversationItems {
+  display: grid;
+  gap: 4px;
+  margin: 12px -4px 0;
+  overflow: auto;
+  padding: 0 4px 4px;
+}
+.teacherConversationRow {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 10px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.teacherConversationRow:hover,
+.teacherConversationRow.active {
+  border-color: var(--app-border);
+  background: color-mix(in srgb, var(--hn-dark-primary) 9%, var(--app-panel));
+}
+.teacherConversationRowBody {
+  min-width: 0;
+  flex: 1;
+}
+.teacherConversationUnread {
+  display: inline-grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+  font-size: 11px;
+  font-weight: 700;
+}
+.teacherConversationThread {
+  display: flex;
+  flex-direction: column;
+  min-height: 560px;
+}
+.teacherThreadHeader,
+.teacherThreadComposer {
+  padding: 18px;
+}
+.teacherThreadMessages {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  flex: 1;
+  min-height: 220px;
+  overflow: auto;
+  padding: 20px 22px;
+}
+.teacherMessage {
+  max-width: min(78%, 620px);
+}
+.teacherMessageSelf {
+  justify-self: end;
+}
+.teacherMessageMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 4px 4px;
+}
+.teacherMessageSelf .teacherMessageMeta {
+  justify-content: flex-end;
+}
+.teacherMessageBubble {
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--app-shell);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.teacherMessageSelf .teacherMessageBubble {
+  border-color: color-mix(in srgb, var(--hn-dark-primary) 30%, var(--app-border));
+  background: color-mix(in srgb, var(--hn-dark-primary) 12%, var(--app-panel));
+}
+.studentMessageBubble {
+  border: 1px solid var(--app-message-border);
+  background: var(--app-message-bg) !important;
+  background-color: var(--app-message-bg) !important;
+  border-color: var(--app-message-border) !important;
+  color: var(--app-message-text) !important;
+}
+.studentMessageBubble .studentMessageMeta {
+  color: var(--app-message-meta) !important;
+}
+.studentMessageBubbleMine {
+  border-color: var(--app-message-mine-border) !important;
+  background: var(--app-message-mine-bg) !important;
+  background-color: var(--app-message-mine-bg) !important;
+  color: var(--app-message-mine-text) !important;
+}
+.studentMessageBubbleMine .studentMessageMeta {
+  color: var(--app-message-mine-meta) !important;
+}
+.studentMessageBubble .studentMessageText {
+  color: inherit !important;
+}
+.payrollMetric {
+  min-height: 112px;
+}
+.payrollTimeline {
+  display: grid;
+  gap: 0;
+  margin-top: 24px;
+}
+.payrollTimelineItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  min-height: 58px;
+}
+.payrollTimelineItem:not(.last)::before {
+  position: absolute;
+  top: 25px;
+  left: 11px;
+  height: calc(100% - 8px);
+  border-left: 1px solid var(--app-border);
+  content: "";
+}
+.payrollTimelineDot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid var(--app-border);
+  border-radius: 50%;
+  background: var(--app-panel);
+  color: var(--mantine-color-dimmed);
+}
+.payrollTimelineItem.active .payrollTimelineDot {
+  border-color: var(--mantine-primary-color-filled);
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+}
+.payslipDocument {
+  max-width: 980px;
+}
+.assessmentModeBanner {
+  margin-bottom: 16px;
+  border: 1px solid var(--app-border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: color-mix(in srgb, var(--hn-dark-primary) 8%, var(--app-panel));
+}
+.assessmentModeIcon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--hn-dark-primary) 18%, var(--app-panel));
+  color: var(--hn-dark-primary);
+}
+@media (max-width: 700px) {
+  .payrollMetric {
+    min-height: auto;
+  }
+}
+@media (max-width: 900px) {
+  .teacherCommunicationLayout {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .teacherConversationList {
+    min-height: 320px;
+  }
+  .teacherConversationThread {
+    min-height: 560px;
+  }
 }
 .workspaceButton {
   width: 100%;
@@ -680,6 +995,7 @@ a {
 .sidebarCollapsed .workspace,
 .sidebarCollapsed .navItem span,
 .sidebarCollapsed .navChevron,
+.sidebarCollapsed .navSectionLabel,
 .sidebarCollapsed .navSubmenu {
   display: none;
 }
@@ -759,6 +1075,7 @@ a {
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  background: var(--app-panel);
 }
 .swatch:nth-child(2),
 .swatch:nth-child(3) {
@@ -854,6 +1171,22 @@ a {
 .tableWrap thead .tableSortButton {
   color: inherit;
 }
+.tableWrap table,
+.tableWrap tbody {
+  background: var(--app-panel);
+}
+.tableWrap tbody tr,
+.tableWrap tbody td {
+  background: var(--app-panel);
+}
+.tableWrap tbody tr:nth-child(even),
+.tableWrap tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--app-panel) 88%, var(--mantine-color-body));
+}
+.tableWrap tbody tr:hover,
+.tableWrap tbody tr:hover td {
+  background: color-mix(in srgb, var(--mantine-primary-color-filled) 10%, var(--app-panel));
+}
 
 .tableLinkButton {
   appearance: none;
@@ -947,3 +1280,71 @@ a {
 .mediaFileField { display: grid; gap: 6px; color: var(--mantine-color-text); font-size: var(--mantine-font-size-sm); font-weight: 600; }
 .mediaFileField input { width: 100%; padding: 9px; border: 1px dashed var(--app-border); border-radius: 6px; background: var(--app-panel); font-weight: 400; }
 .mediaFileField small { color: var(--mantine-color-dimmed); font-weight: 400; }
+
+.authBoundary { min-height: 100vh; background: var(--app-bg); }
+.loginPage { min-height: 100vh; display: grid; grid-template-columns: minmax(340px, .9fr) minmax(520px, 1.1fr); }
+.loginIntro { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(28px, 5vw, 72px); background: linear-gradient(145deg, color-mix(in srgb, var(--mantine-primary-color-filled) 22%, var(--app-bg)), var(--app-bg) 68%); border-right: 1px solid var(--app-border); }
+.loginBrand { display: inline-flex; align-items: center; gap: 10px; color: var(--mantine-color-text); text-decoration: none; font-weight: 750; font-size: 18px; }
+.loginIntroContent { max-width: 540px; margin: 48px 0; }
+.loginIntroContent h1 { max-width: 520px; margin: 18px 0 12px; font-size: clamp(32px, 4vw, 54px); line-height: 1.08; letter-spacing: 0; }
+.loginPanel { display: grid; place-items: center; padding: clamp(20px, 5vw, 72px); }
+.loginCard { width: min(100%, 640px); }
+.loginDivider { display: flex; align-items: center; gap: 10px; margin: 24px 0 16px; color: var(--mantine-color-dimmed); font-size: 12px; }
+.loginDivider::before, .loginDivider::after { content: ""; height: 1px; flex: 1; background: var(--app-border); }
+.loginDemoButtonText { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; line-height: 1.25; text-align: left; }
+.loginDemoButtonText small { overflow: hidden; max-width: 100%; color: var(--mantine-color-dimmed); font-size: 10px; font-weight: 400; text-overflow: ellipsis; }
+@media (max-width: 900px) {
+  .loginPage { grid-template-columns: 1fr; }
+  .loginIntro { min-height: 340px; padding: 28px 24px; border-right: 0; border-bottom: 1px solid var(--app-border); }
+  .loginIntroContent { margin: 36px 0 20px; }
+  .loginIntroContent h1 { font-size: 34px; }
+}
+
+.payroll-breakdown { grid-column: span 3; }
+.payroll-audit { grid-column: span 2; }
+.payroll-ring {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  border: 10px solid var(--mantine-color-teal-6);
+  box-shadow: inset 0 0 0 12px var(--app-panel);
+}
+.work-status, .leave-status { grid-column: span 3; }
+.work-next, .leave-next { grid-column: span 2; }
+.leave-balance-summary { min-width: 250px; padding: 14px 0 0; }
+.leads-overview-summary { min-width: min(100%, 420px); padding-top: 8px; }
+.admission-overview-summary { min-width: min(100%, 420px); padding-top: 8px; }
+.teacher-overview-summary, .teacher-classes-summary { min-width: min(100%, 390px); padding-top: 8px; }
+.teacher-online-summary { min-width: min(100%, 230px); padding-top: 5px; }
+.teacherWorkspace .pageHeader { margin-bottom: 20px; }
+.teacherWorkspace .panel { border-radius: 8px; }
+.teacherWorkspace .toolbar { align-items: flex-end; padding: 4px 0; }
+.teacher-module-summary { min-width: min(100%, 250px); padding-top: 5px; }
+.accountPreference { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 9px 0; color: var(--mantine-color-text); cursor: pointer; }
+.accountPreference input { width: 17px; height: 17px; accent-color: var(--mantine-primary-color-filled); }
+.accountPreference:hover { color: var(--mantine-primary-color-filled); }
+.adminWorkspace .pageHeader, .studentWorkspace .pageHeader, .parentWorkspace .pageHeader { margin-bottom: 20px; }
+.studentOverviewPanel {
+  border-radius: 8px;
+  background-color: var(--app-panel);
+}
+@media (max-width: 767px) {
+  .work-status, .work-next, .leave-status, .leave-next { grid-column: auto; }
+  .leave-balance-summary { width: 100%; min-width: 0; padding-top: 4px; }
+  .leave-balance-summary .mantine-Progress-root { width: 100% !important; }
+  .leads-overview-summary { width: 100%; min-width: 0; }
+  .admission-overview-summary { width: 100%; min-width: 0; }
+  .teacher-overview-summary, .teacher-classes-summary { width: 100%; min-width: 0; }
+  .teacher-online-summary { width: 100%; min-width: 0; }
+  .teacher-module-summary { width: 100%; min-width: 0; }
+}
+@media (max-width: 767px) {
+  .payroll-breakdown, .payroll-audit { grid-column: auto; }
+  .payroll-ring { width: 96px; height: 96px; }
+}
+@media (max-width: 560px) {
+  .loginPanel { padding: 16px; }
+  .loginCard { padding: 20px !important; }
+}

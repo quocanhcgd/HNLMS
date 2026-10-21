@@ -102,4 +102,54 @@ describe("T087 English pathway workflow", () => {
       service.calculatePlacement(actor, { studentId: "student-1", ruleId: "rule-1", skills: [{ skill: "reading", score: 8, maxScore: 10 }] }),
     ).rejects.toMatchObject({ code: "invalid_input" } satisfies Partial<EnglishPathwayError>);
   });
+
+  it("enforces student, branch and certification scope for competency review", async () => {
+    repository.placementRules[0] = {
+      ...repository.placementRules[0]!,
+      branchId: "branch-hn",
+      requiredCertificationCode: "english-b2",
+    };
+    const scopedActor = {
+      ...actor,
+      studentIds: new Set(["student-1"]),
+      branchIds: new Set(["branch-hcm"]),
+      certificationCodes: new Set(["english-b2"]),
+    };
+
+    await expect(
+      service.calculatePlacement(scopedActor, {
+        studentId: "student-1",
+        ruleId: "rule-1",
+        skills: [
+          { skill: "listening", score: 8, maxScore: 10 },
+          { skill: "speaking", score: 8, maxScore: 10 },
+          { skill: "reading", score: 8, maxScore: 10 },
+          { skill: "writing", score: 8, maxScore: 10 },
+        ],
+      }),
+    ).rejects.toMatchObject({ code: "forbidden", message: "branch_outside_scope" });
+
+    await expect(service.getProgress(scopedActor, "student-2")).rejects.toMatchObject({
+      code: "forbidden",
+      message: "student_outside_scope",
+    });
+  });
+
+  it("requires explicit baseline approval permission for teaching assistants", async () => {
+    await expect(
+      service.calculatePlacement(
+        { ...actor, isTeachingAssistant: true },
+        {
+          studentId: "student-1",
+          ruleId: "rule-1",
+          skills: [
+            { skill: "listening", score: 8, maxScore: 10 },
+            { skill: "speaking", score: 8, maxScore: 10 },
+            { skill: "reading", score: 8, maxScore: 10 },
+            { skill: "writing", score: 8, maxScore: 10 },
+          ],
+        },
+      ),
+    ).rejects.toMatchObject({ code: "forbidden", message: "baseline_approval_permission_required" });
+  });
 });

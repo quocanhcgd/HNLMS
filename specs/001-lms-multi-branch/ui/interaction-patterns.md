@@ -20,6 +20,15 @@
 - Optimistic update chỉ dùng khi rollback rõ; payment, payroll, grading và permission không giả báo thành công.
 - Toast cho kết quả ngắn; lỗi cần xử lý dùng inline/banner và correlation ID.
 
+## Table and row actions
+
+- Mỗi chức năng ưu tiên một bảng chính cho một tập dữ liệu và một lifecycle. Không tạo bảng phụ chỉ để lặp lại các dòng đã có ở bảng chính.
+- Nếu bảng phụ và bảng chính có cùng đối tượng hoặc cùng thao tác, bỏ bảng phụ và thêm cột `Thao tác` vào bảng chính. Cột này dùng icon + tooltip hoặc icon + text ngắn, có accessible name và ẩn/hiện theo permission.
+- Cột `Thao tác` có thể gồm `Xem`, `Sửa`, `Xóa`, `Chấm`, `Công bố` hoặc command tương ứng lifecycle; không hiển thị command không hợp lệ với trạng thái dòng.
+- `Sửa` luôn mở modal form có field label, validation, dirty-state guard, lỗi inline và footer `Hủy` → `Lưu`/`Lưu nháp`/`Xác nhận`. Modal không được chứa bảng lồng để thay thế một workflow khác.
+- `Xóa` luôn mở confirmation/alert dialog. Dữ liệu đã publish, đã chốt, đã dùng để tính điểm/lương/tài chính hoặc cần audit phải dùng archive/void/adjustment; không được xóa vật lý.
+- Khi thao tác cần nhập nhiều trường hoặc nội dung dài vượt quá modal, mở detail page theo route rõ ràng; không tạo bảng phụ tạm thời.
+
 ## Theme and locale
 
 - Theme đổi tức thời, không reload.

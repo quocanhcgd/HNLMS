@@ -1,0 +1,27 @@
+# Privacy, Retention And Data Governance Matrix
+
+This matrix is the baseline for every role and module. Authorization is enforced at the API/service boundary; a hidden UI element is never a privacy control. Retention clocks use the record's `created_at`/`published_at` in UTC. A legal hold suspends deletion until released by an authorized compliance owner.
+
+| Data class | Examples | Legal basis / consent | Default retention | Access and propagation | Export/delete/anonymize | Audit and redaction |
+| --- | --- | --- | --- | --- | --- | --- |
+| Identity and account | name, email, role, session metadata | contract, security, account administration | account life + 2 years | user self; staff only within organization/branch; platform admins isolated | export own data; deactivate then anonymize contact fields after hold | never log password, token, cookie, MFA secret or full IP |
+| Admission/contact | lead phone/email, interest, consent source/version | explicit consultation consent; withdrawable for marketing | 24 months after last interaction, unless enrollment/legal hold | consultant and assigned branch; finance/academic receive only required fields | export subject request; delete/anonymize after retention; preserve consent audit | redact contact values from analytics and support logs |
+| Learning and assessment | enrollment, attendance, scores, competency evidence, baseline/current/target | education contract; assessment purpose; parent delegation for minor access | enrollment + 7 years; published evidence remains versioned | teacher/academic by class/program; student own; parent only active per-student delegation; reporting aggregates | export canonical projection; correct by adjustment/version, never overwrite published evidence | reviewer rationale, drafts and raw rubric stay internal; redact learner identifiers in exports |
+| Communication | parent-teacher/internal messages, attachments, delivery receipts | service operation and safeguarding; attachment purpose limitation | 2 years after thread close; legal hold overrides | conversation members and moderators within organization; no cross-branch discovery | export conversation for members; delete attachment content, retain minimal audit tombstone | redact message body/attachments from logs; keep actor/action/time |
+| Media and recordings | lesson files, submissions, voice/audio/video, online recordings | explicit purpose/consent where required; recording notice before capture | lesson life + 2 years; recordings 180 days unless contract/legal hold | private object storage; signed URL re-authorizes tenant/class/student/parent scope on every access | delete object and derivatives, retain checksum/tombstone; anonymize metadata | never log URLs, raw media, transcripts or biometric-like features |
+| Finance and payroll | invoices, receipts, expense documents, worklog, payslip, tax/insurance | contract, accounting and statutory obligation | statutory period (minimum 10 years for accounting records) | finance/HR by branch; teacher sees own published payslip/worklog; student/parent own billing only | accounting records are immutable; use void/adjustment and restricted export | redact bank/payment secrets and document contents; audit all approvals |
+| AI processing | prompts, source references, model/prompt version, output, review/appeal | documented purpose and opt-in where personal data is used; no training reuse by default | task + 90 days; safety/audit decision 2 years | only scoped operator/reviewer; student/parent never receive private prompt or reviewer rationale | export decision/evidence; delete prompt payload after retention; anonymize telemetry | redact PII before provider; store confidence/source/safety and human approval |
+
+## Subject rights and workflow
+
+1. A verified subject, parent/guardian with active delegation, or authorized staff submits an access/correction/deletion request. Parent requests are limited to the delegated student and permission set; they never grant access to another child or teacher workspace.
+2. Privacy staff records identity verification, affected organization/branch, data classes, legal basis, deadline and any legal hold. Export is an asynchronous, scope-filtered package with an expiry and audit event.
+3. Correction creates a new version or adjustment for learning, payroll and accounting records. Published evidence, receipts and audit entries are never hard-deleted.
+4. Deletion removes private object bytes and direct identifiers when retention and legal hold allow it. Aggregates are irreversibly anonymized; the tombstone retains only non-identifying record ID, action, actor and timestamp.
+5. Breach or accidental disclosure triggers access revocation, session revocation, provider notification where applicable, incident audit and a cross-role impact review covering admin, teacher, student, parent, finance/HR and reporting.
+
+## AI and minors guardrails
+
+- Minor data is purpose-limited to education/safeguarding. Parent delegation is time-bounded and independently checked for schedule, progress, scores, attendance, feedback and competency.
+- AI receives the minimum redacted context needed for the task. It must not infer or expose sensitive traits, and high-risk outputs require human review before persistence or notification.
+- Notifications contain context links and safe summaries, never private rubric, worklog, payroll, internal handoff or raw AI prompt data.

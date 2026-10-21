@@ -1,7 +1,14 @@
 export type ParentLinkStatus = "active" | "revoked" | "expired";
 export type ParentDelegationStatus = "active" | "revoked" | "expired";
 export type ParentPermission =
-  "view_schedule" | "view_progress" | "view_scores" | "view_attendance" | "view_finance" | "message_teacher";
+  | "view_schedule"
+  | "view_progress"
+  | "view_scores"
+  | "view_attendance"
+  | "view_feedback"
+  | "view_finance"
+  | "view_competency"
+  | "message_teacher";
 
 export type CommunicationActor = { userId: string; organizationId: string };
 export type ParentLink = {

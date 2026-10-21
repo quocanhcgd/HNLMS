@@ -20,6 +20,7 @@
 | UI-014 | Invoice/payment detail | LMS | P1 |
 | UI-015 | Organization/access settings | LMS | P1 |
 | UI-016 | Theme preview/publish | LMS | P1 |
+| UI-017 | Competency profile (global and class-scoped) | LMS | P1 |
 
 ## Required states
 

@@ -10,6 +10,34 @@
 
 ## Clarifications
 
+### Session 2026-08-24 - Năng lực học tập đa ngành
+
+- Hồ sơ năng lực MUST là khái niệm dùng chung cho mọi môn và chương trình; Tiếng Anh chỉ là một cấu hình môn có bốn kỹ năng listening, speaking, reading và writing.
+- Bài đánh giá đầu vào MUST được tạo theo chương trình hoặc mục tiêu học mà người học đăng ký. Hệ thống chỉ đánh giá các nhóm năng lực nằm trong blueprint của chương trình, không bắt buộc mọi học viên phải làm đủ bốn kỹ năng Tiếng Anh.
+- Mỗi kết quả đầu vào MUST lưu cả điểm gốc, thang điểm, năng lực hoặc level đã chuẩn hóa, ngày đánh giá, nguồn, người đánh giá và phiên bản blueprint. Mốc đầu vào đã xác nhận là lịch sử bất biến; điều chỉnh tạo phiên bản/audit mới.
+- Hồ sơ năng lực MUST phân biệt tối thiểu mốc đầu vào, năng lực hiện tại, mục tiêu chương trình và lịch sử minh chứng. Nếu một năng lực không thuộc mục tiêu hoặc chưa được đánh giá, hệ thống MUST hiển thị trạng thái tương ứng thay vì suy đoán.
+- Minh chứng năng lực có thể đến từ kiểm tra đầu vào, thi thử, bài tập, đánh giá trên lớp hoặc nhận xét có cấu trúc của giáo viên. Điểm danh và tỷ lệ hoàn thành chỉ là dữ liệu tiến trình/cảnh báo, không tự động trở thành điểm năng lực.
+- Đánh giá thủ công của giáo viên MUST dùng rubric theo từng nhóm năng lực được cấu hình cho chương trình; không dùng một nhận xét chung để kết luận năng lực tổng thể. Giáo viên chỉ xác nhận overall khi phạm vi năng lực bắt buộc của chương trình đã đủ dữ liệu hoặc có lý do được ghi nhận.
+- Không có một overall level dùng chung giữa các môn. Overall, quy tắc quy đổi, ngưỡng xếp lớp và cách so sánh đầu vào - hiện tại - mục tiêu MUST thuộc về phiên bản chương trình/môn.
+- Một học viên có thể có nhiều hồ sơ theo các chương trình hoặc môn khác nhau và có thể thuộc nhiều lớp. Hồ sơ năng lực thuộc học viên và chương trình; minh chứng có thể tham chiếu lớp, buổi học, bài kiểm tra và giáo viên.
+- Màn hình tổng hợp hồ sơ năng lực MUST lọc được môn, chương trình, lớp, nhóm năng lực, trạng thái, nguồn minh chứng, độ tin cậy, thời gian đánh giá và người phụ trách. Màn hình trong lớp chỉ là một view có scope lớp dùng chung hồ sơ, không tạo bản sao dữ liệu.
+- Các luồng tư vấn, thi đầu vào, xếp lớp, đánh giá thi thử, điểm/tiến độ lớp, lộ trình, báo cáo và trao đổi MUST tham chiếu cùng mã chương trình, môn, nhóm năng lực và minh chứng để không tạo kết quả mâu thuẫn.
+- Thay đổi trong chi tiết lớp MUST được phân loại trước khi lan truyền: lịch, học liệu đã công bố, điểm đã công bố, điểm danh, phản hồi đã gửi và hồ sơ năng lực đã xác nhận là dữ liệu có thể hiển thị ở portal; worklog, bản nháp, hàng đợi xử lý, ghi chú nội bộ và handoff vận hành chỉ dành cho staff/teacher theo quyền.
+- Khi dữ liệu học tập được công bố hoặc xác nhận, hệ thống MUST cập nhật các view liên quan của học viên và phụ huynh được ủy quyền, tạo thông báo phù hợp và giữ liên kết ngữ cảnh lớp/chương trình; không để giáo viên phải nhập lại cùng một kết quả ở portal khác.
+- Hồ sơ năng lực hiển thị cho học viên gồm đầu vào, hiện tại, mục tiêu, tiến bộ và phản hồi đã công bố. Phụ huynh chỉ xem các phần này khi delegation có quyền tiến độ/điểm/nhận xét; không xem bản nháp, rubric nội bộ, độ tin cậy nội bộ hoặc ghi chú vận hành nếu chưa được chính sách cho phép.
+- Teaching assistant MUST be scoped to assigned class/program competency groups for grading and evidence capture; entrance/mock queues and baseline/current approval require an explicit assessment-review permission.
+
+### Session 2026-08-24 - Change impact và chuẩn thao tác bảng
+
+- Mọi yêu cầu mới, yêu cầu điều chỉnh hoặc phản hồi phát sinh từ người dùng MUST được ghi nhận thành change item có nguồn, phạm vi, lý do, trạng thái và người duyệt.
+- Trước khi thiết kế hoặc triển khai change item, owner MUST lập impact analysis trên toàn bộ vai trò, workspace, module, dữ liệu, quyền, notification, báo cáo và integration có liên quan; không chỉ sửa màn hình nơi người dùng gửi yêu cầu.
+- Impact analysis MUST kiểm tra tối thiểu các vai trò quản trị, học vụ, tư vấn, giáo viên, trợ giảng, học viên, phụ huynh, tài chính/nhân sự nếu dữ liệu hoặc quyền của họ bị ảnh hưởng. Vai trò không bị ảnh hưởng phải được ghi rõ lý do loại trừ.
+- Change item chỉ được chuyển sang triển khai sau khi business owner xác nhận luồng mới, cập nhật đặc tả/role matrix/acceptance test và ghi nhận migration hoặc compatibility plan nếu có dữ liệu/route cũ.
+- Khi một chức năng có bảng dữ liệu chính và bảng phụ trùng hoặc lặp cùng phạm vi thao tác, MUST bỏ bảng phụ và đưa thao tác vào bảng chính. Bảng phụ chỉ được giữ nếu biểu diễn một tập dữ liệu khác bản chất, có owner/trạng thái/quyền riêng và được giải thích trong screen specification.
+- Bảng chính MUST có cột `Thao tác` khi người dùng cần sửa, xóa, xem chi tiết, chấm, công bố hoặc thực hiện workflow trên từng dòng. Thao tác phải chịu cùng data scope và permission như API.
+- Chỉnh sửa dữ liệu từ bảng MUST mở modal có form, validation, dirty-state guard và footer `Hủy` → `Lưu nháp`/`Lưu`/`Xác nhận` tùy workflow; không mở một bảng sửa lồng trong trang nếu không có lý do accessibility hoặc dữ liệu quá dài đã được phê duyệt.
+- Xóa dữ liệu MUST dùng confirmation/alert dialog nêu rõ đối tượng, hậu quả và khả năng khôi phục. Bản ghi đã phát sinh điểm, bài làm, tài chính, payroll, audit, tin nhắn hoặc minh chứng đã xác nhận không được xóa vật lý; dùng archive/void/adjustment workflow.
+
 ### Session 2026-08-19
 
 - Q: Khi license tháng hoặc năm hết hạn và hết cả grace period, tổ chức được tiếp tục sử dụng hệ thống ở mức nào? → A: Chỉ tắt các module hết entitlement; module lõi và module còn license tiếp tục hoạt động.
@@ -136,6 +164,8 @@ Học viên đăng ký lớp, theo dõi lịch, tiến độ và kết quả; ph
 2. **Given** phụ huynh được liên kết với học viên, **When** quản trị viên cấu hình quyền theo hồ sơ, **Then** phụ huynh chỉ xem được lịch, điểm danh, tiến độ, học phí, điểm, nhận xét hoặc bài tập theo đúng tập quyền được cấp.
 3. **Given** giáo viên, phụ huynh và tổ chức cùng thuộc một học viên hoặc lớp, **When** một bên tạo trao đổi ba bên, **Then** các bên được phép xem nhận thông báo và trả lời trong đúng phạm vi cuộc trao đổi.
 4. **Given** học viên hoàn thành nội dung hoặc đánh giá, **When** kết quả được xác nhận, **Then** tiến độ, điểm và trạng thái hoàn thành được lưu trong hồ sơ học tập và hiển thị theo quyền.
+5. **Given** giáo viên hoặc học vụ công bố lịch, học liệu, điểm, điểm danh, phản hồi hoặc minh chứng năng lực từ lớp, **When** học viên mở portal, **Then** portal hiển thị cùng kết quả và ngữ cảnh lớp/chương trình mà không cần nhập lại.
+6. **Given** phụ huynh có delegation phù hợp, **When** kết quả học tập hoặc hồ sơ năng lực được công bố, **Then** phụ huynh xem được đúng phần được ủy quyền và không xem được bản nháp hoặc ghi chú nội bộ.
 
 ---
 
@@ -174,19 +204,23 @@ Khách hoặc học viên thực hiện bài thi đầu vào để xếp lớp, 
 
 ---
 
-### User Story 9 - Lộ trình học Tiếng Anh (Priority: P1)
+### User Story 9 - Hồ sơ năng lực và lộ trình học đa ngành (Priority: P1)
 
-Học viên Tiếng Anh làm kiểm tra xếp lớp, nhận lộ trình phù hợp, thực hành nghe, nói, đọc, viết, nhận phản hồi giáo viên và theo dõi tiến bộ từng kỹ năng.
+Học viên theo bất kỳ môn hoặc chương trình nào làm đánh giá đầu vào theo mục tiêu đăng ký, nhận lộ trình phù hợp, học theo các nhóm năng lực của chương trình, nhận phản hồi giáo viên và theo dõi tiến bộ từ mốc đầu vào đến hiện tại. Tiếng Anh là một cấu hình đặc thù có thể dùng bốn kỹ năng nghe, nói, đọc, viết.
 
-**Why this priority**: Tiếng Anh có đặc thù đánh giá bốn kỹ năng, cần lộ trình và phản hồi chi tiết hơn các ngành chỉ dùng kiểm tra lý thuyết.
+**Why this priority**: Nền tảng đa ngành cần một mô hình năng lực thống nhất để tránh nhân bản luồng Tiếng Anh cho Toán, Văn hoặc môn mới, đồng thời vẫn cho phép từng chương trình định nghĩa blueprint, rubric và quy tắc level riêng.
 
-**Independent Test**: Ghi nhận kết quả xếp lớp, gán lộ trình; hoàn thành hoạt động cho bốn kỹ năng và xác minh hồ sơ hiển thị tiến bộ riêng từng kỹ năng.
+**Independent Test**: Tạo hai chương trình có tập năng lực khác nhau, ghi nhận đầu vào theo đúng blueprint, thêm minh chứng trong quá trình học và xác minh mỗi hồ sơ hiển thị đầu vào, hiện tại, mục tiêu, lịch sử và tiến bộ đúng phạm vi chương trình.
 
 **Acceptance Scenarios**:
 
-1. **Given** học viên Tiếng Anh chưa có cấp độ, **When** hoàn thành bài kiểm tra xếp lớp, **Then** hệ thống ghi nhận kết quả và đề xuất cấp độ hoặc lộ trình theo quy tắc chương trình.
-2. **Given** học viên thuộc lộ trình Tiếng Anh, **When** mở học phần, **Then** hệ thống hiển thị hoạt động nghe, nói, đọc, viết theo cấp độ và tiến độ hiện tại.
-3. **Given** học viên nộp bài nói hoặc viết cần chấm thủ công, **When** giáo viên đánh giá và phản hồi, **Then** học viên nhận được điểm, nhận xét và trạng thái hoàn thành của kỹ năng tương ứng.
+1. **Given** người học đăng ký một chương trình có blueprint chỉ gồm một số nhóm năng lực, **When** hoàn thành bài đánh giá đầu vào, **Then** hệ thống chỉ tạo mốc đầu vào cho các nhóm năng lực thuộc blueprint và đề xuất level/lộ trình theo phiên bản quy tắc của chương trình.
+2. **Given** học viên có hồ sơ năng lực, **When** mở hồ sơ, **Then** hệ thống hiển thị riêng đầu vào, hiện tại, mục tiêu và các minh chứng theo từng nhóm năng lực; năng lực ngoài phạm vi hoặc chưa đánh giá không bị suy đoán.
+3. **Given** giáo viên cần rà soát hồ sơ, **When** mở một học viên từ view tổng hợp hoặc từ lớp, **Then** hệ thống hiển thị lớp/chương trình liên quan, lịch sử minh chứng và rubric đầy đủ cho các nhóm năng lực bắt buộc của chương trình.
+4. **Given** học viên có kết quả từ bài tập, thi thử hoặc đánh giá trên lớp, **When** kết quả được xác nhận, **Then** hệ thống thêm minh chứng mới, cập nhật đề xuất hiện tại và giữ nguyên mốc đầu vào cùng lịch sử trước đó.
+5. **Given** giáo viên đánh giá thủ công, **When** lưu review, **Then** hệ thống yêu cầu mức đánh giá, độ tin cậy và nhận xét theo từng nhóm năng lực được áp dụng; không dùng một nhận xét chung để hoàn tất toàn bộ hồ sơ.
+6. **Given** học viên học nhiều môn hoặc nhiều lớp, **When** xem hồ sơ, **Then** hệ thống tách hồ sơ theo chương trình/môn, cho phép lọc theo lớp và không tạo overall level xuyên môn.
+7. **Given** năng lực hoặc kết quả đã được giáo viên xác nhận và công bố, **When** học viên hoặc phụ huynh được ủy quyền mở portal, **Then** hệ thống hiển thị đúng môn/chương trình, mốc đầu vào, hiện tại, mục tiêu, tiến bộ và phản hồi theo scope; bản nháp và dữ liệu nội bộ không bị lộ.
 
 ---
 
@@ -347,10 +381,26 @@ Lãnh đạo và quản lý chi nhánh theo dõi khách hàng tiềm năng, tuy�
 - **FR-035**: Hệ thống MUST cho phép tạo và quản lý đợt thi thử với đề thi, đối tượng dự thi, thời hạn, số lượt, quy tắc chấm và chính sách công bố kết quả.
 - **FR-036**: Hệ thống MUST ghi nhận trạng thái làm bài, thời gian, câu trả lời, lần nộp và kết quả từng lượt thi mà không tạo nhiều lượt cho cùng lần làm.
 - **FR-037**: Hệ thống MUST hiển thị kết quả thi theo tổng điểm, chủ đề hoặc kỹ năng, cùng gợi ý nội dung ôn tập theo quyền công bố.
-- **FR-038**: Hệ thống MUST hỗ trợ kiểm tra xếp lớp Tiếng Anh và gán cấp độ hoặc lộ trình theo quy tắc do quản lý đào tạo cấu hình.
-- **FR-039**: Hệ thống MUST hỗ trợ nội dung, hoạt động, đánh giá, điểm và tiến độ tách biệt cho nghe, nói, đọc và viết.
-- **FR-040**: Hệ thống MUST cho phép giảng viên nhận bài nói hoặc viết, chấm thủ công, phản hồi và cập nhật kết quả theo kỹ năng.
-- **FR-041**: Hệ thống MUST hiển thị hồ sơ năng lực Tiếng Anh theo cấp độ, bốn kỹ năng, kết quả xếp lớp và các mốc đánh giá.
+- **FR-084**: Hệ thống MUST hỗ trợ blueprint đánh giá đầu vào theo từng chương trình/môn, trong đó cấu hình được nhóm năng lực bắt buộc, thang điểm, rubric, quy tắc chuẩn hóa, ngưỡng xếp lớp và mục tiêu đầu ra.
+- **FR-085**: Hệ thống MUST tạo hồ sơ năng lực theo học viên và chương trình/môn, tách biệt mốc đầu vào, năng lực hiện tại, mục tiêu và lịch sử minh chứng; không tạo một overall level dùng chung xuyên môn.
+- **FR-086**: Hệ thống MUST lưu điểm gốc cùng thang điểm, điểm hoặc level chuẩn hóa, nguồn, blueprint version, người đánh giá, thời điểm, độ tin cậy và trạng thái của từng minh chứng năng lực.
+- **FR-087**: Hệ thống MUST hỗ trợ nội dung, hoạt động, đánh giá, điểm và tiến độ theo các nhóm năng lực do chương trình cấu hình; Tiếng Anh có thể cấu hình listening, speaking, reading và writing nhưng không được là mô hình bắt buộc cho môn khác.
+- **FR-088**: Hệ thống MUST cho phép giảng viên đánh giá thủ công bằng rubric theo từng nhóm năng lực áp dụng, phản hồi có dẫn chứng và cập nhật phiên bản kết quả mà không ghi đè lịch sử.
+- **FR-089**: Hệ thống MUST hiển thị hồ sơ năng lực theo môn/chương trình với đầu vào, hiện tại, mục tiêu, tiến bộ, độ tin cậy, nguồn minh chứng, lớp liên quan và trạng thái chưa đánh giá/ngoài phạm vi.
+- **FR-090**: Hệ thống MUST cho phép lọc và truy cập hồ sơ năng lực từ view tổng hợp hoặc từ lớp học theo môn, chương trình, lớp, nhóm năng lực, nguồn, trạng thái, độ tin cậy, thời gian và người phụ trách; hai view dùng chung dữ liệu.
+- **FR-091**: Hệ thống MUST liên kết kết quả tư vấn, đánh giá đầu vào, thi thử, bài tập, điểm/tiến độ lớp, lộ trình và báo cáo với cùng chương trình/môn và mã minh chứng, đồng thời ngăn việc cập nhật năng lực từ nguồn không được xác nhận.
+- **FR-092**: Hệ thống MUST giữ mốc đầu vào đã xác nhận là bất biến; chấm lại hoặc điều chỉnh phải tạo phiên bản/audit mới, ghi lý do và người phê duyệt.
+- **FR-093**: Hệ thống MUST phân loại dữ liệu phát sinh từ chi tiết lớp thành dữ liệu vận hành nội bộ hoặc kết quả học tập công bố; mỗi loại có chính sách hiển thị và quyền riêng cho teacher, student, parent và staff.
+- **FR-094**: Hệ thống MUST đồng bộ lịch, học liệu đã công bố, điểm đã công bố, điểm danh, phản hồi đã gửi và competency evidence đã xác nhận từ lớp tới portal học viên theo đúng enrollment/program scope, không yêu cầu nhập lặp.
+- **FR-095**: Hệ thống MUST hiển thị cho học viên hồ sơ năng lực theo môn/chương trình gồm baseline/current/target, progress, evidence summary và feedback đã công bố; phải phân biệt rõ draft, pending review, published và superseded.
+- **FR-096**: Hệ thống MUST hiển thị cho phụ huynh các kết quả học tập và hồ sơ năng lực theo delegation từng học viên; quyền xem điểm, tiến độ, nhận xét, attendance và evidence summary có thể cấp độc lập và phải audit.
+- **FR-097**: Hệ thống MUST tạo notification/context link khi lịch, học liệu, điểm, điểm danh, phản hồi hoặc hồ sơ năng lực công bố thay đổi; notification không được tiết lộ dữ liệu ngoài scope.
+- **FR-098**: Hệ thống MUST giữ liên kết hai chiều giữa lớp, buổi học, assessment, competency evidence, student portal, parent portal và conversation context để người có quyền truy nguyên nguồn dữ liệu.
+- **FR-099**: Hệ thống MUST có change item registry hoặc audit record cho yêu cầu phát sinh từ người dùng, gồm nguồn, nhu cầu, phạm vi, owner, trạng thái, quyết định và liên kết tài liệu/issue/test.
+- **FR-100**: Hệ thống MUST yêu cầu impact analysis liên vai trò và liên module trước khi chấp nhận thay đổi; analysis phải bao phủ quyền, dữ liệu, notification, báo cáo, integration và compatibility/migration khi áp dụng.
+- **FR-101**: Hệ thống MUST dùng một bảng chính có cột thao tác thay cho bảng phụ lặp dữ liệu; ngoại lệ phải được ghi rõ trong screen specification và được business owner duyệt.
+- **FR-102**: Hệ thống MUST mở modal form cho thao tác chỉnh sửa từ bảng, có validation, dirty-state guard, permission check, audit và trạng thái lưu phù hợp.
+- **FR-103**: Hệ thống MUST dùng confirmation cho xóa; dữ liệu lịch sử hoặc dữ liệu đã công bố/xác nhận phải chuyển sang archive/void/adjustment thay vì xóa vật lý.
 - **FR-042**: Hệ thống MUST cho phép tạo buổi học online gắn với lớp, bao gồm lịch, liên kết phòng họp, người tham dự, học liệu và trạng thái buổi học.
 - **FR-043**: Hệ thống MUST đồng bộ hoặc ghi nhận trạng thái tham dự và bản ghi buổi học từ nền tảng họp trực tuyến theo quyền truy cập được cấp.
 - **FR-044**: Hệ thống MUST quản lý biểu phí, ưu đãi, hóa đơn, hạn thanh toán, công nợ, thu tiền, hoàn tiền và biên nhận theo học viên, phụ huynh, lớp hoặc chương trình.
@@ -417,11 +467,14 @@ Lãnh đạo và quản lý chi nhánh theo dõi khách hàng tiềm năng, tuy�
 - **Học liệu**: Bài giảng, video, bài tập hoặc tài nguyên học tập có tác giả, phiên bản, trạng thái công bố và phạm vi dùng.
 - **Tài nguyên thư viện số**: Tài liệu tham khảo có phân loại, mô tả, quyền truy cập, chính sách dùng và lịch sử phiên bản.
 - **Cuộc trao đổi**: Kênh thảo luận gắn với thành viên, lớp, học viên hoặc nghiệp vụ; có lịch sử, trạng thái và phạm vi quyền.
-- **Ngân hàng câu hỏi**: Tập hợp câu hỏi theo ngành, chủ đề, kỹ năng, mức độ và trạng thái duyệt.
-- **Đợt đánh giá**: Thi đầu vào hoặc thi thử có đề, đối tượng, thời hạn, số lượt, quy tắc chấm và chính sách công bố.
+- **Ngân hàng câu hỏi**: Tập hợp câu hỏi theo ngành, chương trình, nhóm năng lực, chủ đề, mức độ và trạng thái duyệt.
+- **Blueprint đánh giá**: Cấu hình đánh giá theo chương trình/môn gồm nhóm năng lực, thang điểm, rubric, quy tắc chuẩn hóa, ngưỡng và mục tiêu đầu ra.
+- **Đợt đánh giá**: Thi đầu vào, thi thử hoặc đánh giá khác có blueprint, đối tượng, thời hạn, số lượt, quy tắc chấm và chính sách công bố.
 - **Lượt thi**: Một lần làm bài gồm thời gian, câu trả lời, trạng thái nộp và kết quả.
-- **Lộ trình Tiếng Anh**: Chuỗi học phần và hoạt động theo cấp độ, có mục tiêu riêng cho nghe, nói, đọc, viết.
-- **Hồ sơ năng lực Tiếng Anh**: Kết quả xếp lớp, điểm và tiến độ theo bốn kỹ năng qua các mốc đánh giá.
+- **Lộ trình học**: Chuỗi học phần và hoạt động theo mục tiêu của một chương trình/môn, có phiên bản và điều kiện hoàn thành.
+- **Hồ sơ năng lực học tập**: Hồ sơ của học viên theo chương trình/môn, gồm mốc đầu vào, năng lực hiện tại, mục tiêu, nhóm năng lực, minh chứng, tiến bộ, độ tin cậy và lịch sử phiên bản.
+- **Minh chứng năng lực**: Kết quả đã xác nhận từ bài thi, bài tập, đánh giá lớp hoặc rubric giáo viên; có điểm gốc, chuẩn hóa, nguồn, thời điểm, người đánh giá và liên kết lớp nếu có.
+- **Change item**: Bản ghi yêu cầu phát sinh từ người dùng kèm impact analysis, owner, quyết định, cập nhật tài liệu, kiểm thử liên vai trò và trạng thái phát hành.
 - **Buổi học online**: Buổi học gắn với lớp, lịch, liên kết họp, thành phần tham dự, học liệu, trạng thái và bản ghi.
 - **Hóa đơn**: Nghĩa vụ tài chính gồm biểu phí, ưu đãi, hạn thanh toán, số tiền và trạng thái công nợ.
 - **Giao dịch thanh toán**: Bản ghi thu, hoàn hoặc điều chỉnh tiền, kèm trạng thái, biên nhận và mã đối chiếu kế toán.
@@ -440,7 +493,7 @@ Lãnh đạo và quản lý chi nhánh theo dõi khách hàng tiềm năng, tuy�
 - **SC-007**: Ít nhất 90% phụ huynh thử nghiệm chỉ xem được đúng tập dữ liệu được ủy quyền và hoàn tất một trao đổi với giáo viên trong tối đa 2 phút.
 - **SC-008**: Ít nhất 90% người dùng thử nghiệm tìm được tài liệu thư viện phù hợp qua từ khóa hoặc bộ lọc trong tối đa 2 phút.
 - **SC-009**: Ít nhất 95% học viên hoàn tất bài thi đầu vào hoặc thi thử trong thời hạn nhận được trạng thái nộp bài và kết quả chấm tự động trong vòng 10 giây sau khi nộp.
-- **SC-010**: Ít nhất 90% học viên Tiếng Anh thử nghiệm hoàn thành xếp lớp và xem lộ trình cùng tiến bộ bốn kỹ năng trong lần đầu sử dụng.
+- **SC-010**: Ít nhất 90% học viên thử nghiệm thuộc các chương trình có blueprint khác nhau hoàn thành đánh giá đầu vào và xem đúng lộ trình cùng tiến bộ theo các nhóm năng lực của chương trình; bộ kiểm thử English phải bao phủ bốn kỹ năng khi blueprint yêu cầu.
 - **SC-011**: Ít nhất 95% buổi học online thử nghiệm ghi nhận đúng lịch, người tham dự và trạng thái tham dự từ nền tảng họp.
 - **SC-012**: Ít nhất 98% thanh toán trực tuyến thành công cập nhật công nợ và phát hành biên nhận trong vòng 1 phút sau khi được xác nhận.
 - **SC-013**: 100% giao dịch được đồng bộ lại trong kịch bản kiểm thử không tạo bản ghi kế toán hoặc ERP trùng lặp.
@@ -465,6 +518,10 @@ Lãnh đạo và quản lý chi nhánh theo dõi khách hàng tiềm năng, tuy�
 - **SC-032**: 100% playback/download trái scope bị từ chối; signed URL hết hạn không tiếp tục cấp quyền ngoài access policy hiện hành.
 - **SC-033**: 100% assessment autosave test có request đến sai thứ tự giữ câu trả lời sequence mới nhất; submit lặp và media response retry không tạo attempt hoặc answer effect trùng.
 - **SC-034**: 100% luồng speaking MVP cho phép ghi âm, nghe lại, nộp, chờ chấm và giáo viên phản hồi trên desktop/mobile được hỗ trợ; khi microphone/provider lỗi có hướng dẫn retry hoặc upload file theo policy.
+- **SC-035**: 100% hồ sơ năng lực thử nghiệm hiển thị riêng đầu vào, hiện tại, mục tiêu và lịch sử minh chứng; không có năng lực ngoài blueprint bị đánh dấu là thiếu dữ liệu.
+- **SC-036**: 100% kết quả năng lực thử nghiệm lưu được điểm gốc, thang điểm, chuẩn hóa, nguồn, chương trình, blueprint version, người đánh giá và thời điểm; chấm lại không làm thay đổi bản ghi lịch sử đã xác nhận.
+- **SC-037**: 100% học viên thử nghiệm học nhiều lớp hoặc nhiều môn có hồ sơ tách theo chương trình/môn, không phát sinh overall level xuyên môn; view từ lớp và view tổng hợp trả về cùng dữ liệu.
+- **SC-038**: Người dùng có quyền tìm được học viên cần rà soát bằng bộ lọc môn, chương trình, lớp, nhóm năng lực, nguồn, trạng thái và thời gian trong tối đa ba thao tác sau khi mở hồ sơ năng lực.
 
 ## Assumptions
 

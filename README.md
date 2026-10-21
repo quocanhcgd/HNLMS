@@ -7,10 +7,7 @@ LMS đa ngành, đa chi nhánh với public landing, tuyển sinh, học tập, 
 
 ## Project progress
 
-- Completed: **63 / 175 tasks** (**36.0%**)
-- Current phase: **Phase 1 - Setup**
-- Next task: **T064 - Learning content and library resources**
-- Live dashboard: **https://quocanhcgd.github.io/HNLMS/**
+- Completed: xem [dashboard trạng thái](./docs/project-status.json) và [task dashboard](./docs/task-dashboard.html)
 - Source checklist: [tasks.md](./specs/001-lms-multi-branch/tasks.md)
 - Full-stack gate: [full-stack-readiness.md](./specs/001-lms-multi-branch/checklists/full-stack-readiness.md)
 
@@ -18,10 +15,14 @@ LMS đa ngành, đa chi nhánh với public landing, tuyển sinh, học tập, 
 
 Repository hiện đang ở giai đoạn foundation và UI prototype. Prototype web chạy với Next.js App Router, Mantine, TanStack Table 8.x và mock data:
 
+Repository dùng **npm workspaces** và `package-lock.json` làm nguồn khóa duy nhất. Node phải là `20.12.x` theo `.nvmrc`/`.node-version`.
+
 ```powershell
-npm install
+npm ci
 npm run dev
 ```
+
+Không dùng `pnpm` hoặc `yarn` để cài dependency trong repository này.
 
 Mở `http://localhost:3100/ui-preview` hoặc route `/admin`, `/admin/leads`, `/platform`.
 

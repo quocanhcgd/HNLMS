@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@hnlms/domain-contracts": "0.1.0",
     "@hnlms/theme-presets": "*",
     "@hnlms/ui": "*",
     "@mantine/core": "^8.3.1",

@@ -10,6 +10,11 @@
 
 ## Environment or provider changes
 
+## Release and dependency impact
+
+- [ ] Versioning/changelog labels applied (`feature`, `bug`, `security`, `dependencies`, or `skip-changelog`)
+- [ ] Dependency/license/security scans considered
+
 ## Security and data-scope considerations
 
 - [ ] No secrets/private media included

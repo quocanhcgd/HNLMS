@@ -71,3 +71,6 @@ export function parseAssessmentAnswer(input: unknown): AssessmentAnswer {
 }
 export * from "./remote-command";
 export * from "./learning/index";
+export * from "./assessment";
+export * from "./program-competency";
+export * from "./learning-output";

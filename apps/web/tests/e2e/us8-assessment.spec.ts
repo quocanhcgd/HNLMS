@@ -11,9 +11,10 @@ test.describe("US8 assessment workspaces", () => {
 
   test("teacher opens assessment review workspace and sees grading controls", async ({ page }) => {
     await page.goto("/teacher/assessment");
-    await expect(page.locator(".pageHeader").getByText("Chấm bài & đề thi", { exact: true })).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator(".pageHeader").getByText("Chấm bài kiểm tra đầu vào", { exact: true })).toBeVisible({ timeout: 15_000 });
     await expect(page.getByText("Nguyễn Minh Anh", { exact: true })).toBeVisible();
-    await expect(page.getByText("Phiếu chấm nhanh", { exact: true })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Công bố kết quả" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Chấm bài" }).first()).toBeVisible();
+    await page.getByRole("button", { name: "Chấm bài" }).first().click();
+    await expect(page.getByText("Phiếu chấm", { exact: false })).toBeVisible();
   });
 });

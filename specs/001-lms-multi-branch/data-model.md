@@ -26,8 +26,9 @@ Rules: mỗi organization dùng database riêng; migration SaaS sang dedicated l
 - `Role`: tên và tập permission; `Permission`: resource/action.
 - `ScopeGrant`: user, organization, branch, class, student, effective period.
 - `AuditEvent`: actor, action, entity, before/after, result, correlation ID, occurred time; append-only.
+- `ChangeItem`: source/user, request summary, problem/outcome, business owner, priority, lifecycle status, impact analysis version, affected roles/modules/routes/entities, decision, linked spec/test/issue, approval and release verification.
 
-Rules: backend kiểm tra scope trên mọi read/write/export; UI visibility không thay authorization.
+Rules: backend kiểm tra scope trên mọi read/write/export; UI visibility không thay authorization. Every approved `ChangeItem` must retain its impact record and cross-role verification links. Once scope and implementation direction are approved, execution continues without repeated confirmation; pause only for a blocker or material scope, risk or ownership decision.
 
 ## Module, license và theme
 
@@ -52,6 +53,8 @@ Rules: chỉ nội dung published xuất hiện public; lead trùng được nh�
 
 - `Department`, `Program`, `Course`, `Module`: cấu trúc chương trình, mục tiêu, thứ tự, completion rules và publication state.
 - `Class`, `Schedule`, `Enrollment`: branch, modality, capacity, teacher, resource/time, student, progress và finance reference.
+- `StudentLearningOutputReadModel`: projection theo enrollment/program gồm lịch đã xác nhận, học liệu đã publish, điểm/điểm danh/phản hồi đã công bố và tóm tắt năng lực; không chứa draft, worklog, private note hoặc internal handoff.
+- `ClassOutputPublication`: immutable mapping theo organization + output, gồm output type, class, enrollment, student, publisher, published time và notification reference; unique business key `(organization_id, output_id)` bảo đảm publish idempotent.
 - `Student`, `ParentLink`, `Delegation`: profile và permission riêng theo từng student.
 - `LibraryResource`: metadata, category, subject, access scope, usage policy, version và status.
 
@@ -88,13 +91,14 @@ Rules:
 - Pipeline MVP gồm virus scan, image derivative, audio normalization, video metadata/thumbnail/HLS hoặc provider adapter, slide-to-PDF/thumbnail và search indexing.
 - Upload file lớn hỗ trợ multipart/resumable, retry và idempotency; processing lỗi không làm mất source.
 
-## Assessment, practice và English
+## Assessment, practice và năng lực học tập đa ngành
 
 ### QuestionDefinition registry
 
 - `QuestionTypeDefinition`: plugin key, schema version, authoring/attempt/review capability, scoring strategy key, migration key, status.
-- `AssessmentBankItem`: type key, schema version, localized prompt, media references, skill, topic, difficulty, answer schema, scoring config, approval state, version.
-- `Assessment`: entrance/mock/practice, blueprint, window, attempts allowed, time limit, scoring policy, result visibility.
+- `AssessmentBankItem`: type key, schema version, localized prompt, media references, subject/program, competency group, topic, difficulty, answer schema, scoring config, approval state, version.
+- `AssessmentBlueprint`: subject/program, required competency groups, score scale, rubric references, normalization rules, placement thresholds, target outcomes và version.
+- `Assessment`: entrance/mock/practice, subject/program, blueprint version, window, attempts allowed, time limit, scoring policy, result visibility.
 - `AssessmentAttempt`: assessment, candidate, start/expiry/submit, state, draft version, connectivity state.
 - `AttemptAnswer`: attempt, item version, validated answer payload, media response reference, save sequence, saved time.
 - `AssessmentResult`: total, skill/topic scores, recommendations, publication state.
@@ -109,21 +113,32 @@ Rules:
 - Media response liên kết asset có scope attempt; speaking/writing ở trạng thái chờ chấm cho đến manual review.
 - Answer/result immutable sau publish; điều chỉnh tạo version/audit mới.
 
-### EnglishPathway, EnglishSkillRecord
+### LearningPathway, CompetencyProfile và CompetencyEvidence
 
-- Pathway gồm level, module và placement rules.
-- Skill record tách listening, speaking, reading, writing; có score, evidence và assessed time.
+- `LearningPathway`: student, subject/program, level or target, modules, completion rules, source assessment và version.
+- `CompetencyProfile`: student, subject/program, baseline assessment, current snapshot, target, status, confidence, reviewed time và version.
+- `CompetencyDefinition`: subject/program, code, name, type, required flag, rubric, score scale, normalization policy và active version. English có thể khai báo listening, speaking, reading, writing; môn khác dùng bộ năng lực riêng.
+- `CompetencyEvidence`: profile, competency definition, source type (entrance/mock/classwork/teacher review), source id, class/enrollment/session reference, raw score, raw scale, normalized score/level, confidence, reviewer, assessed time, status, note và immutable version.
+- `CompetencyReview`: profile, reviewer, per-competency rubric results, evidence references, rationale, target/current decision, approval state và audit reference.
+
+Rules:
+
+- Profile thuộc student + subject/program, không thuộc duy nhất một class; evidence có thể tham chiếu nhiều class hoặc enrollment theo thời điểm.
+- Blueprint chỉ tạo và yêu cầu các competency definition nằm trong phạm vi chương trình; competency ngoài phạm vi không bị đánh dấu thiếu dữ liệu.
+- Baseline evidence đã xác nhận là immutable; regrade hoặc correction tạo version/audit mới và không làm mất snapshot trước đó.
+- Normalized score/level chỉ được so sánh khi cùng normalization policy hoặc có mapping version được phê duyệt.
+- Overall chỉ có ý nghĩa trong subject/program và chỉ được xác nhận khi policy kiểm tra đủ competency bắt buộc hoặc có lý do ngoại lệ đã được phê duyệt.
 
 ## Online class, communication, HRM và finance
 
 - `OnlineSession`: class, provider meeting, join/host reference, schedule, attendance sync, recording, status.
-- `Conversation`, `ConversationMember`, `Message`, `Notification`: context, membership, immutable message history và delivery/read state.
+- `Conversation`, `ConversationMember`, `Message`, `Notification`: context, membership, immutable message history và delivery/read state. Notification do class output tạo chỉ lưu public title/body, audience và context `{ contextType: class-output, contextId, outputType, classId, enrollmentId }`, không sao chép private operational payload.
 - `EmployeeProfile`, `EmploymentContract`, `TeacherAssignment`, `WorkSchedule`, `Attendance`, `LeaveRequest`, `PerformanceReview`.
 - `PayrollPeriod`, `PayrollLine`, `Payslip`: calculation version, approval/lock và adjustment.
 - `Budget`, `FinanceCategory`, `CashAccount`, `FinanceEntry`, `ExpenseRequest`, `ReceiptDocument`.
 - `Invoice`, `PaymentTransaction`, `Refund`, `AccountingSync`.
 
-Rules: recording private; membership theo scope; payroll locked chỉ điều chỉnh qua workflow; payment/webhook/accounting có idempotency và reconciliation.
+Rules: recording private; membership theo scope; mở notification context phải authorization lại; publication + notification cần transaction/outbox để không phát thông báo khi publication thất bại; payroll locked chỉ điều chỉnh qua workflow; payment/webhook/accounting có idempotency và reconciliation.
 
 ## AI governance và integration primitives
 

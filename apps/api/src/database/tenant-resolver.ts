@@ -15,11 +15,11 @@ export class TenantResolver {
   async resolve(source: TenantSource): Promise<TenantRegistryRecord> {
     if (source.organizationId) {
       const record = await this.registry.findByOrganizationId(source.organizationId);
-      if (record) return record;
+      if (record && record.status !== "archived") return record;
     }
     if (source.subdomain) {
       const record = await this.registry.findBySubdomain(source.subdomain);
-      if (record) return record;
+      if (record && record.status !== "archived") return record;
     }
     throw new Error("tenant_not_resolved");
   }

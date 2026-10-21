@@ -8,6 +8,12 @@ export type EnglishPathwayActor = {
   userId: string;
   organizationId: string;
   canReviewEnglishPathway?: boolean;
+  studentIds?: ReadonlySet<string>;
+  branchIds?: ReadonlySet<string>;
+  classIds?: ReadonlySet<string>;
+  certificationCodes?: ReadonlySet<string>;
+  isTeachingAssistant?: boolean;
+  canApproveBaseline?: boolean;
 };
 
 export type EnglishSkillInput = {
@@ -24,6 +30,8 @@ export type EnglishPlacementRuleReference = {
   status: "draft" | "active" | "archived";
   thresholds: Array<{ levelCode: EnglishLevelCode; minPercent: number }>;
   skillWeights?: Partial<Record<EnglishSkill, number>>;
+  branchId?: string;
+  requiredCertificationCode?: string;
 };
 
 export type EnglishSkillRecordReference = {
@@ -63,6 +71,8 @@ export type ManualReviewInput = {
   score?: number;
   confidence?: number;
   note: string;
+  branchId?: string;
+  classId?: string;
 };
 
 export type EnglishPathwayRepository = {
@@ -97,6 +107,37 @@ const levelOrder: EnglishLevelCode[] = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 function assertReviewPermission(actor: EnglishPathwayActor): void {
   if (!actor.canReviewEnglishPathway) throw new EnglishPathwayError("forbidden", "english_review_permission_required");
+}
+
+function assertBaselineApprovalPermission(actor: EnglishPathwayActor): void {
+  if (actor.isTeachingAssistant && !actor.canApproveBaseline) {
+    throw new EnglishPathwayError("forbidden", "baseline_approval_permission_required");
+  }
+}
+
+function assertStudentScope(actor: EnglishPathwayActor, studentId: string): void {
+  if (actor.studentIds && !actor.studentIds.has(studentId)) {
+    throw new EnglishPathwayError("forbidden", "student_outside_scope");
+  }
+}
+
+function assertTeachingScope(
+  actor: EnglishPathwayActor,
+  input: { branchId?: string; classId?: string },
+  rule?: Pick<EnglishPlacementRuleReference, "branchId" | "requiredCertificationCode">,
+): void {
+  if (input.branchId && actor.branchIds && !actor.branchIds.has(input.branchId)) {
+    throw new EnglishPathwayError("forbidden", "branch_outside_scope");
+  }
+  if (input.classId && actor.classIds && !actor.classIds.has(input.classId)) {
+    throw new EnglishPathwayError("forbidden", "class_outside_scope");
+  }
+  if (rule?.branchId && actor.branchIds && !actor.branchIds.has(rule.branchId)) {
+    throw new EnglishPathwayError("forbidden", "branch_outside_scope");
+  }
+  if (rule?.requiredCertificationCode && actor.certificationCodes && !actor.certificationCodes.has(rule.requiredCertificationCode)) {
+    throw new EnglishPathwayError("forbidden", "certification_required");
+  }
 }
 
 function percent(score: number, maxScore: number): number {
@@ -149,12 +190,15 @@ export class EnglishPathwayService {
     input: { studentId: string; ruleId: string; skills: EnglishSkillInput[]; sourceRef?: string },
   ): Promise<EnglishPlacementDecision> {
     assertReviewPermission(actor);
+    assertBaselineApprovalPermission(actor);
+    assertStudentScope(actor, input.studentId);
     const rule = normalizeRule(
       await this.repository.findPlacementRule({ organizationId: actor.organizationId, ruleId: input.ruleId }).then((x) => {
         if (!x || x.organizationId !== actor.organizationId) throw new EnglishPathwayError("not_found", "placement_rule_not_found");
         return x;
       }),
     );
+    assertTeachingScope(actor, {}, rule);
     const provided = new Map(input.skills.map((item) => [item.skill, item]));
     if (skills.some((skill) => !provided.has(skill))) throw new EnglishPathwayError("invalid_input", "four_skills_required");
     const capturedAt = this.now();
@@ -208,6 +252,7 @@ export class EnglishPathwayService {
   }
 
   async getProgress(actor: EnglishPathwayActor, studentId: string): Promise<EnglishPathwayProgress> {
+    assertStudentScope(actor, studentId);
     const records = await this.repository.listSkillRecords({ organizationId: actor.organizationId, studentId });
     const latest = latestBySkill(records.filter((record) => record.organizationId === actor.organizationId));
     if (skills.some((skill) => !latest.has(skill))) throw new EnglishPathwayError("not_found", "skill_records_incomplete");
@@ -231,6 +276,8 @@ export class EnglishPathwayService {
 
   async recordManualReview(actor: EnglishPathwayActor, input: ManualReviewInput): Promise<EnglishSkillRecordReference> {
     assertReviewPermission(actor);
+    assertStudentScope(actor, input.studentId);
+    assertTeachingScope(actor, input);
     if (!input.note.trim()) throw new EnglishPathwayError("invalid_input", "review_note_required");
     const capturedAt = this.now();
     const record = await this.repository.createManualReview({

@@ -847,6 +847,12 @@ export class AcademicLearningService {
     const resource = this.libraryResource(actor, resourceId);
     if (resource.status !== "published") throw new AcademicServiceError("invalid_status", "resource_not_published");
     this.assertScope(actor, resource);
+    const usagePolicy = resource.usagePolicy;
+    if (usagePolicy && typeof usagePolicy === "object" && !Array.isArray(usagePolicy)) {
+      const policy = usagePolicy as Record<string, unknown>;
+      const allowDownload = policy.allowDownload ?? policy.downloadAllowed;
+      if (allowDownload === false) throw new AcademicServiceError("forbidden", "download_not_allowed");
+    }
     const version = this.currentLibraryVersion(resource);
     if (!version.fileAssetId) throw new AcademicServiceError("invalid_input", "resource_has_no_file");
     const file = this.fileAsset(actor, version.fileAssetId);

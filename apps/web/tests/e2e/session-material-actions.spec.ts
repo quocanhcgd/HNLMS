@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
 test("all session material actions work", async ({ page }) => {
   await page.goto("/teacher/classes/if-2609/sessions");
-  await page.getByRole("button", { name: "Xem / thêm" }).first().click();
+  await page.getByRole("button", { name: "Xem học liệu" }).first().click();
   await expect(page.getByText("Học liệu của buổi này", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Xem lại" }).first().click();
-  await expect(page.getByText("Xem trước theo quyền học viên", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Xem lại:/ })).toBeVisible();
   await page.getByRole("dialog").getByRole("button").first().click();
   await page.getByRole("button", { name: "Chỉnh sửa" }).first().click();
   await expect(page.getByText("Chỉnh sửa học liệu", { exact: true })).toBeVisible();
@@ -12,7 +12,7 @@ test("all session material actions work", async ({ page }) => {
   await page.getByRole("button", { name: "Thêm học liệu" }).last().click();
   await expect(page.getByText("Thêm học liệu cho buổi học", { exact: true })).toBeVisible();
   await page.locator('input[type="file"]').setInputFiles({ name: "bai-giang-unit-5.pdf", mimeType: "application/pdf", buffer: Buffer.from("sample lesson") });
-  await expect(page.getByText(/bai-giang-unit-5.pdf/)).toBeVisible();
+  await expect(page.getByText(/bai-giang-unit-5\.pdf ·/)).toBeVisible();
   await page.getByRole("button", { name: "Thêm học liệu" }).last().click();
   await expect(page.getByText("Đã thêm học liệu vào buổi học.", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Xem trước như học viên" }).click();

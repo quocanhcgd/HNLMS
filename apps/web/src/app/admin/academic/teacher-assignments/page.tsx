@@ -1,12 +1,3 @@
-import { PageHeader } from "@/components/app-shell";
+import { OperationsRegistryWorkspace } from "../../operations-registry-workspace";
 
-export default function TeachingAssignmentsPage() {
-  return (
-    <div className="page">
-      <PageHeader
-        title="Phân công giảng dạy"
-        subtitle="Xếp giáo viên, trợ giảng, ca học và xử lý thay thế dựa trên chuyên môn, lịch rảnh và tải dạy."
-      />
-    </div>
-  );
-}
+export default function TeachingAssignmentsPage() { return <OperationsRegistryWorkspace section="assignments" />; }

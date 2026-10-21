@@ -235,6 +235,10 @@ describe("Phase 7 academic learning", () => {
     const signed = service.createLibraryResourceSignedUrl(scopedActor, resource.id, storage, 60);
     expect(signed.url).toContain("https://files.test");
     expect(signed.expiresAt.getTime()).toBeGreaterThan(Date.now());
+    resource.usagePolicy = { allowDownload: false };
+    expect(() => service.createLibraryResourceSignedUrl(scopedActor, resource.id, storage, 60)).toThrow(
+      "download_not_allowed",
+    );
     expect(() => service.createLibraryResourceSignedUrl(actor, resource.id, storage, 60)).toThrow(
       "class_outside_scope",
     );

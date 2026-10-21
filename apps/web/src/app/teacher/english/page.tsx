@@ -1,5 +1,14 @@
-import type { Metadata } from "next";
-import { TeacherEnglishWorkspace } from "./teacher-english-workspace";
+"use client";
 
-export const metadata: Metadata = { title: "Rà soát tiếng Anh", description: "Giáo viên rà soát tiến bộ bốn kỹ năng và ghi nhận nhận xét thủ công." };
-export default function TeacherEnglishPage() { return <TeacherEnglishWorkspace />; }
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
+export default function TeacherEnglishCompatibilityPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const query = searchParams.toString();
+    router.replace(`/teacher/competency${query ? `?${query}` : ""}`);
+  }, [router, searchParams]);
+  return null;
+}

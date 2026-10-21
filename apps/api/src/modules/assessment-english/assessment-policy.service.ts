@@ -5,6 +5,8 @@ export type AssessmentPolicyActor = {
   userId: string;
   organizationId: string;
   canManageAssessments?: boolean;
+  subjectIds?: ReadonlySet<string>;
+  programIds?: ReadonlySet<string>;
 };
 
 export type AssessmentQuestionReference = {
@@ -34,6 +36,8 @@ export type AssessmentPolicyReference = {
   kind: "entrance" | "mock" | "practice";
   status: "draft" | "published" | "retired";
   title: string;
+  subjectId?: string;
+  programId?: string;
   opensAt: Date | null;
   closesAt: Date | null;
   durationMinutes: number | null;
@@ -137,6 +141,15 @@ function assertManager(actor: AssessmentPolicyActor): void {
   if (!actor.canManageAssessments) throw new AssessmentPolicyError("forbidden", "assessment_management_required");
 }
 
+function assertAssessmentScope(actor: AssessmentPolicyActor, assessment: Pick<AssessmentPolicyReference, "subjectId" | "programId">): void {
+  if (assessment.subjectId && actor.subjectIds && !actor.subjectIds.has(assessment.subjectId)) {
+    throw new AssessmentPolicyError("forbidden", "assessment_subject_scope_denied");
+  }
+  if (assessment.programId && actor.programIds && !actor.programIds.has(assessment.programId)) {
+    throw new AssessmentPolicyError("forbidden", "assessment_program_scope_denied");
+  }
+}
+
 function assertTimeWindow(assessment: AssessmentPolicyReference, now: Date): { opensAt: Date; closesAt: Date } {
   if (!assessment.opensAt || !assessment.closesAt || assessment.closesAt <= assessment.opensAt) {
     throw new AssessmentPolicyError("invalid_time_window", "assessment_window_required");
@@ -232,6 +245,7 @@ export class AssessmentPolicyService {
     if (!assessment || assessment.organizationId !== actor.organizationId) {
       throw new AssessmentPolicyError("not_found", "assessment_not_found");
     }
+    assertAssessmentScope(actor, assessment);
     const decision = await this.validateForPublication(actor, assessment);
     const published = await this.repository.publishAssessment({
       organizationId: actor.organizationId,
@@ -254,6 +268,7 @@ export class AssessmentPolicyService {
   ): Promise<AssessmentPublicationDecision> {
     assertManager(actor);
     if (assessment.organizationId !== actor.organizationId) throw new AssessmentPolicyError("not_found");
+    assertAssessmentScope(actor, assessment);
     if (assessment.status !== "draft") {
       throw new AssessmentPolicyError("invalid_assessment_status", "assessment_must_be_draft");
     }

@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/main.ts",
+    "dev": "node ../../scripts/run-api-dev.cjs",
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "start": "node dist/main.js",
     "test": "node --test",
     "db:generate": "drizzle-kit generate --config=../../drizzle.config.ts",
-    "db:migrate": "tsx src/database/migrate.ts --run"
+    "db:migrate": "tsx src/database/migrate.ts --run",
+    "db:seed:competency": "tsx src/database/seed-competency-profiles.ts",
+    "db:seed:academic": "tsx src/database/seed-academic-registry.ts --run"
   },
   "dependencies": {
+    "@hnlms/config": "0.1.0",
+    "@hnlms/domain-contracts": "0.1.0",
+    "@hnlms/test-fixtures": "0.1.0",
     "@nestjs/common": "^11.1.6",
     "@nestjs/core": "^11.1.6",
     "@nestjs/platform-express": "^11.1.6",

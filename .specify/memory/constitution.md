@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 -> 1.1.0
+- Version change: 1.1.0 -> 1.2.0
 - Modified principles:
   - Placeholder Principle 1 -> I. Phân quyền và cô lập dữ liệu theo phạm vi
   - Placeholder Principle 2 -> II. Module hóa và kiểm soát license
@@ -10,6 +10,7 @@ Sync Impact Report
 - Added sections:
   - Ràng buộc kiến trúc và trải nghiệm
   - Quy trình phát triển và quality gates
+  - Quy tắc tiếp tục triển khai sau khi được phê duyệt
 - Added architecture constraints:
   - Next.js App Router là router duy nhất; không dùng React Router
   - Mantine component system và semantic theme tokens; không tự mô phỏng component có sẵn
@@ -141,6 +142,12 @@ các yêu cầu an toàn thành bằng chứng có thể lặp lại thay vì gi
 9. Production change MUST có người chịu trách nhiệm, kế hoạch quan sát sau triển khai và
    đường rollback. Incident ảnh hưởng dữ liệu, tài chính, payroll, quyền hoặc AI MUST được
    lập biên bản và tạo action items có owner.
+10. Khi người dùng hoặc business owner đã phê duyệt phạm vi và hướng triển khai, team MUST
+    tiếp tục thực hiện mà không hỏi lại cùng một nội dung dưới bất kỳ hình thức nào. Không
+    được gửi câu hỏi xác nhận lặp lại như “đồng ý không?” hoặc “xác nhận lại?” nếu chưa có
+    blocker, thiếu authority hoặc thay đổi trọng yếu về phạm vi, rủi ro hay ownership. Nếu
+    xuất hiện một trong các điều kiện đó, team phải ghi rõ blocker/quyết định tối thiểu cần
+    có và chỉ hỏi phần thông tin mới đó.
 
 ## Governance
 
@@ -162,5 +169,5 @@ kiến trúc hoặc ít nhất mỗi 12 tháng. Compliance issue ảnh hưởng 
 license hoặc AI MUST chặn release cho đến khi được xử lý hoặc có ngoại lệ hữu hạn được phê
 duyệt theo quy định trên.
 
-**Version**: 1.1.0 | **Ratified**: 2026-08-19 | **Last Amended**: 2026-08-19
+**Version**: 1.2.0 | **Ratified**: 2026-08-19 | **Last Amended**: 2026-08-24
 

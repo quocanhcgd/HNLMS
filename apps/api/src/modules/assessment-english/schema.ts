@@ -1,4 +1,16 @@
-import { boolean, index, integer, jsonb, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  integer,
+  jsonb,
+  pgEnum,
+  pgTable,
+  real,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { students } from "../academic-learning/schema";
 import { organizations, users } from "../../database/schema/identity-access";
 import { leads } from "../marketing-admission/schema";
@@ -51,9 +63,50 @@ export const assessmentAttemptStatus = pgEnum("assessment_attempt_status", [
 
 export const englishPathwayStatus = pgEnum("english_pathway_status", ["active", "inactive", "archived"]);
 export const englishLevelStatus = pgEnum("english_level_status", ["active", "inactive"]);
-export const englishSkillRecordSource = pgEnum("english_skill_record_source", ["placement", "assessment", "review", "migration"]);
+export const englishSkillRecordSource = pgEnum("english_skill_record_source", [
+  "placement",
+  "assessment",
+  "review",
+  "migration",
+]);
 export const englishPlacementRuleStatus = pgEnum("english_placement_rule_status", ["draft", "active", "archived"]);
+export const competencyReviewHistoryAction = pgEnum("competency_review_history_action", [
+  "draft_saved",
+  "review_confirmed",
+  "support_requested",
+  "publication_requested",
+  "publication_approved",
+]);
 
+export const competencyCurrentPublicationStatus = pgEnum("competency_current_publication_status", [
+  "draft",
+  "pending_publication",
+  "published",
+  "withdrawn",
+]);
+
+export const competencyCurrentReviewStatus = pgEnum("competency_current_review_status", [
+  "pending_review",
+  "confirmed",
+  "needs_support",
+]);
+
+export const competencyEvidenceSource = pgEnum("competency_evidence_source", [
+  "entrance",
+  "mock",
+  "practice",
+  "classwork",
+  "teacher_review",
+  "migration",
+]);
+
+export const competencyEvidenceStatus = pgEnum("competency_evidence_status", [
+  "draft",
+  "pending_review",
+  "confirmed",
+  "superseded",
+  "voided",
+]);
 
 // ── Tables ─────────────────────────────────────────────────────────────
 
@@ -76,7 +129,10 @@ export const englishPathways = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => ({
-    organizationCodeUnique: uniqueIndex("english_pathways_organization_code_unique").on(table.organizationId, table.code),
+    organizationCodeUnique: uniqueIndex("english_pathways_organization_code_unique").on(
+      table.organizationId,
+      table.code,
+    ),
     organizationStatusIndex: index("english_pathways_organization_status_index").on(table.organizationId, table.status),
   }),
 );
@@ -106,7 +162,10 @@ export const englishLevels = pgTable(
   (table) => ({
     pathwayPositionUnique: uniqueIndex("english_levels_pathway_position_unique").on(table.pathwayId, table.position),
     pathwayCodeUnique: uniqueIndex("english_levels_pathway_code_unique").on(table.pathwayId, table.code),
-    organizationPathwayIndex: index("english_levels_organization_pathway_index").on(table.organizationId, table.pathwayId),
+    organizationPathwayIndex: index("english_levels_organization_pathway_index").on(
+      table.organizationId,
+      table.pathwayId,
+    ),
   }),
 );
 
@@ -150,6 +209,165 @@ export const englishSkillRecords = pgTable(
       table.organizationId,
       table.levelCode,
       table.capturedAt,
+    ),
+  }),
+);
+
+/** Latest competency projection. Individual transitions live in the history table below. */
+export const competencyProfiles = pgTable(
+  "competency_profiles",
+  {
+    profileId: text("profile_id").primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    subjectId: text("subject_id").notNull(),
+    programId: text("program_id").notNull(),
+    classId: text("class_id").notNull(),
+    branchId: text("branch_id").notNull(),
+    reviewStatus: competencyCurrentReviewStatus("review_status").notNull(),
+    publicationStatus: competencyCurrentPublicationStatus("publication_status").notNull(),
+    version: integer("version").notNull(),
+    snapshot: jsonb("snapshot").notNull(),
+    privateReviewerNote: text("private_reviewer_note"),
+    internalWorklogId: text("internal_worklog_id"),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    organizationStudentContextIndex: index("competency_profiles_organization_student_context_index").on(
+      table.organizationId,
+      table.studentId,
+      table.subjectId,
+      table.programId,
+      table.classId,
+    ),
+    organizationPublicationIndex: index("competency_profiles_organization_publication_index").on(
+      table.organizationId,
+      table.publicationStatus,
+      table.reviewStatus,
+    ),
+  }),
+);
+
+/** Immutable evidence snapshots used by competency profiles and migration lineage. */
+export const competencyEvidence = pgTable(
+  "competency_evidence",
+  {
+    id: text("id").primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    subjectId: text("subject_id").notNull(),
+    programId: text("program_id").notNull(),
+    blueprintVersion: integer("blueprint_version").notNull(),
+    competencyCode: text("competency_code").notNull(),
+    sourceType: competencyEvidenceSource("source_type").notNull(),
+    sourceId: text("source_id").notNull(),
+    classId: text("class_id"),
+    rawScore: real("raw_score"),
+    normalizedScore: real("normalized_score"),
+    normalizedLevel: text("normalized_level"),
+    confidence: real("confidence"),
+    status: competencyEvidenceStatus("status").notNull(),
+    reviewerId: uuid("reviewer_id").references(() => users.id),
+    assessedAt: timestamp("assessed_at", { withTimezone: true }),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    legacyRecordId: uuid("legacy_record_id"),
+    notes: jsonb("notes"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    organizationSourceUnique: uniqueIndex("competency_evidence_organization_source_unique").on(
+      table.organizationId,
+      table.sourceType,
+      table.sourceId,
+    ),
+    organizationStudentIndex: index("competency_evidence_organization_student_index").on(
+      table.organizationId,
+      table.studentId,
+      table.competencyCode,
+    ),
+  }),
+);
+
+/** Idempotency and audit lineage for importing legacy English skill records. */
+export const legacyEnglishMigrationMappings = pgTable(
+  "legacy_english_migration_mappings",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    legacyRecordId: uuid("legacy_record_id")
+      .notNull()
+      .references(() => englishSkillRecords.id),
+    evidenceId: text("evidence_id")
+      .notNull()
+      .references(() => competencyEvidence.id),
+    profileId: text("profile_id")
+      .notNull()
+      .references(() => competencyProfiles.profileId),
+    competencyCode: text("competency_code").notNull(),
+    sourceType: competencyEvidenceSource("source_type").notNull(),
+    migratedByUserId: uuid("migrated_by_user_id")
+      .notNull()
+      .references(() => users.id),
+    migratedAt: timestamp("migrated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    organizationLegacyUnique: uniqueIndex("legacy_english_migration_org_legacy_unique").on(
+      table.organizationId,
+      table.legacyRecordId,
+    ),
+    organizationProfileIndex: index("legacy_english_migration_org_profile_index").on(
+      table.organizationId,
+      table.profileId,
+    ),
+  }),
+);
+
+/**
+ * Append-only audit trail for teacher competency reviews. The profile read
+ * model is projected from the latest state, while these snapshots preserve
+ * the baseline and evidence that were visible at every transition.
+ */
+export const competencyProfileReviewHistory = pgTable(
+  "competency_profile_review_history",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id),
+    profileId: text("profile_id").notNull(),
+    studentId: uuid("student_id")
+      .notNull()
+      .references(() => students.id),
+    action: competencyReviewHistoryAction("action").notNull(),
+    actorUserId: uuid("actor_user_id")
+      .notNull()
+      .references(() => users.id),
+    version: integer("version").notNull(),
+    reason: text("reason"),
+    beforeSnapshot: jsonb("before_snapshot").notNull(),
+    afterSnapshot: jsonb("after_snapshot").notNull(),
+    occurredAt: timestamp("occurred_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    organizationProfileIndex: index("competency_review_history_organization_profile_index").on(
+      table.organizationId,
+      table.profileId,
+      table.occurredAt,
+    ),
+    organizationStudentIndex: index("competency_review_history_organization_student_index").on(
+      table.organizationId,
+      table.studentId,
+      table.occurredAt,
     ),
   }),
 );
@@ -478,6 +696,14 @@ export type EnglishLevel = typeof englishLevels.$inferSelect;
 export type NewEnglishLevel = typeof englishLevels.$inferInsert;
 export type EnglishSkillRecord = typeof englishSkillRecords.$inferSelect;
 export type NewEnglishSkillRecord = typeof englishSkillRecords.$inferInsert;
+export type CompetencyProfile = typeof competencyProfiles.$inferSelect;
+export type NewCompetencyProfile = typeof competencyProfiles.$inferInsert;
+export type CompetencyProfileReviewHistory = typeof competencyProfileReviewHistory.$inferSelect;
+export type NewCompetencyProfileReviewHistory = typeof competencyProfileReviewHistory.$inferInsert;
+export type CompetencyEvidenceRow = typeof competencyEvidence.$inferSelect;
+export type NewCompetencyEvidenceRow = typeof competencyEvidence.$inferInsert;
+export type LegacyEnglishMigrationMappingRow = typeof legacyEnglishMigrationMappings.$inferSelect;
+export type NewLegacyEnglishMigrationMappingRow = typeof legacyEnglishMigrationMappings.$inferInsert;
 export type EnglishPlacementRule = typeof englishPlacementRules.$inferSelect;
 export type NewEnglishPlacementRule = typeof englishPlacementRules.$inferInsert;
 export type AssessmentBank = typeof assessmentBanks.$inferSelect;

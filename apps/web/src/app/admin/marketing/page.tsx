@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { ContentListWorkspace } from "./content-list";
+import { MarketingDashboard } from "./marketing-dashboard";
 
-export const metadata: Metadata = {
-  title: "Nội dung Landing Page",
-  description: "Quản lý nội dung hiển thị trên trang landing page công khai.",
-};
+export const metadata: Metadata = { title: "Marketing & tăng trưởng", description: "Điều hành chiến dịch, nguồn lead và nội dung công khai." };
 
-export default function MarketingContentPage() {
-  return <ContentListWorkspace />;
+export default function MarketingPage() {
+  return <MarketingDashboard />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   type ColumnDef,
   type RowSelectionState,
@@ -10,8 +10,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ActionIcon, Button, Checkbox, Drawer, Group, Paper, Stack, Text, Tooltip } from "@mantine/core";
-import { Check, CircleOff, Eye, GripVertical, Pencil, Search } from "lucide-react";
+import { Button, Checkbox, Drawer, Group, Paper, Stack, Text } from "@mantine/core";
+import { Check, CircleOff, Search } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import {
   PageToolbar,
@@ -21,6 +21,9 @@ import {
   UiSelect,
   UiStatusBadge,
   UiTextInput,
+  UiConfirmModal,
+  UiEditModal,
+  UiRowActions,
   uiStatusRoleColor,
   type UiStatusRole,
 } from "@/components/ui";
@@ -243,6 +246,7 @@ const mockContent: LandingContent[] = [
 /* ---------- main component ---------- */
 
 export function ContentListWorkspace() {
+  const [items, setItems] = useState(mockContent);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [query, setQuery] = useState("");
   const [kindFilter, setKindFilter] = useState<string | null>("all");
@@ -250,31 +254,60 @@ export function ContentListWorkspace() {
   const [selectedIds, setSelectedIds] = useState<RowSelectionState>({});
   const [previewItem, setPreviewItem] = useState<LandingContent | null>(null);
   const [editItem, setEditItem] = useState<LandingContent | null>(null);
-  const [editDrawerOpen, setEditDrawerOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [notice, setNotice] = useState("");
   const [confirmAction, setConfirmAction] = useState<{
     type: "publish" | "revoke" | "delete";
-    item: LandingContent;
+    items: LandingContent[];
   } | null>(null);
 
   const filteredData = useMemo(() => {
-    let items = [...mockContent];
+    let result = [...items];
     if (kindFilter && kindFilter !== "all") {
-      items = items.filter((i) => i.kind === kindFilter);
+      result = result.filter((i) => i.kind === kindFilter);
     }
     if (statusFilter && statusFilter !== "all") {
-      items = items.filter((i) => i.status === statusFilter);
+      result = result.filter((i) => i.status === statusFilter);
     }
     if (query) {
       const q = query.toLowerCase();
-      items = items.filter(
+      result = result.filter(
         (i) =>
           i.title.toLowerCase().includes(q) ||
           i.slug.toLowerCase().includes(q) ||
           (i.summary && i.summary.toLowerCase().includes(q)),
       );
     }
-    return items;
-  }, [kindFilter, statusFilter, query]);
+    return result;
+  }, [items, kindFilter, statusFilter, query]);
+
+  function openCreate() {
+    setEditItem(null);
+    setEditModalOpen(true);
+  }
+
+  function saveContent(draft: LandingContent) {
+    setItems((current) => current.some((item) => item.id === draft.id) ? current.map((item) => item.id === draft.id ? draft : item) : [...current, draft]);
+    setNotice(`${draft.id.startsWith("lc-") && items.some((item) => item.id === draft.id) ? "Đã cập nhật" : "Đã tạo"} nội dung “${draft.title}”.`);
+    setEditModalOpen(false);
+    setEditItem(null);
+  }
+
+  function applyStatus(type: "publish" | "revoke" | "delete", targets: LandingContent[]) {
+    if (type === "delete") {
+      const ids = new Set(targets.map((target) => target.id));
+      setItems((current) => current.filter((item) => !ids.has(item.id)));
+      setNotice(`Đã xóa ${targets.length} nội dung.`);
+    } else {
+      const status: ContentStatus = type === "publish" ? "published" : "revoked";
+      const now = new Date().toISOString();
+      const ids = new Set(targets.map((target) => target.id));
+      setItems((current) => current.map((item) => ids.has(item.id) ? { ...item, status, publishedAt: type === "publish" ? now : item.publishedAt, revokedAt: type === "revoke" ? now : item.revokedAt, updatedAt: now, version: item.version + (type === "publish" ? 1 : 0) } : item));
+      setNotice(`${type === "publish" ? "Đã công bố" : "Đã thu hồi"} ${targets.length} nội dung.`);
+    }
+    setConfirmAction(null);
+    setSelectedIds({});
+  }
 
   const columns = useMemo<ColumnDef<LandingContent>[]>(
     () => [
@@ -296,13 +329,6 @@ export function ContentListWorkspace() {
           />
         ),
         size: 40,
-        enableSorting: false,
-      },
-      {
-        id: "drag",
-        header: () => <GripVertical size={16} opacity={0.3} />,
-        cell: () => <GripVertical size={16} opacity={0.3} style={{ cursor: "grab" }} />,
-        size: 36,
         enableSorting: false,
       },
       {
@@ -357,72 +383,22 @@ export function ContentListWorkspace() {
       },
       {
         id: "actions",
-        header: () => <Text size="xs">Thao tác</Text>,
+        header: "Thao tác",
         cell: ({ row }) => {
           const item = row.original;
-          return (
-            <Group gap={4} wrap="nowrap">
-              <Tooltip label="Xem trước">
-                <ActionIcon
-                  variant="subtle"
-                  color="primary"
-                  size="sm"
-                  onClick={() => setPreviewItem(item)}
-                  aria-label={`Xem trước ${item.title}`}
-                >
-                  <Eye size={15} />
-                </ActionIcon>
-              </Tooltip>
-              {item.status !== "published" && item.status !== "revoked" && (
-                <Tooltip label="Chỉnh sửa">
-                  <ActionIcon
-                    variant="subtle"
-                    color="gray"
-                    size="sm"
-                    onClick={() => {
-                      setEditItem(item);
-                      setEditDrawerOpen(true);
-                    }}
-                    aria-label={`Chỉnh sửa ${item.title}`}
-                  >
-                    <Pencil size={15} />
-                  </ActionIcon>
-                </Tooltip>
-              )}
-              {item.status !== "published" && item.status !== "revoked" && (
-                <Tooltip label="Công bố">
-                  <ActionIcon
-                    variant="subtle"
-                    color={uiStatusRoleColor.success}
-                    size="sm"
-                    onClick={() => setConfirmAction({ type: "publish", item })}
-                    aria-label={`Công bố ${item.title}`}
-                  >
-                    <Check size={15} />
-                  </ActionIcon>
-                </Tooltip>
-              )}
-              {item.status === "published" && (
-                <Tooltip label="Thu hồi">
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    size="sm"
-                    onClick={() => setConfirmAction({ type: "revoke", item })}
-                    aria-label={`Thu hồi ${item.title}`}
-                  >
-                    <CircleOff size={15} />
-                  </ActionIcon>
-                </Tooltip>
-              )}
-            </Group>
-          );
+          return <UiRowActions actions={{
+            view: () => setPreviewItem(item),
+            edit: item.status !== "published" && item.status !== "revoked" ? () => { setEditItem(item); setEditModalOpen(true); } : undefined,
+            publish: item.status !== "published" && item.status !== "revoked" ? () => setConfirmAction({ type: "publish", items: [item] }) : undefined,
+            void: item.status === "published" ? () => setConfirmAction({ type: "revoke", items: [item] }) : undefined,
+            delete: item.status === "revoked" ? () => setConfirmAction({ type: "delete", items: [item] }) : undefined,
+          }} labels={{ view: "Xem trước", edit: "Chỉnh sửa", publish: "Công bố", void: "Thu hồi", delete: "Xóa" }} />;
         },
-        size: 110,
+        size: 220,
         enableSorting: false,
       },
     ],
-    [],
+    [items],
   );
 
   const table = useReactTable({
@@ -444,6 +420,9 @@ export function ContentListWorkspace() {
   });
 
   const selectedCount = Object.keys(table.getState().rowSelection).length;
+  const selectedItems = table.getSelectedRowModel().rows.map((row) => row.original);
+  const publishableItems = selectedItems.filter((item) => item.status !== "published" && item.status !== "revoked");
+  const revokableItems = selectedItems.filter((item) => item.status === "published");
 
   return (
     <div className="page">
@@ -451,6 +430,7 @@ export function ContentListWorkspace() {
         title="Quản lý nội dung Landing Page"
         subtitle="Tạo, chỉnh sửa, công bố và sắp xếp nội dung hiển thị trên trang landing page."
         action="Tạo nội dung"
+        onAction={openCreate}
       />
       <PageToolbar className="toolbar">
         <UiTextInput
@@ -495,26 +475,37 @@ export function ContentListWorkspace() {
             <Text size="sm" c="dimmed">
               Đã chọn {selectedCount} nội dung
             </Text>
-            <UiButton variant="light" color={uiStatusRoleColor.success} leftSection={<Check size={14} />}>
+            <UiButton variant="light" color={uiStatusRoleColor.success} leftSection={<Check size={14} />} disabled={!publishableItems.length} onClick={() => setConfirmAction({ type: "publish", items: publishableItems })}>
               Công bố ({selectedCount})
             </UiButton>
-            <UiButton variant="light" color="red" leftSection={<CircleOff size={14} />}>
+            <UiButton variant="light" color="red" leftSection={<CircleOff size={14} />} disabled={!revokableItems.length} onClick={() => setConfirmAction({ type: "revoke", items: revokableItems })}>
               Thu hồi ({selectedCount})
             </UiButton>
           </Group>
         )}
       </PageToolbar>
-      <UiDataTable
-        table={table}
-        columnCount={columns.length}
-        emptyTitle="Không tìm thấy nội dung phù hợp."
-        getRowProps={(row) => ({
-          className: row.getIsSelected() ? "tableRow--selected" : undefined,
-        })}
-      />
-      <Text size="xs" c="dimmed" mt="sm">
-        {filteredData.length} / {mockContent.length} bản ghi · hỗ trợ tìm kiếm, lọc, sắp xếp và chọn nhiều
-      </Text>
+      <Paper className="panel" p="md" withBorder>
+        <Group justify="space-between" mb="sm">
+          <div>
+            <Text fw={700}>Danh sách nội dung</Text>
+            <Text size="sm" c="dimmed">Theo dõi trạng thái công bố, phiên bản và thứ tự hiển thị.</Text>
+          </div>
+          <UiBadge>{filteredData.length} nội dung</UiBadge>
+        </Group>
+        <UiDataTable
+          table={table}
+          columnCount={columns.length}
+          minWidth={960}
+          emptyTitle="Không tìm thấy nội dung phù hợp."
+          getRowProps={(row) => ({
+            className: row.getIsSelected() ? "tableRow--selected" : undefined,
+          })}
+        />
+        <Text size="xs" c="dimmed" mt="sm">
+          {filteredData.length} / {items.length} bản ghi · hỗ trợ tìm kiếm, lọc, sắp xếp và chọn nhiều
+        </Text>
+      </Paper>
+      {notice ? <Text size="sm" c="teal" mt="sm" role="status">{notice}</Text> : null}
 
       {/* Preview Drawer */}
       <Drawer
@@ -608,51 +599,25 @@ export function ContentListWorkspace() {
         )}
       </Drawer>
 
-      {/* Edit/Create Drawer */}
-      <Drawer
-        opened={editDrawerOpen}
-        onClose={() => {
-          setEditDrawerOpen(false);
-          setEditItem(null);
-        }}
-        title={editItem ? "Chỉnh sửa nội dung" : "Tạo nội dung mới"}
-        position="right"
-        size="lg"
-        padding="lg"
-      >
-        <ContentEditForm
-          content={editItem}
-          onClose={() => {
-            setEditDrawerOpen(false);
-            setEditItem(null);
-          }}
-        />
-      </Drawer>
-
-      {/* Confirm Dialog */}
-      {confirmAction && (
-        <Group justify="flex-end" mt="md">
-          <Button variant="subtle" color="gray" onClick={() => setConfirmAction(null)}>
-            Hủy
-          </Button>
-          <Button
-            color={confirmAction.type === "publish" ? "teal" : "red"}
-            onClick={() => {
-              // TODO: wire to real service
-              setConfirmAction(null);
-            }}
-          >
-            {confirmAction.type === "publish" ? "Xác nhận công bố" : "Xác nhận thu hồi"}
-          </Button>
-        </Group>
-      )}
+      <UiEditModal opened={editModalOpen} onClose={() => { setEditModalOpen(false); setEditItem(null); }} title={editItem ? "Chỉnh sửa nội dung" : "Tạo nội dung mới"} saveLabel={editItem ? "Lưu thay đổi" : "Tạo nội dung"} onSave={() => (document.getElementById("content-edit-form") as HTMLFormElement | null)?.requestSubmit()}>
+        <ContentEditForm content={editItem} onSave={saveContent} />
+      </UiEditModal>
+      <UiConfirmModal
+        opened={confirmAction !== null}
+        onClose={() => setConfirmAction(null)}
+        title={confirmAction?.type === "publish" ? "Công bố nội dung" : confirmAction?.type === "delete" ? "Xóa nội dung" : "Thu hồi nội dung"}
+        description={confirmAction ? `${confirmAction.items.length} nội dung được chọn. Thao tác này sẽ cập nhật trạng thái ngay trên workspace marketing.` : ""}
+        confirmLabel={confirmAction?.type === "publish" ? "Công bố" : confirmAction?.type === "delete" ? "Xóa" : "Thu hồi"}
+        destructive={confirmAction?.type !== "publish"}
+        onConfirm={() => confirmAction && applyStatus(confirmAction.type, confirmAction.items)}
+      />
     </div>
   );
 }
 
 /* ---------- edit form ---------- */
 
-function ContentEditForm({ content, onClose }: { content: LandingContent | null; onClose: () => void }) {
+function ContentEditForm({ content, onSave }: { content: LandingContent | null; onSave: (draft: LandingContent) => void }) {
   const [title, setTitle] = useState(content?.title ?? "");
   const [slug, setSlug] = useState(content?.slug ?? "");
   const [summary, setSummary] = useState(content?.summary ?? "");
@@ -660,6 +625,16 @@ function ContentEditForm({ content, onClose }: { content: LandingContent | null;
   const [locale, setLocale] = useState(content?.locale ?? "vi");
   const [sortOrder, setSortOrder] = useState(String(content?.sortOrder ?? 0));
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setTitle(content?.title ?? "");
+    setSlug(content?.slug ?? "");
+    setSummary(content?.summary ?? "");
+    setKind(content?.kind ?? "page");
+    setLocale(content?.locale ?? "vi");
+    setSortOrder(String(content?.sortOrder ?? 0));
+    setErrors({});
+  }, [content]);
 
   function validate(): boolean {
     const errs: Record<string, string> = {};
@@ -676,8 +651,30 @@ function ContentEditForm({ content, onClose }: { content: LandingContent | null;
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!validate()) return;
-    // TODO: wire to real service
-    onClose();
+    const now = new Date().toISOString();
+    onSave({
+      ...(content ?? {
+        id: `lc-${Date.now()}`,
+        body: null,
+        media: null,
+        version: 1,
+        status: "draft" as ContentStatus,
+        publishedAt: null,
+        revokedAt: null,
+        publishedByUserId: null,
+        revokedByUserId: null,
+        createdByUserId: "demo-user",
+        createdAt: now,
+        updatedAt: now,
+      }),
+      kind,
+      slug: slug.trim(),
+      title: title.trim(),
+      summary: summary.trim() || null,
+      locale,
+      sortOrder: Number(sortOrder) || 0,
+      updatedAt: now,
+    });
   }
 
   function handleAutoSlug() {
@@ -693,7 +690,7 @@ function ContentEditForm({ content, onClose }: { content: LandingContent | null;
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="content-edit-form" onSubmit={handleSubmit}>
       <Stack gap="md">
         <UiTextInput
           label="Tiêu đề"
@@ -712,7 +709,7 @@ function ContentEditForm({ content, onClose }: { content: LandingContent | null;
             error={errors.slug}
             required
           />
-          <Button variant="subtle" size="xs" mt="xl" onClick={handleAutoSlug}>
+          <Button type="button" variant="subtle" size="xs" mt="xl" onClick={handleAutoSlug}>
             Tự động
           </Button>
         </Group>
@@ -766,12 +763,6 @@ function ContentEditForm({ content, onClose }: { content: LandingContent | null;
             </Group>
           </Paper>
         )}
-        <Group justify="flex-end" mt="md">
-          <Button variant="subtle" color="gray" onClick={onClose}>
-            Hủy
-          </Button>
-          <Button type="submit">{content ? "Lưu thay đổi" : "Tạo nội dung"}</Button>
-        </Group>
       </Stack>
     </form>
   );

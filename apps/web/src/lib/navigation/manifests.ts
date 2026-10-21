@@ -5,22 +5,26 @@ import {
   CalendarClock,
   Building2,
   ClipboardList,
+  Bell,
   GraduationCap,
   LayoutDashboard,
   Megaphone,
   MessageSquare,
   Settings,
   Users,
+  UsersRound,
   Wallet,
 } from "lucide-react";
 import type { ComponentType } from "react";
 
 export type WorkspaceKey = "admin" | "teacher" | "student" | "parent";
 export type NavIcon = ComponentType<{ size?: number }>;
+export type NavigationSectionKey = "overview" | "admission" | "operations" | "learning" | "information" | "personal" | "settings";
 export type NavigationManifest = NavigationItem & {
   icon?: NavIcon;
   roles?: readonly string[];
   children?: readonly NavigationManifest[];
+  section?: NavigationSectionKey;
 };
 export type NavigationContext = {
   role: string;
@@ -38,11 +42,18 @@ export const adminNavigation: readonly NavigationManifest[] = [
       "organization_admin",
       "branch_manager",
       "consultant",
+      "admission_manager",
+      "marketing_manager",
+      "academic_manager",
       "academic_affairs",
+      "content_reviewer",
+      "support_staff",
       "finance_officer",
       "hr_officer",
       "payroll_officer",
+      "executive",
     ],
+    section: "overview",
   },
   {
     key: "admission",
@@ -51,22 +62,57 @@ export const adminNavigation: readonly NavigationManifest[] = [
     icon: Users,
     moduleKey: "admission",
     roles: ["organization_admin", "branch_manager", "consultant", "admission_manager"],
+    section: "admission",
     children: [
       {
         key: "leads",
         labelKey: "leads",
         href: "/admin/leads",
-        roles: ["organization_admin", "branch_manager", "consultant"],
+        roles: ["organization_admin", "branch_manager", "consultant", "admission_manager"],
       },
     ],
   },
   {
+    key: "consultantWork",
+    labelKey: "consultantWork",
+    href: "/admin/my-work",
+    icon: CalendarClock,
+    roles: ["organization_admin", "branch_manager", "consultant", "admission_manager", "marketing_manager", "academic_manager", "academic_affairs", "content_reviewer", "support_staff", "finance_officer", "payroll_officer", "hr_officer", "executive"],
+    section: "personal",
+  },
+
+
+  {
+    key: "consultantLeave",
+    labelKey: "consultantLeave",
+    href: "/admin/my-leave",
+    icon: ClipboardList,
+    roles: ["organization_admin", "branch_manager", "consultant", "admission_manager", "marketing_manager", "academic_manager", "academic_affairs", "content_reviewer", "support_staff", "finance_officer", "payroll_officer", "hr_officer", "executive"],
+    section: "personal",
+  },
+  {
+    key: "consultantPayroll",
+    labelKey: "consultantPayroll",
+    href: "/admin/my-payroll",
+    icon: Wallet,
+    roles: ["organization_admin", "branch_manager", "consultant", "admission_manager", "marketing_manager", "academic_manager", "academic_affairs", "content_reviewer", "support_staff", "finance_officer", "payroll_officer", "hr_officer", "executive"],
+    section: "personal",
+  },
+  {
+    key: "branchOperations",
+    labelKey: "branchOperations",
+    href: "/admin/branch-operations",
+    icon: Building2,
+    roles: ["branch_manager"],
+    section: "operations",
+  },  {
     key: "marketing",
     labelKey: "marketing",
     href: "/admin/marketing",
     icon: Megaphone,
     moduleKey: "marketing",
     roles: ["organization_admin", "branch_manager", "marketing_manager"],
+    section: "operations",
     children: [
       {
         key: "content",
@@ -89,6 +135,7 @@ export const adminNavigation: readonly NavigationManifest[] = [
     icon: BookOpen,
     moduleKey: "academic",
     roles: ["organization_admin", "branch_manager", "academic_manager", "academic_affairs"],
+    section: "operations",
     children: [
       {
         key: "programs",
@@ -114,6 +161,12 @@ export const adminNavigation: readonly NavigationManifest[] = [
         href: "/admin/academic/teacher-assignments",
         roles: ["organization_admin", "branch_manager", "academic_manager", "academic_affairs"],
       },
+      {
+        key: "competencyPublication",
+        labelKey: "competencyPublication",
+        href: "/admin/academic/competency",
+        roles: ["organization_admin", "academic_manager", "academic_affairs"],
+      },
     ],
   },
   {
@@ -123,6 +176,7 @@ export const adminNavigation: readonly NavigationManifest[] = [
     icon: ClipboardList,
     moduleKey: "learning",
     roles: ["organization_admin", "academic_manager", "content_reviewer"],
+    section: "operations",
     children: [
       {
         key: "learningContentAdmin",
@@ -139,26 +193,22 @@ export const adminNavigation: readonly NavigationManifest[] = [
     ],
   },
   {
-    key: "communication",
-    labelKey: "communication",
+    key: "communicationCenter",
+    labelKey: "communicationCenter",
     href: "/admin/communication",
     icon: MessageSquare,
     moduleKey: "communication",
-    roles: ["organization_admin", "branch_manager", "academic_affairs", "support_staff"],
-    children: [
-      {
-        key: "communicationCenter",
-        labelKey: "communicationCenter",
-        href: "/admin/communication",
-        roles: ["organization_admin", "branch_manager", "academic_affairs", "support_staff"],
-      },
-      {
-        key: "notificationInbox",
-        labelKey: "notificationInbox",
-        href: "/admin/communication/notifications",
-        roles: ["organization_admin", "branch_manager", "academic_affairs", "support_staff"],
-      },
-    ],
+    roles: ["organization_admin", "branch_manager", "consultant", "admission_manager", "marketing_manager", "academic_manager", "academic_affairs", "content_reviewer", "support_staff", "finance_officer", "payroll_officer", "hr_officer", "executive"],
+    section: "information",
+  },
+  {
+    key: "notificationInbox",
+    labelKey: "notificationInbox",
+    href: "/admin/communication/notifications",
+    icon: Bell,
+    moduleKey: "communication",
+    roles: ["organization_admin", "branch_manager", "consultant", "admission_manager", "marketing_manager", "academic_manager", "academic_affairs", "content_reviewer", "support_staff", "finance_officer", "payroll_officer", "hr_officer", "executive"],
+    section: "information",
   },
   {
     key: "finance",
@@ -167,6 +217,15 @@ export const adminNavigation: readonly NavigationManifest[] = [
     icon: Wallet,
     moduleKey: "finance",
     roles: ["organization_admin", "branch_manager", "finance_officer"],
+    section: "operations",
+    children: [
+      {
+        key: "branchFinance",
+        labelKey: "branchFinance",
+        href: "/admin/finance/branch-finance",
+        roles: ["organization_admin", "branch_manager", "finance_officer"],
+      },
+    ],
   },
   {
     key: "payroll",
@@ -175,6 +234,7 @@ export const adminNavigation: readonly NavigationManifest[] = [
     icon: Wallet,
     moduleKey: "payroll",
     roles: ["organization_admin", "payroll_officer"],
+    section: "operations",
   },
   {
     key: "people",
@@ -183,6 +243,7 @@ export const adminNavigation: readonly NavigationManifest[] = [
     icon: Building2,
     moduleKey: "hrm",
     roles: ["organization_admin", "branch_manager", "hr_officer"],
+    section: "operations",
   },
   {
     key: "reports",
@@ -191,8 +252,38 @@ export const adminNavigation: readonly NavigationManifest[] = [
     icon: BarChart3,
     moduleKey: "reporting",
     roles: ["organization_admin", "branch_manager", "finance_officer", "executive"],
+    section: "operations",
   },
-  { key: "settings", labelKey: "settings", href: "/ui-preview", icon: Settings, roles: ["organization_admin"] },
+  {
+    key: "organizationSettings",
+    labelKey: "settings",
+    href: "/admin/settings",
+    icon: Settings,
+    roles: ["organization_admin"],
+    section: "settings",
+  },
+  {
+    key: "adminAccount",
+    labelKey: "teacherSettings",
+    href: "/admin/account",
+    icon: Settings,
+    roles: [
+      "organization_admin",
+      "branch_manager",
+      "consultant",
+      "admission_manager",
+      "marketing_manager",
+      "academic_manager",
+      "academic_affairs",
+      "content_reviewer",
+      "support_staff",
+      "finance_officer",
+      "payroll_officer",
+      "hr_officer",
+      "executive",
+    ],
+    section: "settings",
+  },
 ];
 
 export const teacherNavigation: readonly NavigationManifest[] = [
@@ -202,6 +293,7 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     href: "/teacher",
     icon: LayoutDashboard,
     roles: ["teacher", "teaching_assistant"],
+    section: "overview",
   },
   {
     key: "teacherClasses",
@@ -209,6 +301,7 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     href: "/teacher/classes",
     icon: BookOpen,
     roles: ["teacher", "teaching_assistant"],
+    section: "learning",
   },
   {
     key: "teacherContent",
@@ -217,22 +310,34 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     icon: ClipboardList,
     moduleKey: "learning",
     roles: ["teacher"],
+    section: "learning",
   },
   {
-    key: "teacherAssessment",
-    labelKey: "teacherAssessment",
-    href: "/teacher/assessment",
+    key: "teacherEntranceAssessment",
+    labelKey: "teacherEntranceAssessment",
+    href: "/teacher/assessment/entrance",
     icon: ClipboardList,
     moduleKey: "assessment",
     roles: ["teacher"],
+    section: "learning",
   },
   {
-    key: "teacherEnglish",
-    labelKey: "teacherEnglish",
-    href: "/teacher/english",
+    key: "teacherMockAssessment",
+    labelKey: "teacherMockAssessment",
+    href: "/teacher/assessment/mock",
+    icon: ClipboardList,
+    moduleKey: "assessment",
+    roles: ["teacher"],
+    section: "learning",
+  },
+  {
+    key: "teacherCompetency",
+    labelKey: "teacherCompetency",
+    href: "/teacher/competency",
     icon: BarChart3,
     moduleKey: "assessment",
     roles: ["teacher"],
+    section: "learning",
   },
   {
     key: "teacherOnline",
@@ -241,6 +346,7 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     icon: BookOpen,
     moduleKey: "online_class",
     roles: ["teacher", "teaching_assistant"],
+    section: "learning",
   },
   {
     key: "teacherWorklog",
@@ -249,14 +355,7 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     icon: ClipboardList,
     moduleKey: "academic",
     roles: ["teacher", "teaching_assistant"],
-  },
-  {
-    key: "teacherMessages",
-    labelKey: "teacherMessages",
-    href: "/teacher/messages",
-    icon: MessageSquare,
-    moduleKey: "communication",
-    roles: ["teacher", "teaching_assistant"],
+    section: "personal",
   },
   {
     key: "teacherPayroll",
@@ -265,20 +364,97 @@ export const teacherNavigation: readonly NavigationManifest[] = [
     icon: Wallet,
     moduleKey: "payroll",
     roles: ["teacher", "teaching_assistant"],
+    section: "personal",
+  },
+  {
+    key: "teacherLeave",
+    labelKey: "consultantLeave",
+    href: "/teacher/leave",
+    icon: ClipboardList,
+    moduleKey: "hrm",
+    roles: ["teacher", "teaching_assistant"],
+    section: "personal",
+  },
+  {
+    key: "teacherMessages",
+    labelKey: "teacherMessages",
+    href: "/teacher/messages",
+    icon: MessageSquare,
+    moduleKey: "communication",
+    roles: ["teacher", "teaching_assistant"],
+    section: "information",
+  },
+  {
+    key: "teacherInternalMessages",
+    labelKey: "teacherInternalMessages",
+    href: "/teacher/internal",
+    icon: UsersRound,
+    moduleKey: "communication",
+    roles: ["teacher", "teaching_assistant"],
+    section: "information",
+  },
+  {
+    key: "teacherSettings",
+    labelKey: "teacherSettings",
+    href: "/teacher/settings",
+    icon: Settings,
+    roles: ["teacher", "teaching_assistant"],
+    section: "settings",
   },
 ];
 
 export const studentNavigation: readonly NavigationManifest[] = [
-  { key: "studentHome", labelKey: "studentHome", href: "/student", icon: GraduationCap, roles: ["student"] },
-  { key: "studentSchedule", labelKey: "studentSchedule", href: "/student/schedule", icon: CalendarClock, moduleKey: "academic", roles: ["student"] },
-  { key: "studentScores", labelKey: "studentScores", href: "/student/scores", icon: BarChart3, moduleKey: "academic", roles: ["student"] },
-  { key: "studentHomework", labelKey: "studentHomework", href: "/student/homework", icon: ClipboardList, moduleKey: "learning", roles: ["student"] },
+  {
+    key: "studentHome",
+    labelKey: "studentHome",
+    href: "/student",
+    icon: GraduationCap,
+    roles: ["student"],
+    section: "overview",
+  },
+  {
+    key: "studentSchedule",
+    labelKey: "studentSchedule",
+    href: "/student/schedule",
+    icon: CalendarClock,
+    moduleKey: "academic",
+    roles: ["student"],
+    section: "learning",
+  },
+  {
+    key: "studentClasses",
+    labelKey: "studentClasses",
+    href: "/student/classes",
+    icon: BookOpen,
+    moduleKey: "academic",
+    roles: ["student"],
+    section: "learning",
+  },
+  {
+    key: "studentScores",
+    labelKey: "studentScores",
+    href: "/student/scores",
+    icon: BarChart3,
+    moduleKey: "academic",
+    roles: ["student"],
+    section: "learning",
+  },
+  {
+    key: "studentHomework",
+    labelKey: "studentHomework",
+    href: "/student/homework",
+    icon: ClipboardList,
+    moduleKey: "learning",
+    roles: ["student"],
+    section: "learning",
+  },
   {
     key: "studentProgress",
     labelKey: "studentProgress",
     href: "/student/progress",
     icon: BarChart3,
     roles: ["student"],
+    section: "learning",
   },
   {
     key: "studentLibrary",
@@ -287,6 +463,7 @@ export const studentNavigation: readonly NavigationManifest[] = [
     icon: ClipboardList,
     moduleKey: "learning",
     roles: ["student"],
+    section: "learning",
   },
   {
     key: "studentAssessment",
@@ -295,14 +472,16 @@ export const studentNavigation: readonly NavigationManifest[] = [
     icon: ClipboardList,
     moduleKey: "assessment",
     roles: ["student"],
+    section: "learning",
   },
   {
     key: "studentEnglish",
     labelKey: "studentEnglish",
-    href: "/student/english",
+    href: "/student/competency",
     icon: BarChart3,
     moduleKey: "assessment",
     roles: ["student"],
+    section: "learning",
   },
   {
     key: "studentOnline",
@@ -311,6 +490,7 @@ export const studentNavigation: readonly NavigationManifest[] = [
     icon: BookOpen,
     moduleKey: "online_class",
     roles: ["student"],
+    section: "learning",
   },
   {
     key: "studentMessages",
@@ -319,6 +499,7 @@ export const studentNavigation: readonly NavigationManifest[] = [
     icon: MessageSquare,
     moduleKey: "communication",
     roles: ["student"],
+    section: "information",
   },
   {
     key: "studentBilling",
@@ -327,17 +508,45 @@ export const studentNavigation: readonly NavigationManifest[] = [
     icon: Wallet,
     moduleKey: "finance",
     roles: ["student"],
+    section: "personal",
+  },
+  {
+    key: "studentSettings",
+    labelKey: "studentSettings",
+    href: "/student/settings",
+    icon: Settings,
+    roles: ["student"],
+    section: "settings",
   },
 ];
 
 export const parentNavigation: readonly NavigationManifest[] = [
-  { key: "parentHome", labelKey: "parentHome", href: "/parent", icon: Users, roles: ["parent"] },
+  { key: "parentHome", labelKey: "parentHome", href: "/parent", icon: Users, roles: ["parent"], section: "overview" },
+  {
+    key: "parentCompetency",
+    labelKey: "parentCompetency",
+    href: "/parent/competency",
+    icon: BarChart3,
+    moduleKey: "assessment",
+    roles: ["parent"],
+    section: "learning",
+  },
   {
     key: "parentStudents",
     labelKey: "parentStudents",
     href: "/parent/students",
     icon: GraduationCap,
     roles: ["parent"],
+    section: "learning",
+  },
+  {
+    key: "parentClasses",
+    labelKey: "parentClasses",
+    href: "/parent/classes",
+    icon: BookOpen,
+    moduleKey: "academic",
+    roles: ["parent"],
+    section: "learning",
   },
   {
     key: "parentOnline",
@@ -346,6 +555,7 @@ export const parentNavigation: readonly NavigationManifest[] = [
     icon: BookOpen,
     moduleKey: "online_class",
     roles: ["parent"],
+    section: "learning",
   },
   {
     key: "parentConversations",
@@ -354,6 +564,7 @@ export const parentNavigation: readonly NavigationManifest[] = [
     icon: MessageSquare,
     moduleKey: "communication",
     roles: ["parent"],
+    section: "information",
   },
   {
     key: "notificationInbox",
@@ -362,6 +573,7 @@ export const parentNavigation: readonly NavigationManifest[] = [
     icon: MessageSquare,
     moduleKey: "communication",
     roles: ["parent"],
+    section: "information",
   },
   {
     key: "parentPayments",
@@ -370,6 +582,15 @@ export const parentNavigation: readonly NavigationManifest[] = [
     icon: Wallet,
     moduleKey: "finance",
     roles: ["parent"],
+    section: "personal",
+  },
+  {
+    key: "parentSettings",
+    labelKey: "settings",
+    href: "/parent/settings",
+    icon: Settings,
+    roles: ["parent"],
+    section: "settings",
   },
 ];
 
@@ -445,10 +666,21 @@ export function getNavigationForWorkspace(
   return filterNavigation(workspaceNavigation[workspace], context);
 }
 
+/** Returns whether a pathname belongs to a route visible to the current role. */
+export function isNavigationPathAllowed(
+  pathname: string,
+  workspace: WorkspaceKey,
+  context: NavigationContext = mockWorkspaceContexts[workspace],
+) {
+  return getNavigationForWorkspace(workspace, context).some((item) => isNavigationActive(pathname, item));
+}
+
 export function isNavigationActive(pathname: string, item: NavigationManifest): boolean {
+  const workspaceRootRoutes = new Set(["/admin", "/teacher", "/student", "/parent"]);
   return (
     pathname === item.href ||
-    (item.href !== "/admin" && pathname.startsWith(`${item.href}/`)) ||
+    (!workspaceRootRoutes.has(item.href) && pathname.startsWith(`${item.href}/`)) ||
     Boolean(item.children?.some((child) => isNavigationActive(pathname, child)))
   );
 }
+

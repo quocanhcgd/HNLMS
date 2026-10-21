@@ -1,4 +1,4 @@
-export type ScopeKind = "organization" | "branch" | "class" | "student";
+export type ScopeKind = "organization" | "branch" | "class" | "student" | "subject" | "program";
 export type PermissionKey = `${string}:${string}`;
 export type ScopeGrant = {
   userId: string;
@@ -13,11 +13,20 @@ export type AuthorizationContext = {
   branchIds: ReadonlySet<string>;
   classIds: ReadonlySet<string>;
   studentIds: ReadonlySet<string>;
+  subjectIds: ReadonlySet<string>;
+  programIds: ReadonlySet<string>;
   permissions: ReadonlySet<PermissionKey>;
   roles: ReadonlySet<string>;
   now?: Date;
 };
-export type ScopedResource = { organizationId: string; branchId?: string; classId?: string; studentId?: string };
+export type ScopedResource = {
+  organizationId: string;
+  branchId?: string;
+  classId?: string;
+  studentId?: string;
+  subjectId?: string;
+  programId?: string;
+};
 export class AuthorizationError extends Error {
   constructor(public readonly code: "forbidden" | "missing_permission" | "scope_mismatch") {
     super(code);
@@ -32,13 +41,17 @@ export function hasScope(context: AuthorizationContext, grant: ScopeGrant): bool
   if (grant.kind === "organization") return grant.resourceId === context.organizationId;
   if (grant.kind === "branch") return context.branchIds.has(grant.resourceId);
   if (grant.kind === "class") return context.classIds.has(grant.resourceId);
-  return context.studentIds.has(grant.resourceId);
+  if (grant.kind === "student") return context.studentIds.has(grant.resourceId);
+  if (grant.kind === "subject") return context.subjectIds.has(grant.resourceId);
+  return context.programIds.has(grant.resourceId);
 }
 export function canAccessResource(context: AuthorizationContext, resource: ScopedResource): boolean {
   if (resource.organizationId !== context.organizationId) return false;
   if (resource.branchId && !context.branchIds.has(resource.branchId)) return false;
   if (resource.classId && !context.classIds.has(resource.classId)) return false;
   if (resource.studentId && !context.studentIds.has(resource.studentId)) return false;
+  if (resource.subjectId && !context.subjectIds.has(resource.subjectId)) return false;
+  if (resource.programId && !context.programIds.has(resource.programId)) return false;
   return true;
 }
 export function hasPermission(context: AuthorizationContext, permission: PermissionKey): boolean {
@@ -58,6 +71,8 @@ export function createAuthorizationContext(input: {
   branchIds?: Iterable<string>;
   classIds?: Iterable<string>;
   studentIds?: Iterable<string>;
+  subjectIds?: Iterable<string>;
+  programIds?: Iterable<string>;
   permissions?: Iterable<PermissionKey>;
   roles?: Iterable<string>;
   now?: Date;
@@ -68,6 +83,8 @@ export function createAuthorizationContext(input: {
     branchIds: new Set(input.branchIds),
     classIds: new Set(input.classIds),
     studentIds: new Set(input.studentIds),
+    subjectIds: new Set(input.subjectIds),
+    programIds: new Set(input.programIds),
     permissions: new Set(input.permissions),
     roles: new Set(input.roles),
     now: input.now,

@@ -2,6 +2,7 @@ node_modules/
 **/node_modules/
 .next/
 **/.next/
+**/.next-*/
 .turbo/
 coverage/
 *.tsbuildinfo
@@ -32,3 +33,5 @@ infra/secrets/*
 
 # Build outputs
 **/dist/
+.npm-cache-ci/
+hrm-current.png

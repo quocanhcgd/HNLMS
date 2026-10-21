@@ -1,0 +1,7 @@
+{
+  "retention": { "daily": 35, "monthly": 12, "yearly": 7 },
+  "targets": { "rpoHours": 24, "rtoHours": 4 },
+  "encryption": { "required": true, "provider": "external-kms", "keyReferenceEnv": "HN_LMS_BACKUP_KEY_REF" },
+  "objectStorage": { "private": true, "versioning": true, "quarantineBucket": "hn-lms-quarantine" },
+  "restoreDrill": { "cadence": "quarterly", "isolationRequired": true }
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Group, Paper, Select, SimpleGrid, Tabs, Text, TextInput } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/app-shell";
 import { UiStatusBadge } from "@/components/ui";
 import { getPreset, themePresetRegistry, tokenCssVariables, validateContrast } from "@/lib/theme/registry";
@@ -26,8 +26,19 @@ function applyPreset(key: string) {
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState(settingDefaults);
+  const [notice, setNotice] = useState("");
   const [activeKey, setActiveKey] = useState("hnlms-operational");
   const [previewKey, setPreviewKey] = useState<string | null>(null);
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem("hnlms:organization-settings");
+      if (stored) setSettings({ ...settingDefaults, ...JSON.parse(stored) });
+    } catch { /* ignore malformed demo preferences */ }
+  }, []);
+  const saveSettings = () => {
+    window.localStorage.setItem("hnlms:organization-settings", JSON.stringify(settings));
+    setNotice("Đã lưu cài đặt tổ chức trên thiết bị này.");
+  };
   const shown = getPreset(previewKey ?? activeKey);
   const preview = (key: string | null) => {
     if (key) {
@@ -53,7 +64,9 @@ export default function SettingsPage() {
         title="Cài đặt tổ chức"
         subtitle="Thông tin dùng chung và nhận diện Mantine của tổ chức"
         action="Lưu cài đặt"
+        onAction={saveSettings}
       />
+      {notice ? <Text size="sm" c="teal" mb="sm">{notice}</Text> : null}
       <Tabs defaultValue="general">
         <Tabs.List>
           <Tabs.Tab value="general">Thông tin chung</Tabs.Tab>

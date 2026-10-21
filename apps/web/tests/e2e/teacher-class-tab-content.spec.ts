@@ -2,11 +2,11 @@ import { expect, test } from "@playwright/test";
 const tabChecks = [
   ["students", "Danh sách học viên"],
   ["sessions", "Toàn bộ lịch buổi học của khóa"],
-  ["assignments", "Chờ chấm trên lớp"],
+  ["assignments", "Tạo bài"],
   ["materials", "tài liệu lớp"],
-  ["attendance", "tham dự"],
-  ["scores", "Điểm trung bình"],
-  ["feedback", "Phản hồi buổi học gần nhất"],
+  ["attendance", "Điểm danh"],
+  ["scores", "bài chờ chấm"],
+  ["feedback", "Ghi nhận phản hồi buổi học"],
 ] as const;
 test("class tabs show their own business content", async ({ page }) => {
   for (const [tab, text] of tabChecks) {

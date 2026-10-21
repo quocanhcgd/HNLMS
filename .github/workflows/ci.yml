@@ -28,7 +28,18 @@ jobs:
       - run: npm run format:check
       - run: npm run lint
       - run: npm run typecheck
+      - run: npm run readiness:check
+      - run: npm run test:unit
+      - run: npm run test:contract
+      - run: npm run test:authorization
+      - run: npm run test:migration
       - run: npm test
+      - name: Dependency audit
+        run: npm audit --omit=dev --audit-level=high
+      - name: Dependency license scan
+        run: npm run ci:license-scan
+      - name: Secret scan
+        run: npm run ci:secret-scan
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
@@ -79,6 +90,7 @@ jobs:
           done
           tar -C release -czf "release/hn-lms-${version}.tgz" "hn-lms-${version}"
           (cd release && sha256sum "hn-lms-${version}.tgz" > "hn-lms-${version}.sha256")
+          (cd release && sha256sum --check "hn-lms-${version}.sha256")
       - uses: actions/upload-artifact@v4
         with:
           name: hn-lms-${{ github.sha }}

@@ -7,7 +7,7 @@ test.describe("US5 learning content and library UI", () => {
       timeout: 15_000,
     });
     await expect(page.getByText("IELTS Listening · Warm-up", { exact: true })).toBeVisible();
-    await expect(page.getByText("Bản nháp đang soạn", { exact: true })).toBeVisible();
+    await expect(page.getByRole("table").getByText("Bản nháp", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Gửi duyệt" })).toBeVisible();
   });
 
@@ -16,10 +16,10 @@ test.describe("US5 learning content and library UI", () => {
     await expect(page.locator(".pageHeader").getByText("Thư viện học tập", { exact: true })).toBeVisible({
       timeout: 15_000,
     });
-    await expect(page.getByRole("button", { name: /IELTS Grammar Pack/ })).toBeVisible();
+    await expect(page.getByText("IELTS Grammar Pack", { exact: true })).toBeVisible();
     await page.getByLabel("Lọc danh mục").click();
-    await page.getByRole("option", { name: "Speaking" }).click();
-    await expect(page.getByRole("button", { name: /Speaking warm-up video/ })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Mở học liệu" })).toBeVisible();
+    await page.getByRole("option", { name: "Nói" }).click();
+    await expect(page.getByText("Speaking warm-up video", { exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Xem" }).first()).toBeVisible();
   });
 });

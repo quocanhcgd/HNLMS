@@ -180,4 +180,54 @@ describe("T056 entrance assessment assignment", () => {
       } satisfies Partial<EntranceAssessmentError>);
     }
   });
+
+  it("denies assigning an assessment outside the consultant subject or program scope", async () => {
+    repository.assessments[0] = {
+      ...repository.assessments[0]!,
+      subjectId: "subject-math",
+      programId: "program-foundation",
+    };
+    const scopedActor = {
+      ...actor,
+      subjectIds: new Set(["subject-english"]),
+      programIds: new Set(["program-foundation"]),
+    };
+
+    await expect(service.assign(scopedActor, input())).rejects.toMatchObject({
+      code: "forbidden",
+      message: "assessment_subject_scope_denied",
+    } satisfies Partial<EntranceAssessmentError>);
+  });
+
+  it("requires explicit assessment-review permission for teaching assistants", async () => {
+    await service.assign(actor, input());
+    await expect(
+      service.linkPublishedResult({ ...actor, isTeachingAssistant: true }, "assignment-1", {
+        id: "result-assistant-1",
+        organizationId: "org-1",
+        assessmentId: "assessment-1",
+        publicationStatus: "published",
+      }),
+    ).rejects.toMatchObject({ code: "forbidden", message: "assessment_review_permission_required" });
+  });
+
+  it("enforces branch, class and certification scope for assessment work", async () => {
+    repository.assessments[0] = {
+      ...repository.assessments[0]!,
+      branchId: "branch-hn",
+      classId: "class-1",
+      requiredCertificationCode: "english-b2",
+    };
+    const scopedActor = {
+      ...actor,
+      branchIds: new Set(["branch-hcm"]),
+      classIds: new Set(["class-1"]),
+      certificationCodes: new Set(["english-b2"]),
+    };
+
+    await expect(service.assign(scopedActor, input())).rejects.toMatchObject({
+      code: "forbidden",
+      message: "assessment_branch_scope_denied",
+    } satisfies Partial<EntranceAssessmentError>);
+  });
 });

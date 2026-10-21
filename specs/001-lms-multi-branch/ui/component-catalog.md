@@ -15,6 +15,8 @@ Page header, breadcrumb, workspace switcher, navigation group, filter bar, searc
 - Mọi list page dùng cùng cấu trúc: `PageHeader` → toolbar search/filter/action → table wrapper → pagination/summary → empty/error/loading state. Không để mỗi trang tự bố trí toolbar, bảng, padding, badge, sort icon hoặc empty state theo kiểu khác nhau.
 - Column sizing, row height, sticky/overflow, hover/selected, sort indicator, action column, column settings/export và pagination phải lấy từ component chuẩn; trang chỉ khai báo column definition và dữ liệu.
 - Mobile/tablet dùng cùng responsive policy: filter vào sheet, bảng được horizontal scroll hoặc chuyển sang card-list chuẩn do table component cung cấp; không tự chế layout mobile khác từng trang.
+- Bảng chuẩn mặc định có cột `Thao tác` khi row có command. Row command phải dùng cùng permission/state policy, tooltip/accessibility và confirmation/modal patterns của catalog.
+- Không render bảng phụ trùng tập dữ liệu hoặc trùng command với bảng chính. Nếu cần hai bảng vì khác lifecycle/owner, screen specification phải ghi rõ quan hệ và lý do.
 
 ## Shell, topbar and breadcrumb standard
 

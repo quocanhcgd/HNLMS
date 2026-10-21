@@ -4,11 +4,13 @@ import { useMemo, useState } from "react";
 import {
   Alert,
   Avatar,
+  Badge,
   Checkbox,
   Divider,
   Grid,
   Group,
   Paper,
+  Progress,
   Radio,
   ScrollArea,
   SimpleGrid,
@@ -19,13 +21,14 @@ import {
   ThemeIcon,
   Timeline,
 } from "@mantine/core";
-import { AlertTriangle, CalendarClock, CheckCircle2, Phone, Search, UserRoundPlus } from "lucide-react";
+import { AlertTriangle, CalendarClock, CheckCircle2, Clock3, Phone, Search, TrendingUp, UserRoundPlus, UsersRound } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
 import { ConfirmationSummary } from "@/components/domain";
 import {
   PageToolbar,
   UiBadge,
   UiButton,
+  UiEditModal,
   UiModal,
   UiSelect,
   UiStatusBadge,
@@ -134,18 +137,19 @@ const seedLeads: ConsultantLead[] = [
   },
 ];
 
-const initialConsultation: ConsultationDraft = {
-  notes: "",
-  outcome: "Đã xác nhận nhu cầu",
-  nextAction: "Gửi thông tin chương trình",
-  nextActionAt: "2026-08-24T09:00",
-};
+function createConsultationDraft(): ConsultationDraft {
+  const next = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  next.setMinutes(0, 0, 0);
+  const local = new Date(next.getTime() - next.getTimezoneOffset() * 60_000).toISOString().slice(0, 16);
+  return { notes: "", outcome: "Đã xác nhận nhu cầu", nextAction: "Gửi thông tin chương trình", nextActionAt: local };
+}
 
 const initialConversion: ConversionDraft = {
   classId: "",
   studentMode: "create",
   financeAcknowledged: false,
 };
+type CreateLeadDraft = { fullName: string; phone: string; interest: string };
 
 function displayDate(value: string) {
   return new Intl.DateTimeFormat("vi-VN", {
@@ -161,10 +165,19 @@ export function ConsultantPortal() {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<string | null>("active");
   const [consultationOpened, setConsultationOpened] = useState(false);
+  const [createOpened, setCreateOpened] = useState(false);
   const [conversionOpened, setConversionOpened] = useState(false);
-  const [consultation, setConsultation] = useState(initialConsultation);
+  const [consultation, setConsultation] = useState<ConsultationDraft>(createConsultationDraft);
   const [conversion, setConversion] = useState<ConversionDraft>(initialConversion);
   const [feedback, setFeedback] = useState("");
+  const [createDraft, setCreateDraft] = useState<CreateLeadDraft>({ fullName: "", phone: "", interest: "" });
+
+  const dueToday = leads.filter((lead) => lead.status !== "enrolled" && lead.status !== "disqualified").length;
+  const overdue = leads.filter((lead) => lead.status !== "enrolled" && lead.status !== "disqualified" && new Date(lead.nextActionAt).getTime() < Date.now()).length;
+  const readyToEnroll = leads.filter((lead) => lead.status === "class_proposed").length;
+  const enrolled = leads.filter((lead) => lead.status === "enrolled").length;
+  const conversionRate = leads.length ? Math.round((enrolled / leads.length) * 100) : 0;
+  const nextDue = leads.filter((lead) => lead.status !== "enrolled" && lead.status !== "disqualified").sort((a, b) => new Date(a.nextActionAt).getTime() - new Date(b.nextActionAt).getTime())[0];
 
   const filteredLeads = useMemo(
     () =>
@@ -191,12 +204,40 @@ export function ConsultantPortal() {
         author: "Lan Anh",
       });
       setLeads((current) => current.map((lead) => (lead.id === next.id ? next : lead)));
-      setConsultation(initialConsultation);
+      setConsultation(createConsultationDraft());
       setConsultationOpened(false);
       setFeedback("Đã lưu ghi chú và lịch bước tiếp theo.");
     } catch (error) {
       setFeedback(error instanceof Error ? error.message : "Không thể lưu tư vấn.");
     }
+  }
+
+  function createLead() {
+    if (!createDraft.fullName.trim() || !createDraft.phone.trim() || !createDraft.interest.trim()) {
+      setFeedback("Vui lòng nhập đủ họ tên, số điện thoại và nhu cầu.");
+      return;
+    }
+    const now = new Date();
+    const nextActionAt = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
+    const newLead: ConsultantLead = {
+      id: `lead-${Date.now()}`,
+      fullName: createDraft.fullName.trim(),
+      phone: createDraft.phone.trim(),
+      email: "",
+      interest: createDraft.interest.trim(),
+      source: "Tư vấn trực tiếp",
+      branch: "Cầu Giấy",
+      owner: "Lan Anh",
+      status: "new",
+      nextAction: "Gọi xác nhận nhu cầu",
+      nextActionAt,
+      timeline: [],
+    };
+    setLeads((current) => [newLead, ...current]);
+    setSelectedId(newLead.id);
+    setCreateOpened(false);
+    setCreateDraft({ fullName: "", phone: "", interest: "" });
+    setFeedback("Đã tạo khách tiềm năng và đưa vào work queue.");
   }
 
   function confirmConversion() {
@@ -222,7 +263,10 @@ export function ConsultantPortal() {
         title="Không gian tư vấn tuyển sinh"
         subtitle="Theo dõi khách phụ trách, lịch sử chăm sóc, bước tiếp theo và chuyển đổi ghi danh."
         action="Tạo khách tiềm năng"
+        onAction={() => setCreateOpened(true)}
       />
+
+      <Paper withBorder p="lg" mb="md" className="admission-overview" style={{ background: "color-mix(in srgb, var(--hn-light-primary) 8%, var(--app-panel))", borderColor: "color-mix(in srgb, var(--hn-light-primary) 32%, var(--app-border))" }}><Group justify="space-between" align="flex-start" wrap="wrap" gap="xl"><Group align="flex-start" gap="md"><ThemeIcon size={48} radius="md" color="primary"><UsersRound size={25} /></ThemeIcon><div><Text size="sm" c="dimmed">Work queue tuyển sinh</Text><Text fz={32} fw={800} lh={1.1}>{leads.length} hồ sơ đang theo dõi</Text><Group gap="xs" mt={6}><Badge color="blue" variant="light">{dueToday} cần xử lý</Badge><Text size="xs" c="dimmed">Ưu tiên theo hạn bước tiếp theo</Text></Group></div></Group><div className="admission-overview-summary"><Group gap="xl"><div><Text size="xs" c="dimmed">Tỷ lệ ghi danh</Text><Text fw={750}>{conversionRate}%</Text></div><div><Text size="xs" c="dimmed">Sẵn sàng ghi danh</Text><Text fw={750} c="teal">{readyToEnroll}</Text></div><div><Text size="xs" c="dimmed">Quá hạn</Text><Text fw={750} c="red">{overdue}</Text></div></Group><Progress value={conversionRate} color="teal" size="sm" mt="md" /></div></Group></Paper>
 
       {feedback ? (
         <Alert
@@ -236,13 +280,13 @@ export function ConsultantPortal() {
         </Alert>
       ) : null}
 
-      <SimpleGrid cols={{ base: 1, sm: 3 }} mb="md">
+      <SimpleGrid cols={{ base: 1, sm: 4 }} mb="md">
         <Paper withBorder p="md">
           <Text size="xs" c="dimmed">
             Cần xử lý hôm nay
           </Text>
           <Text fw={700} fz={24}>
-            3
+            {dueToday}
           </Text>
         </Paper>
         <Paper withBorder p="md">
@@ -250,7 +294,7 @@ export function ConsultantPortal() {
             Quá hạn bước tiếp theo
           </Text>
           <Text fw={700} fz={24} c="red">
-            1
+            {overdue}
           </Text>
         </Paper>
         <Paper withBorder p="md">
@@ -258,10 +302,13 @@ export function ConsultantPortal() {
             Sẵn sàng ghi danh
           </Text>
           <Text fw={700} fz={24} c="teal">
-            1
+            {readyToEnroll}
           </Text>
         </Paper>
+        <Paper withBorder p="md"><Group gap="sm" wrap="nowrap"><ThemeIcon color="teal" variant="light" size={36}><TrendingUp size={18} /></ThemeIcon><div><Text size="xs" c="dimmed">Tỷ lệ ghi danh</Text><Text fw={700} fz={24} c="teal">{conversionRate}%</Text><Text size="xs" c="dimmed">{enrolled} hồ sơ đã chuyển đổi</Text></div></Group></Paper>
       </SimpleGrid>
+
+      {nextDue ? <Paper className="panelHighlight" p="md" mb="md"><Group justify="space-between" wrap="wrap"><Group gap="sm"><ThemeIcon variant="light" color={overdue ? "red" : "blue"}><Clock3 size={17} /></ThemeIcon><div><Text size="xs" c="dimmed">Ưu tiên tiếp theo</Text><Text fw={650}>{nextDue.fullName} · {nextDue.nextAction}</Text></div></Group><Text size="sm" c={new Date(nextDue.nextActionAt).getTime() < Date.now() ? "red" : "dimmed"}>{displayDate(nextDue.nextActionAt)}</Text></Group></Paper> : null}
 
       <PageToolbar className="toolbar">
         <UiTextInput
@@ -517,6 +564,21 @@ export function ConsultantPortal() {
           </Group>
         </Stack>
       </UiModal>
+
+      <UiEditModal
+        opened={createOpened}
+        onClose={() => setCreateOpened(false)}
+        title="Tạo khách tiềm năng"
+        onSave={createLead}
+        saveLabel="Tạo khách hàng"
+      >
+        <Stack>
+          <TextInput label="Họ và tên" required value={createDraft.fullName} onChange={(event) => setCreateDraft({ ...createDraft, fullName: event.currentTarget.value })} placeholder="Nhập tên khách hàng" />
+          <TextInput label="Số điện thoại" required value={createDraft.phone} onChange={(event) => setCreateDraft({ ...createDraft, phone: event.currentTarget.value })} placeholder="Nhập số điện thoại" />
+          <TextInput label="Nhu cầu / chương trình" required value={createDraft.interest} onChange={(event) => setCreateDraft({ ...createDraft, interest: event.currentTarget.value })} placeholder="Ví dụ: Toán 9 nâng cao, IELTS 6.5..." />
+          <Text size="sm" c="dimmed">Sau khi tạo, hồ sơ sẽ ở trạng thái “Mới”; tư vấn viên cần bổ sung thông tin liên hệ trong bước tiếp theo.</Text>
+        </Stack>
+      </UiEditModal>
 
       <UiModal
         opened={conversionOpened}

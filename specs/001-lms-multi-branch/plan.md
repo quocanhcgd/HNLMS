@@ -6,7 +6,7 @@
 
 ## Summary
 
-Xây dựng nền tảng LMS web responsive cho trung tâm đào tạo đa ngành, đa chi nhánh, kết hợp public landing page, tuyển sinh/CRM, học tập, thư viện số, assessment, chương trình Tiếng Anh, lớp online, phụ huynh, trao đổi, HRM, giáo viên, payroll, tài chính chi nhánh, kế toán/ERP và AI tự động hóa có kiểm soát.
+Xây dựng nền tảng LMS web responsive cho trung tâm đào tạo đa ngành, đa chi nhánh, kết hợp public landing page, tuyển sinh/CRM, học tập, thư viện số, đánh giá và hồ sơ năng lực theo chương trình/môn, lộ trình đặc thù như Tiếng Anh, lớp online, phụ huynh, trao đổi, HRM, giáo viên, payroll, tài chính chi nhánh, kế toán/ERP và AI tự động hóa có kiểm soát.
 
 Kiến trúc được chọn là frontend public/authenticated sử dụng Mantine, backend modular monolith stateless được tổ chức thành các module có manifest và license gate, worker bất đồng bộ, PostgreSQL làm nguồn dữ liệu giao dịch, Redis cho cache/queue, private object storage cho file và adapter riêng cho payment, meeting, accounting/ERP và AI. Hệ thống triển khai trực tiếp trên Debian/Ubuntu bằng Node.js, Nginx và systemd, không sử dụng Docker. Outbox/inbox, idempotency, audit, authorization và license enforcement theo organization/branch/module scope là các cơ chế nền tảng.
 
@@ -54,7 +54,7 @@ Kiến trúc được chọn là frontend public/authenticated sử dụng Manti
 - License hỗ trợ monthly, yearly, lifetime, thời gian hiệu lực, grace period, giới hạn module và quota; thay đổi license phải audit và có cơ chế đồng bộ/kiểm tra chữ ký.
 - Triển khai production không dùng Docker; release phải có artifact versioned, migration, systemd units, Nginx config, rollback và backup/restore runbook.
 
-**Scale/Scope**: 15 nhóm luồng nghiệp vụ cùng một luồng UI foundation, 83 functional requirements, 34 success criteria; phiên bản đầu gồm application shell/design system, identity/organization, module registry/license runtime, public landing, CRM/admission, academic/LMS, assessment/English, online class, parent/communication, HRM/teacher, payroll/branch finance, accounting integration, reporting và AI governance.
+**Scale/Scope**: 15 nhóm luồng nghiệp vụ cùng một luồng UI foundation, 103 functional requirements và 38 success criteria bao phủ đánh giá/hồ sơ năng lực đa ngành, propagation sang student/parent portals và change/UI governance; phiên bản đầu gồm application shell/design system, identity/organization, module registry/license runtime, public landing, CRM/admission, academic/LMS, assessment/competency profiles, lộ trình đặc thù theo môn (bao gồm English), online class, parent/communication, HRM/teacher, payroll/branch finance, accounting integration, reporting và AI governance.
 
 ## Constitution Check
 
@@ -114,6 +114,8 @@ specs/001-lms-multi-branch/
 │   ├── api-contracts.md
 │   └── integration-contracts.md
 ├── quickstart.md
+├── change-impact-template.md
+├── current-state-audit.md
 └── tasks.md              # tạo bởi /speckit-tasks
 ```
 
@@ -149,7 +151,7 @@ apps/
 │   │   │   ├── super-admin-license/
 │   │   │   ├── marketing-admission/
 │   │   │   ├── academic-learning/
-│   │   │   ├── assessment-english/
+│   │   │   ├── assessment-competency/
 │   │   │   ├── online-class/
 │   │   │   ├── communication/
 │   │   │   ├── hrm-teacher/
@@ -222,6 +224,47 @@ Sau khi tạo design artifacts, các gate sau được đánh giá:
 - [x] Constitution chính thức đã được ratify và không còn placeholder.
 
 **Post-design gate status**: PASS; stack, deployment, module/license, tenant isolation và migration đã được chốt ở mức planning.
+
+## Cross-module adjustment plan: competency-first, multi-subject
+
+| Phase | Scope | Main adjustment | Gate / output |
+|---|---|---|---|
+| 0. Contract baseline | Requirements and terminology | Replace English-only pathway/profile terms with subject/program competency concepts; define blueprint, evidence, baseline, current and target semantics. | Approved glossary and acceptance scenarios in `spec.md` and `data-model.md`. |
+| 0A. Change governance | User-originated changes | Record each request, run cross-role/module impact analysis, identify owner/permissions/propagation, update spec, role matrix, UI and tests before implementation; close each item with evidence, residual risk and a next-step handoff; continue after approved scope without repeated confirmation. | No change item proceeds without impact record and affected-role decision; no item is fully closed without a next-step record or an explicit reopen condition. Pause only for a genuine blocker or material scope/risk/owner decision. |
+| 1. Academic configuration | Program and subject setup | Add competency definitions, score scales, rubrics, normalization policies, placement thresholds and target outcomes to each program version. | Mathematics, Literature and English sample blueprints pass configuration tests. |
+| 2. Assessment | Admission, entrance and mock | Make every assessment reference subject/program and blueprint version; publish result as immutable competency evidence instead of directly overwriting a profile. | Entrance and mock contract tests prove correct evidence creation and no cross-program leakage. |
+| 3. Competency profile | Teacher and student views | Build one shared profile by student + subject/program with baseline/current/target, evidence timeline, confidence, four-skill English when configured, and explicit not-assessed/out-of-scope states. | Same record is returned from global profile view and class-scoped view. |
+| 4. Class integration | Roster, scores, assignments and feedback | Add class/program context and “open competency profile” action; class observations use the assigned rubric and contribute evidence only after confirmation. | Class transfer preserves profile history and class references remain auditable. |
+| 4A. Portal propagation | Student and parent self-service | Class outputs are classified as published learning output, internal operational state or sensitive evidence; sync published schedule/material/score/attendance/feedback/competency evidence to student and delegated parent views. | Student/parent see the same canonical result with no draft/private leakage and no duplicate data entry. |
+| 5. Admission and pathway | Consultation and placement | Derive assessment assignment and placement recommendation from learner goal and program blueprint; activate a versioned pathway without assuming English. | Consultant → assessment → academic handoff scenario passes for at least three subjects. |
+| 6. Reporting and communication | Reports, parent and internal exchange | Add subject/program/competency dimensions to filters and report read models; link messages to evidence or review context without exposing unauthorized detail. | Branch and program reports reconcile with profile source data and scope tests. |
+| 7. Migration and deprecation | Existing English UI/data | Map current EnglishSkillRecord/EnglishPathway data into generic profiles and evidence; keep `/teacher/english` as a compatibility redirect to the generic `/teacher/competency` route while the new profile UI is validated. | Migration is idempotent, audit-preserving, class-context aware and no duplicate evidence/profile version is created. |
+| 8. Verification | End-to-end quality | Test mixed cohorts, missing/out-of-scope competencies, multiple classes, class transfer, regrade/versioning, filters, authorization and mobile views. | All P1 gates and new SC-035..SC-038 pass before broad UI rollout. |
+| 9. UI normalization | Existing and new data screens | Audit every list screen for duplicate primary/secondary tables; consolidate repeated data into one table with row action column, modal edit and confirmed archive/void/delete behavior. | Table/modal checklist passes for teacher, class, assessment, admission, student, parent, finance and HR screens. |
+
+### Teacher workspace decisions confirmed
+
+- Rename the teacher navigation item from `Rà soát tiếng Anh` to `Hồ sơ năng lực`; keep `/teacher/english` as a compatibility route until the generic profile route is ready.
+- Move `Buổi dạy & worklog` to the teacher `Cá nhân` section next to `Lương & công dạy`; class sessions retain the contextual worklog action.
+- Allow teaching assistants to grade and capture evidence only inside assigned class/program competency scope; entrance/mock review and baseline/current approval require explicit permission.
+- Restrict teacher entrance/mock/profile access to assigned subject, program, branch, class and certification scope; do not expose a cross-center queue by default.
+
+### Review checklist for related features
+
+- Does the feature identify subject, program and blueprint version instead of assuming English?
+- Does it write a score/result or create competency evidence, and which owner approves that transition?
+- Can the same learner have multiple programs/classes without overwriting another profile?
+- Are not-assessed and out-of-scope states distinct?
+- Does the UI show class context while keeping the canonical profile outside the class?
+- Are raw score, normalized level, source, confidence, reviewer and audit history available?
+- Can filters and reports scope by branch, subject, program, class, competency and time?
+- Does a class change produce the right student/parent view and notification without exposing worklog, drafts, private notes or internal review data?
+- Is every parent-visible learning result authorized by an independent delegation permission?
+- Is the request recorded as a change item with an impact analysis covering every affected role/module?
+- Does completion record verification evidence, residual risk and a next step with owner, priority and start condition (or an explicit reopen condition)?
+- After approval, can implementation continue without repeating confirmation unless a blocker or material scope/risk/owner decision appears?
+- Does every table-plus-subtable pattern have a documented reason, or can it be consolidated into one table with row actions?
+- Does edit use a validated modal and does delete use confirmation plus archive/void/adjustment for immutable records?
 
 ## Complexity Tracking
 

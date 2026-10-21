@@ -106,7 +106,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T053 [P] [US3] Tạo `Lead`, `Consultation`, `LeadAssignment` migrations/entities trong `apps/api/src/modules/marketing-admission/`
 - [x] T054 [US3] Implement lead routing, consultant ownership, duplicate lead detection và lifecycle trong `apps/api/src/modules/marketing-admission/`
 - [x] T055 [US3] Implement consultant portal, notes, next actions và conversion flow trong `apps/web/src/app/admin/admission/`
-- [x] T056 [US3] Implement entrance-assessment assignment link từ lead sang assessment trong `apps/api/src/modules/assessment-english/`
+- [x] T056 [US3] Implement entrance-assessment assignment link từ lead sang assessment trong `apps/api/src/modules/assessment-competency/`
 - [x] T057 [US3] Add US3 integration/contract/E2E tests trong `apps/api/tests/integration/us3-admission.spec.ts` và `apps/web/tests/e2e/us3-admission.spec.ts`
 
 ## Phase 7: User Story 4 - Chương trình, lớp học và lịch học (P1)
@@ -166,22 +166,47 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Tạo đề, làm/nộp bài, retry submit không tạo attempt trùng và kết quả được công bố theo policy.
 
-- [x] T081 [P] [US8] Tạo assessment bank, assessment, attempt, result migrations/entities trong `apps/api/src/modules/assessment-english/`
-- [x] T082 [US8] Implement question approval, blueprint, time window, attempts limit và scoring policy trong `apps/api/src/modules/assessment-english/`
-- [x] T083 [US8] Implement timed attempt state machine, autosave, submit idempotency và timeout handling trong `apps/api/src/modules/assessment-english/`
+- [x] T081 [P] [US8] Tạo assessment bank, blueprint, assessment, attempt, result migrations/entities trong `apps/api/src/modules/assessment-competency/`
+- [x] T082 [US8] Implement question approval, subject/program blueprint, time window, attempts limit và scoring policy trong `apps/api/src/modules/assessment-competency/`
+- [x] T083 [US8] Implement timed attempt state machine, autosave, submit idempotency và timeout handling trong `apps/api/src/modules/assessment-competency/`
 - [x] T084 [US8] Implement assessment engine UI và result/recommendation UI trong `apps/web/src/app/student/assessment/` và `apps/web/src/app/teacher/assessment/`
 - [x] T085 [US8] Add assessment contract, duplicate/retry and E2E tests trong `apps/api/tests/contract/us8-assessment.contract.spec.ts` và `apps/web/tests/e2e/us8-assessment.spec.ts`
 
-## Phase 12: User Story 9 - Lộ trình Tiếng Anh (P1)
+## Phase 12: User Story 9 - Hồ sơ năng lực và lộ trình đa ngành (P1)
 
-**Goal**: Placement, pathway và tiến bộ riêng cho listening, speaking, reading, writing.
+**Goal**: Blueprint, baseline/current/target và tiến bộ theo nhóm năng lực của từng chương trình; English là một cấu hình bốn kỹ năng.
 
-**Independent Test**: Xếp level, hoàn thành hoạt động bốn kỹ năng và chờ giáo viên chấm speaking/writing.
+**Independent Test**: Xếp level theo hai blueprint khác nhau, hoàn thành hoạt động theo nhóm năng lực và chờ giáo viên chấm các phần cần manual review.
 
-- [x] T086 [P] [US9] Tạo English pathway, level, skill record và placement rule entities trong `apps/api/src/modules/assessment-english/`
-- [x] T087 [US9] Implement four-skill placement, progress và manual review workflow trong `apps/api/src/modules/assessment-english/`
-- [x] T088 [US9] Implement English learning activities và teacher review UI trong `apps/web/src/app/student/english/` và `apps/web/src/app/teacher/english/`
-- [x] T089 [US9] Add skill-level calculation and E2E tests trong `apps/api/tests/integration/us9-english.spec.ts` và `apps/web/tests/e2e/us9-english.spec.ts`
+- [x] T086 [P] [US9] Tạo learning pathway, competency profile/evidence và placement rule entities trong `apps/api/src/modules/assessment-competency/`
+- [x] T087 [US9] Implement blueprint-driven placement, baseline/current/target progress và manual review workflow trong `apps/api/src/modules/assessment-competency/`
+- [x] T088 [US9] Implement subject/program competency views; English UI dùng cấu hình four-skill trong `apps/web/src/app/student/english/` và `apps/web/src/app/teacher/english/`
+- [x] T089 [US9] Add competency normalization, versioning, authorization and E2E tests trong `apps/api/tests/integration/us9-competency.spec.ts` và `apps/web/tests/e2e/us9-competency.spec.ts`
+
+### Phase 12A: Multi-subject competency hardening
+
+- [x] T090 [P] Add program competency definitions, blueprint versioning, score scales, rubrics and normalization policies for English, Mathematics and Literature.
+- [x] T091 [P] Add immutable baseline/current/target profile projection and evidence timeline APIs with class/enrollment references.
+- [x] T092 [US9] Add global competency profile route and class-scoped entry point with subject/program/class/competency/source/status/confidence/date filters.
+- [x] T093 [US9] Migrate legacy EnglishPathway/EnglishSkillRecord data to generic profile/evidence records with audit-preserving compatibility redirect.
+- [x] T094 [US9] Add cross-module contract tests for admission → assessment → academic placement → class → teacher review → student/parent/reporting views.
+- [x] T095 [P] Add student learning-output read model for published schedule, materials, scores, attendance, feedback and competency summaries by enrollment/program.
+- [x] T096 [P] Add parent learning-output read model with independent delegation checks for progress, score, attendance, feedback and competency summary.
+- [x] T097 [US6] Add class-output publication policy, notification context links and negative tests preventing drafts/worklogs/private notes from student/parent APIs.
+- [x] T098 [US9] Add student/parent competency profile views with baseline/current/target and published evidence states; keep legacy English pathway as a compatibility view only.
+- [x] T176 [P] Rename teacher navigation label to Hồ sơ năng lực and add compatibility redirect metadata for `/teacher/english`.
+- [x] T177 [P] Move teacher worklog navigation to Cá nhân and retain contextual class-session entry points.
+- [x] T178 [US9] Enforce teacher subject/program/branch/class/certification scope for entrance, mock and competency profile actions.
+- [x] T179 [US9] Enforce teaching-assistant class/program competency scope; require explicit assessment-review permission for entrance/mock and baseline/current approval.
+- [x] T180 [US0] Add navigation and permission matrix tests for teacher, teaching assistant, student and parent views.
+- [x] T181 [P] Add change-item template/registry and cross-role impact-analysis checklist to product documentation and delivery workflow.
+- [x] T182 [P] Audit all authenticated list screens for duplicate primary/secondary tables and document approved exceptions in `specs/001-lms-multi-branch/current-state-audit.md`.
+- [x] T183 [P] Add shared row-action, edit-modal, confirmation and archive/void compositions; remove duplicate processing panels where they repeat table rows.
+- [x] T184 [US0] Add review gate tests proving table row actions obey permission/status and edits do not bypass modal validation or audit.
+- [x] T185 [P] Add generic assessment blueprint/evidence runtime contracts and subject/program scope primitives in `packages/domain-contracts/` and `packages/authorization/`, with cross-scope tests.
+- [x] T186 [US9] Apply subject/program scope guards to entrance-assessment assignment, published-result linking and assessment blueprint publication, with mismatch tests in `apps/api/src/modules/assessment-english/`.
+- [x] T187 [US9] Extend assessment/profile scope checks with branch, class and certification references and require explicit assessment-review permission for teaching assistants, with negative tests.
+- [x] T188 [US9] Replace English-only competency review sample with subject/program/class profile rows, baseline/current/target evidence columns and scope filters in `apps/web/src/app/teacher/english/`.
 
 ## Phase 13: User Story 10 - Lớp học online (P1)
 
@@ -193,7 +218,7 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 - [x] T091 [US10] Implement meeting provider adapter và signed webhook inbox trong `packages/integration-adapters/` và `apps/api/src/modules/integrations/meeting/`
 - [x] T092 [US10] Implement meeting sync worker, reconciliation và recording permission link trong `worker/src/jobs/meeting-sync/`
 - [x] T093 [US10] Implement online session teacher/student/parent UI trong `apps/web/src/app/teacher/online/`, `apps/web/src/app/student/online/` và `apps/web/src/app/parent/online/`
-- [ ] T094 [US10] Add provider contract, duplicate webhook and E2E tests trong `apps/api/tests/contract/us10-meeting.contract.spec.ts` và `apps/web/tests/e2e/us10-online.spec.ts`
+- [x] T094 [US10] Add provider contract, duplicate webhook and E2E tests trong `apps/api/tests/contract/us10-meeting.contract.spec.ts` và `apps/web/tests/e2e/us10-online.spec.ts`
 
 ## Phase 14: User Story 11 - Tài chính, thanh toán và kế toán (P1)
 
@@ -227,12 +252,12 @@ description: "Task list for LMS đa ngành đa chi nhánh"
 
 **Independent Test**: Tính payroll theo công/giờ/lớp, approve/lock, tạo adjustment và phân bổ thu chi đúng chi nhánh.
 
-- [ ] T107 [P] [US13] Tạo budget, finance category, cash account, finance entry, expense request và receipt entities trong `apps/api/src/modules/payroll-finance/`
-- [ ] T108 [P] [US13] Tạo payroll period, payroll line, payslip và calculation snapshot entities trong `apps/api/src/modules/payroll-finance/`
-- [ ] T109 [US13] Implement branch budget, income/expense ledger, approval routing và document validation trong `apps/api/src/modules/payroll-finance/`
-- [ ] T110 [US13] Implement payroll calculation engine theo salary/hour/class, allowance, deduction, tax, insurance và calculation version trong `apps/api/src/modules/payroll-finance/`
-- [ ] T111 [US13] Implement payroll approve/lock/adjustment workflow và payslip publication trong `apps/api/src/modules/payroll-finance/`
-- [ ] T112 [US13] Implement payroll/branch finance portal trong `apps/web/src/app/admin/payroll/` và `apps/web/src/app/admin/finance/branch-finance/`
+- [x] T107 [P] [US13] Tạo budget, finance category, cash account, finance entry, expense request và receipt entities trong `apps/api/src/modules/payroll-finance/`
+- [x] T108 [P] [US13] Tạo payroll period, payroll line, payslip và calculation snapshot entities trong `apps/api/src/modules/payroll-finance/`
+- [x] T109 [US13] Implement branch budget, income/expense ledger, approval routing và document validation trong `apps/api/src/modules/payroll-finance/`
+- [x] T110 [US13] Implement payroll calculation engine theo salary/hour/class, allowance, deduction, tax, insurance và calculation version trong `apps/api/src/modules/payroll-finance/`
+- [x] T111 [US13] Implement payroll approve/lock/adjustment workflow và payslip publication trong `apps/api/src/modules/payroll-finance/`
+- [x] T112 [US13] Implement payroll/branch finance portal trong `apps/web/src/app/admin/payroll/` và `apps/web/src/app/admin/finance/branch-finance/`
 - [x] T113 [US13] Add payroll invariant, lock bypass, multi-branch allocation and E2E tests trong `apps/api/tests/integration/us13-payroll.spec.ts` và `apps/web/tests/e2e/us13-payroll.spec.ts`
 
 ## Phase 17: User Story 14 - AI hỗ trợ và tự động hóa có kiểm soát (P1)
@@ -413,20 +438,20 @@ Tất cả implementation tasks đều theo format `- [ ] T### [P?] [US#?] Descr
 
 **Purpose**: Bổ sung các quyết định và hạ tầng còn thiếu để đội phát triển có thể triển khai, kiểm thử, bảo mật và vận hành toàn bộ stack nhất quán.
 
-- [ ] T161 Chốt package manager duy nhất, Node version, Corepack policy và reproducible install; loại workspace config cạnh tranh và thêm `.nvmrc`/`.node-version`, `engines`, lockfile policy trong repository root
-- [ ] T162 [P] Tạo root `README.md`, `CONTRIBUTING.md`, architecture map, local onboarding và command catalog cho web/API/worker/test/migration/seed trong `README.md` và `docs/development/`
-- [ ] T163 [P] Tạo typed environment schemas và `.env.example` không chứa secret cho web/API/worker; validate fail-fast, phân loại public/private secret và document rotation trong `packages/config/` và `infra/environments/`
-- [ ] T164 Chốt PostgreSQL data-access/migration stack, transaction convention, naming, decimal/timezone strategy và tenant connection pooling; tạo ADR và migration smoke test trong `docs/adr/` và `apps/api/src/database/`
-- [ ] T165 [P] Tạo local development service profile không Docker theo baseline production, gồm scripts kiểm tra PostgreSQL, Redis, S3-compatible storage và optional sandbox adapters trong `infra/development/`
-- [ ] T166 [P] Chuẩn hóa API `/v1`, OpenAPI source/generation, DTO/schema compatibility, CORS, CSRF, cookie/session, rate limit, request size, webhook raw-body và security headers trong `apps/api/src/shared/http/`
-- [ ] T167 Chốt authentication ADR gồm email/password, password reset, session cookie, MFA policy, super-admin isolation, SSO extension point, account recovery và session revocation trong `docs/adr/authentication.md`
-- [ ] T168 [P] Tạo notification provider contracts cho email, SMS và in-app; template localization, opt-out, retry, delivery receipt và sandbox adapter trong `packages/integration-adapters/src/notification/`
-- [ ] T169 [P] Tạo privacy/data governance matrix cho consent, retention, legal hold, data export/delete/anonymize, minors/parent delegation, AI data use và audit redaction trong `docs/security/privacy-retention.md`
-- [ ] T170 [P] Tạo backup encryption/key management, restore drill, RPO/RTO, object storage lifecycle, malware quarantine và secret rotation runbooks trong `infra/backup/` và `docs/operations/`
-- [ ] T171 [P] Tạo deterministic seed/factory cho hai tenant, nhiều branch và mọi persona; sample media không nhạy cảm và reset-safe development data trong `packages/test-fixtures/` và `apps/api/src/database/seeds/`
-- [ ] T172 Tạo CI quality gates cho install, format/lint, typecheck, unit, contract, authorization, migration, build, dependency/license scan, secret scan và artifact checksum trong `.github/workflows/ci.yml`
-- [ ] T173 [P] Tạo GitHub issue/PR templates, CODEOWNERS, branch protection checklist, Dependabot/Renovate policy, security reporting và release/versioning convention trong `.github/`
-- [ ] T174 Chốt provider decision records và sandbox credentials process cho payment, meeting, accounting/ERP, AI, object storage và video transcoding trước task adapter production trong `docs/adr/providers/`
-- [ ] T175 Tạo full-stack readiness gate kiểm tra toàn bộ mục trong `checklists/full-stack-readiness.md`; không bắt đầu production rollout khi còn mục Critical chưa đạt
+- [x] T161 Chốt package manager duy nhất, Node version, Corepack policy và reproducible install; loại workspace config cạnh tranh và thêm `.nvmrc`/`.node-version`, `engines`, lockfile policy trong repository root
+- [x] T162 [P] Tạo root `README.md`, `CONTRIBUTING.md`, architecture map, local onboarding và command catalog cho web/API/worker/test/migration/seed trong `README.md` và `docs/development/`
+- [x] T163 [P] Tạo typed environment schemas và `.env.example` không chứa secret cho web/API/worker; validate fail-fast, phân loại public/private secret và document rotation trong `packages/config/` và `infra/environments/`
+- [x] T164 Chốt PostgreSQL data-access/migration stack, transaction convention, naming, decimal/timezone strategy và tenant connection pooling; tạo ADR và migration smoke test trong `docs/adr/` và `apps/api/src/database/`
+- [x] T165 [P] Tạo local development service profile không Docker theo baseline production, gồm scripts kiểm tra PostgreSQL, Redis, S3-compatible storage và optional sandbox adapters trong `infra/development/`
+- [x] T166 [P] Chuẩn hóa API `/v1`, OpenAPI source/generation, DTO/schema compatibility, CORS, CSRF, cookie/session, rate limit, request size, webhook raw-body và security headers trong `apps/api/src/shared/http/`
+- [x] T167 Chốt authentication ADR gồm email/password, password reset, session cookie, MFA policy, super-admin isolation, SSO extension point, account recovery và session revocation trong `docs/adr/authentication.md`
+- [x] T168 [P] Tạo notification provider contracts cho email, SMS và in-app; template localization, opt-out, retry, delivery receipt và sandbox adapter trong `packages/integration-adapters/src/notification/`
+- [x] T169 [P] Tạo privacy/data governance matrix cho consent, retention, legal hold, data export/delete/anonymize, minors/parent delegation, AI data use và audit redaction trong `docs/security/privacy-retention.md`
+- [x] T170 [P] Tạo backup encryption/key management, restore drill, RPO/RTO, object storage lifecycle, malware quarantine và secret rotation runbooks trong `infra/backup/` và `docs/operations/`
+- [x] T171 [P] Tạo deterministic seed/factory cho hai tenant, nhiều branch và mọi persona; sample media không nhạy cảm và reset-safe development data trong `packages/test-fixtures/` và `apps/api/src/database/seeds/`
+- [x] T172 Tạo CI quality gates cho install, format/lint, typecheck, unit, contract, authorization, migration, build, dependency/license scan, secret scan và artifact checksum trong `.github/workflows/ci.yml`
+- [x] T173 [P] Tạo GitHub issue/PR templates, CODEOWNERS, branch protection checklist, Dependabot/Renovate policy, security reporting và release/versioning convention trong `.github/`
+- [x] T174 Chốt provider decision records và sandbox credentials process cho payment, meeting, accounting/ERP, AI, object storage và video transcoding trước task adapter production trong `docs/adr/providers/`
+- [x] T175 Tạo full-stack readiness gate kiểm tra toàn bộ mục trong `checklists/full-stack-readiness.md`; không bắt đầu production rollout khi còn mục Critical chưa đạt
 
 **Checkpoint**: Full-stack implementation có thể bắt đầu theo MVP sau T161-T167 và T171-T172; production integration/rollout yêu cầu hoàn tất T168-T175 cùng các release gate tương ứng.

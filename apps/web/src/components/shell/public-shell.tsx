@@ -43,6 +43,9 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
           <ActionIcon variant="subtle" aria-label="Change theme" onClick={() => toggleColorScheme()}>
             {colorScheme === "dark" ? <Sun size={18} /> : <MoonStar size={18} />}
           </ActionIcon>
+          <UiButton component={Link} href="/login" variant="subtle" className="publicLoginCta">
+            Đăng nhập
+          </UiButton>
           <UiButton component={Link} href="#consultation" className="publicCta">
             Đăng ký tư vấn
           </UiButton>
@@ -65,6 +68,9 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
               {label}
             </UiButton>
           ))}
+          <UiButton component={Link} href="/login" variant="subtle" justify="flex-start" onClick={close}>
+            Đăng nhập
+          </UiButton>
           <UiButton component={Link} href="/admin" onClick={close}>
             Vào portal học tập
           </UiButton>

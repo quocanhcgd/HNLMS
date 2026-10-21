@@ -1,0 +1,20 @@
+changelog:
+  categories:
+    - title: User-facing changes
+      labels:
+        - feature
+        - enhancement
+    - title: Fixes and reliability
+      labels:
+        - bug
+        - reliability
+    - title: Security and dependencies
+      labels:
+        - security
+        - dependencies
+    - title: Other changes
+      labels:
+        - "*"
+  exclude:
+    labels:
+      - skip-changelog

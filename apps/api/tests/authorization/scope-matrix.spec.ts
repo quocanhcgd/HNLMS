@@ -22,6 +22,8 @@ const permittedContext = createAuthorizationContext({
   branchIds: ["branch-a"],
   classIds: ["class-a"],
   studentIds: ["student-a"],
+  subjectIds: ["subject-english"],
+  programIds: ["program-teen"],
   permissions: [permission],
   now,
 });
@@ -149,6 +151,39 @@ describe("T039 authorization negative-access matrix", () => {
         branchId: "branch-a",
         classId: "class-a",
         studentId: "student-a",
+      }),
+    ).toThrow(new AuthorizationError("scope_mismatch"));
+  });
+
+  it("denies assessment access outside the granted subject or program", () => {
+    const assessmentPermission = "assessment:review" as PermissionKey;
+    const context = createAuthorizationContext({
+      userId: "teacher-a",
+      organizationId: "organization-a",
+      branchIds: ["branch-a"],
+      classIds: ["class-a"],
+      subjectIds: ["subject-english"],
+      programIds: ["program-teen"],
+      permissions: [assessmentPermission],
+      now,
+    });
+
+    expect(() =>
+      assertAuthorized(context, assessmentPermission, {
+        organizationId: "organization-a",
+        branchId: "branch-a",
+        classId: "class-a",
+        subjectId: "subject-math",
+        programId: "program-teen",
+      }),
+    ).toThrow(new AuthorizationError("scope_mismatch"));
+    expect(() =>
+      assertAuthorized(context, assessmentPermission, {
+        organizationId: "organization-a",
+        branchId: "branch-a",
+        classId: "class-a",
+        subjectId: "subject-english",
+        programId: "program-adult",
       }),
     ).toThrow(new AuthorizationError("scope_mismatch"));
   });

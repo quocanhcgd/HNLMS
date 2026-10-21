@@ -33,15 +33,15 @@ Table/Kanban segmented control; trạng thái Mới, Đã liên hệ, Đang tư 
 
 ## Class detail
 
-Identity gồm class, program, branch, modality, teacher, capacity dạng số và status. Tabs: Tổng quan, Học viên, Lịch, Học liệu, Điểm danh, Đánh giá, Tài chính, Trao đổi. Conflict chỉ rõ resource và thời gian, focus tới trường lỗi.
+Identity gồm class, program, branch, modality, teacher, capacity dạng số và status. Tabs: Tổng quan, Học viên, Lịch, Học liệu, Điểm danh, Bài tập/Đánh giá, Hồ sơ năng lực, Tài chính, Trao đổi. Tab Hồ sơ năng lực là view theo scope lớp của profile dùng chung, không lưu bản sao theo lớp. Conflict chỉ rõ resource và thời gian, focus tới trường lỗi.
 
 ## Student profile
 
-Identity và privacy marker; enrollment hiện tại; lịch sắp tới; tiến độ; điểm danh; kết quả; công nợ; parent links; timeline. Trường nhạy cảm không tồn tại trong client payload ngoài scope.
+Identity và privacy marker; enrollment hiện tại; lịch sắp tới; tiến độ; hồ sơ năng lực theo môn/chương trình; điểm danh; kết quả; công nợ; parent links; timeline. Trường nhạy cảm không tồn tại trong client payload ngoài scope. Hồ sơ năng lực phân biệt baseline/current/target và evidence đã công bố với draft/pending-review.
 
 ## Parent dashboard
 
-Student switcher rõ khi có nhiều học viên; mọi widget ghi context học viên. Hiển thị lịch, điểm danh, tiến độ, học phí, nhận xét và conversation theo delegation. Module không có quyền không render; deep link trả forbidden an toàn.
+Student switcher rõ khi có nhiều học viên; mọi widget ghi context học viên. Hiển thị lịch, điểm danh, tiến độ, hồ sơ năng lực, học phí, nhận xét và conversation theo delegation độc lập. Module không có quyền không render; deep link trả forbidden an toàn.
 
 ## Assessment attempt
 

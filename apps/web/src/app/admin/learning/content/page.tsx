@@ -1,12 +1,3 @@
-import { PageHeader } from "@/components/app-shell";
+import { OperationsRegistryWorkspace } from "../../operations-registry-workspace";
 
-export default function LearningContentAdminPage() {
-  return (
-    <div className="page">
-      <PageHeader
-        title="Nội dung học tập"
-        subtitle="Không gian quản trị, duyệt và phân quyền học liệu cho nhân sự đào tạo."
-      />
-    </div>
-  );
-}
+export default function LearningContentAdminPage() { return <OperationsRegistryWorkspace section="contents" />; }
