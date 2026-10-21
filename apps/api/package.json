@@ -27,10 +27,10 @@
     "@hnlms/integration-adapters": "0.1.0"
   },
   "devDependencies": {
-    "@types/node": "^22.18.1",
+    "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
-    "drizzle-kit": "^0.31.10",
-    "tsx": "^4.20.5",
-    "typescript": "^5.9.2"
+    "drizzle-kit": "^0.31.11",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }
