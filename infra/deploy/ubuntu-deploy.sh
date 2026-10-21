@@ -92,7 +92,7 @@ User=$run_user
 WorkingDirectory=$current_link
 EnvironmentFile=$env_file
 # Internal workspace packages expose TypeScript source entrypoints.
-ExecStart=$current_link/node_modules/.bin/tsx $current_link/apps/api/src/main.ts
+ExecStart=$current_link/node_modules/.bin/tsx --tsconfig $current_link/apps/api/tsconfig.json $current_link/apps/api/src/main.ts
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=true
