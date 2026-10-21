@@ -60,23 +60,7 @@ install -d -o "$run_user" -g "$run_user" -m 0755 "$release_dir"
 git -c "safe.directory=$source_root" -C "$source_root" archive "$commit" | tar -x -C "$release_dir"
 chown -R "$run_user:$run_user" "$release_dir"
 
-# tsx must see the decorator settings explicitly when loading NestJS sources.
-cat > "$release_dir/tsconfig.runtime.json" <<'JSON'
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
-  }
-}
-JSON
-chown "$run_user:$run_user" "$release_dir/tsconfig.runtime.json"
-
-run_app() {
+run_as_app() {
   runuser -u "$run_user" -- env \
     NODE_ENV=production \
     DATABASE_URL="$DATABASE_URL" \
@@ -85,7 +69,11 @@ run_app() {
     NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-}" \
     NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-}" \
     REDIS_URL="${REDIS_URL:-}" \
-    npm "$@"
+    "$@"
+}
+
+run_app() {
+  run_as_app npm "$@"
 }
 
 log "Installing dependencies"
@@ -95,6 +83,39 @@ log "Applying database migrations"
 run_app run db:migrate --workspace=@hnlms/api
 log "Building workspaces"
 run_app run build --workspaces --if-present
+
+# Production Node must load compiled JavaScript from internal workspace packages.
+# Their source exports are useful for local TypeScript development but cannot be
+# loaded by Node directly after the API has been compiled.
+run_as_app node - <<'NODE'
+const fs = require('node:fs');
+const path = require('node:path');
+
+const root = process.cwd();
+const packageNames = [
+  '@hnlms/authorization',
+  '@hnlms/config',
+  '@hnlms/domain-contracts',
+  '@hnlms/integration-adapters',
+  '@hnlms/license-contracts',
+  '@hnlms/module-sdk',
+  '@hnlms/test-fixtures',
+];
+
+const workspacePackagePath = (name) => {
+  const [, scope, packageName] = name.match(/^(@[^/]+)\/(.+)$/);
+  return path.join(root, 'node_modules', scope, packageName, 'package.json');
+};
+
+for (const name of packageNames) {
+  const packagePath = workspacePackagePath(name);
+  const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+  packageJson.main = './dist/index.js';
+  packageJson.types = './dist/index.d.ts';
+  packageJson.exports = { '.': './dist/index.js' };
+  fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`);
+}
+NODE
 
 cat > "/etc/systemd/system/$app_name-api.service" <<UNIT
 [Unit]
@@ -107,9 +128,7 @@ Type=simple
 User=$run_user
 WorkingDirectory=$current_link
 EnvironmentFile=$env_file
-# Internal workspace packages expose TypeScript source entrypoints.
-Environment=TSX_TSCONFIG_PATH=$current_link/tsconfig.runtime.json
-ExecStart=$current_link/node_modules/.bin/tsx --tsconfig $current_link/tsconfig.runtime.json $current_link/apps/api/src/main.ts
+ExecStart=$current_link/apps/api/dist/main.js
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=true
