@@ -60,6 +60,22 @@ install -d -o "$run_user" -g "$run_user" -m 0755 "$release_dir"
 git -c "safe.directory=$source_root" -C "$source_root" archive "$commit" | tar -x -C "$release_dir"
 chown -R "$run_user:$run_user" "$release_dir"
 
+# tsx must see the decorator settings explicitly when loading NestJS sources.
+cat > "$release_dir/tsconfig.runtime.json" <<'JSON'
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
+}
+JSON
+chown "$run_user:$run_user" "$release_dir/tsconfig.runtime.json"
+
 run_app() {
   runuser -u "$run_user" -- env \
     NODE_ENV=production \
@@ -92,7 +108,8 @@ User=$run_user
 WorkingDirectory=$current_link
 EnvironmentFile=$env_file
 # Internal workspace packages expose TypeScript source entrypoints.
-ExecStart=$current_link/node_modules/.bin/tsx --tsconfig $current_link/apps/api/tsconfig.json $current_link/apps/api/src/main.ts
+Environment=TSX_TSCONFIG_PATH=$current_link/tsconfig.runtime.json
+ExecStart=$current_link/node_modules/.bin/tsx --tsconfig $current_link/tsconfig.runtime.json $current_link/apps/api/src/main.ts
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=true
