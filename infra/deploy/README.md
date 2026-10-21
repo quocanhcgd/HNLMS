@@ -3,6 +3,24 @@
 This directory contains a native Ubuntu deployment for HN-LMS. It does not use
 Docker and it does not store credentials in the repository.
 
+## One-command installation (recommended)
+
+For a clean Ubuntu server, run this single installer as `root`:
+
+```bash
+curl --fail --silent --show-error --location \
+  https://raw.githubusercontent.com/quocanhcgd/HNLMS/main/infra/deploy/ubuntu-install.sh \
+  --output /tmp/hn-lms-install.sh
+bash /tmp/hn-lms-install.sh
+```
+
+The installer installs the runtime, asks for the public web URL, public API URL
+and remote PostgreSQL URL, creates the protected environment file, runs the
+database migration, builds the workspaces and starts all systemd services. It
+does not install Nginx or create certificates. Configure Nginx Proxy Manager to
+forward the web hostname to `SERVER_IP:3000` and the API hostname to
+`SERVER_IP:4000`.
+
 ## 1. Bootstrap a basic Ubuntu server
 
 `ubuntu-bootstrap.sh` installs the host dependencies required by the release

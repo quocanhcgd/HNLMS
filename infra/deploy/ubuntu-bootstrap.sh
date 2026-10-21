@@ -7,7 +7,7 @@ set -Eeuo pipefail
 readonly app_root="${HN_LMS_APP_ROOT:-/opt/hn-lms}"
 readonly env_file="${HN_LMS_ENV_FILE:-/etc/hn-lms/hn-lms.env}"
 readonly run_user="${HN_LMS_USER:-hnlms}"
-readonly install_nginx="${HN_LMS_INSTALL_NGINX:-1}"
+readonly install_nginx="${HN_LMS_INSTALL_NGINX:-0}"
 
 log() { printf '[hn-lms-bootstrap] %s\n' "$*"; }
 fail() { printf '[hn-lms-bootstrap] ERROR: %s\n' "$*" >&2; exit 1; }
@@ -22,7 +22,7 @@ source /etc/os-release
 export DEBIAN_FRONTEND=noninteractive
 log "Installing base packages"
 apt-get update
-apt-get install -y --no-install-recommends \
+base_packages=(
   ca-certificates \
   curl \
   git \
@@ -30,10 +30,14 @@ apt-get install -y --no-install-recommends \
   pkg-config \
   python3 \
   gnupg \
-  nginx \
   openssl \
   postgresql-client \
   unzip
+)
+if [[ "$install_nginx" == "1" ]]; then
+  base_packages+=(nginx)
+fi
+apt-get install -y --no-install-recommends "${base_packages[@]}"
 
 log "Configuring NodeSource Node.js 20 repository"
 install -d -m 0755 /etc/apt/keyrings

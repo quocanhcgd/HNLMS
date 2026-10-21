@@ -74,7 +74,7 @@ run_app() {
 
 log "Installing dependencies"
 cd "$release_dir"
-run_app ci
+run_app ci --include=dev
 log "Applying database migrations"
 run_app run db:migrate --workspace=@hnlms/api
 log "Building workspaces"
@@ -91,7 +91,7 @@ Type=simple
 User=$run_user
 WorkingDirectory=$current_link
 EnvironmentFile=$env_file
-ExecStart=$current_link/node_modules/.bin/tsx apps/api/src/main.ts
+ExecStart=$(command -v node) $current_link/apps/api/dist/main.js
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=true
