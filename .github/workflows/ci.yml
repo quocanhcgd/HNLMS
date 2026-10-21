@@ -45,7 +45,7 @@ jobs:
       - run: npm run test:e2e
       - name: Upload Playwright report on failure
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-report-${{ github.sha }}
           path: |
@@ -91,7 +91,7 @@ jobs:
           tar -C release -czf "release/hn-lms-${version}.tgz" "hn-lms-${version}"
           (cd release && sha256sum "hn-lms-${version}.tgz" > "hn-lms-${version}.sha256")
           (cd release && sha256sum --check "hn-lms-${version}.sha256")
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: hn-lms-${{ github.sha }}
           path: |
