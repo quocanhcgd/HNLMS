@@ -47,9 +47,9 @@ if [[ ! -d "$source_root/.git" ]]; then
   rm -rf "$source_root"
   git clone --no-checkout "$repo_url" "$source_root"
 fi
-git -C "$source_root" remote set-url origin "$repo_url"
-git -C "$source_root" fetch --prune --depth=1 origin "$ref"
-commit="$(git -C "$source_root" rev-parse 'FETCH_HEAD^{commit}')"
+git -c "safe.directory=$source_root" -C "$source_root" remote set-url origin "$repo_url"
+git -c "safe.directory=$source_root" -C "$source_root" fetch --prune --depth=1 origin "$ref"
+commit="$(git -c "safe.directory=$source_root" -C "$source_root" rev-parse 'FETCH_HEAD^{commit}')"
 release_id="${commit:0:12}"
 release_dir="$releases_root/$release_id"
 [[ "$release_dir" == "$releases_root/"* ]] || fail "Unsafe release path"
@@ -57,7 +57,7 @@ release_dir="$releases_root/$release_id"
 
 log "Preparing commit $commit"
 install -d -o "$run_user" -g "$run_user" -m 0755 "$release_dir"
-git -C "$source_root" archive "$commit" | tar -x -C "$release_dir"
+git -c "safe.directory=$source_root" -C "$source_root" archive "$commit" | tar -x -C "$release_dir"
 chown -R "$run_user:$run_user" "$release_dir"
 
 run_app() {
