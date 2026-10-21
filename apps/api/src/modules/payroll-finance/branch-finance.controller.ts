@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Param, Patch, Post, Query } from "@nestjs/common";
+import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Optional, Param, Patch, Post, Query } from "@nestjs/common";
 import { createBudget, createLedgerEntry, FinanceServiceError, type LedgerEntry } from "./finance.service";
 import { createDatabase } from "../../database/client";
 import { DrizzleBranchFinanceRepository, type BranchFinanceRepository, type PersistedBranchFinanceRow } from "./drizzle-branch-finance-repository";
@@ -20,7 +20,7 @@ function defaultRepository(): BranchFinanceRepository | undefined {
 
 @Controller("finance/branches")
 export class BranchFinanceController {
-  constructor(private readonly repository: BranchFinanceRepository | undefined = defaultRepository()) {}
+  constructor(@Optional() private readonly repository: BranchFinanceRepository | undefined = defaultRepository()) {}
   private scope(headers: HeaderMap) {
     const role = header(headers, "x-role");
     const organizationId = header(headers, "x-organization-id");

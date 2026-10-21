@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Param, Patch, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Optional, Param, Patch, Post } from "@nestjs/common";
 import { createDatabase } from "../../database/client";
 import { DrizzleBillingRepository } from "./drizzle-billing-repository";
 
@@ -29,7 +29,7 @@ function learnerScope(headers: HeaderMap) {
 
 @Controller("finance/billing")
 export class BillingController {
-  constructor(private readonly repository: DrizzleBillingRepository | undefined = defaultRepository()) {}
+  constructor(@Optional() private readonly repository: DrizzleBillingRepository | undefined = defaultRepository()) {}
   @Get("student/invoices")
   async learnerList(@Headers() headers: HeaderMap) {
     const current = learnerScope(headers);

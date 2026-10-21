@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Param, Patch, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Optional, Param, Patch, Post } from "@nestjs/common";
 import { createDatabase } from "../../database/client";
 import { DrizzleHrmRepository } from "./drizzle-hrm-repository";
 
@@ -37,7 +37,7 @@ const leaves = new Map<string, LeaveRequest>([
 
 @Controller("hrm")
 export class HrmController {
-  constructor(private readonly repository: DrizzleHrmRepository | undefined = defaultRepository()) {}
+  constructor(@Optional() private readonly repository: DrizzleHrmRepository | undefined = defaultRepository()) {}
 
   private scope(headers: HeaderMap) {
     const role = header(headers, "x-role");

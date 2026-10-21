@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Param, Patch, Post } from "@nestjs/common";
+import { BadRequestException, Body, Controller, ForbiddenException, Get, Headers, Optional, Param, Patch, Post } from "@nestjs/common";
 import { calculatePayroll, PayrollWorkflowError, type PayrollInput } from "./payroll.service";
 import { createDatabase } from "../../database/client";
 import { DrizzlePayrollRepository } from "./drizzle-payroll-repository";
@@ -51,7 +51,7 @@ function summary(period: PayrollPeriod) {
 
 @Controller("payroll")
 export class PayrollController {
-  constructor(private readonly repository: DrizzlePayrollRepository | undefined = defaultRepository()) {}
+  constructor(@Optional() private readonly repository: DrizzlePayrollRepository | undefined = defaultRepository()) {}
   @Get("periods")
   async list(@Headers() headers: HeaderMap) {
     const current = scope(headers);
