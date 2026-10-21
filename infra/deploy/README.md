@@ -53,13 +53,15 @@ NODE_ENV=production
 API_PORT=4000
 WEB_ORIGIN=https://your-domain.example
 NEXT_PUBLIC_SITE_URL=https://your-domain.example
+NEXT_PUBLIC_API_URL=https://api.your-domain.example
 DATABASE_URL=postgresql://REMOTE_DATABASE_CONNECTION_STRING
 SESSION_SECRET=replace-with-at-least-32-random-characters
 ```
 
 `REDIS_URL`, object storage settings and provider credentials should be added
 when those services are enabled. Back up the remote database before the first
-production migration.
+production migration. `NEXT_PUBLIC_API_URL` must be the public HTTPS origin of
+the API; it is embedded into the web build.
 
 ## 3. Deploy the application
 

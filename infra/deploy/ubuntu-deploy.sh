@@ -67,6 +67,7 @@ run_app() {
     SESSION_SECRET="$SESSION_SECRET" \
     WEB_ORIGIN="${WEB_ORIGIN:-http://127.0.0.1:$web_port}" \
     NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-}" \
+    NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-}" \
     REDIS_URL="${REDIS_URL:-}" \
     npm "$@"
 }
