@@ -91,7 +91,8 @@ Type=simple
 User=$run_user
 WorkingDirectory=$current_link
 EnvironmentFile=$env_file
-ExecStart=$(command -v node) $current_link/apps/api/dist/main.js
+# Internal workspace packages expose TypeScript source entrypoints.
+ExecStart=$current_link/node_modules/.bin/tsx apps/api/src/main.ts
 Restart=on-failure
 RestartSec=5
 NoNewPrivileges=true
