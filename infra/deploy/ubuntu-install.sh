@@ -53,9 +53,20 @@ install -d -o "$run_user" -g "$run_user" -m 0755 \
   "$app_root" "$app_root/source" "$app_root/releases" /var/lib/hn-lms
 install -d -o root -g root -m 0755 "$(dirname "$env_file")"
 
-if [[ -s "$env_file" ]]; then
+env_is_complete=0
+if [[ -s "$env_file" ]] \
+  && grep -Eq '^[[:space:]]*(export[[:space:]]+)?NODE_ENV=production([[:space:]]|$)' "$env_file" \
+  && grep -Eq '^[[:space:]]*(export[[:space:]]+)?DATABASE_URL=' "$env_file" \
+  && grep -Eq '^[[:space:]]*(export[[:space:]]+)?SESSION_SECRET=' "$env_file"; then
+  env_is_complete=1
+fi
+
+if [[ "$env_is_complete" == "1" ]]; then
   log "Using existing environment file: $env_file"
 else
+  if [[ -s "$env_file" ]]; then
+    log "Existing environment file is incomplete; recreating required production settings"
+  fi
   web_origin="${HN_LMS_WEB_ORIGIN:-}"
   api_url="${HN_LMS_API_URL:-}"
   database_url="${HN_LMS_DATABASE_URL:-}"
