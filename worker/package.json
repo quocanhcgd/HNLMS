@@ -9,7 +9,7 @@
     "start": "node dist/main.js"
   },
   "dependencies": {
-    "ioredis": "^5.7.0"
+    "ioredis": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.18.1",
